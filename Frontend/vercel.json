@@ -1,4 +1,3 @@
-// ...existing code...
 {
   "version": 2,
   "builds": [
@@ -9,11 +8,6 @@
     }
   ],
   "routes": [
-    { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/index.html" }
-  ],
-  "buildCommand": "npm install && npm run build",
-  "installCommand": "npm install",
-  "outputDirectory": "dist"
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
 }
-// ...existing code...
