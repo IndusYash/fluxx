@@ -6,10 +6,12 @@ const Application = require('../models/application');
 
 const applicationSchema = Joi.object({
   name: Joi.string().min(1).max(200).required(),
+  rollNo: Joi.string().length(10).required(),
   branch: Joi.string().min(1).max(200).required(),
   year: Joi.string().min(1).max(20).required(),
   phone: Joi.string().pattern(/^[0-9+\-() ]{6,20}$/).required(),
   email: Joi.string().email().required(),
+  society: Joi.string().min(1).max(200).required(),
   whyJoin: Joi.string().min(1).max(2000).required(),
   softSkills: Joi.alternatives().try(Joi.array().items(Joi.string()), Joi.string()).optional(),
   hardSkills: Joi.alternatives().try(Joi.array().items(Joi.string()), Joi.string()).optional(),
@@ -18,7 +20,10 @@ const applicationSchema = Joi.object({
 // Create application
 router.post('/', async (req, res) => {
   const { error, value } = applicationSchema.validate(req.body, { abortEarly: false });
-  if (error) return res.status(400).json({ errors: error.details.map(d => d.message) });
+  if (error) {
+    console.error("Validation failed:", error.details); // 👈 Debug log
+    return res.status(400).json({ errors: error.details.map(d => d.message) });
+  }
 
   // normalize skills to arrays
   const softSkills = Array.isArray(value.softSkills) ? value.softSkills : (value.softSkills ? value.softSkills.split(',').map(s => s.trim()) : []);
@@ -27,10 +32,12 @@ router.post('/', async (req, res) => {
   try {
     const app = new Application({
       name: value.name,
+      rollNo: value.rollNo,
       branch: value.branch,
       year: value.year,
       phone: value.phone,
       email: value.email,
+      society: value.society,
       whyJoin: value.whyJoin,
       softSkills,
       hardSkills,
