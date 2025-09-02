@@ -5,6 +5,14 @@ import { FaWhatsapp, FaInstagram, FaBars, FaTimes, FaLinkedin } from "react-icon
 import { motion } from "framer-motion";
 import logo from "@/assets/images/flux_logo.png";
 
+// Declare gtag function for TypeScript
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void;
+    dataLayer: any[];
+  }
+}
+
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [showNavbar, setShowNavbar] = useState<boolean>(true);
@@ -21,6 +29,15 @@ const Navbar: React.FC = () => {
     { name: "Contact", path: "/contact" },
     { name: "Induction", path: "/join" },
   ];
+
+  // Google Analytics page tracking
+  useEffect(() => {
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('config', 'G-NWFYWZE8PQ', {
+        page_path: location.pathname + location.search,
+      });
+    }
+  }, [location]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,6 +63,29 @@ const Navbar: React.FC = () => {
   }, []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  // Function to track navigation clicks
+  const handleNavClick = (linkName: string, path: string) => {
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'navigation_click', {
+        event_category: 'Navigation',
+        event_label: linkName,
+        value: path,
+      });
+    }
+    setIsOpen(false);
+  };
+
+  // Function to track social media clicks
+  const handleSocialClick = (platform: string, url: string) => {
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'social_click', {
+        event_category: 'Social Media',
+        event_label: platform,
+        value: url,
+      });
+    }
+  };
 
   return (
     <>
@@ -79,7 +119,11 @@ const Navbar: React.FC = () => {
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-full">
           {/* Logo and Title */}
-          <Link to="/" className="flex items-center gap-3 flex-none">
+          <Link 
+            to="/" 
+            className="flex items-center gap-3 flex-none"
+            onClick={() => handleNavClick('Logo', '/')}
+          >
             <motion.img
               src={logo}
               alt="FLUX Logo"
@@ -121,6 +165,7 @@ const Navbar: React.FC = () => {
                   className={`relative z-10 transition-colors duration-300 flex items-center gap-2 ${
                     location.pathname === link.path ? "text-primary" : "text-gray-300/90 hover:text-white"
                   }`}
+                  onClick={() => handleNavClick(link.name, link.path)}
                 >
                   {link.name}
                   {link.name === "Induction" && (
@@ -150,33 +195,30 @@ const Navbar: React.FC = () => {
 
           {/* Social Icons and CTA Button (desktop only) */}
           <div className="hidden md:flex items-center gap-6">
-            {[SiGmail, FaWhatsapp, FaInstagram, FaLinkedin].map((Icon, i) => (
+            {[
+              { Icon: SiGmail, href: "mailto:flux@mmmut.ac.in", platform: "Gmail" },
+              { Icon: FaWhatsapp, href: "https://chat.whatsapp.com/F8O8hTu2aCZ6NKLeRVqJ0R?mode=ac_t", platform: "WhatsApp" },
+              { Icon: FaInstagram, href: "https://www.instagram.com/flux.mmmut?igsh=aHI5c3Z1dGZwOGI2", platform: "Instagram" },
+              { Icon: FaLinkedin, href: "https://www.linkedin.com/company/flux-mmm/", platform: "LinkedIn" }
+            ].map(({ Icon, href, platform }, i) => (
               <motion.a
                 key={i}
-                href={
-                  Icon === SiGmail
-                    ? "mailto:flux@mmmut.ac.in"
-                    : Icon === FaWhatsapp
-                    ? "https://chat.whatsapp.com/F8O8hTu2aCZ6NKLeRVqJ0R?mode=ac_t"
-                    : Icon === FaInstagram
-                    ? "https://www.instagram.com/flux.mmmut?igsh=aHI5c3Z1dGZwOGI2"
-                    : "https://www.linkedin.com/company/flux-mmm/"
-                }
+                href={href}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="relative group cursor-pointer"
                 whileHover={{ scale: 1.2, rotate: 5 }}
                 whileTap={{ scale: 0.9 }}
+                onClick={() => handleSocialClick(platform, href)}
               >
                 <Icon
                   size={20}
                   style={{
-                    color: "rgba(156, 163, 175, 0.7)", // Equivalent to text-gray-400/70
+                    color: "rgba(156, 163, 175, 0.7)",
                     pointerEvents: "auto",
                     transition: "color 0.3s",
                   }}
                 />
-                {/* Background hex shape */}
                 <motion.div
                   className="absolute inset-0 bg-primary/5 -z-10"
                   style={{
@@ -209,6 +251,14 @@ const Navbar: React.FC = () => {
                 background: "rgba(16, 185, 129, 0.2)",
               }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                if (typeof window.gtag !== 'undefined') {
+                  window.gtag('event', 'cta_click', {
+                    event_category: 'CTA',
+                    event_label: 'Go to App',
+                  });
+                }
+              }}
             >
               <span className="relative z-10 flex items-center gap-2">
                 <span>Go to App</span>
@@ -277,7 +327,7 @@ const Navbar: React.FC = () => {
                         : "text-gray-300/80 hover:text-white hover:bg-white/5"
                     }`}
                     style={{ fontFamily: "'Space Grotesk', 'Inter', sans-serif" }}
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => handleNavClick(link.name, link.path)}
                   >
                     {link.name}
                   </Link>
@@ -290,8 +340,21 @@ const Navbar: React.FC = () => {
                 animate={{ opacity: isOpen ? 1 : 0 }}
                 transition={{ delay: 0.5, duration: 0.3 }}
               >
-                {[SiGmail, FaWhatsapp, FaInstagram, FaLinkedin].map((Icon, i) => (
-                  <motion.div key={i} whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}>
+                {[
+                  { Icon: SiGmail, href: "mailto:flux@mmmut.ac.in", platform: "Gmail" },
+                  { Icon: FaWhatsapp, href: "https://chat.whatsapp.com/F8O8hTu2aCZ6NKLeRVqJ0R?mode=ac_t", platform: "WhatsApp" },
+                  { Icon: FaInstagram, href: "https://www.instagram.com/flux.mmmut?igsh=aHI5c3Z1dGZwOGI2", platform: "Instagram" },
+                  { Icon: FaLinkedin, href: "https://www.linkedin.com/company/flux-mmm/", platform: "LinkedIn" }
+                ].map(({ Icon, href, platform }, i) => (
+                  <motion.a
+                    key={i}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => handleSocialClick(platform, href)}
+                  >
                     <Icon
                       size={24}
                       style={{
@@ -300,7 +363,7 @@ const Navbar: React.FC = () => {
                         transition: "color 0.3s",
                       }}
                     />
-                  </motion.div>
+                  </motion.a>
                 ))}
               </motion.div>
             </div>
