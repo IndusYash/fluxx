@@ -112,12 +112,13 @@ export const FluxApplicationForm = () => {
           title: "Application Submitted!",
           description:
             "Thank you for applying to FLUX. We'll review your application and get back to you soon.",
+          className: "bg-[#101318] text-white"
         });
         reset();
       } else if (res.status === 409) {
-        toast({ title: "Duplicate Entry", description: body.error || "Phone or email already exists" });
+        toast({ title: "Duplicate Entry", description: body.error || "Phone or email already exists", className: "bg-[#101318] text-white" });
       } else {
-        toast({ title: "Submission Failed", description: body.error || "Unexpected server error" });
+        toast({ title: "Submission Failed", description: body.error || "Unexpected server error", className: "bg-[#101318] text-white" });
       }
     } catch (err) {
       console.error(err);
