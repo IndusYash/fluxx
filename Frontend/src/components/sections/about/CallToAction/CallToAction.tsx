@@ -106,7 +106,7 @@ const CallToAction: React.FC<CallToActionProps> = ({ title, description, primary
         >
           {/* Primary Button with enhanced animations */}
           <motion.a
-            href="/induction"
+            href="/join"
             variants={buttonVariants}
             whileHover={{ 
               scale: 1.05, 
