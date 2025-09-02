@@ -174,6 +174,7 @@ export const FluxApplicationForm = () => {
         title: "Network Error",
         description:
           "Could not reach the server. Check your network or backend.",
+          className: "bg-[#101318] text-white",
       });
     } finally {
       setIsSubmitting(false);
