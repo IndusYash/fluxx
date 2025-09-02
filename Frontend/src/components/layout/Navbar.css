@@ -1,0 +1,18 @@
+/* src/components/Navbar.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+.logo-text {
+  letter-spacing: 1.5px;
+}
+
+.nav-link {
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  text-shadow: 0px 0px 8px rgba(16, 185, 129, 0.6);
+}
