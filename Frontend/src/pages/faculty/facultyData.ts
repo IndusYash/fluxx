@@ -3,7 +3,6 @@ import shwetSir from '../../assets/images/shwetSir.jpeg';
 import SatyaSir from '../../assets/images/SatyaSir.jpeg';
 import ShantanuSir from '../../assets/images/ShantanuSir.jpg';
 
-
 export interface FacultyMember {
   id: number;
   name: string;
@@ -31,7 +30,6 @@ export interface FacultyMember {
   articles?: string;
   areasOfExpertise?: string;
 }
-
 
 export const facultyData: FacultyMember[] = [
   // 1st Position: Dr. Satya Prakash Yadav (Google Scholar kept)
@@ -72,9 +70,25 @@ export const facultyData: FacultyMember[] = [
     internationalPublications: "18+",
     organisations: "10+"
   },
-  // 3rd Position: Dr. Shwet Ketu (Google Scholar removed)
+  // 3rd Position: Dr. Shantanu Shahi (moved up)
   {
     id: 3,
+    name: "Dr. Shantanu Shahi",
+    title: "Assistant Professor",
+    department: "Computer Science and Engineering",
+    specialization: ["Software Development", "Data Analysis", "Research Methodologies", "Academic Excellence"],
+    email: "dsscse@mmmut.ac.in",
+    phone: "+91-XXXXXXXXXX",
+    profileImage: ShantanuSir,
+    description: "Expert in software development and data analysis with focus on research methodologies and academic excellence.",
+    linkedinUrl: "https://www.linkedin.com/in/dr-shantanu-shahi-5a1b8325b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    skills: 10,
+    areasOfExpertise: "8+",
+    experience: 2
+  },
+  // 4th Position: Dr. Shwet Ketu (moved down)
+  {
+    id: 4,
     name: "Dr. Shwet Ketu",
     title: "Assistant Professor",
     department: "Computer Science & Engineering",
@@ -89,21 +103,5 @@ export const facultyData: FacultyMember[] = [
     internationalConferences: "4+",
     internationalPublications: "13+",
     organisations: "30+"
-  },
-  // 4th Position: Dr. Shantanu Shahi (no Google Scholar)
-  {
-    id: 4,
-    name: "Dr. Shantanu Shahi",
-    title: "Assistant Professor",
-    department: "Computer Science and Engineering",
-    specialization: ["Software Development", "Data Analysis", "Research Methodologies", "Academic Excellence"],
-    email: "dsscse@mmmut.ac.in",
-    phone: "+91-XXXXXXXXXX",
-    profileImage: ShantanuSir,
-    description: "Expert in software development and data analysis with focus on research methodologies and academic excellence.",
-    linkedinUrl: "https://www.linkedin.com/in/dr-shantanu-shahi-5a1b8325b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-    skills: 10,
-    areasOfExpertise: "8+",
-    experience: 2
   },
 ];

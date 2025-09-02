@@ -178,7 +178,7 @@ const Team: React.FC = () => {
     role: "President",
     description: "Sets strategic vision and builds partnerships; leads cross-team initiatives and fosters innovation across the society.",
     email: "president@flux.edu",
-    linkedin: "linkedin.com/in/shivam-rai-a64b84298",
+    linkedin: "https://www.linkedin.com/in/shivam-rai-a64b84298/",
     image: presidentImage
   };
 
