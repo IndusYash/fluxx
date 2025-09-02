@@ -16,7 +16,7 @@ export default function InductionCTA() {
 
   const handleJoinClick = () => {
     if (isMobile) {
-      document.getElementById("application")?.scrollIntoView({ behavior: "smooth" });
+      document.getElementById("join")?.scrollIntoView({ behavior: "smooth" });
     } else {
       navigate("/join");
     }

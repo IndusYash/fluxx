@@ -36,7 +36,7 @@ export default function MobileLayout({ isMobile }: MobileLayoutProps) {
       <section id="contact" className="pt-16 scroll-mt-16 px-4 max-w-md mx-auto">
         <ContactPage isMobile={isMobile} />
       </section>
-      <section id="application" className="pt-16 scroll-mt-16 px-4 max-w-md mx-auto">
+      <section id="join" className="pt-16 scroll-mt-16 px-4 max-w-md mx-auto">
         <Application isMobile={isMobile} />
       </section>
     </div>
