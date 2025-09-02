@@ -1,4 +1,4 @@
-i want it should open in single page also  // ...existing code...
+
 {
   "version": 2,
   "builds": [
@@ -16,4 +16,4 @@ i want it should open in single page also  // ...existing code...
   "installCommand": "npm install",
   "outputDirectory": "dist"
 }
-// ...existing code...
+
