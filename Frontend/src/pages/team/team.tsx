@@ -1,4 +1,5 @@
 // Navigation removed: page should render without header
+import React from 'react';
 import TeamCard from "@/components/TeamCard";
 import { Mail, Instagram, Linkedin, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,14 +13,32 @@ import ysvImage from "../../assets/images/ysv.jpg";
 import threeMImage from "../../assets/images/3m.jpg";
 import presidentImage from "../../assets/images/president.jpg";
 
+// TypeScript interfaces
+interface TeamMember {
+  name: string;
+  role: string;
+  description: string;
+  email: string;
+  linkedin: string;
+  image: string;
+}
 
-const Team = () => {
+interface ContactInfo {
+  icon: React.ReactNode;
+  label: string;
+  description?: string;
+  value: string;
+  link: string;
+  buttonText: string | null;
+}
+
+const Team: React.FC = () => {
   // ORIGINAL TEAM MEMBERS DATA - COMMENTED FOR FUTURE USE
   /*
-  const teamMembersOriginal = [
+  const teamMembersOriginal: TeamMember[] = [
     {
       name: "Aryan Shandilya",
-      role: "Executive Engineer",
+      role: "Executive Member",
       description: "Designs efficient algorithms and mentors competitive programming; focuses on performance and problem-solving best practices.",
       email: "aryanacc28@gmail.com",
       linkedin: "https://www.linkedin.com/in/aryan-s-shandilya?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
@@ -27,7 +46,7 @@ const Team = () => {
     },
     {
       name: "Ashish Yadav",
-      role: "Executive Engineer",
+      role: "Executive Member",
       description: "Leads backend architecture and cloud infrastructure; specializes in scalable APIs, CI/CD and reliability engineering.",
       email: "kumaryadavashish390@gmail.com",
       linkedin: "https://in.linkedin.com/in/ashish-yadav-040730225",
@@ -35,7 +54,7 @@ const Team = () => {
     },
      {
       name: "Shivam Bhardwaj",
-      role: "Executive Engineer",
+      role: "Executive Member",
       description: "Manages membership operations and records; ensures smooth onboarding and member support systems.",
       email: "N/A",
       linkedin: "N/A",
@@ -43,7 +62,7 @@ const Team = () => {
     },
     {
       name: "Shivam Mishra",
-      role: "Executive Engineer",
+      role: "Executive Member",
       description: "Organizes tech events and hackathons; expert in event logistics, speaker curation, and community partnerships.",
       email: "shivammishra01329@gmail.com",
       linkedin: "www.linkedin.com/in/shiv9918",
@@ -51,7 +70,7 @@ const Team = () => {
     },
     {
       name: "Shivam Singh",
-      role: "Executive Engineer",
+      role: "Executive Member",
       description: "Drives marketing strategy and outreach; focused on growth campaigns, content strategy and social analytics.",
       email: "shivamsingh221045@gmail.com",
       linkedin: "https://www.linkedin.com/in/shivam451/",
@@ -60,7 +79,7 @@ const Team = () => {
    
     {
       name: "Vishesh Mishra",
-      role: "Executive Engineer",
+      role: "Executive Member",
       description: "Handles internal coordination and documentation; maintains project trackers and communication channels.",
       email: "mishravishesh1403@gmail.com",
       linkedin: "https://www.linkedin.com/in/vishesh-mishra-372784218/",
@@ -68,7 +87,7 @@ const Team = () => {
     },
     {
       name: "Yashasvi Sharma",
-      role: "Executive Engineer",
+      role: "Executive Member",
       description: "Front-end specialist focused on accessible UI, component design and polishing user experiences.",
       email: "yashasvisharma650@gmail.com",
       linkedin: "https://www.linkedin.com/in/yashasvi-sharma-688245294/",
@@ -76,7 +95,7 @@ const Team = () => {
     },
     {
       name: "Yashvardhan Ojha",
-      role: "Executive Engineer",
+      role: "Executive Member",
       description: "Full-stack developer supporting integrations, tooling and automations to streamline developer workflows.",
       email: "2023021270@mmmut.ac.in",
       linkedin: "https://www.linkedin.com/in/yashvardhann/",
@@ -86,10 +105,10 @@ const Team = () => {
   */
 
   // PLACEHOLDER TEAM MEMBERS - AWAITING INDUCTION
-  const teamMembers = [
+  const teamMembers: TeamMember[] = [
     {
       name: "Awaiting Induction",
-      role: "Executive Engineer",
+      role: "Executive Member",
       description: "This position is currently open and awaiting the induction of a new team member. Stay tuned for updates!",
       email: "N/A",
       linkedin: "N/A",
@@ -97,7 +116,7 @@ const Team = () => {
     },
     {
       name: "Awaiting Induction",
-      role: "Executive Engineer", 
+      role: "Executive Member", 
       description: "This position is currently open and awaiting the induction of a new team member. Stay tuned for updates!",
       email: "N/A",
       linkedin: "N/A",
@@ -105,7 +124,7 @@ const Team = () => {
     },
     {
       name: "Awaiting Induction",
-      role: "Executive Engineer",
+      role: "Executive Member",
       description: "This position is currently open and awaiting the induction of a new team member. Stay tuned for updates!",
       email: "N/A", 
       linkedin: "N/A",
@@ -113,7 +132,7 @@ const Team = () => {
     },
     {
       name: "Awaiting Induction",
-      role: "Executive Engineer",
+      role: "Executive Member",
       description: "This position is currently open and awaiting the induction of a new team member. Stay tuned for updates!",
       email: "N/A",
       linkedin: "N/A", 
@@ -121,7 +140,7 @@ const Team = () => {
     },
     {
       name: "Awaiting Induction",
-      role: "Executive Engineer",
+      role: "Executive Member",
       description: "This position is currently open and awaiting the induction of a new team member. Stay tuned for updates!",
       email: "N/A",
       linkedin: "N/A",
@@ -129,7 +148,7 @@ const Team = () => {
     },
     {
       name: "Awaiting Induction", 
-      role: "Executive Engineer",
+      role: "Executive Member",
       description: "This position is currently open and awaiting the induction of a new team member. Stay tuned for updates!",
       email: "N/A",
       linkedin: "N/A",
@@ -137,7 +156,7 @@ const Team = () => {
     },
     {
       name: "Awaiting Induction",
-      role: "Executive Engineer", 
+      role: "Executive Member", 
       description: "This position is currently open and awaiting the induction of a new team member. Stay tuned for updates!",
       email: "N/A",
       linkedin: "N/A",
@@ -145,7 +164,7 @@ const Team = () => {
     },
     {
       name: "Awaiting Induction",
-      role: "Executive Engineer",
+      role: "Executive Member",
       description: "This position is currently open and awaiting the induction of a new team member. Stay tuned for updates!", 
       email: "N/A",
       linkedin: "N/A",
@@ -154,7 +173,7 @@ const Team = () => {
   ];
 
   // President as separate object for special positioning
-  const president = {
+  const president: TeamMember = {
     name: "Shivam Rai",
     role: "President",
     description: "Sets strategic vision and builds partnerships; leads cross-team initiatives and fosters innovation across the society.",
@@ -164,7 +183,7 @@ const Team = () => {
   };
 
   // UPDATED CONTACT INFO - Email as normal text
-  const contactInfo = [
+  const contactInfo: ContactInfo[] = [
     {
       icon: <Mail className="h-5 w-5" />,
       label: "Email",
@@ -244,7 +263,7 @@ const Team = () => {
 
           {/* Other Team Members - PLACEHOLDER CARDS */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
-            {teamMembers.map((member, index) => (
+            {teamMembers.map((member: TeamMember, index: number) => (
               <div 
                 key={index} 
                 className={`group animate-fade-up animate-delay-${800 + (index * 100)} transform hover:scale-105 transition-all duration-500`}
@@ -281,7 +300,7 @@ const Team = () => {
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {contactInfo.map((info, index) => (
+            {contactInfo.map((info: ContactInfo, index: number) => (
               <div
                 key={index}
                 className={`group gradient-card rounded-xl p-6 text-center animate-fade-up animate-delay-${700 + (index * 100)} hover:shadow-2xl hover:shadow-primary/25 transition-all duration-500`}
