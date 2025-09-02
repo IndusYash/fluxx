@@ -2,10 +2,12 @@ const mongoose = require('mongoose');
 
 const applicationSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true },
+  rollNo: { type: String, required: true, trim: true, unique: true }, // added
   branch: { type: String, required: true, trim: true },
   year: { type: String, required: true, trim: true },
   phone: { type: String, required: true, trim: true, unique: true },
   email: { type: String, required: true, trim: true, lowercase: true, unique: true },
+  society: { type: String, required: true, trim: true },
   whyJoin: { type: String, required: true },
   softSkills: { type: [String], default: [] },
   hardSkills: { type: [String], default: [] },
