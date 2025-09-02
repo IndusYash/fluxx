@@ -1,8 +1,10 @@
 // src/components/home/ContactPreview.tsx
 import SectionWrapper from "@/components/SectionWrapper";
 import SectionCTA from "@/components/sectionCTA";
+import { useNavigate } from "react-router-dom";
+
 import { Mail, MapPin, ExternalLink, Copy, Check } from "lucide-react";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 
 export default function ContactPreview() {
   const [emailCopied, setEmailCopied] = useState(false);
@@ -13,27 +15,48 @@ export default function ContactPreview() {
     setTimeout(() => setEmailCopied(false), 2000);
   };
 
+  const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const updateMobile = () => setIsMobile(window.innerWidth < 768);
+    updateMobile(); // check once on mount
+    window.addEventListener("resize", updateMobile);
+    return () => window.removeEventListener("resize", updateMobile);
+  }, []);
+
+  const handleContactClick = () => {
+    if (isMobile) {
+      document
+        .getElementById("contact")
+        ?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate("/contact");
+    }
+  };
+
   return (
     <SectionWrapper
       title="Get in Touch"
       description="Have questions, ideas, or just want to say hi? We'd love to hear from you."
-      cta={
-        <SectionCTA
-          to="/contact"
-          label="Go to Contact Page →"
-          variant="primary"
-        />
-      }
+     cta={
+  <button
+    onClick={handleContactClick}
+    className="inline-flex items-center justify-center rounded-md px-5 py-3 font-medium bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-lg hover:shadow-purple-500/30 transition transform hover:scale-105"
+  >
+    Go to Contact Page →
+  </button>
+}
+
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl">
-        
         {/* Contact Info with Enhanced Design */}
         <div className="space-y-6">
           {/* Email Card */}
           <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-primary/5 via-background/80 to-primary/10 border border-primary/20 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
             {/* Animated background glow */}
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            
+
             {/* Floating icon */}
             <div className="relative mb-4">
               <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
@@ -47,7 +70,7 @@ export default function ContactPreview() {
               <p className="font-bold text-xl mb-3 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
                 Email
               </p>
-              
+
               <div className="flex items-center gap-3 group/email">
                 <a
                   href="mailto:flux@mmmut.ac.in"
@@ -67,7 +90,7 @@ export default function ContactPreview() {
                   )}
                 </button>
               </div>
-              
+
               {emailCopied && (
                 <div className="absolute -bottom-8 left-0 bg-green-500 text-white text-sm px-3 py-1 rounded-lg animate-in slide-in-from-bottom-2 duration-200">
                   Email copied!
@@ -80,7 +103,7 @@ export default function ContactPreview() {
           <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-secondary/5 via-background/80 to-secondary/10 border border-secondary/20 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
             {/* Animated background glow */}
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-secondary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            
+
             {/* Floating icon */}
             <div className="relative mb-4">
               <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
@@ -95,8 +118,11 @@ export default function ContactPreview() {
                 Location
               </p>
               <p className="text-foreground/80 leading-relaxed font-medium">
-                MMM University of Technology,<br />
-                <span className="text-secondary/80">Gorakhpur, Uttar Pradesh</span>
+                MMM University of Technology,
+                <br />
+                <span className="text-secondary/80">
+                  Gorakhpur, Uttar Pradesh
+                </span>
               </p>
             </div>
           </div>
@@ -106,7 +132,6 @@ export default function ContactPreview() {
         <div className="relative group">
           {/* Map container with modern styling */}
           <div className="relative rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 bg-gradient-to-br from-primary/5 to-transparent">
-            
             {/* Overlay with click-to-open hint */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex items-end">
               <div className="w-full p-4 bg-gradient-to-t from-black/60 to-transparent">
@@ -119,7 +144,7 @@ export default function ContactPreview() {
 
             {/* Animated border */}
             <div className="absolute inset-0 rounded-2xl border-2 border-primary/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse" />
-            
+
             <a
               href="https://www.google.com/maps/dir/?api=1&destination=26.73056,83.43333"
               target="_blank"

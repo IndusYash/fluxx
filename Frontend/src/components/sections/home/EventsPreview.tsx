@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Calendar, Clock, Users, Zap, Brain } from "lucide-react";
 
 // Particle System (stars in bg)
@@ -112,7 +113,9 @@ const PlanetBackground = () => {
         <div
           className="absolute left-1/2 bottom-0 -translate-x-1/2 w-[650px] h-[325px] rounded-t-full bg-gradient-to-t from-blue-900 via-purple-900 to-transparent opacity-95"
           style={{
-            boxShadow: `0 0 ${glowBlur}px ${glowBlur / 2}px rgba(130,97,255,${glowOpacity})`,
+            boxShadow: `0 0 ${glowBlur}px ${
+              glowBlur / 2
+            }px rgba(130,97,255,${glowOpacity})`,
             transition: "box-shadow 0.3s ease-out",
           }}
         />
@@ -210,6 +213,24 @@ export default function ModernEventsPreview() {
     setIsVisible(true);
   }, []);
 
+  const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const updateMobile = () => setIsMobile(window.innerWidth < 768);
+    updateMobile(); // check once on mount
+    window.addEventListener("resize", updateMobile);
+    return () => window.removeEventListener("resize", updateMobile);
+  }, []);
+
+  const handleEventsClick = () => {
+    if (isMobile) {
+      document.getElementById("events")?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate("/events");
+    }
+  };
+
   const events: EventItem[] = [
     {
       id: 1,
@@ -286,12 +307,12 @@ export default function ModernEventsPreview() {
             .
           </p>
           <div className="mt-8">
-            <a
-              href="events"
+            <button
+              onClick={handleEventsClick}
               className="inline-flex items-center justify-center rounded-md px-5 py-3 font-medium bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-lg hover:shadow-purple-500/30 transition transform hover:scale-105"
             >
               🎯 View All Events →
-            </a>
+            </button>
           </div>
         </div>
 

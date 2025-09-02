@@ -1,8 +1,22 @@
 // src/components/sections/home/FacultyPreview.tsx
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import SectionWrapper from "@/components/SectionWrapper";
 import SectionCTA from "@/components/sectionCTA";
-import { GraduationCap, BookOpen, Award, Users, Lightbulb, Target, Brain, Sparkles, Trophy, Globe, Zap, Star } from "lucide-react";
+import {
+  GraduationCap,
+  BookOpen,
+  Award,
+  Users,
+  Lightbulb,
+  Target,
+  Brain,
+  Sparkles,
+  Trophy,
+  Globe,
+  Zap,
+  Star,
+} from "lucide-react";
 import { useState, useEffect } from "react";
 
 interface StatItem {
@@ -14,48 +28,48 @@ interface StatItem {
 }
 
 const stats: StatItem[] = [
-  { 
-    label: 'Patents', 
-    value: '20+', 
-    icon: Users, 
-    color: 'from-blue-500 to-cyan-500',
-    description: 'Innovative patents filed'
+  {
+    label: "Patents",
+    value: "20+",
+    icon: Users,
+    color: "from-blue-500 to-cyan-500",
+    description: "Innovative patents filed",
   },
-  { 
-    label: 'Project Based Publications', 
-    value: '75+', 
-    icon: BookOpen, 
-    color: 'from-green-500 to-emerald-500',
-    description: 'Research publications'
+  {
+    label: "Project Based Publications",
+    value: "75+",
+    icon: BookOpen,
+    color: "from-green-500 to-emerald-500",
+    description: "Research publications",
   },
-  { 
-    label: 'Books(Edited & Published)', 
-    value: '4+', 
-    icon: Award, 
-    color: 'from-purple-500 to-violet-500',
-    description: 'Academic books published'
+  {
+    label: "Books(Edited & Published)",
+    value: "4+",
+    icon: Award,
+    color: "from-purple-500 to-violet-500",
+    description: "Academic books published",
   },
-  { 
-    label: 'Research Projects', 
-    value: '30+', 
-    icon: Brain, 
-    color: 'from-orange-500 to-red-500',
-    description: 'Active research initiatives'
+  {
+    label: "Research Projects",
+    value: "30+",
+    icon: Brain,
+    color: "from-orange-500 to-red-500",
+    description: "Active research initiatives",
   },
-  { 
-    label: 'International Collaborations', 
-    value: '15+', 
-    icon: Globe, 
-    color: 'from-teal-500 to-cyan-500',
-    description: 'Global academic partnerships'
+  {
+    label: "International Collaborations",
+    value: "15+",
+    icon: Globe,
+    color: "from-teal-500 to-cyan-500",
+    description: "Global academic partnerships",
   },
-  { 
-    label: 'Awards & Recognition', 
-    value: '8+', 
-    icon: Trophy, 
-    color: 'from-yellow-500 to-amber-500',
-    description: 'Academic achievements'
-  }
+  {
+    label: "Awards & Recognition",
+    value: "8+",
+    icon: Trophy,
+    color: "from-yellow-500 to-amber-500",
+    description: "Academic achievements",
+  },
 ];
 
 export default function FacultyPreview() {
@@ -65,7 +79,7 @@ export default function FacultyPreview() {
 
   useEffect(() => {
     setIsVisible(true);
-    
+
     // Auto-rotate stats
     const statsInterval = setInterval(() => {
       setCurrentStat((prev) => (prev + 1) % stats.length);
@@ -76,23 +90,46 @@ export default function FacultyPreview() {
     };
   }, []);
 
+  const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const updateMobile = () => setIsMobile(window.innerWidth < 768);
+    updateMobile(); // check once on mount
+    window.addEventListener("resize", updateMobile);
+    return () => window.removeEventListener("resize", updateMobile);
+  }, []);
+
+  const handleFacultyClick = () => {
+    if (isMobile) {
+      document
+        .getElementById("faculty")
+        ?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate("/faculty");
+    }
+  };
+
   return (
     <SectionWrapper>
       {/* Centered header section */}
       <div className="text-center mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">Meet Our Faculty</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          Meet Our Faculty
+        </h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Under the guidance of our Faculty Co-ordinator, our faculty team blends
-          expertise with dedication — shaping the minds of tomorrow through
-          innovation, research, and unwavering commitment to excellence.
+          Under the guidance of our Faculty Co-ordinator, our faculty team
+          blends expertise with dedication — shaping the minds of tomorrow
+          through innovation, research, and unwavering commitment to excellence.
         </p>
 
         <div className="mt-6">
-          <SectionCTA
-            to="/faculty"
-            label="View All Faculty →"
-            variant="primary"
-          />
+          <button
+            onClick={handleFacultyClick}
+            className="px-5 py-3 rounded-md font-medium bg-blue-600 text-white hover:bg-blue-700 transition"
+          >
+            View All Faculty →
+          </button>
         </div>
       </div>
 
@@ -123,16 +160,46 @@ export default function FacultyPreview() {
 
         {/* Multiple gradient orbs with different sizes */}
         <div className="absolute top-1/4 left-1/8 w-32 h-32 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-3xl animate-pulse-slow" />
-        <div className="absolute bottom-1/4 right-1/8 w-48 h-48 bg-gradient-to-br from-secondary/15 to-transparent rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: "2s" }} />
-        <div className="absolute top-1/2 left-1/2 w-24 h-24 bg-gradient-to-br from-accent/25 to-transparent rounded-full blur-2xl animate-pulse-slow" style={{ animationDelay: "4s" }} />
-        
+        <div
+          className="absolute bottom-1/4 right-1/8 w-48 h-48 bg-gradient-to-br from-secondary/15 to-transparent rounded-full blur-3xl animate-pulse-slow"
+          style={{ animationDelay: "2s" }}
+        />
+        <div
+          className="absolute top-1/2 left-1/2 w-24 h-24 bg-gradient-to-br from-accent/25 to-transparent rounded-full blur-2xl animate-pulse-slow"
+          style={{ animationDelay: "4s" }}
+        />
+
         {/* Animated grid pattern */}
         <div className="absolute inset-0 opacity-5">
-          <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <svg
+            className="w-full h-full"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
             <defs>
-              <pattern id="stats-grid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                <circle cx="10" cy="10" r="0.5" fill="currentColor" className="text-primary animate-pulse" />
-                <circle cx="0" cy="0" r="0.3" fill="currentColor" className="text-secondary animate-pulse" style={{animationDelay: "1s"}} />
+              <pattern
+                id="stats-grid"
+                x="0"
+                y="0"
+                width="20"
+                height="20"
+                patternUnits="userSpaceOnUse"
+              >
+                <circle
+                  cx="10"
+                  cy="10"
+                  r="0.5"
+                  fill="currentColor"
+                  className="text-primary animate-pulse"
+                />
+                <circle
+                  cx="0"
+                  cy="0"
+                  r="0.3"
+                  fill="currentColor"
+                  className="text-secondary animate-pulse"
+                  style={{ animationDelay: "1s" }}
+                />
               </pattern>
             </defs>
             <rect width="100" height="100" fill="url(#stats-grid)" />
@@ -147,31 +214,39 @@ export default function FacultyPreview() {
             <div
               key={stat.label}
               className={`group relative transition-all duration-700 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-              } ${
-                currentStat === index ? 'scale-105 z-20' : 'scale-100'
-              }`}
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-12"
+              } ${currentStat === index ? "scale-105 z-20" : "scale-100"}`}
               style={{ transitionDelay: `${index * 150}ms` }}
               onMouseEnter={() => setHoveredStat(index)}
               onMouseLeave={() => setHoveredStat(null)}
             >
-              <div className={`relative p-8 rounded-3xl border-2 transition-all duration-500 cursor-pointer transform ${
-                currentStat === index || hoveredStat === index
-                  ? 'border-primary/50 bg-gradient-to-br from-background/95 to-background/80 shadow-2xl shadow-primary/20 -translate-y-2' 
-                  : 'border-border/30 bg-background/60 hover:border-primary/30 hover:-translate-y-1'
-              } backdrop-blur-lg overflow-hidden`}
-              onClick={() => setCurrentStat(index)}
+              <div
+                className={`relative p-8 rounded-3xl border-2 transition-all duration-500 cursor-pointer transform ${
+                  currentStat === index || hoveredStat === index
+                    ? "border-primary/50 bg-gradient-to-br from-background/95 to-background/80 shadow-2xl shadow-primary/20 -translate-y-2"
+                    : "border-border/30 bg-background/60 hover:border-primary/30 hover:-translate-y-1"
+                } backdrop-blur-lg overflow-hidden`}
+                onClick={() => setCurrentStat(index)}
               >
-                
                 {/* Dynamic background gradient */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} transition-opacity duration-500 ${
-                  currentStat === index ? 'opacity-10' : 'opacity-5'
-                }`} />
-                
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${
+                    stat.color
+                  } transition-opacity duration-500 ${
+                    currentStat === index ? "opacity-10" : "opacity-5"
+                  }`}
+                />
+
                 {/* Animated border glow */}
-                <div className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${stat.color} transition-opacity duration-500 ${
-                  currentStat === index ? 'opacity-20' : 'opacity-0'
-                } blur-xl`} />
+                <div
+                  className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${
+                    stat.color
+                  } transition-opacity duration-500 ${
+                    currentStat === index ? "opacity-20" : "opacity-0"
+                  } blur-xl`}
+                />
 
                 {/* Floating particles */}
                 <div className="absolute inset-0 pointer-events-none">
@@ -179,7 +254,9 @@ export default function FacultyPreview() {
                     <div
                       key={i}
                       className={`absolute w-1 h-1 bg-primary/40 rounded-full transition-opacity duration-500 ${
-                        hoveredStat === index ? 'animate-sparkle opacity-100' : 'opacity-0'
+                        hoveredStat === index
+                          ? "animate-sparkle opacity-100"
+                          : "opacity-0"
                       }`}
                       style={{
                         left: `${20 + Math.random() * 60}%`,
@@ -193,44 +270,74 @@ export default function FacultyPreview() {
                 <div className="relative z-10">
                   {/* Stat icon with enhanced styling */}
                   <div className="flex items-start justify-between mb-6">
-                    <div className={`relative w-16 h-16 rounded-2xl bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-lg transition-all duration-500 ${
-                      currentStat === index ? 'animate-pulse-glow scale-110' : ''
-                    }`}>
+                    <div
+                      className={`relative w-16 h-16 rounded-2xl bg-gradient-to-br ${
+                        stat.color
+                      } flex items-center justify-center shadow-lg transition-all duration-500 ${
+                        currentStat === index
+                          ? "animate-pulse-glow scale-110"
+                          : ""
+                      }`}
+                    >
                       <stat.icon className="w-8 h-8 text-white" />
-                      
+
                       {/* Icon glow effect */}
-                      <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${stat.color} blur-lg transition-opacity duration-500 ${
-                        currentStat === index ? 'opacity-60 animate-ping' : 'opacity-30'
-                      }`} />
+                      <div
+                        className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${
+                          stat.color
+                        } blur-lg transition-opacity duration-500 ${
+                          currentStat === index
+                            ? "opacity-60 animate-ping"
+                            : "opacity-30"
+                        }`}
+                      />
                     </div>
 
                     {/* Progress indicator */}
-                    <div className={`flex flex-col items-end space-y-1 transition-all duration-500 ${
-                      currentStat === index ? 'opacity-100' : 'opacity-50'
-                    }`}>
-                      <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${stat.color} transition-all duration-500 ${
-                        currentStat === index ? 'scale-125 animate-pulse' : ''
-                      }`} />
-                      <div className={`w-2 h-8 rounded-full bg-gradient-to-b ${stat.color} transition-all duration-500 ${
-                        currentStat === index ? 'opacity-100 scale-110' : 'opacity-40'
-                      }`} />
+                    <div
+                      className={`flex flex-col items-end space-y-1 transition-all duration-500 ${
+                        currentStat === index ? "opacity-100" : "opacity-50"
+                      }`}
+                    >
+                      <div
+                        className={`w-3 h-3 rounded-full bg-gradient-to-r ${
+                          stat.color
+                        } transition-all duration-500 ${
+                          currentStat === index ? "scale-125 animate-pulse" : ""
+                        }`}
+                      />
+                      <div
+                        className={`w-2 h-8 rounded-full bg-gradient-to-b ${
+                          stat.color
+                        } transition-all duration-500 ${
+                          currentStat === index
+                            ? "opacity-100 scale-110"
+                            : "opacity-40"
+                        }`}
+                      />
                     </div>
                   </div>
 
                   {/* Stat content */}
                   <div className="space-y-3">
-                    <div className={`text-4xl font-bold transition-all duration-500 ${
-                      currentStat === index 
-                        ? 'bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent scale-110 animate-pulse-text' 
-                        : 'text-foreground'
-                    }`}>
+                    <div
+                      className={`text-4xl font-bold transition-all duration-500 ${
+                        currentStat === index
+                          ? "bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent scale-110 animate-pulse-text"
+                          : "text-foreground"
+                      }`}
+                    >
                       {stat.value}
                     </div>
-                    
+
                     <div className="space-y-1">
-                      <div className={`text-lg font-semibold transition-colors duration-300 ${
-                        currentStat === index ? 'text-primary' : 'text-foreground'
-                      }`}>
+                      <div
+                        className={`text-lg font-semibold transition-colors duration-300 ${
+                          currentStat === index
+                            ? "text-primary"
+                            : "text-foreground"
+                        }`}
+                      >
                         {stat.label}
                       </div>
                       <div className="text-sm text-muted-foreground leading-relaxed">
@@ -240,23 +347,37 @@ export default function FacultyPreview() {
                   </div>
 
                   {/* Animated bottom accent */}
-                  <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${stat.color} transition-all duration-500 ${
-                    currentStat === index ? 'opacity-100 scale-x-100' : 'opacity-50 scale-x-75'
-                  } transform origin-center rounded-full`} />
+                  <div
+                    className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${
+                      stat.color
+                    } transition-all duration-500 ${
+                      currentStat === index
+                        ? "opacity-100 scale-x-100"
+                        : "opacity-50 scale-x-75"
+                    } transform origin-center rounded-full`}
+                  />
                 </div>
 
                 {/* Hover shimmer effect */}
-                <div className={`absolute inset-0 transition-opacity duration-500 pointer-events-none ${
-                  hoveredStat === index ? 'opacity-100' : 'opacity-0'
-                }`}>
+                <div
+                  className={`absolute inset-0 transition-opacity duration-500 pointer-events-none ${
+                    hoveredStat === index ? "opacity-100" : "opacity-0"
+                  }`}
+                >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 animate-shimmer" />
                 </div>
               </div>
 
               {/* External glow for active stat */}
-              <div className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${stat.color} transition-all duration-500 ${
-                currentStat === index ? 'opacity-20 blur-2xl scale-110' : 'opacity-0'
-              } -z-10`} />
+              <div
+                className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${
+                  stat.color
+                } transition-all duration-500 ${
+                  currentStat === index
+                    ? "opacity-20 blur-2xl scale-110"
+                    : "opacity-0"
+                } -z-10`}
+              />
             </div>
           ))}
         </div>
@@ -273,7 +394,9 @@ export default function FacultyPreview() {
         </div>
       </div>
 
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
         @keyframes float-academic {
           0%, 100% {
             transform: translateY(0px) translateX(0px) rotate(0deg);
@@ -380,7 +503,9 @@ export default function FacultyPreview() {
         .animate-spin-slow {
           animation: spin-slow 6s linear infinite;
         }
-      `}} />
+      `,
+        }}
+      />
     </SectionWrapper>
   );
 }

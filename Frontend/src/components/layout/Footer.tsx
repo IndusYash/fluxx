@@ -1,14 +1,14 @@
-import { useState } from "react"
-import type { ChangeEvent } from "react"
-import {  FaWhatsapp, FaInstagram , FaLinkedin } from "react-icons/fa";
+import { useState } from "react";
+import type { ChangeEvent } from "react";
+import { FaWhatsapp, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
-import SectionWrapper from "../SectionWrapper"
+import SectionWrapper from "../SectionWrapper";
 
 type Testimonial = {
-  text: string
-  user: string
-  img?: string
-}
+  text: string;
+  user: string;
+  img?: string;
+};
 
 // Commented out testimonials for future use
 /*
@@ -23,17 +23,17 @@ const testimonials: Testimonial[] = [
 */
 
 export default function Footer() {
-  const [email, setEmail] = useState<string>("")
-  const [message, setMessage] = useState<string>("")
+  const [email, setEmail] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
 
   const handleSubscribe = (): void => {
     if (!email || !email.includes("@")) {
-      setMessage("Please enter a valid email address.")
-      return
+      setMessage("Please enter a valid email address.");
+      return;
     }
-    setMessage("🎉 Thanks for subscribing!")
-    setEmail("")
-  }
+    setMessage("🎉 Thanks for subscribing!");
+    setEmail("");
+  };
 
   return (
     <SectionWrapper title="Get In Touch" background="bg-card/60">
@@ -42,40 +42,73 @@ export default function Footer() {
           {/* Top Row: Links + Newsletter */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-gray-700">
             <div>
-              <h3 className="text-lg font-semibold mb-4 text-emerald-400">WebFlux</h3>
+              <h3 className="text-lg font-semibold mb-4 text-emerald-400">
+                WebFlux
+              </h3>
               <p className="text-gray-400 leading-relaxed">
-                A community of developers and tech enthusiasts building together and pushing innovation forward.
+                A community of developers and tech enthusiasts building together
+                and pushing innovation forward.
               </p>
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold mb-4 text-emerald-400">Quick Links</h3>
+              <h3 className="text-lg font-semibold mb-4 text-emerald-400">
+                Quick Links
+              </h3>
               <ul className="space-y-2 text-gray-300">
-                <li className="hover:text-white cursor-pointer">Home</li>
-                <li className="hover:text-white cursor-pointer">Events</li>
-                <li className="hover:text-white cursor-pointer">Our Team</li>
-                <li className="hover:text-white cursor-pointer">Contact</li>
+                <li>
+                  <a href="/" className="hover:text-white cursor-pointer">
+                    Home
+                  </a>
+                </li>
+                <li>
+                  <a href="events" className="hover:text-white cursor-pointer">
+                    Events
+                  </a>
+                </li>
+                <li>
+                  <a href="team" className="hover:text-white cursor-pointer">
+                    Our Team
+                  </a>
+                </li>
+                <li>
+                  <a href="contact" className="hover:text-white cursor-pointer">
+                    Contact
+                  </a>
+                </li>
               </ul>
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold mb-4 text-emerald-400">Resources</h3>
+              <h3 className="text-lg font-semibold mb-4 text-emerald-400">
+                Resources
+              </h3>
               <ul className="space-y-2 text-gray-300">
                 <li className="hover:text-white cursor-pointer">Blog</li>
-                <li className="hover:text-white cursor-pointer">Privacy Policy</li>
-                <li className="hover:text-white cursor-pointer">Terms & Conditions</li>
+                <li className="hover:text-white cursor-pointer">
+                  Privacy Policy
+                </li>
+                <li className="hover:text-white cursor-pointer">
+                  Terms & Conditions
+                </li>
               </ul>
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold mb-4 text-emerald-400">Join Our Newsletter</h3>
-              <p className="text-gray-400 mb-3">Stay updated with upcoming events & resources.</p>
+              <h3 className="text-lg font-semibold mb-4 text-emerald-400">
+                Join Our Newsletter
+              </h3>
+              <p className="text-gray-400 mb-3">
+                Stay updated with upcoming events & resources.
+              </p>
               <div className="flex">
                 <input
                   type="email"
                   placeholder="Your email"
                   value={email}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setEmail(e.target.value)
+                  }
                   className="px-4 py-2 w-full rounded-l-lg focus:outline-none focus:ring-2 focus:ring-emerald-400 shadow-md text-black"
                 />
                 <button
@@ -85,7 +118,9 @@ export default function Footer() {
                   Subscribe
                 </button>
               </div>
-              {message && <p className="text-sm mt-2 text-emerald-300">{message}</p>}
+              {message && (
+                <p className="text-sm mt-2 text-emerald-300">{message}</p>
+              )}
             </div>
           </div>
 
@@ -115,44 +150,43 @@ export default function Footer() {
 
           <div className="flex flex-col md:flex-row justify-between items-center border-t border-gray-700 pt-6 text-gray-400 text-sm">
             <p>© {new Date().getFullYear()} WebFlux. All rights reserved.</p>
-            
+
             <div className="flex gap-4 text-lg mt-4 md:mt-0">
-              <a 
-                href="flux@mmmut.ac.in" 
-                target="_blank" 
+              <a
+                href="flux@mmmut.ac.in"
+                target="_blank"
                 rel="noopener noreferrer"
               >
                 <SiGmail className="hover:text-emerald-400 cursor-pointer transition-colors duration-300" />
               </a>
 
-              <a 
-                href="https://chat.whatsapp.com/F8O8hTu2aCZ6NKLeRVqJ0R?mode=ac_t" 
-                target="_blank" 
+              <a
+                href="https://chat.whatsapp.com/F8O8hTu2aCZ6NKLeRVqJ0R?mode=ac_t"
+                target="_blank"
                 rel="noopener noreferrer"
               >
                 <FaWhatsapp className="hover:text-sky-400 cursor-pointer transition-colors duration-300" />
               </a>
 
-              <a 
-                href="https://www.instagram.com/flux.mmmut?igsh=aHI5c3Z1dGZwOGI2" 
-                target="_blank" 
+              <a
+                href="https://www.instagram.com/flux.mmmut?igsh=aHI5c3Z1dGZwOGI2"
+                target="_blank"
                 rel="noopener noreferrer"
               >
                 <FaInstagram className="hover:text-pink-400 cursor-pointer transition-colors duration-300" />
               </a>
 
-              <a 
-                href="https://www.linkedin.com/company/flux-mmm/" 
-                target="_blank" 
+              <a
+                href="https://www.linkedin.com/company/flux-mmm/"
+                target="_blank"
                 rel="noopener noreferrer"
               >
                 <FaLinkedin className="hover:text-sky-400 cursor-pointer transition-colors duration-300" />
               </a>
             </div>
           </div>
-
         </div>
       </footer>
     </SectionWrapper>
-  )
+  );
 }
