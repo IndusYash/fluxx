@@ -31,50 +31,23 @@ import {
 
 const applicationSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters"),
-  email: z
-    .string()
-    .trim()
-    .transform((val) => val.toLowerCase())
-    .superRefine((val, ctx) => {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(val)) {
-        ctx.addIssue({
-          code: "custom",
-          message: "Please enter a valid email address",
-        });
-      }
-    }),
-
-  phone: z
-    .string()
-    .trim()
-    .regex(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
-
-  rollNo: z
-    .string()
-    .trim()
-    .length(10, "Roll number must be exactly 10 characters"),
-
+  email: z.string().email("Please enter a valid email address"),
+  phone: z.string().min(10, "Phone number must be at least 10 digits"),
+  rollNo: z.string().min(1, "Roll number is required"),
   year: z.string().min(1, "Year is required"),
   branch: z.string().min(1, "Branch is required"),
-  softSkills: z.string().min(1, "Please add at least one skill"),
-  hardSkills: z.string().min(1, "Please add at least one skill"),
-
-  society: z
-    .string()
-    .min(1, "Please mention your current society or write 'None'"),
-  whyJoin: z
-    .string()
-    .trim()
-    .min(50, "Please provide at least 50 characters")
-    .refine((val) => val.split(" ").length >= 10, {
-      message: "Please provide at least 10 words",
-    }),
+  softSkills: z.string().min(1, "Please mention at least one soft skill"),
+  hardSkills: z.string().min(1, "Please mention at least one hard skill"),
+  society: z.string().min(1, "Please mention your current society or write 'None'"),
+  whyJoin: z.string().min(
+    50,
+    "Please provide at least 50 characters explaining why you want to join"
+  ),
 });
 
 type ApplicationForm = z.infer<typeof applicationSchema>;
 
-const years = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
+const years = [ "3rd Year"];
 const branches = [
   "Computer Science Engineering",
   "Electronics & Communication Engineering",
@@ -104,10 +77,9 @@ export const FluxApplicationForm = () => {
 
   const parseSkills = (value: string) => {
     if (!value) return [];
-    return value
-      .split(",")
-      .map((s) => s.trim())
-      .filter((s) => s.length > 0);
+    return value.includes(",")
+      ? value.split(",").map((s) => s.trim()).filter(Boolean)
+      : [value.trim()];
   };
 
   const onSubmit = async (data: ApplicationForm) => {
@@ -117,12 +89,10 @@ export const FluxApplicationForm = () => {
 
     const payload = {
       name: data.fullName,
-      rollNo: data.rollNo,
       branch: data.branch,
       year: data.year,
       phone: data.phone,
       email: data.email,
-      society: data.society,
       whyJoin: data.whyJoin,
       softSkills: parseSkills(data.softSkills),
       hardSkills: parseSkills(data.hardSkills),
@@ -135,47 +105,23 @@ export const FluxApplicationForm = () => {
         body: JSON.stringify(payload),
       });
 
-      let body: any = {};
-      try {
-        body = await res.json();
-      } catch {
-        try {
-          const text = await res.text();
-          body = { error: text };
-        } catch {
-          body = {};
-        }
-      }
+      const body = await res.json().catch(() => ({}));
 
       if (res.ok) {
         toast({
           title: "Application Submitted!",
           description:
             "Thank you for applying to FLUX. We'll review your application and get back to you soon.",
-          className: "bg-[#101318] text-white",
         });
         reset();
       } else if (res.status === 409) {
-        toast({
-          title: "Duplicate Entry",
-          description: body.error || "Phone or email already exists",
-          className: "bg-[#101318] text-white",
-        });
+        toast({ title: "Duplicate Entry", description: body.error || "Phone or email already exists" });
       } else {
-        toast({
-          title: "Submission Failed",
-          description: body.error || "Unexpected server error",
-          className: "bg-[#101318] text-white",
-        });
+        toast({ title: "Submission Failed", description: body.error || "Unexpected server error" });
       }
     } catch (err) {
       console.error(err);
-      toast({
-        title: "Network Error",
-        description:
-          "Could not reach the server. Check your network or backend.",
-          className: "bg-[#101318] text-white",
-      });
+      toast({ title: "Network Error", description: "Could not reach the server. Check your network or backend." });
     } finally {
       setIsSubmitting(false);
     }
@@ -208,9 +154,7 @@ export const FluxApplicationForm = () => {
                 className="bg-input border-flux-border focus:border-primary"
               />
               {errors.fullName && (
-                <p className="text-sm text-destructive">
-                  {errors.fullName.message}
-                </p>
+                <p className="text-sm text-destructive">{errors.fullName.message}</p>
               )}
             </div>
 
@@ -228,9 +172,7 @@ export const FluxApplicationForm = () => {
                 className="bg-input border-flux-border focus:border-primary"
               />
               {errors.email && (
-                <p className="text-sm text-destructive">
-                  {errors.email.message}
-                </p>
+                <p className="text-sm text-destructive">{errors.email.message}</p>
               )}
             </div>
 
@@ -247,9 +189,7 @@ export const FluxApplicationForm = () => {
                 className="bg-input border-flux-border focus:border-primary"
               />
               {errors.phone && (
-                <p className="text-sm text-destructive">
-                  {errors.phone.message}
-                </p>
+                <p className="text-sm text-destructive">{errors.phone.message}</p>
               )}
             </div>
 
@@ -266,9 +206,7 @@ export const FluxApplicationForm = () => {
                 className="bg-input border-flux-border focus:border-primary"
               />
               {errors.rollNo && (
-                <p className="text-sm text-destructive">
-                  {errors.rollNo.message}
-                </p>
+                <p className="text-sm text-destructive">{errors.rollNo.message}</p>
               )}
             </div>
 
@@ -278,11 +216,7 @@ export const FluxApplicationForm = () => {
                 <Calendar className="w-4 h-4" />
                 Year
               </Label>
-              <Select
-                onValueChange={(value) =>
-                  setValue("year", value, { shouldValidate: true })
-                }
-              >
+              <Select onValueChange={(value) => setValue("year", value)}>
                 <SelectTrigger className="bg-input border-flux-border focus:border-primary">
                   <SelectValue placeholder="Select your year" />
                 </SelectTrigger>
@@ -295,9 +229,7 @@ export const FluxApplicationForm = () => {
                 </SelectContent>
               </Select>
               {errors.year && (
-                <p className="text-sm text-destructive">
-                  {errors.year.message}
-                </p>
+                <p className="text-sm text-destructive">{errors.year.message}</p>
               )}
             </div>
 
@@ -307,11 +239,7 @@ export const FluxApplicationForm = () => {
                 <GitBranch className="w-4 h-4" />
                 Branch
               </Label>
-              <Select
-                onValueChange={(value) =>
-                  setValue("branch", value, { shouldValidate: true })
-                }
-              >
+              <Select onValueChange={(value) => setValue("branch", value)}>
                 <SelectTrigger className="bg-input border-flux-border focus:border-primary">
                   <SelectValue placeholder="Select your branch" />
                 </SelectTrigger>
@@ -324,9 +252,7 @@ export const FluxApplicationForm = () => {
                 </SelectContent>
               </Select>
               {errors.branch && (
-                <p className="text-sm text-destructive">
-                  {errors.branch.message}
-                </p>
+                <p className="text-sm text-destructive">{errors.branch.message}</p>
               )}
             </div>
 
@@ -343,9 +269,7 @@ export const FluxApplicationForm = () => {
                 className="bg-input border-flux-border focus:border-primary"
               />
               {errors.softSkills && (
-                <p className="text-sm text-destructive">
-                  {errors.softSkills.message}
-                </p>
+                <p className="text-sm text-destructive">{errors.softSkills.message}</p>
               )}
             </div>
 
@@ -362,9 +286,7 @@ export const FluxApplicationForm = () => {
                 className="bg-input border-flux-border focus:border-primary"
               />
               {errors.hardSkills && (
-                <p className="text-sm text-destructive">
-                  {errors.hardSkills.message}
-                </p>
+                <p className="text-sm text-destructive">{errors.hardSkills.message}</p>
               )}
             </div>
 
@@ -381,9 +303,7 @@ export const FluxApplicationForm = () => {
                 className="bg-input border-flux-border focus:border-primary"
               />
               {errors.society && (
-                <p className="text-sm text-destructive">
-                  {errors.society.message}
-                </p>
+                <p className="text-sm text-destructive">{errors.society.message}</p>
               )}
             </div>
           </div>
@@ -402,9 +322,7 @@ export const FluxApplicationForm = () => {
               className="bg-input border-flux-border focus:border-primary resize-none"
             />
             {errors.whyJoin && (
-              <p className="text-sm text-destructive">
-                {errors.whyJoin.message}
-              </p>
+              <p className="text-sm text-destructive">{errors.whyJoin.message}</p>
             )}
           </div>
 
