@@ -2,9 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import FacultyCard from './FacultyCard';
 import { facultyData } from './facultyData';
 
+
 // Custom hook to detect when element is in viewport
 function useOnScreen(ref: React.RefObject<HTMLDivElement>) {
   const [isIntersecting, setIntersecting] = useState(false);
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -12,9 +14,11 @@ function useOnScreen(ref: React.RefObject<HTMLDivElement>) {
       { threshold: 0.1 }
     );
 
+
     if (ref.current) {
       observer.observe(ref.current);
     }
+
 
     return () => {
       if (ref.current) {
@@ -23,8 +27,10 @@ function useOnScreen(ref: React.RefObject<HTMLDivElement>) {
     };
   }, [ref]);
 
+
   return isIntersecting;
 }
+
 
 const FacultyPage: React.FC = () => {
   return (
@@ -96,6 +102,7 @@ const FacultyPage: React.FC = () => {
             />
           ))}
 
+
           {/* FloatY particles - reduced to 15 */}
           {[...Array(15)].map((_, i) => (
             <div
@@ -111,6 +118,7 @@ const FacultyPage: React.FC = () => {
             />
           ))}
 
+
           {/* Drift particles - reduced to 8 */}
           {[...Array(8)].map((_, i) => (
             <div
@@ -124,6 +132,7 @@ const FacultyPage: React.FC = () => {
               }}
             />
           ))}
+
 
           {/* Simple float particles - reduced to 20 */}
           {[...Array(20)].map((_, i) => (
@@ -141,6 +150,7 @@ const FacultyPage: React.FC = () => {
           ))}
         </div>
 
+
         {/* ✅ HEADER SECTION ✅ */}
         <div className="relative z-10 text-center pt-6 pb-8 px-4 md:px-5">
           <div className="max-w-6xl mx-auto">
@@ -154,6 +164,7 @@ const FacultyPage: React.FC = () => {
                 COORDINATORS
               </span>
             </h1>
+
 
             <p className="text-gray-400 text-lg md:text-xl lg:text-2xl xl:text-3xl 
                           leading-relaxed mb-6 
@@ -180,9 +191,10 @@ const FacultyPage: React.FC = () => {
           </div>
         </div>
 
+
         {/* Faculty Cards Grid with Top-to-Bottom Scroll Animation */}
         <div className="relative z-10 px-6 md:px-8 lg:px-10 pb-16 md:pb-20 lg:pb-28">
-          <div className="max-w-7xl mx-auto space-y-8 md:space-y-12 lg:space-y-16">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
             {facultyData.map((faculty, index) => {
               const ref = useRef<HTMLDivElement>(null);
               const isVisible = useOnScreen(ref);
@@ -206,5 +218,6 @@ const FacultyPage: React.FC = () => {
     </>
   );
 };
+
 
 export default FacultyPage;
