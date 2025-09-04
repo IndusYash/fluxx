@@ -46,8 +46,8 @@ export default function Contact() {
       answer: "We are a coding society dedicated to hosting conferences, workshops, and hackathons to foster learning and innovation. Our mission is to connect tech enthusiasts, provide mentorship, and empower members with the latest industry insights."
     }
     ,{
-      question: "Who can join the society?",
-      answer: "Anyone interested in coding, technology, and innovation can join, regardless of experience level."
+      question: "Who can I join the society?",
+      answer: "Anyone interested in coding, technology, and innovation can join, regardless of experience level. Follow our social media handles for latest updates."
     },
     {
       question: "How often does the society host events?",
