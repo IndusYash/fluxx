@@ -79,8 +79,11 @@ const FacultyCard: React.FC<FacultyCardProps> = ({ faculty }) => {
             {faculty.areasOfExpertise && (
               <MetricItem value={faculty.areasOfExpertise} label="Areas" />
             )}
-            {faculty.experience && (
-              <MetricItem value={`${faculty.experience}+`} label="Years" />
+            {faculty.review && (
+              <MetricItem value={`${faculty.review}+`} label="Reviews" />
+            )}
+            {faculty.publications && (
+              <MetricItem value={`${faculty.publications}+`} label="Publications" />
             )}
           </>
         );
