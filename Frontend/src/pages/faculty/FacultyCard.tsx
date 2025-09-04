@@ -37,6 +37,9 @@ const FacultyCard: React.FC<FacultyCardProps> = ({ faculty }) => {
             {faculty.patents && (
               <MetricItem value={faculty.patents} label="Patents" />
             )}
+             {faculty.citations && (
+              <MetricItem value={faculty.citations} label="Citations" />
+            )}
             {faculty.projectPublications && (
               <MetricItem value={faculty.projectPublications} label="Projects" />
             )}
@@ -46,15 +49,18 @@ const FacultyCard: React.FC<FacultyCardProps> = ({ faculty }) => {
             {faculty.internationalPublications && (
               <MetricItem value={faculty.internationalPublications} label="Intl Pubs" />
             )}
-            {faculty.organisations && (
+            {/* {faculty.organisations && (
               <MetricItem value={faculty.organisations} label="Orgs" />
-            )}
+            )} */}
           </>
         );
       
       case 3: // Dr. Shwet Ketu
         return (
           <>
+          {faculty.citations && (
+              <MetricItem value={faculty.citations} label="Citations" />
+            )}
             {faculty.patents && (
               <MetricItem value={faculty.patents} label="Patents" />
             )}
@@ -66,6 +72,9 @@ const FacultyCard: React.FC<FacultyCardProps> = ({ faculty }) => {
             )}
             {faculty.organisations && (
               <MetricItem value={faculty.organisations} label="Orgs" />
+            )}
+            {faculty.review && (
+              <MetricItem value={`${faculty.review}+`} label="Reviews" />
             )}
           </>
         );
