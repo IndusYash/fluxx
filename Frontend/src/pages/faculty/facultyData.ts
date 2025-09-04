@@ -30,7 +30,7 @@ export interface FacultyMember {
   internationalConferences?: string;
   articles?: string;
   areasOfExpertise?: string;
-  review?: number;
+  review?: string;
 }
 
 
@@ -67,11 +67,12 @@ export const facultyData: FacultyMember[] = [
     description: "Specializing in Big Data analytics and Deep Learning applications with focus on real-world AI implementations.",
     linkedinUrl: "https://www.linkedin.com/in/satvik-vats?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
     websiteUrl: "https://svats.in",
+    citations: "2700+",
     patents: "20+",
     projectPublications: "75+",
     booksPublished: "4+",
     internationalPublications: "18+",
-    organisations: "10+"
+    // organisations: "10+"
   },
   // 3rd Position: Dr. Shwet Ketu (Google Scholar removed)
   {
@@ -86,10 +87,12 @@ export const facultyData: FacultyMember[] = [
     description: "Expert in IoT systems and healthcare technology integration with extensive research in wireless communication protocols.",
     linkedinUrl: "https://www.linkedin.com/in/shwetketu?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
     websiteUrl: "https://sites.google.com/view/shwetketu",
+    citations: "1000+",
     patents: "6+",
     internationalConferences: "4+",
     internationalPublications: "13+",
-    organisations: "30+"
+    organisations: "5+",
+    review: "10",
   },
   // 4th Position: Dr. Shantanu Shahi (no Google Scholar)
   {
@@ -106,6 +109,6 @@ export const facultyData: FacultyMember[] = [
     skills: 10,
     areasOfExpertise: "8+",
     publications: 2,
-    review: 8,
+    review: "8",
   },
 ];
