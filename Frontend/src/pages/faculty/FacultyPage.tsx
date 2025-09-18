@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+
 import FacultyCard from './FacultyCard';
 import { facultyData } from './facultyData';
 
@@ -198,17 +199,24 @@ const FacultyPage: React.FC = () => {
             {facultyData.map((faculty, index) => {
               const ref = useRef<HTMLDivElement>(null);
               const isVisible = useOnScreen(ref);
-              
+              const isCenter = faculty.id === 0;
+
+              // If it's the center card, span both columns on md+ and center the inner card
+              const containerClasses = isCenter ? 'col-span-1 md:col-span-2 flex justify-center items-start' : '';
+              // Make the featured card wider on md+ so name + description have room
+              const cardWidthClasses = isCenter ? 'w-full md:w-2/3 lg:w-1/2' : 'w-full';
+
               return (
-                <div
-                  key={faculty.id}
-                  ref={ref}
-                  className={isVisible ? 'card-visible' : 'card-hidden'}
-                  style={{ 
-                    transitionDelay: isVisible ? `${index * 150}ms` : '0ms' 
-                  }}
-                >
-                  <FacultyCard faculty={faculty} />
+                <div key={faculty.id} className={containerClasses}>
+                  <div
+                    ref={ref}
+                    className={`${isVisible ? 'card-visible' : 'card-hidden'} ${cardWidthClasses}`}
+                    style={{ 
+                      transitionDelay: isVisible ? `${index * 150}ms` : '0ms' 
+                    }}
+                  >
+                    <FacultyCard faculty={faculty} featured={isCenter} />
+                  </div>
                 </div>
               );
             })}
