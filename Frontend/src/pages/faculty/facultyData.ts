@@ -3,6 +3,7 @@ import shwetSir from '../../assets/images/shwetSir.jpeg';
 import SatyaSir from '../../assets/images/SatyaSir.jpeg';
 import ShantanuSir from '../../assets/images/ShantanuSir.jpg';
 
+ import hod from '../../assets/images/RakeshSir.jpg';
 
 export interface FacultyMember {
   id: number;
@@ -21,6 +22,7 @@ export interface FacultyMember {
   linkedinUrl?: string;
   websiteUrl?: string;
   googleScholarUrl?: string;
+
   // Additional fields for metrics
   patents?: string;
   projectPublications?: string;
@@ -31,10 +33,27 @@ export interface FacultyMember {
   articles?: string;
   areasOfExpertise?: string;
   review?: string;
+  
+  // New field to identify HOD
+  isHOD?: boolean;
 }
 
-
 export const facultyData: FacultyMember[] = [
+  // HOD Position: Prof. Rakesh Kumar (First position, stats hidden)
+  {
+    id: 0, // Using ID 0 for HOD
+    name: "Prof. Rakesh Kumar",
+    title: "Head of Department",
+    department: "Computer Science and Engineering",
+    specialization: [],
+    email: "	rkiitr@gmail.com", // Update with actual email
+    phone: "+91-XXXXXXXXXX", // Update with actual phone
+    profileImage: hod, // Replace with RakeshSir when image is available
+    description: "Under the close supervision of our Head of Department, leading the Computer Science and Engineering department with vision and excellence in academic and research pursuits.",
+    isHOD: true, // This flag will hide stats
+    // No stats/metrics for HOD as requested
+  },
+
   // 1st Position: Dr. Satya Prakash Yadav (Google Scholar kept)
   {
     id: 1,
@@ -54,6 +73,7 @@ export const facultyData: FacultyMember[] = [
     booksPublished: "4+",
     organisations: "10+"
   },
+
   // 2nd Position: Dr. Satvik Vats (Google Scholar removed)
   {
     id: 2,
@@ -74,6 +94,7 @@ export const facultyData: FacultyMember[] = [
     internationalPublications: "18+",
     // organisations: "10+"
   },
+
   // 3rd Position: Dr. Shwet Ketu (Google Scholar removed)
   {
     id: 3,
@@ -94,6 +115,7 @@ export const facultyData: FacultyMember[] = [
     organisations: "5+",
     review: "10",
   },
+
   // 4th Position: Dr. Shantanu Shahi (no Google Scholar)
   {
     id: 4,
