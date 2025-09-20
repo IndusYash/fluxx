@@ -1,23 +1,31 @@
-// Navigation removed: page should render without header
 import React from 'react';
 import TeamCard from "@/components/TeamCard";
 import { Mail, Instagram, Linkedin, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import aryanImage from "../../assets/images/Aryan.webp";
 import ashishImage from "../../assets/images/ashish.jpg";
-import shivamBhardwajImage from "../../assets/images/shivamBhardwaj.jpg";
 import shivammishraImage from "../../assets/images/shivammishra.jpg";
 import shivamsinghImage from "../../assets/images/shivamsingh.jpg";
 import vmishraImage from "../../assets/images/vmishra.jpg";
 import ysvImage from "../../assets/images/ysv.jpg";
 import threeMImage from "../../assets/images/3m.jpg";
 import presidentImage from "../../assets/images/president.jpg";
+import PriyaImage from "../../assets/images/Priya Singh.jpg";
+import RiyaImage from "../../assets/images/Riya Verma.jpg";
+import Tamanna from "../../assets/images/Tamanna.jpg";
+import Shubham from "../../assets/images/Shubham.jpg";
+import Ananya from "../../assets/images/Ananya.jpg";
+import Anant from "../../assets/images/Anant Mishra.jpg";
+import Aman from "../../assets/images/Aman Rawat.png";
+import Prad from "../../assets/images/Pradyuman.webp";
+import Anushka from "../../assets/images/Anushka.jpg";
+import Aviral from "../../assets/images/Aviral.jpg";
 
-// TypeScript interfaces
+
 interface TeamMember {
   name: string;
   role: string;
-  description: string;
+  description?: string;
   email: string;
   linkedin: string;
   image: string;
@@ -33,168 +41,153 @@ interface ContactInfo {
 }
 
 const Team: React.FC = () => {
-  // ORIGINAL TEAM MEMBERS DATA - COMMENTED FOR FUTURE USE
-  /*
-  const teamMembersOriginal: TeamMember[] = [
+  // Default placeholder for missing images
+  const defaultImage = "/path/to/default-placeholder.png"; // Add your placeholder image path
+
+  const teamMembers: TeamMember[] = [
     {
-      name: "Aryan Shandilya",
-      role: "Executive Member",
-      description: "Designs efficient algorithms and mentors competitive programming; focuses on performance and problem-solving best practices.",
-      email: "aryanacc28@gmail.com",
-      linkedin: "https://www.linkedin.com/in/aryan-s-shandilya?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-      image: aryanImage
+      name: "Aman Kumar Rawat",
+      role: "ME-3rd Year",
+      email: "ar533582@gmail.com",
+      linkedin: "https://www.linkedin.com/in/amankrrawat/",
+      image: Aman || defaultImage
     },
     {
-      name: "Ashish Yadav",
-      role: "Executive Member",
-      description: "Leads backend architecture and cloud infrastructure; specializes in scalable APIs, CI/CD and reliability engineering.",
+      name: "Anant Mishra", 
+      role: "BBA Final Year",
+      email: "anant.m121@gmail.com",
+      linkedin: "https://www.linkedin.com/in/anant-mishraa?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      image: Anant || defaultImage
+    },
+    {
+      name: "Ananya",
+      role: "CE-3rd Year", 
+      email: "ananyar0912@gmail.com",
+      linkedin: "https://www.linkedin.com/in/ananya-mmmut",
+      image: Ananya || defaultImage
+    },
+    {
+      name: "Anushka Singh",
+      role: "CSE-3rd Year",
+      email: "2023021215@mmmut.ac.in", // Changed from empty string to explicit N/A
+      linkedin: "N/A", // Changed from empty string to explicit N/A  
+     // image: Anushka// Use placeholder for missing image
+    },
+    {
+      name: "Ashish Kumar Yadav",
+      role: "CSE-3rd Year",
       email: "kumaryadavashish390@gmail.com",
       linkedin: "https://in.linkedin.com/in/ashish-yadav-040730225",
-      image: ashishImage
+      image: ashishImage || defaultImage
     },
-     {
-      name: "Shivam Bhardwaj",
-      role: "Executive Member",
-      description: "Manages membership operations and records; ensures smooth onboarding and member support systems.",
-      email: "N/A",
-      linkedin: "N/A",
-      image: shivamBhardwajImage
+    {
+      name: "Aviral Omar", 
+      role: "ChE-3rd Year",
+      email: "N/A", // Changed from empty string
+      linkedin: "N/A", // Changed from empty string
+      image: Aviral // Use placeholder for missing image
+    },
+    {
+      name: "Aryan S Shandilya",
+      role: "CSE-3rd Year",
+      email: "aryanacc28@gmail.com", 
+      linkedin: "https://www.linkedin.com/in/aryan-s-shandilya?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      image: aryanImage || defaultImage
+    },
+    {
+      name: "Pradyumn Agrahari",
+      role: "CSE-3rd Year",
+      email: "pradyumnagrahari111@gmail.com",
+      linkedin: "https://www.linkedin.com/in/pradyumn-a-09b209277?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app", 
+      image: Prad || defaultImage
+    },
+    {
+      name: "Priya Singh",
+      role: "BBA Final Year", 
+      email: "Rina965304@gmail.com",
+      linkedin: "https://www.linkedin.com/in/priya-s-1b2329259?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      image: PriyaImage || defaultImage
+    },
+    {
+      name: "Riya Verma",
+      role: "CSE-3rd Year", 
+      email: "riya.verma7202@gmail.com",
+      linkedin: "https://www.linkedin.com/in/riya-verma-28b461289/",
+      image: RiyaImage || defaultImage
     },
     {
       name: "Shivam Mishra",
-      role: "Executive Member",
-      description: "Organizes tech events and hackathons; expert in event logistics, speaker curation, and community partnerships.",
+      role: "CSE-3rd Year",
       email: "shivammishra01329@gmail.com",
-      linkedin: "www.linkedin.com/in/shiv9918",
-      image: shivammishraImage
+      linkedin: "https://www.linkedin.com/in/shiv9918",
+      image: shivammishraImage || defaultImage
     },
     {
-      name: "Shivam Singh",
-      role: "Executive Member",
-      description: "Drives marketing strategy and outreach; focused on growth campaigns, content strategy and social analytics.",
+      name: "Shivam Singh", 
+      role: "CSE-3rd Year",
       email: "shivamsingh221045@gmail.com",
       linkedin: "https://www.linkedin.com/in/shivam451/",
-      image: shivamsinghImage
+      image: shivamsinghImage || defaultImage
     },
-   
     {
-      name: "Vishesh Mishra",
-      role: "Executive Member",
-      description: "Handles internal coordination and documentation; maintains project trackers and communication channels.",
+      name: "Shubham Rai",
+      role: "CSE-3rd year",
+      email: "kuvar2003@gmail.com", 
+      linkedin: "https://www.linkedin.com/in/shubham-rai-866b2b294/",
+      image: Shubham || defaultImage
+    },
+    {
+      name: "Tamanna Sharma",
+      role: "EE-3rd Year",
+      email: "tamanna.sharma9929knp@gmail.com",
+      linkedin: "https://www.linkedin.com/in/tamanna-sharma-b3290a294/",
+      image: Tamanna || defaultImage
+    },
+    {
+      name: "Vishesh mishra", 
+      role: "CSE-3rd year",
       email: "mishravishesh1403@gmail.com",
       linkedin: "https://www.linkedin.com/in/vishesh-mishra-372784218/",
-      image: vmishraImage
+      image: vmishraImage || defaultImage
     },
     {
       name: "Yashasvi Sharma",
-      role: "Executive Member",
-      description: "Front-end specialist focused on accessible UI, component design and polishing user experiences.",
-      email: "yashasvisharma650@gmail.com",
-      linkedin: "https://www.linkedin.com/in/yashasvi-sharma-688245294/",
-      image: ysvImage
+      role: "CSE-3rd year",
+      email: "yashasvisharma650@gmail.com", 
+      linkedin: "https://www.linkedin.com/in/yashasvi-sharma-688245294",
+      image: ysvImage || defaultImage
     },
     {
       name: "Yashvardhan Ojha",
-      role: "Executive Member",
+      role: "CSE-3rd Year", 
       description: "Full-stack developer supporting integrations, tooling and automations to streamline developer workflows.",
       email: "2023021270@mmmut.ac.in",
       linkedin: "https://www.linkedin.com/in/yashvardhann/",
-      image: threeMImage
+      image: threeMImage || defaultImage
     }
-  ];
-  */
+  ].filter(member => member.name && member.role); // Filter out any incomplete entries
 
-  // PLACEHOLDER TEAM MEMBERS - AWAITING INDUCTION
-  const teamMembers: TeamMember[] = [
-    {
-      name: "Awaiting Induction",
-      role: "Executive Member",
-      description: "This position is currently open and awaiting the induction of a new team member. Stay tuned for updates!",
-      email: "N/A",
-      linkedin: "N/A",
-      image: "?" // This will be handled in TeamCard to show question mark
-    },
-    {
-      name: "Awaiting Induction",
-      role: "Executive Member", 
-      description: "This position is currently open and awaiting the induction of a new team member. Stay tuned for updates!",
-      email: "N/A",
-      linkedin: "N/A",
-      image: "?" // This will be handled in TeamCard to show question mark
-    },
-    {
-      name: "Awaiting Induction",
-      role: "Executive Member",
-      description: "This position is currently open and awaiting the induction of a new team member. Stay tuned for updates!",
-      email: "N/A", 
-      linkedin: "N/A",
-      image: "?" // This will be handled in TeamCard to show question mark
-    },
-    {
-      name: "Awaiting Induction",
-      role: "Executive Member",
-      description: "This position is currently open and awaiting the induction of a new team member. Stay tuned for updates!",
-      email: "N/A",
-      linkedin: "N/A", 
-      image: "?" // This will be handled in TeamCard to show question mark
-    },
-    {
-      name: "Awaiting Induction",
-      role: "Executive Member",
-      description: "This position is currently open and awaiting the induction of a new team member. Stay tuned for updates!",
-      email: "N/A",
-      linkedin: "N/A",
-      image: "?" // This will be handled in TeamCard to show question mark
-    },
-    {
-      name: "Awaiting Induction", 
-      role: "Executive Member",
-      description: "This position is currently open and awaiting the induction of a new team member. Stay tuned for updates!",
-      email: "N/A",
-      linkedin: "N/A",
-      image: "?" // This will be handled in TeamCard to show question mark
-    },
-    {
-      name: "Awaiting Induction",
-      role: "Executive Member", 
-      description: "This position is currently open and awaiting the induction of a new team member. Stay tuned for updates!",
-      email: "N/A",
-      linkedin: "N/A",
-      image: "?" // This will be handled in TeamCard to show question mark
-    },
-    {
-      name: "Awaiting Induction",
-      role: "Executive Member",
-      description: "This position is currently open and awaiting the induction of a new team member. Stay tuned for updates!", 
-      email: "N/A",
-      linkedin: "N/A",
-      image: "?" // This will be handled in TeamCard to show question mark
-    }
-  ];
-
-  // President as separate object for special positioning
   const president: TeamMember = {
     name: "Shivam Rai",
     role: "President",
     description: "Sets strategic vision and builds partnerships; leads cross-team initiatives and fosters innovation across the society.",
     email: "president@flux.edu",
-    linkedin: "https://www.linkedin.com/in/shivam-rai-a64b84298/",
-    image: presidentImage
+    linkedin: "https://www.linkedin.com/in/shivam-rai-a64b84298/", 
+    image: presidentImage || defaultImage
   };
 
-  // UPDATED CONTACT INFO - Email as normal text
   const contactInfo: ContactInfo[] = [
     {
       icon: <Mail className="h-5 w-5" />,
       label: "Email",
       description: "Drop us a line at:",
       value: "flux@mmmut.ac.in",
-      link: "mailto:flux@mmmut.ac.in",
-      buttonText: null // No button for email
+      link: "mailto:flux@mmmut.ac.in", 
+      buttonText: null
     },
     {
       icon: <Instagram className="h-5 w-5" />,
-      label: "Instagram",
+      label: "Instagram", 
       value: "FLUX",
       link: "https://instagram.com/flux.mmmut",
       buttonText: "Connect"
@@ -202,7 +195,7 @@ const Team: React.FC = () => {
     {
       icon: <Linkedin className="h-5 w-5" />,
       label: "LinkedIn",
-      value: "FLUX",
+      value: "FLUX", 
       link: "https://www.linkedin.com/company/flux-mmm/",
       buttonText: "Connect"
     },
@@ -210,47 +203,40 @@ const Team: React.FC = () => {
       icon: <MapPin className="h-5 w-5" />,
       label: "Location",
       value: "CSED, MMMUT, Tech District, Gorakhpur, U.P.",
-      link: "https://www.google.com/maps/search/?api=1&query=CSED+MMMUT+Tech+District+Gorakhpur+UP",
+      link: "https://www.google.com/maps/search/?api=1&query=CSED+MMMUT+Tech+District+Gorakhpur+UP", 
       buttonText: "View Map"
     }
   ];
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header Space */}
       <div className="h-16 md:h-20"></div>
       
-      {/* Team Section */}
       <section className="pt-12 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16 text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground animate-fade-up animate-delay-200 relative">
               <span className="relative inline-block">
                 <span className="typewriter">Meet Our Team</span>
-                {/* Floating elements around the heading */}
                 <div className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-r from-primary/30 to-purple-500/30 rounded-full blur-sm animate-bounce"></div>
                 <div className="absolute -bottom-2 -left-6 w-6 h-6 bg-gradient-to-r from-pink-500/30 to-primary/30 rounded-full blur-sm animate-ping"></div>
                 <div className="absolute top-1/2 -right-8 w-4 h-4 bg-gradient-to-r from-purple-500/40 to-primary/40 rounded-full blur-sm animate-pulse delay-300"></div>
               </span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto animate-fade-up animate-delay-500 transform hover:scale-105 transition-transform duration-300">
-              Connect directly with our passionate leaders who are driving innovation 
-              and building the future of technology at our institution.
+              Connect directly with our passionate leaders who are driving innovation and building the future of technology at our institution.
             </p>
           </div>
 
-          {/* President Card - Centered */}
+          {/* President Card */}
           <div className="flex justify-center mb-16">
             <div className="w-full max-w-lg animate-fade-up animate-delay-700 transform hover:scale-105 transition-all duration-500">
               <div className="group relative">
-                {/* Animated gradient border - only on hover */}
                 <div className="absolute -inset-1 bg-gradient-to-r from-primary/60 via-purple-600/60 to-pink-500/60 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-700 animate-spin-slow"></div>
-                {/* Floating particles - only visible on hover */}
                 <div className="absolute -top-6 -left-6 w-3 h-3 bg-primary/50 rounded-full opacity-0 group-hover:opacity-100 animate-float transition-opacity duration-300"></div>
                 <div className="absolute -top-4 -right-8 w-2 h-2 bg-purple-500/50 rounded-full opacity-0 group-hover:opacity-100 animate-float delay-500 transition-opacity duration-300"></div>
                 <div className="absolute -bottom-6 -right-4 w-4 h-4 bg-pink-500/50 rounded-full opacity-0 group-hover:opacity-100 animate-float delay-1000 transition-opacity duration-300"></div>
                 <div className="absolute -bottom-4 -left-8 w-2 h-2 bg-primary/50 rounded-full opacity-0 group-hover:opacity-100 animate-float delay-700 transition-opacity duration-300"></div>
-                {/* Mini floating particles that appear on hover */}
                 <div className="absolute -top-2 -right-2 w-2 h-2 bg-primary/60 rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
                 <div className="absolute -bottom-2 -left-2 w-1.5 h-1.5 bg-purple-500/60 rounded-full opacity-0 group-hover:opacity-100 animate-pulse delay-300"></div>
                 
@@ -261,17 +247,15 @@ const Team: React.FC = () => {
             </div>
           </div>
 
-          {/* Other Team Members - PLACEHOLDER CARDS */}
+          {/* Team Members Grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
             {teamMembers.map((member: TeamMember, index: number) => (
-              <div 
-                key={index} 
-                className={`group animate-fade-up animate-delay-${800 + (index * 100)} transform hover:scale-105 transition-all duration-500`}
+              <div
+                key={`${member.name}-${index}`} // Better key using name + index
+                className={`group animate-fade-up animate-delay-${Math.min(800 + index * 100, 1600)} transform hover:scale-105 transition-all duration-500`}
               >
                 <div className="relative">
-                  {/* Animated gradient border */}
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/40 via-purple-600/40 to-pink-500/40 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-700 animate-spin-slow"></div>
-                  {/* Floating mini particles */}
                   <div className="absolute -top-2 -right-2 w-2 h-2 bg-primary/60 rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
                   <div className="absolute -bottom-2 -left-2 w-1.5 h-1.5 bg-purple-500/60 rounded-full opacity-0 group-hover:opacity-100 animate-pulse delay-300"></div>
                   
@@ -285,15 +269,13 @@ const Team: React.FC = () => {
         </div>
       </section>
 
-      {/* Contact Info Section */}
+      {/* Contact Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-card/20">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 animate-fade-up animate-delay-200">
               <span className="text-foreground">Get in </span>
-              <span className="bg-gradient-primary bg-clip-text text-transparent">
-                Touch
-              </span>
+              <span className="bg-gradient-primary bg-clip-text text-transparent">Touch</span>
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-up animate-delay-500">
               Ready to join our community? Here's how you can reach us.
@@ -302,19 +284,20 @@ const Team: React.FC = () => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {contactInfo.map((info: ContactInfo, index: number) => (
               <div
-                key={index}
-                className={`group gradient-card rounded-xl p-6 text-center animate-fade-up animate-delay-${700 + (index * 100)} hover:shadow-2xl hover:shadow-primary/25 transition-all duration-500`}
+                key={info.label}
+                className={`group gradient-card rounded-xl p-6 text-center animate-fade-up animate-delay-${700 + index * 100} hover:shadow-2xl hover:shadow-primary/25 transition-all duration-500`}
               >
                 <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
                   {info.icon}
                 </div>
-                <h3 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">{info.label}</h3>
+                <h3 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
+                  {info.label}
+                </h3>
                 
-                {/* Special handling for email section - NO COLORING */}
                 {info.label === "Email" ? (
                   <div className="mb-3">
                     <p className="text-sm text-muted-foreground mb-1">{info.description}</p>
-                    <a href={info.link} className="text-sm">
+                    <a href={info.link} className="text-sm hover:text-primary transition-colors">
                       {info.value}
                     </a>
                   </div>
@@ -322,9 +305,13 @@ const Team: React.FC = () => {
                   <p className="text-sm text-muted-foreground mb-3">{info.value}</p>
                 )}
 
-                {/* Button for non-email items */}
                 {info.buttonText && (
-                  <Button variant="outline" size="sm" asChild className="group-hover:bg-primary/10 group-hover:border-primary/50 transition-all duration-300">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    asChild
+                    className="group-hover:bg-primary/10 group-hover:border-primary/50 transition-all duration-300"
+                  >
                     <a href={info.link} target="_blank" rel="noopener noreferrer">
                       {info.buttonText}
                     </a>
@@ -336,10 +323,8 @@ const Team: React.FC = () => {
         </div>
       </section>
 
-      {/* Footer Space */}
       <div className="h-16 md:h-20"></div>
       
-      {/* Custom animations */}
       <style dangerouslySetInnerHTML={{
         __html: `
           @keyframes float {
