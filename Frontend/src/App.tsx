@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
-import MobileLayout from "@/components/layout/MobileLayout";
+import MobileLayout from "@/components/layout/mobileLayout";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 
 import HomePage from "@/pages/home";
