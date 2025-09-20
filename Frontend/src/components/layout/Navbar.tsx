@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
     { name: "About", path: "/about" },
     { name: "Faculty", path: "/faculty" },
     { name: "Our Team", path: "/team" },
-    { name: "Events", path: "/events" },
+//     { name: "Events", path: "/events" },
     { name: "Contact", path: "/contact" },
     { name: "Induction", path: "/join" },
   ];
@@ -198,12 +198,12 @@ const Navbar: React.FC = () => {
               }}
               whileTap={{ scale: 0.95 }}
             >
-              <span className="relative z-10 flex items-center gap-2">
+{/*               <span className="relative z-10 flex items-center gap-2">
                 <span>Go to App</span>
                 <motion.span animate={{ x: [0, 3, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
                   →
                 </motion.span>
-              </span>
+              </span> */}
               <motion.div
                 className="absolute inset-0 bg-white/10"
                 initial={{ x: "-100%" }}

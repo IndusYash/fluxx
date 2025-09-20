@@ -307,12 +307,12 @@ export default function ModernEventsPreview() {
             .
           </p>
           <div className="mt-8">
-            <button
+            {/* <button
               onClick={handleEventsClick}
               className="inline-flex items-center justify-center rounded-md px-5 py-3 font-medium bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-lg hover:shadow-purple-500/30 transition transform hover:scale-105"
             >
               🎯 View All Events →
-            </button>
+            </button> */}
           </div>
         </div>
 
