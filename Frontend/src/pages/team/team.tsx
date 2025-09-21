@@ -48,7 +48,7 @@ const Team: React.FC = () => {
     {
       name: "Aman Kumar Rawat",
       role: "ME-3rd Year",
-      email: "ar533582@gmail.com",
+      email: "amankrawat.ds@gmail.com",
       linkedin: "https://www.linkedin.com/in/amankrrawat/",
       image: Aman || defaultImage
     },
