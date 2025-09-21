@@ -160,7 +160,6 @@ const Team: React.FC = () => {
     {
       name: "Yashvardhan Ojha",
       role: "CSE-3rd Year", 
-      description: "Full-stack developer supporting integrations, tooling and automations to streamline developer workflows.",
       email: "2023021270@mmmut.ac.in",
       linkedin: "https://www.linkedin.com/in/yashvardhann/",
       image: threeMImage || defaultImage
