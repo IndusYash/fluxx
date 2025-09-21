@@ -20,7 +20,7 @@ import Aman from "../../assets/images/Aman Rawat.png";
 import Prad from "../../assets/images/Pradyuman.webp";
 import Anushka from "../../assets/images/Anushka.jpg";
 import Aviral from "../../assets/images/Aviral.jpg";
-
+import Anushka from "../../assets/images/Anuphoto - Anushka Singh.jpg";
 
 interface TeamMember {
   name: string;
@@ -71,7 +71,7 @@ const Team: React.FC = () => {
       role: "CSE-3rd Year",
       email: "anuskajiya@gmail.com", // Changed from empty string to explicit N/A
       linkedin: "https://www.linkedin.com/in/anushkasingh-a18a25318/",  
-     // image: Anushka// Use placeholder for missing image
+     image: Anushka || defaultImage
     },
     {
       name: "Ashish Kumar Yadav",
