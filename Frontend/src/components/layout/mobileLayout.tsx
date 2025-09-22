@@ -22,25 +22,26 @@ interface MobileLayoutProps {
 export default function MobileLayout({ isMobile }: MobileLayoutProps) {
   const location = useLocation();
 
-  // 🔥 State for induction flow
-  const [currentPage, setCurrentPage] = useState<"landing" | "form">("landing");
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  // Remove the local state since we're using routes now
+  // const [currentPage, setCurrentPage] = useState<"landing" | "form">("landing");
+  // const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const navigateToForm = () => {
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setCurrentPage("form");
-      setIsTransitioning(false);
-    }, 300);
-  };
+  // Remove these functions since we're using routes now
+  // const navigateToForm = () => {
+  //   setIsTransitioning(true);
+  //   setTimeout(() => {
+  //     setCurrentPage("form");
+  //     setIsTransitioning(false);
+  //   }, 300);
+  // };
 
-  const navigateToLanding = () => {
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setCurrentPage("landing");
-      setIsTransitioning(false);
-    }, 300);
-  };
+  // const navigateToLanding = () => {
+  //   setIsTransitioning(true);
+  //   setTimeout(() => {
+  //     setCurrentPage("landing");
+  //     setIsTransitioning(false);
+  //   }, 300);
+  // };
 
   // 👇 Auto-scroll to corresponding section when route changes
   useEffect(() => {
@@ -100,14 +101,11 @@ export default function MobileLayout({ isMobile }: MobileLayoutProps) {
         id="join"
         className="pt-16 scroll-mt-16 px-4 max-w-md mx-auto min-h-screen bg-[#121212] text-white"
       >
-        <div
-          className={`transition-opacity duration-300 ${
-            isTransitioning ? "opacity-0" : "opacity-100"
-          }`}
-        >
-          {currentPage === "form" && (
+        <div className="transition-opacity duration-300">
+          {/* Show form when on /join/form route, otherwise show landing */}
+          {location.pathname === "/join/form" && (
             <button
-              onClick={navigateToLanding}
+              onClick={() => window.history.back()}
               className="fixed top-6 left-6 z-50 flex items-center space-x-2 text-gray-400 hover:text-white transition-colors duration-200"
             >
               <ChevronLeft size={20} />
@@ -115,10 +113,10 @@ export default function MobileLayout({ isMobile }: MobileLayoutProps) {
             </button>
           )}
 
-          {currentPage === "landing" ? (
-            <LandingPage onJoinClick={navigateToForm} />
-          ) : (
+          {location.pathname === "/join/form" ? (
             <InductionForm />
+          ) : (
+            <LandingPage onJoinClick={() => window.location.href = '/join/form'} />
           )}
         </div>
       </section>
