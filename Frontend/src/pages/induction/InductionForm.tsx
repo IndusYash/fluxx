@@ -18,8 +18,8 @@ interface FormData {
   whyJoin: string;
   softSkills: string;
   hardSkills: string;
-  strengths: string;
-  weaknesses: string;
+  // strengths: string;
+  // weaknesses: string;
   githubProfile: string;
   residence: string;
   imageFile: File | null;
@@ -37,8 +37,8 @@ const InductionForm: React.FC = () => {
     whyJoin: '',
     softSkills: '',
     hardSkills: '',
-    strengths: '',
-    weaknesses: '',
+    // strengths: '',
+    // weaknesses: '',
     githubProfile: '',
     residence: '',
     imageFile: null
@@ -169,8 +169,8 @@ const InductionForm: React.FC = () => {
         break;
       case 'softSkills':
       case 'hardSkills':
-      case 'strengths':
-      case 'weaknesses':
+      // case 'strengths':
+      // case 'weaknesses':
         const words = countWords(value);
         if (!value || value.trim().length === 0) {
           return 'This field is required';
@@ -289,8 +289,8 @@ const InductionForm: React.FC = () => {
           whyJoin: formData.whyJoin,
           softSkills: formData.softSkills,
           hardSkills: formData.hardSkills,
-          strengths: formData.strengths,
-          weaknesses: formData.weaknesses,
+          // strengths: formData.strengths,
+          // weaknesses: formData.weaknesses,
           githubProfile: formData.githubProfile,
           residence: formData.residence,
           imageUrl: uploadedImageUrl || undefined
@@ -515,6 +515,7 @@ const InductionForm: React.FC = () => {
                       <option value="ME">ME</option>
                       <option value="CE">CE</option>
                       <option value="CHE">CHE</option>
+                      <option value="BBA">BBA</option>
                       <option value="BPharma">BPharma</option>
                     </select>
                     {errors.branch && <p className="text-red-400 text-sm mt-1">{errors.branch}</p>}
@@ -531,10 +532,10 @@ const InductionForm: React.FC = () => {
                       className="w-full bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-[#1DB954] focus:outline-none transition-colors duration-300"
                     >
                       <option value="">Select year</option>
-                      <option value="1st Year">1st Year</option>
+                      {/* <option value="1st Year">1st Year</option> */}
                       <option value="2nd Year">2nd Year</option>
-                      <option value="3rd Year">3rd Year</option>
-                      <option value="4th Year">4th Year</option>
+                      {/* <option value="3rd Year">3rd Year</option>
+                      <option value="4th Year">4th Year</option> */}
                     </select>
                     {errors.year && <p className="text-red-400 text-sm mt-1">{errors.year}</p>}
                   </div>
@@ -593,7 +594,7 @@ const InductionForm: React.FC = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      GitHub Profile (Optional)
+                      Showcase your work (GitHub, Portfolio, etc.)
                     </label>
                     <input
                       type="url"
@@ -601,7 +602,7 @@ const InductionForm: React.FC = () => {
                       onChange={(e) => handleInputChange('githubProfile', e.target.value)}
                       disabled={!user}
                       className="w-full bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-[#1DB954] focus:outline-none transition-colors duration-300"
-                      placeholder="https://github.com/yourusername"
+                      placeholder="link to your work"
                     />
                   </div>
                 </div>
@@ -691,7 +692,7 @@ const InductionForm: React.FC = () => {
                     </div>
                   </div>
 
-                  <div>
+                  {/* <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
                       Strengths *
                     </label>
@@ -729,13 +730,13 @@ const InductionForm: React.FC = () => {
                         {countWords(formData.weaknesses)}/100 words
                       </span>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
               {/* Profile Picture */}
               <div className="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 shadow-2xl">
-                <h2 className="text-2xl font-semibold mb-6 text-[#1DB954]">Profile Picture (Optional)</h2>
+                <h2 className="text-2xl font-semibold mb-6 text-[#1DB954]">Profile Picture</h2>
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
