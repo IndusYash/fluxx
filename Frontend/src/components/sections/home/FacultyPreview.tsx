@@ -384,14 +384,23 @@ export default function FacultyPreview() {
 
         {/* Stats summary bar */}
         <div className="mt-16 text-center">
-          <div className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-background/90 to-background/70 border border-primary/20 backdrop-blur-lg shadow-xl">
-            <Star className="w-5 h-5 text-primary animate-spin-slow" />
-            <span className="text-lg font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              Excellence in Academic Leadership
-            </span>
-            <Sparkles className="w-5 h-5 text-secondary animate-pulse" />
-          </div>
-        </div>
+  <div className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-background/90 to-background/70 border border-primary/40 backdrop-blur-lg shadow-2xl">
+    <Star className="w-5 h-5 text-primary animate-spin-slow" />
+    <span
+      className="
+        text-lg font-semibold
+        bg-gradient-to-r from-green-400 via-green-500 to-green-600
+        bg-clip-text text-transparent
+        drop-shadow-md
+      "
+      style={{ filter: "drop-shadow(0 0 2px rgba(0,0,0,0.8))" }}
+    >
+      Excellence in Academic Leadership
+    </span>
+    <Sparkles className="w-5 h-5 text-green-500 animate-pulse" />
+  </div>
+</div>
+
       </div>
 
       <style

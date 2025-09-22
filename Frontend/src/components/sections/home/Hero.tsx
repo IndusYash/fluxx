@@ -588,23 +588,34 @@ export default function Hero() {
               className="flex flex-col sm:flex-row justify-center gap-4 pt-6"
             >
               <motion.div
-                whileHover={{ scale: 1.03, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                className="rounded-lg overflow-hidden shadow-md"
-                style={{
-                  background:
-                    "linear-gradient(45deg, hsl(var(--primary)), #10b981)",
-                  boxShadow: "0 0 20px rgba(16, 185, 129, 0.4)",
-                }}
-              >
-                <button
-                  onClick={handleJoinClick}
-                  className="px-6 py-3 inline-block bg-gradient-to-r from-[#707d7d] to-[#047481] rounded-lg hover:opacity-90 transition text-white font-semibold text-center"
-                  style={{ fontFamily: "'Space Grotesk', 'Inter', sans-serif" }}
-                >
-                  🚀 Join FLUX
-                </button>
-              </motion.div>
+  whileHover={{ scale: 1.03, y: -2 }}
+  whileTap={{ scale: 0.97 }}
+  className="rounded-lg overflow-hidden shadow-md"
+  style={{
+    boxShadow: "0 0 20px rgba(16, 185, 129, 0.4)",
+  }}
+>
+  <button
+    onClick={handleJoinClick}
+    className="
+      w-full sm:w-auto
+      px-4 sm:px-6 py-2 sm:py-3
+      bg-gradient-to-r from-[#707d7d] to-[#047481]
+      rounded-lg
+      hover:opacity-90
+      transition
+      text-white
+      font-semibold
+      text-center
+      text-sm sm:text-base
+    "
+    style={{ fontFamily: "'Space Grotesk', 'Inter', sans-serif" }}
+  >
+    🚀 Join FLUX
+  </button>
+</motion.div>
+
+
 
               <motion.button
                 onClick={handleExploreClick}
@@ -616,7 +627,7 @@ export default function Hero() {
                 🔥 Explore FLUX
               </motion.button>
 
-              <motion.button
+              {/* <motion.button
                 onClick={handleEventsClick}
                 whileHover={{ scale: 1.03, y: -2 }}
                 whileTap={{ scale: 0.97 }}
@@ -624,7 +635,7 @@ export default function Hero() {
                 style={{ boxShadow: "0 0 15px rgba(16, 185, 129, 0.2)" }}
               >
                 ⚡ Upcoming Events
-              </motion.button>
+              </motion.button> */}
             </motion.div>
 
             <motion.div
