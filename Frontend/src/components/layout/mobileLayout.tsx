@@ -42,15 +42,34 @@ export default function MobileLayout({ isMobile }: MobileLayoutProps) {
     }, 300);
   };
 
-  // 👇 Auto-scroll when /join is opened
+  // 👇 Auto-scroll to corresponding section when route changes
   useEffect(() => {
-    if (location.pathname === "/join") {
-      const el = document.getElementById("join");
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
-      }
+    // Map of routes to section IDs
+    const routeToSectionMap: { [key: string]: string } = {
+      "/": "home",
+      "/about": "about",
+      "/faculty": "faculty",
+      "/events": "events",
+      "/team": "team",
+      "/join": "join",
+      "/contact": "contact"
+    };
+
+    const sectionId = routeToSectionMap[location.pathname];
+    
+    if (sectionId) {
+      // Small delay to ensure the page has rendered
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ 
+            behavior: "smooth",
+            block: "start"
+          });
+        }
+      }, 100);
     }
-  }, [location]);
+  }, [location.pathname]);
 
   return (
     <div className="relative">
@@ -106,9 +125,6 @@ export default function MobileLayout({ isMobile }: MobileLayoutProps) {
       <section id="contact" className="pt-16 scroll-mt-16 px-4 max-w-md mx-auto">
         <ContactPage isMobile={isMobile} />
       </section>
-
-      {/* 👇 Induction flow stacked in the join section */}
-      
     </div>
   );
 }
