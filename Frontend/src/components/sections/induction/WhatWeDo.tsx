@@ -136,7 +136,7 @@ const WhatWeDo: React.FC = () => {
               height={isMobile ? 400 : 500}
               cardDistance={isMobile ? 45 : 60}
               verticalDistance={isMobile ? 55 : 70}
-              delay={1000}
+              delay={500}
               pauseOnHover={true}
               easing="elastic"
             >
