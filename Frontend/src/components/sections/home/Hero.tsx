@@ -76,7 +76,7 @@ const FloatingJoinButton = () => {
     
     // Click animation complete hone ke baad navigate
     setTimeout(() => {
-      navigate("/induction");
+      navigate("/join");
     }, 300);
   };
 
@@ -377,7 +377,7 @@ export default function Hero() {
   }, []);
 
   const handleJoinClick = () => {
-    navigate("/induction");
+    navigate("/join");
   };
 
   const handleExploreClick = () => {

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import MobileNavbar from "./MobileNavbar";
@@ -9,7 +9,11 @@ import FacultyPage from "@/pages/faculty/FacultyPage";
 import EventsPage from "@/pages/events/events";
 import ContactPage from "@/pages/contact/contact";
 import TeamPage from "@/pages/team/team";
-import Application from "@/pages/induction/Application";
+
+import LandingPage from "@/pages/induction/LandingPage";
+import InductionForm from "@/pages/induction/InductionForm";
+
+import { ChevronLeft } from "lucide-react";
 
 interface MobileLayoutProps {
   isMobile: boolean;
@@ -18,7 +22,27 @@ interface MobileLayoutProps {
 export default function MobileLayout({ isMobile }: MobileLayoutProps) {
   const location = useLocation();
 
-  // 👇 Watch for "/join" and auto-scroll to #join
+  // 🔥 State for induction flow
+  const [currentPage, setCurrentPage] = useState<"landing" | "form">("landing");
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const navigateToForm = () => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentPage("form");
+      setIsTransitioning(false);
+    }, 300);
+  };
+
+  const navigateToLanding = () => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentPage("landing");
+      setIsTransitioning(false);
+    }, 300);
+  };
+
+  // 👇 Auto-scroll when /join is opened
   useEffect(() => {
     if (location.pathname === "/join") {
       const el = document.getElementById("join");
@@ -35,24 +59,56 @@ export default function MobileLayout({ isMobile }: MobileLayoutProps) {
       <section id="home" className="pt-16 scroll-mt-16 px-4 max-w-md mx-auto">
         <HomePage isMobile={isMobile} />
       </section>
+
       <section id="about" className="pt-16 scroll-mt-16 px-4 max-w-md mx-auto">
         <AboutPage isMobile={isMobile} />
       </section>
+
       <section id="faculty" className="pt-16 scroll-mt-16 px-4 max-w-md mx-auto">
         <FacultyPage isMobile={isMobile} />
       </section>
+
       <section id="events" className="pt-16 scroll-mt-16 px-4 max-w-md mx-auto">
         <EventsPage isMobile={isMobile} />
       </section>
+
       <section id="team" className="pt-16 scroll-mt-16 px-4 max-w-md mx-auto">
         <TeamPage isMobile={isMobile} />
       </section>
+
+      <section
+        id="join"
+        className="pt-16 scroll-mt-16 px-4 max-w-md mx-auto min-h-screen bg-[#121212] text-white"
+      >
+        <div
+          className={`transition-opacity duration-300 ${
+            isTransitioning ? "opacity-0" : "opacity-100"
+          }`}
+        >
+          {currentPage === "form" && (
+            <button
+              onClick={navigateToLanding}
+              className="fixed top-6 left-6 z-50 flex items-center space-x-2 text-gray-400 hover:text-white transition-colors duration-200"
+            >
+              <ChevronLeft size={20} />
+              <span>Back</span>
+            </button>
+          )}
+
+          {currentPage === "landing" ? (
+            <LandingPage onJoinClick={navigateToForm} />
+          ) : (
+            <InductionForm />
+          )}
+        </div>
+      </section>
+
       <section id="contact" className="pt-16 scroll-mt-16 px-4 max-w-md mx-auto">
         <ContactPage isMobile={isMobile} />
       </section>
-      <section id="join" className="pt-16 scroll-mt-16 px-4 max-w-md mx-auto">
-        <Application isMobile={isMobile} />
-      </section>
+
+      {/* 👇 Induction flow stacked in the join section */}
+      
     </div>
   );
 }

@@ -10,11 +10,36 @@ import AboutPage from "@/pages/about/AboutPage";
 // import EventsPage from "@/pages/events/events";
 import ContactPage from "@/pages/contact/contact";
 import TeamPage from "@/pages/team/team";
-import Application from "@/pages/induction/Application";
+
+// 👇 Import induction flow components
+import LandingPage from "@/pages/induction/LandingPage";
+import InductionForm from "@/pages/induction/InductionForm";
+
+import { ChevronLeft } from "lucide-react";
 import { Toaster } from "@/components/ui/toaster";
 
 export default function App() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  // 🔥 For induction flow
+  const [currentPage, setCurrentPage] = useState<"landing" | "form">("landing");
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const navigateToForm = () => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentPage("form");
+      setIsTransitioning(false);
+    }, 300);
+  };
+
+  const navigateToLanding = () => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentPage("landing");
+      setIsTransitioning(false);
+    }, 300);
+  };
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -33,7 +58,34 @@ export default function App() {
             <Route path="/faculty" element={<FacultyPage isMobile={isMobile} />} />
             {/* <Route path="/events" element={<EventsPage isMobile={isMobile} />} /> */}
             <Route path="/team" element={<TeamPage isMobile={isMobile} />} />
-            <Route path="/join" element={<Application isMobile={isMobile} />} />
+            <Route
+              path="/join"
+              element={
+                <div className="min-h-screen bg-[#121212] text-white">
+                  <div
+                    className={`transition-opacity duration-300 ${
+                      isTransitioning ? "opacity-0" : "opacity-100"
+                    }`}
+                  >
+                    {currentPage === "form" && (
+                      <button
+                        onClick={navigateToLanding}
+                        className="fixed top-6 left-6 z-50 flex items-center space-x-2 text-gray-400 hover:text-white transition-colors duration-200"
+                      >
+                        <ChevronLeft size={20} />
+                        <span>Back</span>
+                      </button>
+                    )}
+
+                    {currentPage === "landing" ? (
+                      <LandingPage onJoinClick={navigateToForm} />
+                    ) : (
+                      <InductionForm />
+                    )}
+                  </div>
+                </div>
+              }
+            />
             <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
           </Route>
         </Routes>

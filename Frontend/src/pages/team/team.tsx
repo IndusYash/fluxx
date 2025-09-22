@@ -18,7 +18,6 @@ import Ananya from "../../assets/images/Ananya.jpg";
 import Anant from "../../assets/images/Anant Mishra.jpg";
 import Aman from "../../assets/images/Aman Rawat.png";
 import Prad from "../../assets/images/Pradyuman.webp";
-import Anushka from "../../assets/images/Anushka.jpg";
 import Aviral from "../../assets/images/Aviral.jpg";
 import Anushka from "../../assets/images/Anuphoto - Anushka Singh.jpg";
 

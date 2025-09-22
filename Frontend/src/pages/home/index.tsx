@@ -5,8 +5,24 @@ import InductionCTA from "@/components/sections/home/InductionCTA"
 import FacultyPreview from "@/components/sections/home/FacultyPreview"
 import EventsPreview from "@/components/sections/home/EventsPreview"
 import ContactPreview from "@/components/sections/home/ContactPreview"
+import { useState, useEffect } from "react"
+
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkScreen = () => setIsMobile(window.innerWidth < breakpoint)
+    checkScreen()
+    window.addEventListener("resize", checkScreen)
+    return () => window.removeEventListener("resize", checkScreen)
+  }, [breakpoint])
+
+  return isMobile
+}
 
 export default function HomePage() {
+  const isMobile = useIsMobile()
+
   return (
     <>
       <Hero />
@@ -19,7 +35,7 @@ export default function HomePage() {
         <EventsPreview />
         <FacultyPreview />
         <InductionCTA />
-        <ContactPreview />
+        {!isMobile && <ContactPreview />}
       </motion.div>
     </>
   )

@@ -5,18 +5,14 @@ export default function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Reset the main window scroll
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "instant", // can use "smooth" if you want
-    });
-
-    // Optional: reset any scrollable container too
-    const appRoot = document.querySelector(".min-h-dvh");
-    if (appRoot) {
-      appRoot.scrollTop = 0;
-    }
+    // Force scroll after a tiny delay (lets React paint the new page first)
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "instant", // try "smooth" if you want animation
+      });
+    }, 0);
   }, [pathname]);
 
   return null;
