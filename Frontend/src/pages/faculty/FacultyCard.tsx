@@ -10,6 +10,30 @@ const FacultyCard: React.FC<FacultyCardProps> = ({ faculty }) => {
   // Helper function to render metrics based on faculty ID
   const renderMetrics = () => {
     switch (faculty.id) {
+      case 0: // Prof. Rakesh Kumar (HOD) - Display with "+" sign
+        return (
+          <>
+            {faculty.teachingExperienceUG && (
+              <MetricItem value={`${faculty.teachingExperienceUG}+`} label="UG Years" />
+            )}
+            {faculty.teachingExperiencePG && (
+              <MetricItem value={`${faculty.teachingExperiencePG}+`} label="PG Years" />
+            )}
+            {faculty.seminarsOrganised && (
+              <MetricItem value={`${faculty.seminarsOrganised}+`} label="Seminars Org" />
+            )}
+            {faculty.seminarsAttended && (
+              <MetricItem value={`${faculty.seminarsAttended}+`} label="Seminars Att" />
+            )}
+            {faculty.mtechSupervised && (
+              <MetricItem value={`${faculty.mtechSupervised}+`} label="M.Tech" />
+            )}
+            {faculty.phdSupervised && (
+              <MetricItem value={`${faculty.phdSupervised}+`} label="Ph.D" />
+            )}
+          </>
+        );
+      
       case 1: // Dr. Satya Prakash Yadav
         return (
           <>
@@ -49,9 +73,6 @@ const FacultyCard: React.FC<FacultyCardProps> = ({ faculty }) => {
             {faculty.internationalPublications && (
               <MetricItem value={faculty.internationalPublications} label="Intl Pubs" />
             )}
-            {/* {faculty.organisations && (
-              <MetricItem value={faculty.organisations} label="Orgs" />
-            )} */}
           </>
         );
       
@@ -103,199 +124,134 @@ const FacultyCard: React.FC<FacultyCardProps> = ({ faculty }) => {
   };
 
   return (
-    <div className="relative w-full max-w-5xl mx-auto 
-                    h-auto min-h-[20rem] md:min-h-[18rem] lg:min-h-[20rem] 
-                    rounded-2xl overflow-hidden 
-                    transition-all duration-300 ease-out 
+    <div className="relative w-full h-full
+                    bg-gradient-to-br from-gray-900 via-gray-950 to-black
+                    rounded-3xl p-6 md:p-8 
+                    border-2 border-green-400/40
+                    transition-all duration-500 ease-out 
                     hover:transform hover:scale-[1.02] 
                     hover:-translate-y-2
                     hover:shadow-2xl hover:shadow-green-400/20
-                    cursor-pointer group mx-4 md:mx-auto">
+                    hover:border-green-400/60
+                    cursor-pointer group
+                    backdrop-blur-sm
+                    flex flex-col">
       
-      {/* Border and background layers */}
-      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 
-                      transition-opacity duration-300 z-[0]
-                      bg-gradient-to-r from-green-400/20 via-emerald-300/20 to-green-400/20 
-                      shadow-lg"></div>
-      
-      <div className="absolute inset-[2px] rounded-2xl bg-black z-[10]"></div>
-      
-      <div className="absolute inset-[2px] rounded-2xl z-[11] 
-                      bg-gradient-to-br from-gray-900 via-black to-gray-900"></div>
-
       {/* Content Layer */}
-      <div className="relative z-20 h-full w-full 
-                      p-4 md:p-6 lg:p-8 
-                      flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 
-                      text-white overflow-hidden">
+      <div className="flex flex-col md:flex-row gap-6 md:gap-8 text-white h-full">
         
         {/* Profile Section */}
-        <div className="flex-shrink-0 
-                        w-full md:w-32 lg:w-40 
-                        flex md:flex-col items-center md:items-start 
-                        gap-4 md:gap-4">
+        <div className="flex-shrink-0 flex flex-col items-center md:items-start">
           
-          {/* Profile Image Container */}
-          <div className="relative flex-shrink-0">
+          {/* Profile Image */}
+          <div className="relative group/image mb-4">
             <img 
               src={faculty.profileImage} 
               alt={faculty.name}
-              className="relative w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 
-                         rounded-xl md:rounded-2xl 
-                         border-2 md:border-4 border-green-400/50 
+              className="w-32 h-32 md:w-36 md:h-36 lg:w-40 lg:h-40
+                         rounded-2xl border-3 border-green-400/60 
                          object-cover transition-all duration-300 
-                         group-hover:scale-105 md:group-hover:scale-110 
-                         shadow-2xl contrast-110 saturate-110
-                         group-hover:border-green-300/80 group-hover:shadow-green-400/40"
+                         group-hover:scale-105 group-hover:border-green-300/80
+                         shadow-lg contrast-110 saturate-110"
             />
             
             {/* Status indicator */}
-            <div className="absolute -bottom-1 -right-1 md:-bottom-2 md:-right-2 
-                            w-4 h-4 md:w-5 md:h-5 
-                            rounded-full border-2 md:border-3 border-white 
-                            bg-green-400 shadow-lg shadow-green-400/50
-                            group-hover:shadow-xl group-hover:shadow-green-400/80
-                            transition-all duration-300">
-              <div className="absolute inset-[2px] rounded-full bg-white/90"></div>
+            <div className="absolute -bottom-2 -right-2 
+                            w-6 h-6 md:w-7 md:h-7 
+                            rounded-full border-3 border-white 
+                            bg-gradient-to-r from-green-400 to-emerald-500
+                            shadow-lg">
+              <div className="absolute inset-[2px] rounded-full 
+                              bg-gradient-to-r from-white/90 to-green-100/90
+                              animate-pulse"></div>
             </div>
           </div>
 
-          {/* Mobile: Basic Info */}
-          <div className="flex-1 md:hidden min-w-0">
-            <h3 className="text-xl font-bold mb-1 text-gray-200 leading-tight truncate
-                           group-hover:text-green-100 transition-colors duration-300">
-              {faculty.name}
-            </h3>
-            <div className="text-sm font-semibold mb-1 truncate 
-                            text-green-400 group-hover:text-green-300 transition-colors duration-300">
-              {faculty.title}
-            </div>
-          </div>
-
-          {/* Social Links - Now visible for all faculty */}
-          <div className="hidden md:flex flex-col gap-2 mt-2 lg:mt-4">
+          {/* Social Links */}
+          <div className="flex flex-row md:flex-col gap-3">
             {faculty.linkedinUrl && (
-              <SocialLink href={faculty.linkedinUrl} icon={<Linkedin size={14} />} />
+              <SocialLink href={faculty.linkedinUrl} icon={<Linkedin size={16} />} />
             )}
             
             {faculty.websiteUrl && (
-              <SocialLink href={faculty.websiteUrl} icon={<Globe size={14} />} />
+              <SocialLink href={faculty.websiteUrl} icon={<Globe size={16} />} />
             )}
             
             {faculty.googleScholarUrl && (
               <SocialLink 
                 href={faculty.googleScholarUrl} 
                 icon={
-                  <div className="w-3.5 h-3.5 lg:w-4 lg:h-4 bg-gray-300 group-hover/link:bg-green-200 
+                  <div className="w-4 h-4 bg-gray-300 group-hover/link:bg-green-200 
                                   transition-colors duration-300 rounded-sm text-xs 
-                                  flex items-center justify-center font-bold text-black relative z-10">
+                                  flex items-center justify-center font-bold text-black">
                     G
                   </div>
                 } 
               />
             )}
             
-            <SocialLink href={`mailto:${faculty.email}`} icon={<Mail size={14} />} />
+            <SocialLink href={`mailto:${faculty.email}`} icon={<Mail size={16} />} />
           </div>
         </div>
 
-        {/* Right Section - Faculty Information */}
-        <div className="flex-1 flex flex-col justify-between min-w-0 space-y-2 md:space-y-3">
+        {/* Faculty Information - Using flex-1 and flex column with justify-between */}
+        <div className="flex-1 flex flex-col min-w-0 h-full">
           
-          {/* Desktop Header Info */}
-          <div className="hidden md:block min-w-0">
-            <h3 className="text-xl lg:text-2xl xl:text-3xl font-bold mb-1 lg:mb-2 
-                           text-gray-200 leading-tight truncate drop-shadow-lg
+          {/* Header Info */}
+          <div className="flex-shrink-0 mb-4">
+            <h3 className="text-2xl md:text-3xl font-bold mb-2 
+                           text-gray-100 leading-tight
                            group-hover:text-green-100 transition-colors duration-300">
               {faculty.name}
             </h3>
-            <div className="text-base lg:text-lg xl:text-xl font-semibold mb-1 truncate 
+            <div className="text-lg md:text-xl font-semibold mb-2 
                             text-green-400 group-hover:text-green-300 transition-colors duration-300">
               {faculty.title}
             </div>
-            <p className="text-gray-400 text-sm lg:text-base mb-1 lg:mb-2 leading-relaxed truncate
+            <p className="text-gray-400 text-sm md:text-base mb-3 
                           group-hover:text-gray-300 transition-colors duration-300">
               {faculty.department}
             </p>
-            <p className="text-gray-500 text-xs lg:text-sm leading-relaxed line-clamp-2 lg:line-clamp-3
+            
+            <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 md:line-clamp-3
                           group-hover:text-gray-400 transition-colors duration-300">
               {faculty.description}
             </p>
           </div>
 
-          {/* Mobile Description */}
-          <div className="md:hidden min-w-0">
-            <p className="text-gray-400 text-sm mb-1 truncate
-                          group-hover:text-gray-300 transition-colors duration-300">
-              {faculty.department}
-            </p>
-            <p className="text-gray-500 text-xs leading-relaxed line-clamp-2
-                          group-hover:text-gray-400 transition-colors duration-300">
-              {faculty.description}
-            </p>
-          </div>
-
-          {/* Stats Section */}
-          <div className="flex flex-wrap gap-2 md:gap-3 lg:gap-4 justify-center md:justify-start py-2 md:py-3">
-            {renderMetrics()}
-          </div>
-
-          {/* Specialization Tags */}
-          <div className="w-full overflow-hidden">
-            <div className="flex flex-wrap gap-2 md:gap-2.5 justify-center md:justify-start pb-2 md:pb-0">
-              {faculty.specialization.slice(0, 4).map((skill, index) => (
-                <span 
-                  key={index} 
-                  className="relative bg-green-400/10 backdrop-blur-sm border border-green-400/25 
-                             px-2.5 py-1.5 md:px-3 md:py-1.5 lg:px-4 lg:py-2 
-                             rounded-lg md:rounded-xl lg:rounded-2xl 
-                             text-xs md:text-xs lg:text-sm font-semibold 
-                             transition-all duration-300 hover:bg-green-400/25 
-                             hover:-translate-y-1 whitespace-nowrap text-gray-400 
-                             shadow-lg hover:shadow-xl flex-shrink-0 hover:border-green-300/50
-                             group-hover:border-green-400/40 overflow-hidden"
-                >
-                  <span className="relative z-10 group-hover:text-green-200 transition-colors duration-300">
-                    {skill.length > 20 ? skill.substring(0, 18) + '...' : skill}
-                  </span>
-                </span>
-              ))}
-              {faculty.specialization.length > 4 && (
-                <span className="bg-green-400/10 backdrop-blur-sm border border-green-400/25 
-                                 px-2.5 py-1.5 md:px-3 md:py-1.5 lg:px-4 lg:py-2 
-                                 rounded-lg md:rounded-xl lg:rounded-2xl 
-                                 text-xs md:text-xs lg:text-sm 
-                                 font-semibold text-gray-400 flex-shrink-0
-                                 group-hover:text-green-200 transition-colors duration-300">
-                  +{faculty.specialization.length - 4}
-                </span>
-              )}
+          {/* Middle section that grows to fill space */}
+          <div className="flex-1 flex flex-col justify-center">
+            {/* Stats Section */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
+              {renderMetrics()}
             </div>
           </div>
 
-          {/* Mobile Social Links - Now visible for all faculty */}
-          <div className="flex md:hidden gap-3 justify-center pt-2 pb-1">
-            {faculty.linkedinUrl && (
-              <MobileSocialLink href={faculty.linkedinUrl} icon={<Linkedin size={14} />} />
-            )}
-            
-            {faculty.websiteUrl && (
-              <MobileSocialLink href={faculty.websiteUrl} icon={<Globe size={14} />} />
-            )}
-            
-            {faculty.googleScholarUrl && (
-              <MobileSocialLink 
-                href={faculty.googleScholarUrl} 
-                icon={
-                  <div className="w-3.5 h-3.5 bg-gray-300 hover:bg-green-200 transition-colors duration-300
-                                  rounded-sm text-xs flex items-center justify-center font-bold text-black">
-                    G
-                  </div>
-                } 
-              />
-            )}
-            
-            <MobileSocialLink href={`mailto:${faculty.email}`} icon={<Mail size={14} />} />
+          {/* Bottom section - Specialization Tags (consistent for all) */}
+          <div className="flex-shrink-0">
+            <div className="flex flex-wrap gap-2 justify-start">
+              {faculty.specialization.slice(0, 3).map((skill, index) => (
+                <span 
+                  key={index} 
+                  className="bg-gradient-to-r from-green-400/15 to-emerald-400/10 
+                             backdrop-blur-sm border border-green-400/30 
+                             px-3 py-1.5 rounded-xl text-xs md:text-sm font-medium 
+                             transition-all duration-300 hover:bg-green-400/25 
+                             text-gray-300 hover:text-green-200 
+                             hover:border-green-300/60 flex-shrink-0"
+                >
+                  {skill.length > 15 ? skill.substring(0, 13) + '...' : skill}
+                </span>
+              ))}
+              {faculty.specialization.length > 3 && (
+                <span className="bg-gradient-to-r from-green-400/15 to-emerald-400/10 
+                                 backdrop-blur-sm border border-green-400/30 
+                                 px-3 py-1.5 rounded-xl text-xs md:text-sm 
+                                 font-medium text-gray-300 flex-shrink-0">
+                  +{faculty.specialization.length - 3}
+                </span>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -303,14 +259,17 @@ const FacultyCard: React.FC<FacultyCardProps> = ({ faculty }) => {
   );
 };
 
-// Helper Components (unchanged)
+// Helper Components
 const MetricItem: React.FC<{ value: string; label: string }> = ({ value, label }) => (
-  <div className="text-center flex-shrink-0">
-    <div className="text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold 
-                    text-green-400 group-hover:text-green-300 transition-colors duration-300 drop-shadow-lg">
+  <div className="text-center group/metric">
+    <div className="text-xl md:text-2xl font-bold 
+                    text-green-400 group-hover:text-green-300 transition-colors duration-300 
+                    group-hover/metric:scale-110 transition-transform duration-300">
       {value}
     </div>
-    <div className="text-xs text-gray-500 uppercase tracking-wider">{label}</div>
+    <div className="text-xs text-gray-500 uppercase tracking-wide font-medium">
+      {label}
+    </div>
   </div>
 );
 
@@ -319,27 +278,13 @@ const SocialLink: React.FC<{ href: string; icon: React.ReactNode }> = ({ href, i
     href={href}
     target="_blank"
     rel="noopener noreferrer"
-    className="relative p-2 lg:p-2.5 bg-green-400/10 backdrop-blur-sm border border-green-400/30 
-               rounded-lg lg:rounded-xl transition-all duration-300 
-               hover:bg-green-400/25 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-400/30
-               hover:border-green-300/60 group/link overflow-hidden"
+    className="p-2.5 bg-green-400/15 backdrop-blur-sm border border-green-400/40 
+               rounded-xl transition-all duration-300 
+               hover:bg-green-400/30 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-400/40
+               hover:border-green-300/70 group/link
+               hover:scale-110"
   >
-    <div className="lg:w-4 lg:h-4 text-gray-300 group-hover/link:text-green-200 relative z-10 transition-colors duration-300">
-      {icon}
-    </div>
-  </a>
-);
-
-const MobileSocialLink: React.FC<{ href: string; icon: React.ReactNode }> = ({ href, icon }) => (
-  <a 
-    href={href}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="p-2 bg-green-400/10 backdrop-blur-sm border border-green-400/25 
-               rounded-lg transition-all duration-300 hover:bg-green-400/25 flex-shrink-0
-               hover:border-green-300/50 hover:shadow-lg hover:shadow-green-400/30"
-  >
-    <div className="text-gray-300 hover:text-green-200 transition-colors duration-300">
+    <div className="text-gray-300 group-hover/link:text-green-200 transition-colors duration-300">
       {icon}
     </div>
   </a>
