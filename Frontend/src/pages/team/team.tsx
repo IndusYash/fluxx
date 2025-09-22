@@ -4,7 +4,7 @@ import { Mail, Instagram, Linkedin, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import aryanImage from "../../assets/images/Aryan.webp";
 import ashishImage from "../../assets/images/ashish.jpg";
-import shivammishraImage from "../../assets/images/shivammishra.jpg";
+import shivammishraImage from "../../assets/images/shivamPic.jpg";
 import shivamsinghImage from "../../assets/images/shivamsingh.jpg";
 import vmishraImage from "../../assets/images/vmishra.jpg";
 import ysvImage from "../../assets/images/ysv.jpg";
@@ -46,7 +46,7 @@ const Team: React.FC = () => {
   const teamMembers: TeamMember[] = [
     {
       name: "Aman Kumar Rawat",
-      role: "ME-3rd Year",
+      role: "ME-Pre Final Year",
       email: "amankrawat.ds@gmail.com",
       linkedin: "https://www.linkedin.com/in/amankrrawat/",
       image: Aman || defaultImage
@@ -60,42 +60,42 @@ const Team: React.FC = () => {
     },
     {
       name: "Ananya",
-      role: "CE-3rd Year", 
+      role: "CE-Pre Final Year", 
       email: "ananyar0912@gmail.com",
       linkedin: "https://www.linkedin.com/in/ananya-mmmut",
       image: Ananya || defaultImage
     },
     {
       name: "Anushka Singh",
-      role: "CSE-3rd Year",
+      role: "CSE-Pre Final Year",
       email: "anuskajiya@gmail.com", // Changed from empty string to explicit N/A
       linkedin: "https://www.linkedin.com/in/anushkasingh-a18a25318/",  
      image: Anushka || defaultImage
     },
     {
       name: "Ashish Kumar Yadav",
-      role: "CSE-3rd Year",
+      role: "CSE-Pre Final Year",
       email: "kumaryadavashish390@gmail.com",
       linkedin: "https://in.linkedin.com/in/ashish-yadav-040730225",
       image: ashishImage || defaultImage
     },
     {
       name: "Aviral Omar", 
-      role: "ChE-3rd Year",
+      role: "ChE-Pre Final Year",
       email: "N/A", // Changed from empty string
       linkedin: "N/A", // Changed from empty string
       image: Aviral // Use placeholder for missing image
     },
     {
       name: "Aryan S Shandilya",
-      role: "CSE-3rd Year",
+      role: "CSE-Pre Final Year",
       email: "aryanacc28@gmail.com", 
       linkedin: "https://www.linkedin.com/in/aryan-s-shandilya?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
       image: aryanImage || defaultImage
     },
     {
       name: "Pradyumn Agrahari",
-      role: "CSE-3rd Year",
+      role: "CSE-Pre Final Year",
       email: "pradyumnagrahari111@gmail.com",
       linkedin: "https://www.linkedin.com/in/pradyumn-a-09b209277?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app", 
       image: Prad || defaultImage
@@ -109,56 +109,56 @@ const Team: React.FC = () => {
     },
     {
       name: "Riya Verma",
-      role: "CSE-3rd Year", 
+      role: "CSE-Pre Final Year", 
       email: "riya.verma7202@gmail.com",
       linkedin: "https://www.linkedin.com/in/riya-verma-28b461289/",
       image: RiyaImage || defaultImage
     },
     {
       name: "Shivam Mishra",
-      role: "CSE-3rd Year",
+      role: "CSE-Pre Final Year",
       email: "shivammishra01329@gmail.com",
       linkedin: "https://www.linkedin.com/in/shiv9918",
       image: shivammishraImage || defaultImage
     },
     {
       name: "Shivam Singh", 
-      role: "CSE-3rd Year",
+      role: "CSE-Pre Final Yearr",
       email: "shivamsingh221045@gmail.com",
       linkedin: "https://www.linkedin.com/in/shivam451/",
       image: shivamsinghImage || defaultImage
     },
     {
       name: "Shubham Rai",
-      role: "CSE-3rd year",
+      role: "CSE-Pre Final Year",
       email: "kuvar2003@gmail.com", 
       linkedin: "https://www.linkedin.com/in/shubham-rai-866b2b294/",
       image: Shubham || defaultImage
     },
     {
       name: "Tamanna Sharma",
-      role: "EE-3rd Year",
+      role: "EE-Pre Final Year",
       email: "tamanna.sharma9929knp@gmail.com",
       linkedin: "https://www.linkedin.com/in/tamanna-sharma-b3290a294/",
       image: Tamanna || defaultImage
     },
     {
       name: "Vishesh mishra", 
-      role: "CSE-3rd year",
+      role: "CSE-Pre Final Year",
       email: "mishravishesh1403@gmail.com",
       linkedin: "https://www.linkedin.com/in/vishesh-mishra-372784218/",
       image: vmishraImage || defaultImage
     },
     {
       name: "Yashasvi Sharma",
-      role: "CSE-3rd year",
+      role: "CSE-Pre Final Year",
       email: "yashasvisharma650@gmail.com", 
       linkedin: "https://www.linkedin.com/in/yashasvi-sharma-688245294",
       image: ysvImage || defaultImage
     },
     {
       name: "Yashvardhan Ojha",
-      role: "CSE-3rd Year", 
+      role: "CSE-Pre Final Year", 
       email: "2023021270@mmmut.ac.in",
       linkedin: "https://www.linkedin.com/in/yashvardhann/",
       image: threeMImage || defaultImage
