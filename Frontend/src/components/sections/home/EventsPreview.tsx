@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Calendar, Clock, Users, Zap, Brain } from "lucide-react";
 
+
 // Particle System (stars in bg)
 interface Particle {
   x: number;
@@ -11,9 +12,11 @@ interface Particle {
   speedY: number;
 }
 
+
 const ParticleSystem = ({ isActive }: { isActive: boolean }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particles: Particle[] = [];
+
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -21,12 +24,14 @@ const ParticleSystem = ({ isActive }: { isActive: boolean }) => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
     resize();
     window.addEventListener("resize", resize);
+
 
     for (let i = 0; i < 60; i++) {
       particles.push({
@@ -38,6 +43,7 @@ const ParticleSystem = ({ isActive }: { isActive: boolean }) => {
       });
     }
 
+
     const animate = () => {
       if (!ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -47,8 +53,10 @@ const ParticleSystem = ({ isActive }: { isActive: boolean }) => {
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
 
+
         p.x += p.speedX;
         p.y += p.speedY;
+
 
         if (p.x < 0) p.x = canvas.width;
         if (p.x > canvas.width) p.x = 0;
@@ -56,15 +64,19 @@ const ParticleSystem = ({ isActive }: { isActive: boolean }) => {
         if (p.y > canvas.height) p.y = 0;
       });
 
+
       requestAnimationFrame(animate);
     };
 
+
     if (isActive) animate();
+
 
     return () => {
       window.removeEventListener("resize", resize);
     };
   }, [isActive]);
+
 
   return (
     <canvas
@@ -74,6 +86,7 @@ const ParticleSystem = ({ isActive }: { isActive: boolean }) => {
     />
   );
 };
+
 
 // Floating blurred circles
 const FloatingElements = () => {
@@ -85,9 +98,11 @@ const FloatingElements = () => {
   );
 };
 
+
 // Glowing Planet Background
 const PlanetBackground = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -103,8 +118,10 @@ const PlanetBackground = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+
   const glowOpacity = 0.7 + scrollProgress * 0.3; // 0.7 → 1.0
   const glowBlur = 20 + scrollProgress * 40; // 20 → 60 px
+
 
   return (
     <div className="absolute inset-0 flex items-end justify-center bg-black overflow-hidden -z-20 pointer-events-none">
@@ -132,6 +149,7 @@ const PlanetBackground = () => {
         />
       </div>
 
+
       {/* Twinkling stars */}
       {[...Array(40)].map((_, i) => (
         <div
@@ -155,190 +173,196 @@ const PlanetBackground = () => {
   );
 };
 
-// EventCard component
-interface EventItem {
-  id: number;
-  title: string;
-  date: string;
-  type: string;
-  icon: JSX.Element;
-  participants: string;
-  description: string;
-  iconBg: string;
-  tagColor: string;
-  tagBg: string;
-}
 
-const EventCard = ({
-  event,
-  index,
-  onHover,
-}: {
-  event: EventItem;
-  index: number;
-  onHover: (e: EventItem) => void;
-}) => {
-  return (
-    <div
-      className="p-6 rounded-2xl bg-black/60 backdrop-blur-sm border border-white/10 shadow-lg hover:shadow-xl hover:scale-105 transition transform duration-300 cursor-pointer"
-      onMouseEnter={() => onHover(event)}
-      style={{ animationDelay: `${index * 200}ms` }}
-    >
-      <div className="flex items-center space-x-4 mb-4">
-        <div className={`p-3 rounded-xl ${event.iconBg}`}>{event.icon}</div>
-        <div>
-          <h3 className="text-xl font-bold">{event.title}</h3>
-          <p className="text-sm text-gray-400">{event.date}</p>
-        </div>
-      </div>
-      <p className="text-gray-300 mb-4">{event.description}</p>
-      <div className="flex items-center justify-between text-sm text-gray-400">
-        <span
-          className={`px-3 py-1 rounded-full text-xs ${event.tagColor} ${event.tagBg}`}
-        >
-          {event.type}
-        </span>
-        <span>{event.participants} participants</span>
-      </div>
-    </div>
-  );
-};
+// EventCard component
+// interface EventItem {
+//   id: number;
+//   title: string;
+//   date: string;
+//   type: string;
+//   icon: JSX.Element;
+//   participants: string;
+//   description: string;
+//   iconBg: string;
+//   tagColor: string;
+//   tagBg: string;
+// }
+
+
+// const EventCard = ({
+//   event,
+//   index,
+//   onHover,
+// }: {
+//   event: EventItem;
+//   index: number;
+//   onHover: (e: EventItem) => void;
+// }) => {
+//   return (
+//     <div
+//       className="p-6 rounded-2xl bg-black/60 backdrop-blur-sm border border-white/10 shadow-lg hover:shadow-xl hover:scale-105 transition transform duration-300 cursor-pointer"
+//       onMouseEnter={() => onHover(event)}
+//       style={{ animationDelay: `${index * 200}ms` }}
+//     >
+//       <div className="flex items-center space-x-4 mb-4">
+//         <div className={`p-3 rounded-xl ${event.iconBg}`}>{event.icon}</div>
+//         <div>
+//           <h3 className="text-xl font-bold">{event.title}</h3>
+//           <p className="text-sm text-gray-400">{event.date}</p>
+//         </div>
+//       </div>
+//       <p className="text-gray-300 mb-4">{event.description}</p>
+//       <div className="flex items-center justify-between text-sm text-gray-400">
+//         <span
+//           className={`px-3 py-1 rounded-full text-xs ${event.tagColor} ${event.tagBg}`}
+//         >
+//           {event.type}
+//         </span>
+//         <span>{event.participants} participants</span>
+//       </div>
+//     </div>
+//   );
+// };
+
 
 // Main Page
 export default function ModernEventsPreview() {
-  const [, setSelectedEvent] = useState<EventItem | null>(null);
+  // const [, setSelectedEvent] = useState<EventItem | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
-  const navigate = useNavigate();
-  const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const updateMobile = () => setIsMobile(window.innerWidth < 768);
-    updateMobile(); // check once on mount
-    window.addEventListener("resize", updateMobile);
-    return () => window.removeEventListener("resize", updateMobile);
-  }, []);
+  // const navigate = useNavigate();
+  // const [isMobile, setIsMobile] = useState(false);
 
-  const handleEventsClick = () => {
-    if (isMobile) {
-      document.getElementById("events")?.scrollIntoView({ behavior: "smooth" });
-    } else {
-      navigate("/events");
-    }
-  };
 
-  const events: EventItem[] = [
-    {
-      id: 1,
-      title: "Hack-e-thon Series",
-      date: "Sep 15 – 16",
-      type: "Competition",
-      icon: <Zap className="w-6 h-6 text-orange-400" />,
-      participants: "120+",
-      description:
-        "24-48 hour coding challenges focused on real-world problems with cutting-edge tech stacks",
-      iconBg: "bg-orange-500/20",
-      tagColor: "text-orange-400",
-      tagBg: "bg-orange-500/20",
-    },
-    {
-      id: 2,
-      title: "Annual Research Conclave",
-      date: "Oct 20 – 22",
-      type: "Conference",
-      icon: <Brain className="w-6 h-6 text-blue-400" />,
-      participants: "200+",
-      description:
-        "Invited talks, panel discussions, and technical workshops with industry experts and researchers",
-      iconBg: "bg-blue-500/20",
-      tagColor: "text-blue-400",
-      tagBg: "bg-blue-500/20",
-    },
-    {
-      id: 3,
-      title: "Tech Conferences",
-      date: "Nov 8 – 10",
-      type: "Conference",
-      icon: <Users className="w-6 h-6 text-purple-400" />,
-      participants: "150+",
-      description:
-        "Student-led conferences with paper submissions and presentations on emerging technologies",
-      iconBg: "bg-purple-500/20",
-      tagColor: "text-purple-400",
-      tagBg: "bg-purple-500/20",
-    },
-  ];
+  // useEffect(() => {
+  //   const updateMobile = () => setIsMobile(window.innerWidth < 768);
+  //   updateMobile(); // check once on mount
+  //   window.addEventListener("resize", updateMobile);
+  //   return () => window.removeEventListener("resize", updateMobile);
+  // }, []);
 
-  const onHover = (event: EventItem) => {
-    setSelectedEvent(event);
-  };
 
-  return (
-    <div className="relative min-h-screen overflow-hidden bg-black text-white">
-      {/* Background Layers */}
-      <PlanetBackground />
-      <ParticleSystem isActive={true} />
-      <FloatingElements />
+  // const handleEventsClick = () => {
+  //   if (isMobile) {
+  //     document.getElementById("events")?.scrollIntoView({ behavior: "smooth" });
+  //   } else {
+  //     navigate("/events");
+  //   }
+  // };
 
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 py-16">
-        {/* Header */}
-        <div
-          className={`text-center mb-16 transform transition-all duration-1000 ${
-            isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
-          }`}
-        >
-          <h1 className="text-6xl md:text-8xl font-black bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-6 drop-shadow-lg">
-            Upcoming <br />
-            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Events
-            </span>
-          </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Stay in the loop with our latest workshops, meetups, and tech
-            festivals designed to{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-400 font-semibold animate-pulse">
-              spark your curiosity
-            </span>
-            .
-          </p>
-          <div className="mt-8">
-            {/* <button
-              onClick={handleEventsClick}
-              className="inline-flex items-center justify-center rounded-md px-5 py-3 font-medium bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-lg hover:shadow-purple-500/30 transition transform hover:scale-105"
-            >
-              🎯 View All Events →
-            </button> */}
-          </div>
-        </div>
 
-        {/* Events */}
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mb-16">
-          {events.map((event, index) => (
-            <EventCard
-              key={event.id}
-              event={event}
-              index={index}
-              onHover={onHover}
-            />
-          ))}
-        </div>
+  // const events: EventItem[] = [
+  //   {
+  //     id: 1,
+  //     title: "Hack-e-thon Series",
+  //     date: "Sep 15 – 16",
+  //     type: "Competition",
+  //     icon: <Zap className="w-6 h-6 text-orange-400" />,
+  //     participants: "120+",
+  //     description:
+  //       "24-48 hour coding challenges focused on real-world problems with cutting-edge tech stacks",
+  //     iconBg: "bg-orange-500/20",
+  //     tagColor: "text-orange-400",
+  //     tagBg: "bg-orange-500/20",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Annual Research Conclave",
+  //     date: "Oct 20 – 22",
+  //     type: "Conference",
+  //     icon: <Brain className="w-6 h-6 text-blue-400" />,
+  //     participants: "200+",
+  //     description:
+  //       "Invited talks, panel discussions, and technical workshops with industry experts and researchers",
+  //     iconBg: "bg-blue-500/20",
+  //     tagColor: "text-blue-400",
+  //     tagBg: "bg-blue-500/20",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Tech Conferences",
+  //     date: "Nov 8 – 10",
+  //     type: "Conference",
+  //     icon: <Users className="w-6 h-6 text-purple-400" />,
+  //     participants: "150+",
+  //     description:
+  //       "Student-led conferences with paper submissions and presentations on emerging technologies",
+  //     iconBg: "bg-purple-500/20",
+  //     tagColor: "text-purple-400",
+  //     tagBg: "bg-purple-500/20",
+  //   },
+  // ];
 
-        {/* Footer */}
-        <div className="text-center text-gray-400">
-          <div className="flex items-center justify-center space-x-2">
-            <Clock className="w-5 h-5 text-blue-400" />
-            <span className="text-lg font-medium">
-              More exciting events coming soon
-            </span>
-            <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+
+  // const onHover = (event: EventItem) => {
+  //   setSelectedEvent(event);
+  // };
+
+
+  // return (
+  //   // <div className="relative min-h-screen overflow-hidden bg-black text-white">
+  //   //   {/* Background Layers */}
+  //   //   <PlanetBackground />
+  //   //   <ParticleSystem isActive={true} />
+  //   //   <FloatingElements />
+
+
+  //   //   {/* Content */}
+  //   //   {/* <div className="relative z-10 container mx-auto px-6 py-16">
+  //   //     <div
+  //   //       className={`text-center mb-16 transform transition-all duration-1000 ${
+  //   //         isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+  //   //       }`}
+  //   //     >
+  //   //       <h1 className="text-6xl md:text-8xl font-black bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-6 drop-shadow-lg">
+  //   //         Upcoming <br />
+  //   //         <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+  //   //           Events
+  //   //         </span>
+  //   //       </h1>
+  //   //       <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+  //   //         Stay in the loop with our latest workshops, meetups, and tech
+  //   //         festivals designed to{" "}
+  //   //         <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-400 font-semibold animate-pulse">
+  //   //           spark your curiosity
+  //   //         </span>
+  //   //         .
+  //   //       </p>
+  //   //       <div className="mt-8">
+  //   //         <button
+  //   //           onClick={handleEventsClick}
+  //   //           className="inline-flex items-center justify-center rounded-md px-5 py-3 font-medium bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-lg hover:shadow-purple-500/30 transition transform hover:scale-105"
+  //   //         >
+  //   //           🎯 View All Events →
+  //   //         </button>
+  //   //       </div>
+  //   //     </div>
+  //   //     <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mb-16">
+  //   //       {events.map((event, index) => (
+  //   //         <EventCard
+  //   //           key={event.id}
+  //   //           event={event}
+  //   //           index={index}
+  //   //           onHover={onHover}
+  //   //         />
+  //   //       ))}
+  //   //     </div>
+  //   //     <div className="text-center text-gray-400">
+  //   //       <div className="flex items-center justify-center space-x-2">
+  //   //         <Clock className="w-5 h-5 text-blue-400" />
+  //   //         <span className="text-lg font-medium">
+  //   //           More exciting events coming soon
+  //   //         </span>
+  //   //         <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
+  //   //       </div>
+  //   //     </div>
+  //   //   </div> */}
+  //   // </div>
+  // );
 }
