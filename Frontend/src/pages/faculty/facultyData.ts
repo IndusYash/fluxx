@@ -2,8 +2,7 @@ import SatvikSir from '../../assets/images/SatvikSir.jpg';
 import shwetSir from '../../assets/images/shwetSir.jpeg';
 import SatyaSir from '../../assets/images/SatyaSir.jpeg';
 import ShantanuSir from '../../assets/images/ShantanuSir.jpg';
-
- import hod from '../../assets/images/RakeshSir.jpg';
+import hod from '../../assets/images/RakeshSir.jpg';
 
 export interface FacultyMember {
   id: number;
@@ -34,24 +33,59 @@ export interface FacultyMember {
   areasOfExpertise?: string;
   review?: string;
   
-  // New field to identify HOD
+  // New fields for HOD
   isHOD?: boolean;
+  qualification?: string;
+  teachingExperienceUG?: number;
+  teachingExperiencePG?: number;
+  seminarsOrganised?: number;
+  seminarsAttended?: number;
+  memberships?: string[];
+  mtechSupervised?: number;
+  phdSupervised?: number;
+  additionalInfo?: string;
 }
 
 export const facultyData: FacultyMember[] = [
-  // HOD Position: Prof. Rakesh Kumar (First position, stats hidden)
+  // HOD Position: Prof. Rakesh Kumar (Complete profile)
   {
     id: 0, // Using ID 0 for HOD
     name: "Prof. Rakesh Kumar",
-    title: "Head of Department",
+    title: "Professor & Head",
     department: "Computer Science and Engineering",
-    specialization: [],
-    email: "	rkiitr@gmail.com", // Update with actual email
+    specialization: [
+      "Mobile & Distributed Computing",
+      "Internet of Things",
+      "Sensor Networks", 
+      "Network Security",
+      "Machine Learning",
+      "Cloud Computing",
+      "Image Processing"
+    ],
+    email: "rkiitr@gmail.com",
     phone: "+91-XXXXXXXXXX", // Update with actual phone
-    profileImage: hod, // Replace with RakeshSir when image is available
-    description: "Under the close supervision of our Head of Department, leading the Computer Science and Engineering department with vision and excellence in academic and research pursuits.",
-    isHOD: true, // This flag will hide stats
-    // No stats/metrics for HOD as requested
+    profileImage: hod,
+    description: "Leading the Computer Science and Engineering department with extensive expertise in mobile computing, IoT, and distributed systems. Committed to academic excellence and research innovation.",
+    isHOD: true,
+    
+    // Academic Details from the image
+    qualification: "PhD/IIT Roorkee",
+    teachingExperienceUG: 32,
+    teachingExperiencePG: 28,
+    seminarsOrganised: 16,
+    seminarsAttended: 45,
+    memberships: [
+      "IEEE",
+      "FIE(India)",
+      "FIETE", 
+      "CSI",
+      "ISTE",
+      "ACM",
+      "IAENG"
+    ],
+    mtechSupervised: 32,
+    phdSupervised: 12,
+    additionalInfo: "Head, Computer Science and Engineering since July 01, 2025 • Member Board of Management (BoM), MMMUT • Member Finance Committee, MMMUT • Member Academic Council, MMMUT • Ex. Dean Research & Development and Professional Practices • Ex. Head, Computer Science and Engineering department • Ex. Dean of Student Affairs, MMMUT Gorakhpur • Ex. Chief Warden, MMMUT Gorakhpur • Ex. Chairman Council of Students Activity (CSA) • Ex. Chairman University Health Centre • Recipient of Best Teacher Award"
   },
 
   // 1st Position: Dr. Satya Prakash Yadav (Google Scholar kept)
@@ -91,8 +125,7 @@ export const facultyData: FacultyMember[] = [
     patents: "20+",
     projectPublications: "75+",
     booksPublished: "4+",
-    internationalPublications: "18+",
-    // organisations: "10+"
+    internationalPublications: "18+"
   },
 
   // 3rd Position: Dr. Shwet Ketu (Google Scholar removed)
@@ -113,7 +146,7 @@ export const facultyData: FacultyMember[] = [
     internationalConferences: "4+",
     internationalPublications: "13+",
     organisations: "5+",
-    review: "10",
+    review: "10"
   },
 
   // 4th Position: Dr. Shantanu Shahi (no Google Scholar)
@@ -131,6 +164,6 @@ export const facultyData: FacultyMember[] = [
     skills: 10,
     areasOfExpertise: "8+",
     publications: 2,
-    review: "8",
-  },
+    review: "8"
+  }
 ];
