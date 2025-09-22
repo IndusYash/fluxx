@@ -1,26 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
-
 import FacultyCard from './FacultyCard';
 import { facultyData } from './facultyData';
 
-
-// Custom hook to detect when element is in viewport
+// Optimized viewport detection hook
 function useOnScreen(ref: React.RefObject<HTMLDivElement>) {
   const [isIntersecting, setIntersecting] = useState(false);
-
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setIntersecting(entry.isIntersecting),
-      { threshold: 0.1 }
+      { threshold: 0.2 }
     );
-
-
     if (ref.current) {
       observer.observe(ref.current);
     }
-
-
     return () => {
       if (ref.current) {
         observer.unobserve(ref.current);
@@ -28,204 +21,256 @@ function useOnScreen(ref: React.RefObject<HTMLDivElement>) {
     };
   }, [ref]);
 
-
   return isIntersecting;
 }
 
-
 const FacultyPage: React.FC = () => {
+  // Filter faculty data
+  const hodFaculty = facultyData.filter(faculty =>
+    faculty.name.toLowerCase().includes('rakesh kumar') ||
+    faculty.title.toLowerCase().includes('head of department') ||
+    faculty.title.toLowerCase().includes('hod')
+  );
+
+  const coordinatorsFaculty = facultyData.filter(faculty =>
+    !faculty.name.toLowerCase().includes('rakesh kumar') &&
+    !faculty.title.toLowerCase().includes('head of department') &&
+    !faculty.title.toLowerCase().includes('hod')
+  );
+
   return (
     <>
       <style>
         {`
-          @keyframes floatX {
-            0%, 100% { transform: translateX(0) translateY(0); }
-            33% { transform: translateX(30px) translateY(-20px); }
-            66% { transform: translateX(-30px) translateY(20px); }
+          /* Optimized animations with will-change for GPU acceleration */
+          @keyframes fadeInUp {
+            from {
+              opacity: 0;
+              transform: translate3d(0, 30px, 0);
+            }
+            to {
+              opacity: 1;
+              transform: translate3d(0, 0, 0);
+            }
           }
-          @keyframes floatY {
-            0%, 100% { transform: translateY(0) translateX(0); }
-            50% { transform: translateY(-40px) translateX(15px); }
+
+          @keyframes slideInLeft {
+            from {
+              opacity: 0;
+              transform: translate3d(-50px, 0, 0);
+            }
+            to {
+              opacity: 1;
+              transform: translate3d(0, 0, 0);
+            }
           }
-          @keyframes drift {
-            0% { transform: translateX(-100px) translateY(0); }
-            100% { transform: translateX(100vw) translateY(-50px); }
+
+          @keyframes slideInRight {
+            from {
+              opacity: 0;
+              transform: translate3d(50px, 0, 0);
+            }
+            to {
+              opacity: 1;
+              transform: translate3d(0, 0, 0);
+            }
           }
-          @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+
+          @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
           }
-          .animate-floatX {
-            animation: floatX 8s ease-in-out infinite;
+
+          @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
           }
-          .animate-floatY {
-            animation: floatY 6s ease-in-out infinite;
+
+          /* Stable animation classes */
+          .animate-fadeInUp {
+            animation: fadeInUp 0.8s ease-out forwards;
+            will-change: transform, opacity;
           }
-          .animate-drift {
-            animation: drift 15s linear infinite;
+
+          .animate-slideInLeft {
+            animation: slideInLeft 0.8s ease-out forwards;
+            will-change: transform, opacity;
           }
-          .animate-float {
-            animation: float 4s ease-in-out infinite;
+
+          .animate-slideInRight {
+            animation: slideInRight 0.8s ease-out forwards;
+            will-change: transform, opacity;
           }
-          
-          /* Custom scroll animation classes for top-to-bottom effect */
-          .card-hidden {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+
+          .animate-gentleFloat {
+            animation: gentleFloat 4s ease-in-out infinite;
+            will-change: transform;
           }
-          
-          .card-visible {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+
+          .animate-gradientFlow {
+            animation: gradientFlow 8s ease-in-out infinite;
+            background-size: 200% 200%;
+            will-change: background-position;
+          }
+
+          /* Stable card transitions */
+          .card-container {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+          }
+
+          .card-container:hover {
+            transform: translateY(-5px) scale(1.02);
+          }
+
+          /* Reduced particle system for better performance */
+          .particle {
+            will-change: transform;
+            backface-visibility: hidden;
+          }
+
+          /* Prevent layout shifts */
+          .section-container {
+            contain: layout style paint;
+          }
+
+          /* Two column grid for faculty coordinators */
+          .faculty-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+          }
+
+          /* Responsive breakpoints for grid */
+          @media (max-width: 768px) {
+            .faculty-grid {
+              grid-template-columns: 1fr;
+              gap: 1.5rem;
+            }
           }
         `}
       </style>
       
-      {/* Pure black background */}
-      <div className="min-h-screen relative overflow-hidden bg-black">
+      {/* Stable background with minimal effects */}
+      <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-950 via-slate-900 to-black text-white">
         
-        {/* Reduced Particles for Better Performance */}
-        <div className="fixed inset-0 pointer-events-none z-[1] overflow-hidden">
-          {/* FloatX particles - reduced to 15 */}
-          {[...Array(15)].map((_, i) => (
-            <div
-              key={`floatX-${i}`}
-              className="absolute rounded-full bg-green-400/30 animate-floatX"
-              style={{
-                width: `${Math.random() * 8 + 3}px`,
-                height: `${Math.random() * 8 + 3}px`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 8}s`,
-              }}
-            />
-          ))}
-
-
-          {/* FloatY particles - reduced to 15 */}
-          {[...Array(15)].map((_, i) => (
-            <div
-              key={`floatY-${i}`}
-              className="absolute rounded-full bg-emerald-400/25 animate-floatY"
-              style={{
-                width: `${Math.random() * 6 + 2}px`,
-                height: `${Math.random() * 6 + 2}px`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 6}s`,
-              }}
-            />
-          ))}
-
-
-          {/* Drift particles - reduced to 8 */}
+        {/* Simplified particle system - much fewer particles */}
+        <div className="fixed inset-0 pointer-events-none z-[1] opacity-30">
+          {/* Reduced to 8 particles only */}
           {[...Array(8)].map((_, i) => (
             <div
-              key={`drift-${i}`}
-              className="absolute rounded-full bg-teal-400/20 animate-drift"
+              key={`particle-${i}`}
+              className="absolute particle animate-gentleFloat"
               style={{
-                width: `${Math.random() * 4 + 2}px`,
-                height: `${Math.random() * 4 + 2}px`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 15}s`,
+                left: `${10 + (i * 12)}%`,
+                top: `${20 + (i * 8)}%`,
+                animationDelay: `${i * 1}s`,
               }}
-            />
-          ))}
-
-
-          {/* Simple float particles - reduced to 20 */}
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={`float-${i}`}
-              className="absolute rounded-full bg-green-300/15 animate-float"
-              style={{
-                width: `${Math.random() * 5 + 1}px`,
-                height: `${Math.random() * 5 + 1}px`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 4}s`,
-              }}
-            />
-          ))}
-        </div>
-
-
-        {/* ✅ HEADER SECTION ✅ */}
-        <div className="relative z-10 text-center pt-6 pb-8 px-4 md:px-5">
-          <div className="max-w-6xl mx-auto">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl 
-                           font-display font-black mb-4 md:mb-6 
-                           bg-gradient-to-r from-gray-200 via-green-400 via-blue-400 via-purple-400 via-green-400 to-gray-200 
-                           bg-clip-text text-transparent bg-[length:400%_400%]
-                           leading-tight tracking-wide px-2 animate-pulse">
-              FACULTY <span className="bg-gradient-to-r from-green-400 via-emerald-400 via-teal-400 to-green-400 
-                                     bg-clip-text text-transparent bg-[length:200%_200%] animate-bounce">
-                COORDINATORS
-              </span>
-            </h1>
-
-
-            <p className="text-gray-400 text-lg md:text-xl lg:text-2xl xl:text-3xl 
-                          leading-relaxed mb-6 
-                          max-w-sm md:max-w-3xl lg:max-w-4xl mx-auto font-sans px-4">
-              Meet our distinguished faculty coordinators who are experts in their respective fields
-            </p>
-            
-            <div className="flex items-center justify-center gap-4 md:gap-6 lg:gap-8 mt-6">
-              <div className="w-16 h-0.5 md:w-24 md:h-1 lg:w-32 lg:h-1 
-                              bg-gradient-to-r from-transparent via-green-400 via-blue-400 to-transparent 
-                              rounded-full animate-pulse"></div>
-              <div className="relative">
-                <div className="w-4 h-4 md:w-5 md:h-5 
-                                bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 
-                                rounded-full shadow-lg animate-spin"></div>
-                <div className="absolute inset-0 w-4 h-4 md:w-5 md:h-5 
-                                bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 
-                                rounded-full animate-ping opacity-60"></div>
-              </div>
-              <div className="w-16 h-0.5 md:w-24 md:h-1 lg:w-32 lg:h-1 
-                              bg-gradient-to-r from-transparent via-blue-400 via-green-400 to-transparent 
-                              rounded-full animate-pulse"></div>
+            >
+              <div className="w-2 h-2 rounded-full bg-blue-400/40 shadow-lg" />
             </div>
-          </div>
+          ))}
         </div>
 
+        {/* Stable HOD Section */}
+        {hodFaculty.length > 0 && (
+          <section className="section-container relative z-10 text-center py-16 px-4 md:px-8">
+            <div className="max-w-6xl mx-auto">
+              {/* Simplified header */}
+              <div className="mb-12">
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
+                  <span className="inline-block animate-gradientFlow bg-gradient-to-r from-blue-400 via-purple-500 to-blue-400 bg-clip-text text-transparent">
+                    UNDER GUIDANCE
+                  </span>
+                </h1>
+                
+                <p className="text-gray-300 text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto leading-relaxed">
+                  Leading with excellence and inspiring with vision
+                </p>
+              </div>
 
-        {/* Faculty Cards Grid with Top-to-Bottom Scroll Animation */}
-        <div className="relative z-10 px-6 md:px-8 lg:px-10 pb-16 md:pb-20 lg:pb-28">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
-            {facultyData.map((faculty, index) => {
-              const ref = useRef<HTMLDivElement>(null);
-              const isVisible = useOnScreen(ref);
-              const isCenter = faculty.id === 0;
+              {/* Stable HOD card */}
+              <div className="flex justify-center">
+                {hodFaculty.map((faculty, index) => {
+                  const ref = useRef<HTMLDivElement>(null);
+                  const isVisible = useOnScreen(ref);
+                  
+                  return (
+                    <div 
+                      key={faculty.id} 
+                      ref={ref}
+                      className={`card-container max-w-4xl ${
+                        isVisible ? 'animate-fadeInUp' : 'opacity-0'
+                      }`}
+                      style={{ 
+                        animationDelay: isVisible ? `${index * 200}ms` : '0ms'
+                      }}
+                    >
+                      <FacultyCard faculty={faculty} />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        )}
 
-              // If it's the center card, span both columns on md+ and center the inner card
-              const containerClasses = isCenter ? 'col-span-1 md:col-span-2 flex justify-center items-start' : '';
-              // Make the featured card wider on md+ so name + description have room
-              const cardWidthClasses = isCenter ? 'w-full md:w-2/3 lg:w-1/2' : 'w-full';
+        {/* Stable Faculty Coordinators Section */}
+        {coordinatorsFaculty.length > 0 && (
+          <section className="section-container relative z-10 text-center py-16 px-4 md:px-8">
+            <div className="max-w-6xl mx-auto">
+              {/* Simplified header */}
+              <div className="mb-12">
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
+                  <span className="inline-block animate-gradientFlow bg-gradient-to-r from-green-400 via-emerald-500 to-green-400 bg-clip-text text-transparent">
+                    FACULTY COORDINATORS
+                  </span>
+                </h1>
+                
+                <p className="text-gray-300 text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto leading-relaxed">
+                  Meet our distinguished faculty experts
+                </p>
+              </div>
 
-              return (
-                <div key={faculty.id} className={containerClasses}>
-                  <div
-                    ref={ref}
-                    className={`${isVisible ? 'card-visible' : 'card-hidden'} ${cardWidthClasses}`}
-                    style={{ 
-                      transitionDelay: isVisible ? `${index * 150}ms` : '0ms' 
-                    }}
-                  >
-                    <FacultyCard faculty={faculty} featured={isCenter} />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+              {/* Two column grid layout for faculty coordinators */}
+              <div className="faculty-grid">
+                {coordinatorsFaculty.map((faculty, index) => {
+                  const ref = useRef<HTMLDivElement>(null);
+                  const isVisible = useOnScreen(ref);
+                  const isEven = index % 2 === 0;
+                  
+                  return (
+                    <div 
+                      key={faculty.id} 
+                      ref={ref}
+                      className={`card-container ${
+                        isVisible 
+                          ? (isEven ? 'animate-slideInLeft' : 'animate-slideInRight')
+                          : 'opacity-0'
+                      }`}
+                      style={{ 
+                        animationDelay: isVisible ? `${index * 200}ms` : '0ms'
+                      }}
+                    >
+                      <FacultyCard faculty={faculty} />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Simple bottom spacing */}
+        <div className="h-16 bg-gradient-to-t from-black/50 to-transparent" />
       </div>
     </>
   );
 };
-
 
 export default FacultyPage;
