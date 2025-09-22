@@ -68,7 +68,7 @@ const Team: React.FC = () => {
     {
       name: "Anushka Singh",
       role: "CSE-Pre Final Year",
-      email: "anuskajiya@gmail.com", // Changed from empty string to explicit N/A
+      email: "anuskajiya@gmail.com", 
       linkedin: "https://www.linkedin.com/in/anushkasingh-a18a25318/",  
      image: Anushka || defaultImage
     },
