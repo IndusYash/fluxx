@@ -61,11 +61,11 @@ export default function Footer() {
                     Home
                   </a>
                 </li>
-                <li>
+                {/* <li>
                   <a href="events" className="hover:text-white cursor-pointer">
                     Events
                   </a>
-                </li>
+                </li> */}
                 <li>
                   <a href="team" className="hover:text-white cursor-pointer">
                     Our Team

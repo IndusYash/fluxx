@@ -6,7 +6,7 @@ import MobileNavbar from "./MobileNavbar";
 import HomePage from "@/pages/home";
 import AboutPage from "@/pages/about/AboutPage";
 import FacultyPage from "@/pages/faculty/FacultyPage";
-import EventsPage from "@/pages/events/events";
+// import EventsPage from "@/pages/events/events";
 import ContactPage from "@/pages/contact/contact";
 import TeamPage from "@/pages/team/team";
 
@@ -68,9 +68,9 @@ export default function MobileLayout({ isMobile }: MobileLayoutProps) {
         <FacultyPage isMobile={isMobile} />
       </section>
 
-      <section id="events" className="pt-16 scroll-mt-16 px-4 max-w-md mx-auto">
+      {/* <section id="events" className="pt-16 scroll-mt-16 px-4 max-w-md mx-auto">
         <EventsPage isMobile={isMobile} />
-      </section>
+      </section> */}
 
       <section id="team" className="pt-16 scroll-mt-16 px-4 max-w-md mx-auto">
         <TeamPage isMobile={isMobile} />
