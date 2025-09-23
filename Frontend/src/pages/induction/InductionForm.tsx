@@ -622,7 +622,7 @@ const InductionForm: React.FC = () => {
                     onChange={(e) => handleInputChange('society', e.target.value)}
                     disabled={!user}
                     className="w-full bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-[#1DB954] focus:outline-none transition-colors duration-300"
-                    placeholder="Enter your society (e.g., Flux or another)"
+                    placeholder="Which society are you a part of?"
                   />
                 </div>
 
