@@ -1,16 +1,34 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Calendar, MapPin, Users, ArrowRight } from 'lucide-react';
+import MagicBentoGrid from '@/components/ui/MagicBentoEvents';
+import {
+  Calendar, MapPin, Users, ArrowRight, Code, Presentation, FileText, Trophy, Lightbulb, Sparkles, Zap} from 'lucide-react';
+import { gsap } from 'gsap';
+import { motion } from 'framer-motion';
 
 // Import event images
 import techConferenceImg from '@/assets/images/tech-conference.jpg';
 import designWorkshopImg from '@/assets/images/design-workshop.jpg';
 import networkingEventImg from '@/assets/images/networking-event.jpg';
+import fluxxgfgImg from '@/assets/images/flux-x-gfg.png';
 import startupPitchImg from '@/assets/images/startup-pitch.jpg';
 import aiSummitImg from '@/assets/images/ai-summit.jpg';
 import marketingMasterclassImg from '@/assets/images/marketing-masterclass.jpg';
 
-// Event type definition
+//magic bento
+<MagicBentoGrid
+  textAutoHide={true}
+  enableStars={true}
+  enableSpotlight={true}
+  enableBorderGlow={true}
+  enableTilt={true}
+  enableMagnetism={true}
+  clickEffect={true}
+  spotlightRadius={300}
+  particleCount={12}
+  glowColor="132, 0, 255"
+/>
+
 interface Event {
   id: number;
   title: string;
@@ -20,148 +38,170 @@ interface Event {
   isUpcoming: boolean;
   location?: string;
   attendees?: number;
+  category: 'Tech' | 'Design' | 'Business' | 'Research';
+  prize?: string;
+  featured?: boolean;
+}
+
+// Activity type definition
+interface Activity {
+  id: number;
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  features: string[];
+  imageUrl: string;
+  color: string;
 }
 
 // Sample events data with obscured dates
 const events: Event[] = [
   {
     id: 1,
-    title: "Hack-e-thon Series (Bi-Annual)",
-    date: "20XX-12-15",
-    description: "24-48 hour coding challenges focused on real-world problems.",
-    imageUrl: techConferenceImg,
+    title: "IDEATHON 2025: Innovation Unleashed",
+    date: "2025-03-15",
+    description: "The ultimate 48-hour innovation marathon where brilliant minds collide to solve tomorrow's challenges. Present your groundbreaking ideas and compete for glory!",
+    imageUrl: fluxxgfgImg,
     isUpcoming: true,
     location: "CSED, MMMUT, Gorakhpur",
-    attendees: 500
+    attendees: 1000,
+    category: "Tech",
+    prize: "50,000",
+    featured: true,
   },
   {
     id: 2,
-    title: "Annual Research Conclave",
-    date: "X024-1X-20",
-    description: "Invited talks, panel discussions, and technical workshops with experts.",
-    imageUrl: designWorkshopImg,
+    title: "Hack-e-thon Series (Bi-Annual)",
+    date: "2025-12-15",
+    description: "24-48 hour coding challenges focused on real-world problems. Build, innovate, and win!",
+    imageUrl: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&h=600&fit=crop",
     isUpcoming: true,
     location: "CSED, MMMUT, Gorakhpur",
-    attendees: 150
+    attendees: 500,
+    category: "Tech",
   },
   {
     id: 3,
-    title: "Tech Conferences",
-    date: "2024-X2-22",
-    description: "Student-led conferences inviting paper submissions and presentations.",
-    imageUrl: networkingEventImg,
+    title: "Annual Research Conclave",
+    date: "2024-11-20",
+    description: "Invited talks, panel discussions, and technical workshops with leading experts from academia and industry.",
+    imageUrl: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&h=600&fit=crop",
     isUpcoming: true,
     location: "CSED, MMMUT, Gorakhpur",
-    attendees: 200
+    attendees: 150,
+    category: "Research",
   },
   {
     id: 4,
-    title: "Workshops & Seminars",
-    date: "XX24-11-10",
-    description: "Skill-development sessions on tools and research methodologies.",
-    imageUrl: startupPitchImg,
-    isUpcoming: false,
+    title: "Tech Conferences",
+    date: "2024-12-22",
+    description: "Student-led conferences inviting paper submissions and presentations on cutting-edge topics.",
+    imageUrl: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=600&fit=crop",
+    isUpcoming: true,
     location: "CSED, MMMUT, Gorakhpur",
-    attendees: 300
+    attendees: 200,
+    category: "Tech",
   },
   {
     id: 5,
-    title: "Project Showcases & Demos",
-    date: "X0X4-10-25",
-    description: "Exhibiting student projects and collaborative works.",
-    imageUrl: aiSummitImg,
+    title: "Workshops & Seminars",
+    date: "2024-11-10",
+    description: "Hands-on, skill-development sessions covering tools and research methodologies for future-proof careers.",
+    imageUrl: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&h=600&fit=crop",
     isUpcoming: false,
     location: "CSED, MMMUT, Gorakhpur",
-    attendees: 800
+    attendees: 300,
+    category: "Design",
   },
   {
     id: 6,
-    title: "Publication Drives",
-    date: "2024-1X-15",
-    description: "Sessions to guide students in writing and submitting research papers.",
-    imageUrl: marketingMasterclassImg,
+    title: "Project Showcases & Demos",
+    date: "2024-10-25",
+    description: "An exhibition showcasing innovative student projects and collaborative works. See what's next in tech.",
+    imageUrl: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&h=600&fit=crop",
     isUpcoming: false,
     location: "CSED, MMMUT, Gorakhpur",
-    attendees: 250
+    attendees: 800,
+    category: "Business",
+  },
+];
+
+
+// Activities data
+const activities: Activity[] = [
+  {
+    id: 1,
+    title: "Hackathons",
+    description: "Intensive coding competitions where innovation meets collaboration. Solve real-world problems in 24-48 hours.",
+    icon: <Code className="w-8 h-8" />,
+    features: ["24-48 Hour Challenges", "Real-world Problems", "Team Collaboration", "Prize Competitions"],
+    imageUrl: techConferenceImg,
+    color: "from-blue-600 to-purple-600"
+  },
+  {
+    id: 2,
+    title: "Conferences",
+    description: "Professional gatherings featuring industry experts, thought leaders, and cutting-edge research presentations.",
+    icon: <Presentation className="w-8 h-8" />,
+    features: ["Expert Speakers", "Panel Discussions", "Networking Sessions", "Industry Insights"],
+    imageUrl: designWorkshopImg,
+    color: "from-green-600 to-teal-600"
+  },
+  {
+    id: 3,
+    title: "Research Paper Presentations",
+    description: "Academic showcases where students and researchers present their findings and innovative solutions.",
+    icon: <FileText className="w-8 h-8" />,
+    features: ["Academic Research", "Peer Review", "Publication Support", "Knowledge Sharing"],
+    imageUrl: networkingEventImg,
+    color: "from-orange-600 to-red-600"
   }
 ];
 
 const EventsPage: React.FC = () => {
+  const [activeCategory, setActiveCategory] = useState<'All' | 'Tech' | 'Design' | 'Business' | 'Research'>('All');
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [showFeaturedEvent, setShowFeaturedEvent] = useState(false);
+  const [lightbulbGlow, setLightbulbGlow] = useState(false);
+
+  const featuredEvent = events.find(event => event.featured) || events[0];
+  const filteredEvents = activeCategory === 'All'
+    ? events.filter(e => !e.featured)
+    : events.filter(event => event.category === activeCategory && !event.featured);
+
   useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isDesktop = () => window.matchMedia('(min-width: 768px)').matches;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const el = entry.target as HTMLElement;
-          if (entry.isIntersecting) {
-            if (prefersReduced) {
-              el.classList.remove('opacity-0');
-              el.classList.add('opacity-100');
-              observer.unobserve(el);
-              return;
-            }
-
-            if (isDesktop()) {
-              el.classList.remove('opacity-0');
-              el.classList.add('animate-slide-up', 'opacity-100');
-            } else {
-              el.classList.remove('opacity-0');
-              el.classList.add('opacity-100');
-            }
-
-            observer.unobserve(el);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-
-    const els = document.querySelectorAll('.scroll-card');
-    els.forEach((el) => observer.observe(el));
-
-    // Add animation classes to first three cards after component mounts
-    setTimeout(() => {
-      const firstThreeCards = document.querySelectorAll('.featured-card');
-      firstThreeCards.forEach((card, index) => {
-        setTimeout(() => {
-          card.classList.add('animate-fade-in-up');
-        }, index * 200); // Stagger animation by 200ms
-      });
-    }, 100);
-
-    const onResize = () => {
-      // No-op: existing observer behavior handles new intersections; just keep it for future extension.
-    };
-    window.addEventListener('resize', onResize);
+    const timer1 = setTimeout(() => setIsLoaded(true), 300);
+    const timer2 = setTimeout(() => setLightbulbGlow(true), 800);
+    const timer3 = setTimeout(() => setShowFeaturedEvent(true), 1500);
 
     return () => {
-      observer.disconnect();
-      window.removeEventListener('resize', onResize);
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+      <div className="min-h-screen bg-black text-white font-sans overflow-hidden">
+        {/* ... hero section and featured events section */}
+
+        {/* What We Do Section */}
+        <section className="py-12 px-4 bg-black">
+          <div className="container mx-auto max-w-6xl">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent">
+                What We Do
+              </h2>
+              <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+                We organize diverse events that foster learning, innovation, and collaboration in the tech community.
+              </p>
+            </div>
+            {/* Pass the activities data as a prop */}
+            <MagicBentoGrid activities={activities} />
+          </div>
+        </section>
+      </div>
+
     };
   }, []);
 
-  const upcomingEvents = events.filter(event => event.isUpcoming).slice(0, 3);
-  const allEvents = events;
-
   const formatDate = (dateString: string) => {
-    if (dateString.includes('X')) {
-      const [year, month, day] = dateString.split('-');
-      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-                         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      
-      let monthName = 'XXX';
-      if (!month.includes('X')) {
-        const monthIndex = parseInt(month) - 1;
-        if (monthIndex >= 0 && monthIndex < 12) {
-          monthName = monthNames[monthIndex];
-        }
-      }
-      
-      return `${monthName} ${day}, ${year}`;
-    }
-    
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
       weekday: 'long',
@@ -172,281 +212,265 @@ const EventsPage: React.FC = () => {
   };
 
   return (
-    <>
-      {/* Add custom CSS for animations */}
+      <div className="min-h-screen bg-black text-white font-sans overflow-hidden">
+      {/* Enhanced Animations and Styles */}
       <style jsx>{`
-        @keyframes fadeInUp {
-          from {
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(2deg); }
+        }
+        @keyframes lightbulbGlow {
+          0% { 
+            filter: drop-shadow(0 0 0px rgba(34, 197, 94, 0));
+            transform: scale(1);
+          }
+          50% { 
+            filter: drop-shadow(0 0 30px rgba(34, 197, 94, 0.8)) drop-shadow(0 0 60px rgba(34, 197, 94, 0.4));
+            transform: scale(1.1);
+          }
+          100% { 
+            filter: drop-shadow(0 0 20px rgba(34, 197, 94, 0.6)) drop-shadow(0 0 40px rgba(34, 197, 94, 0.3));
+            transform: scale(1.05);
+          }
+        }
+        @keyframes revealSlide {
+          0% { 
+            transform: translateY(100px) rotateX(-45deg);
             opacity: 0;
-            transform: translateY(30px) scale(0.95);
+            filter: blur(10px);
           }
-          to {
+          100% { 
+            transform: translateY(0) rotateX(0deg);
             opacity: 1;
-            transform: translateY(0) scale(1);
+            filter: blur(0px);
           }
         }
-        
-        .animate-fade-in-up {
-          animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-        
-        .featured-card {
-          opacity: 0;
-          transform: translateY(30px) scale(0.95);
-        }
-        
-        /* Responsive animation adjustments */
-        @media (max-width: 768px) {
-          .featured-card {
-            transform: translateY(20px) scale(0.98);
+        @keyframes morphReveal {
+          0% { 
+            transform: scale(0.3) rotate(-10deg);
+            opacity: 0;
+            border-radius: 50%;
           }
-          
-          @keyframes fadeInUp {
-            from {
-              opacity: 0;
-              transform: translateY(20px) scale(0.98);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0) scale(1);
-            }
+          50% {
+            transform: scale(0.8) rotate(5deg);
+            opacity: 0.7;
+            border-radius: 30px;
           }
-        }
-        
-        /* Reduce motion for accessibility */
-        @media (prefers-reduced-motion: reduce) {
-          .animate-fade-in-up {
-            animation: none;
+          100% { 
+            transform: scale(1) rotate(0deg);
             opacity: 1;
-            transform: none;
+            border-radius: 24px;
           }
-          
-          .featured-card {
+        }
+        @keyframes slideInUp {
+          0% { transform: translateY(100px); opacity: 0; }
+          100% { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes textReveal {
+          0% { 
+            transform: translateY(50px) rotateX(90deg);
+            opacity: 0;
+          }
+          100% { 
+            transform: translateY(0) rotateX(0deg);
             opacity: 1;
-            transform: none;
           }
+        }
+        @keyframes glowPulse {
+          0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.3), 0 0 40px rgba(34, 197, 94, 0.1); }
+          50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.6), 0 0 80px rgba(34, 197, 94, 0.2); }
+        }
+        
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-lightbulb-glow { animation: lightbulbGlow 2s ease-out forwards; }
+        .animate-reveal-slide { animation: revealSlide 1.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .animate-morph-reveal { animation: morphReveal 1.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .animate-slide-in-up { animation: slideInUp 0.8s ease-out; }
+        .animate-text-reveal { animation: textReveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .animate-glow-pulse { animation: glowPulse 2s ease-in-out infinite; }
+        
+        .shimmer-text {
+          background: linear-gradient(90deg, #ffffff 25%, #22c55e 50%, #ffffff 75%);
+          background-size: 200% 100%;
+          animation: shimmer 3s ease-in-out infinite;
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        
+        .card-transform {
+          transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .card-transform:hover {
+          transform: translateY(-20px) rotateX(10deg) rotateY(-5deg) scale(1.02);
         }
       `}</style>
 
-      {/* CHANGED: Complete black background */}
-      <div className="min-h-screen bg-black text-white">
-        {/* Hero Section - BLACK BACKGROUND */}
-        <section className="relative overflow-hidden bg-black py-8 px-4">
-          <div className="absolute inset-0 bg-black/40"></div>
-          
-          {/* Spotify-style animated bars (hidden on small screens, decorative) */}
-          <div className="hidden md:absolute md:top-6 md:left-6 md:flex md:items-end md:gap-1 opacity-20" aria-hidden="true">
-            {[...Array(5)].map((_, i) => (
-              <div
-                key={i}
-                className={`w-2 bg-primary rounded-full md:animate-spotify-wave`}
-                style={{
-                  height: `${16 + i * 8}px`,
-                  animationDelay: `${i * 0.2}s`
-                }}
-              />
-            ))}
-          </div>
-          
-          <div className="relative container mx-auto max-w-6xl text-center text-white">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 animate-bounce-in">
-              Discover Amazing
-              <span className="block bg-gradient-to-r from-white to-primary bg-clip-text text-transparent animate-fade-in-left">
-                Events
-              </span>
-            </h1>
-            <p className="text-lg md:text-xl mb-4 max-w-3xl mx-auto opacity-90 animate-slide-up">
-              Connect, learn, and grow with industry leaders and innovators at our carefully curated events.
-            </p>
-          </div>
-        </section>
+      {/* Hero Section */}
+      <section className="relative overflow-hidden pt-20 pb-16 px-4 md:px-8">
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,197,94,0.1)_0%,transparent_70%)]"></div>
+        </div>
 
-        {/* Event Statistics Bar - BLACK BACKGROUND */}
-        <section className="py-6 px-4 bg-black">
-          <div className="container mx-auto max-w-6xl">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 text-center text-white">
-              <div className="group cursor-pointer">
-                <div className="text-3xl md:text-4xl font-bold text-primary mb-1 group-hover:scale-110 transition-transform duration-300">
-                  XX+
+        <div className={`relative container mx-auto max-w-7xl text-center transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className={`mb-8 ${lightbulbGlow ? 'animate-lightbulb-glow' : ''}`}>
+            <Lightbulb className="w-20 h-20 mx-auto text-green-500" />
+          </div>
+
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 shimmer-text">
+            Step Into the Future
+          </h1>
+
+          <p className="text-lg md:text-2xl text-gray-300 max-w-4xl mx-auto mb-8 animate-slide-in-up" style={{ animationDelay: '0.5s' }}>
+            Explore events, workshops, and conferences crafted for the innovators of tomorrow.
+          </p>
+
+          <div className="flex justify-center items-center gap-4 animate-slide-in-up" style={{ animationDelay: '0.8s' }}>
+            <span className="text-green-400 font-semibold">Innovation Awaits</span>
+            <Zap className="w-6 h-6 text-green-500 animate-pulse" />
+          </div>
+        </div>
+      </section>
+
+      {/* Featured IDEATHON Section - Completely Transformed */}
+      <section className="py-20 px-4 md:px-8 relative bg-black overflow-hidden perspective-1000">
+        {/* Animated background particles */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-green-900/5 via-black to-green-900/5"></div>
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-green-500 rounded-full animate-pulse"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 2}s`,
+                animationDuration: `${2 + Math.random() * 3}s`
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="container mx-auto max-w-7xl relative z-10">
+          {/* Section Header with Reveal Animation */}
+          <div className={`text-center mb-16 ${showFeaturedEvent ? 'animate-text-reveal' : 'opacity-0'}`}>
+            <div className="inline-flex items-center gap-3 mb-4">
+              <Lightbulb className="w-8 h-8 text-green-500 animate-glow-pulse" />
+              <span className="text-green-400 font-semibold text-lg">Featured Event</span>
+            </div>
+            <h2 className="text-6xl md:text-7xl font-extrabold bg-gradient-to-r from-green-400 via-white to-green-400 bg-clip-text text-transparent">
+              Transforming Ideas
+            </h2>
+            <div className="w-32 h-1 bg-gradient-to-r from-transparent via-green-500 to-transparent mx-auto mt-6"></div>
+          </div>
+
+          {/* Main Featured Card with Morphing Reveal */}
+          <div className={`transform-style-3d ${showFeaturedEvent ? 'animate-morph-reveal' : 'opacity-0 scale-0'}`}>
+            <div className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl border-2 border-green-500/30 card-transform animate-glow-pulse">
+              {/* Glowing border effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-green-500/0 via-green-500/20 to-green-500/0 blur-xl"></div>
+
+              <div className="relative z-10 flex flex-col xl:flex-row items-center gap-12 p-12">
+                {/* Image Section with Advanced Animations */}
+                <div className="w-full xl:w-1/2 relative group/image">
+                  <div className="relative overflow-hidden rounded-2xl">
+                    <img
+                      src={featuredEvent.imageUrl}
+                      alt={featuredEvent.title}
+                      className="w-full h-96 object-cover transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
+                    />
+
+                    {/* Overlay effects */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                    <div className="absolute inset-0 bg-green-500/10 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+                  </div>
+
+                  {/* Floating Prize Badge */}
+                  <div className="absolute -top-4 -right-4 bg-gradient-to-r from-green-400 to-green-600 text-black px-6 py-3 rounded-2xl font-bold text-lg shadow-2xl transform rotate-12 hover:rotate-0 transition-all duration-500 animate-float">
+                    <Trophy className="inline w-5 h-5 mr-2" />
+                    {featuredEvent.prize}
+                  </div>
+
+                  {/* Glowing corner accents */}
+                  <div className="absolute -top-2 -left-2 w-8 h-8 border-t-4 border-l-4 border-green-500 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                  <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-4 border-r-4 border-green-500 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
                 </div>
-                <div className="text-xs md:text-sm opacity-80 group-hover:opacity-100 transition-opacity">
-                  Events Hosted
-                </div>
-              </div>
-              <div className="group cursor-pointer">
-                <div className="text-3xl md:text-4xl font-bold text-primary mb-1 group-hover:scale-110 transition-transform duration-300">
-                  XK+
-                </div>
-                <div className="text-xs md:text-sm opacity-80 group-hover:opacity-100 transition-opacity">
-                  Attendees
-                </div>
-              </div>
-              <div className="group cursor-pointer">
-                <div className="text-3xl md:text-4xl font-bold text-primary mb-1 group-hover:scale-110 transition-transform duration-300">
-                  1XX+
-                </div>
-                <div className="text-xs md:text-sm opacity-80 group-hover:opacity-100 transition-opacity">
-                  Speakers
-                </div>
-              </div>
-              <div className="group cursor-pointer">
-                <div className="text-3xl md:text-4xl font-bold text-primary mb-1 group-hover:scale-110 transition-transform duration-300">
-                  X+
-                </div>
-                <div className="text-xs md:text-sm opacity-80 group-hover:opacity-100 transition-opacity">
-                  Years Running
+
+                {/* Content Section with Staggered Reveals */}
+                <div className="w-full xl:w-1/2 text-center xl:text-left space-y-6">
+                  {/* Category Badge */}
+                  <div className={`inline-flex items-center gap-3 bg-gradient-to-r from-green-500/20 to-green-400/20 border border-green-500/30 text-green-400 px-6 py-3 rounded-full font-semibold backdrop-blur-sm ${showFeaturedEvent ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
+                    <Sparkles className="w-5 h-5" />
+                    Innovation Marathon
+                  </div>
+
+                  {/* Title with Character Reveal */}
+                  <h3 className={`text-4xl md:text-5xl font-bold text-white leading-tight ${showFeaturedEvent ? 'animate-text-reveal' : 'opacity-0'}`} style={{ animationDelay: '0.4s' }}>
+                    {featuredEvent.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className={`text-gray-300 text-lg leading-relaxed ${showFeaturedEvent ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.6s' }}>
+                    {featuredEvent.description}
+                  </p>
+
+                  {/* Event Details Grid */}
+                  <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-300 ${showFeaturedEvent ? 'animate-reveal-slide' : 'opacity-0'}`} style={{ animationDelay: '0.8s' }}>
+                    <div className="flex items-center gap-3 justify-center xl:justify-start group/detail">
+                      <Calendar className="w-6 h-6 text-green-500 group-hover/detail:scale-110 transition-transform" />
+                      <span className="group-hover/detail:text-white transition-colors">{formatDate(featuredEvent.date)}</span>
+                    </div>
+                    <div className="flex items-center gap-3 justify-center xl:justify-start group/detail">
+                      <MapPin className="w-6 h-6 text-green-500 group-hover/detail:scale-110 transition-transform" />
+                      <span className="group-hover/detail:text-white transition-colors">{featuredEvent.location}</span>
+                    </div>
+                    <div className="flex items-center gap-3 justify-center xl:justify-start group/detail">
+                      <Users className="w-6 h-6 text-green-500 group-hover/detail:scale-110 transition-transform" />
+                      <span className="group-hover/detail:text-white transition-colors">{featuredEvent.attendees}+ innovators</span>
+                    </div>
+                  </div>
+
+                  {/* CTA Button with Advanced Hover Effects */}
+                  <button className={`group/cta relative bg-gradient-to-r from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 text-black font-bold px-10 py-4 rounded-full transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-green-500/50 overflow-hidden ${showFeaturedEvent ? 'animate-morph-reveal' : 'opacity-0'}`} style={{ animationDelay: '1s' }}>
+
+                    {/* Button shine effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover/cta:translate-x-full transition-transform duration-1000"></div>
+
+                    <span className="relative flex items-center gap-3">
+                      <Lightbulb className="w-5 h-5 group-hover/cta:animate-pulse" />
+                      Ignite Your Innovation
+                      <ArrowRight className="w-5 h-5 transition-transform group-hover/cta:translate-x-2" />
+                    </span>
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Upcoming Events Section - BLACK BACKGROUND */}
-        <section className="py-8 px-4 bg-black">
+        {/* What We Do Section */}
+        <section className="py-12 px-4 bg-black">
           <div className="container mx-auto max-w-6xl">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold mb-2 bg-gradient-to-r from-white to-primary bg-clip-text text-transparent animate-fade-in">
-                Upcoming Events
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent">
+                What We Do
               </h2>
-              <p className="text-lg text-gray-400 max-w-2xl mx-auto animate-fade-in-right">
-                Don't miss these exciting opportunities to connect and learn
+              <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+                We organize diverse events that foster learning, innovation, and collaboration in the tech community.
               </p>
             </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {upcomingEvents.map((event, index) => (
-                <div
-                  key={event.id}
-                  className={`group relative overflow-hidden rounded-2xl bg-gray-900 shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 featured-card border border-gray-800`}
-                >
-                  <div className="relative">
-                    <img
-                      src={event.imageUrl}
-                      alt={event.title}
-                      className={`w-full object-cover transition-transform duration-500 group-hover:scale-110 ${
-                        index === 0 ? 'h-72' : 'h-56'
-                      }`}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                    
-                    {/* Event Badge */}
-                    <div className="absolute top-3 left-3">
-                      <span className="px-2 py-1 bg-primary text-white text-xs font-semibold rounded-full md:animate-pulse-glow">
-                        Upcoming
-                      </span>
-                    </div>
-                    
-                    {/* Spotify-style corner decoration */}
-                    <div className="absolute top-3 right-3 w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                  </div>
-
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <div className="flex items-center gap-3 mb-2 text-xs opacity-90 text-white">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-3 h-3" />
-                        {formatDate(event.date)}
-                      </div>
-                      {event.location && (
-                        <div className="flex items-center gap-1">
-                          <MapPin className="w-3 h-3" />
-                          {event.location}
-                        </div>
-                      )}
-                    </div>
-                    
-                    <h3 className="text-xl font-bold mb-2 text-white">{event.title}</h3>
-                    <p className="text-white/90 mb-3 line-clamp-2 text-sm">{event.description}</p>
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1 text-xs opacity-90 text-white">
-                        <Users className="w-3 h-3" />
-                        {event.attendees} attendees
-                      </div>
-                      <Button variant="default" size="sm" className="group text-xs">
-                        Register Now
-                        <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* All Events Section - BLACK BACKGROUND */}
-        <section className="py-8 px-4 bg-black">
-          <div className="container mx-auto max-w-6xl">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold mb-2 text-white animate-slide-up">All Events</h2>
-              <p className="text-lg text-gray-400 max-w-2xl mx-auto animate-fade-in">
-                Explore our complete collection of past and upcoming events
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {allEvents.map((event) => (
-                <div
-                  key={event.id}
-                  className={`group bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 scroll-card opacity-0 border border-gray-800`}
-                >
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={event.imageUrl}
-                      alt={event.title}
-                      className="w-full h-40 object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute top-3 right-3 flex items-center gap-2">
-                      <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                        event.isUpcoming 
-                          ? 'bg-primary text-white animate-pulse-glow' 
-                          : 'bg-gray-700 text-gray-300'
-                      }`}>
-                        {event.isUpcoming ? 'Upcoming' : 'Past Event'}
-                      </span>
-                      {event.isUpcoming && (
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full animate-ping" aria-hidden="true"></div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="p-4">
-                    <div className="flex items-center gap-3 mb-2 text-xs text-gray-400">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-3 h-3" />
-                        {formatDate(event.date)}
-                      </div>
-                      {event.location && (
-                        <div className="flex items-center gap-1">
-                          <MapPin className="w-3 h-3" />
-                          {event.location}
-                        </div>
-                      )}
-                    </div>
-                    
-                    <h3 className="text-lg font-bold mb-2 text-white group-hover:text-primary transition-colors">
-                      {event.title}
-                    </h3>
-                    <p className="text-gray-400 mb-3 line-clamp-2 text-sm">{event.description}</p>
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1 text-xs text-gray-400">
-                        <Users className="w-3 h-3" />
-                        {event.attendees} attendees
-                      </div>
-                      <Button variant={event.isUpcoming ? "default" : "outline"} size="sm" className="group text-xs">
-                        {event.isUpcoming ? 'Register' : 'View Details'}
-                        <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <MagicBentoGrid activities={activities} />
           </div>
         </section>
       </div>
-    </>
   );
 };
 

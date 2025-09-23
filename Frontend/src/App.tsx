@@ -7,7 +7,7 @@ import ScrollToTop from "@/components/layout/ScrollToTop";
 import HomePage from "@/pages/home";
 import FacultyPage from "@/pages/faculty/FacultyPage";
 import AboutPage from "@/pages/about/AboutPage";
-// import EventsPage from "@/pages/events/events";
+import EventsPage from "@/pages/events/events";
 import ContactPage from "@/pages/contact/contact";
 import TeamPage from "@/pages/team/team";
 
@@ -73,7 +73,7 @@ export default function App() {
             <Route path="/" element={<HomePage isMobile={isMobile} />} />
             <Route path="/about" element={<AboutPage isMobile={isMobile} />} />
             <Route path="/faculty" element={<FacultyPage isMobile={isMobile} />} />
-            {/* <Route path="/events" element={<EventsPage isMobile={isMobile} />} /> */}
+            <Route path="/events" element={<EventsPage isMobile={isMobile} />} />
             <Route path="/team" element={<TeamPage isMobile={isMobile} />} />
             <Route path="/join" element={<LandingPageWrapper isMobile={isMobile} />} />
             <Route path="/join/form" element={<InductionFormWrapper isMobile={isMobile} />} />
