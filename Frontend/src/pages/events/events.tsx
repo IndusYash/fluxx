@@ -43,7 +43,7 @@ interface Activity {
 const events: Event[] = [
   {
     id: 1,
-    title: 'IDEATHON 2025',
+    title: 'GFG IDEATHON 2025',
     date: '2025-XX-XX',
     description:
       "Join innovators, coders, and thinkers to brainstorm, build, and showcase groundbreaking solutions. Unleash your ideas, collaborate with peers, and be part of a game- changing experience!",
