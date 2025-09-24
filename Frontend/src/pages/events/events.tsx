@@ -1,33 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
 import { Button } from '@/components/ui/button';
-import MagicBentoGrid from '@/components/ui/MagicBentoEvents';
+import MagicBentoEvents from '@/components/ui/MagicBentoEvents';
 import {
-  Calendar, MapPin, Users, ArrowRight, Code, Presentation, FileText, Trophy, Lightbulb, Sparkles, Zap} from 'lucide-react';
+  Calendar, MapPin, Users, ArrowRight, Code, Presentation, FileText, Trophy, Lightbulb, Sparkles, Zap
+} from 'lucide-react';
 import { gsap } from 'gsap';
-import { motion } from 'framer-motion';
 
-// Import event images
-import techConferenceImg from '@/assets/images/tech-conference.jpg';
-import designWorkshopImg from '@/assets/images/design-workshop.jpg';
-import networkingEventImg from '@/assets/images/networking-event.jpg';
+// Mock images for the example
+// const fluxxgfgImg = 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=600&fit=crop';
 import fluxxgfgImg from '@/assets/images/flux-x-gfg.png';
-import startupPitchImg from '@/assets/images/startup-pitch.jpg';
-import aiSummitImg from '@/assets/images/ai-summit.jpg';
-import marketingMasterclassImg from '@/assets/images/marketing-masterclass.jpg';
-
-//magic bento
-<MagicBentoGrid
-  textAutoHide={true}
-  enableStars={true}
-  enableSpotlight={true}
-  enableBorderGlow={true}
-  enableTilt={true}
-  enableMagnetism={true}
-  clickEffect={true}
-  spotlightRadius={300}
-  particleCount={12}
-  glowColor="132, 0, 255"
-/>
+const techConferenceImg = 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&h=600&fit=crop';
+const designWorkshopImg = 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&h=600&fit=crop';
+const workshopImg = 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&h=600&fit=crop';
+const seminarImg = 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&h=600&fit=crop';
 
 interface Event {
   id: number;
@@ -43,7 +30,6 @@ interface Event {
   featured?: boolean;
 }
 
-// Activity type definition
 interface Activity {
   id: number;
   title: string;
@@ -54,152 +40,89 @@ interface Activity {
   color: string;
 }
 
-// Sample events data with obscured dates
 const events: Event[] = [
   {
     id: 1,
-    title: "IDEATHON 2025: Innovation Unleashed",
-    date: "2025-03-15",
-    description: "The ultimate 48-hour innovation marathon where brilliant minds collide to solve tomorrow's challenges. Present your groundbreaking ideas and compete for glory!",
+    title: 'IDEATHON 2025',
+    date: '2025-XX-XX',
+    description:
+      "Join innovators, coders, and thinkers to brainstorm, build, and showcase groundbreaking solutions. Unleash your ideas, collaborate with peers, and be part of a game- changing experience!",
     imageUrl: fluxxgfgImg,
     isUpcoming: true,
-    location: "CSED, MMMUT, Gorakhpur",
+    location: 'CSED, MMMUT, Gorakhpur',
     attendees: 1000,
-    category: "Tech",
-    prize: "50,000",
+    category: 'Tech',
+    prize: '₹50,000',
     featured: true,
-  },
-  {
-    id: 2,
-    title: "Hack-e-thon Series (Bi-Annual)",
-    date: "2025-12-15",
-    description: "24-48 hour coding challenges focused on real-world problems. Build, innovate, and win!",
-    imageUrl: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&h=600&fit=crop",
-    isUpcoming: true,
-    location: "CSED, MMMUT, Gorakhpur",
-    attendees: 500,
-    category: "Tech",
-  },
-  {
-    id: 3,
-    title: "Annual Research Conclave",
-    date: "2024-11-20",
-    description: "Invited talks, panel discussions, and technical workshops with leading experts from academia and industry.",
-    imageUrl: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&h=600&fit=crop",
-    isUpcoming: true,
-    location: "CSED, MMMUT, Gorakhpur",
-    attendees: 150,
-    category: "Research",
-  },
-  {
-    id: 4,
-    title: "Tech Conferences",
-    date: "2024-12-22",
-    description: "Student-led conferences inviting paper submissions and presentations on cutting-edge topics.",
-    imageUrl: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=600&fit=crop",
-    isUpcoming: true,
-    location: "CSED, MMMUT, Gorakhpur",
-    attendees: 200,
-    category: "Tech",
-  },
-  {
-    id: 5,
-    title: "Workshops & Seminars",
-    date: "2024-11-10",
-    description: "Hands-on, skill-development sessions covering tools and research methodologies for future-proof careers.",
-    imageUrl: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&h=600&fit=crop",
-    isUpcoming: false,
-    location: "CSED, MMMUT, Gorakhpur",
-    attendees: 300,
-    category: "Design",
-  },
-  {
-    id: 6,
-    title: "Project Showcases & Demos",
-    date: "2024-10-25",
-    description: "An exhibition showcasing innovative student projects and collaborative works. See what's next in tech.",
-    imageUrl: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&h=600&fit=crop",
-    isUpcoming: false,
-    location: "CSED, MMMUT, Gorakhpur",
-    attendees: 800,
-    category: "Business",
-  },
-];
-
-
-// Activities data
-const activities: Activity[] = [
-  {
-    id: 1,
-    title: "Hackathons",
-    description: "Intensive coding competitions where innovation meets collaboration. Solve real-world problems in 24-48 hours.",
-    icon: <Code className="w-8 h-8" />,
-    features: ["24-48 Hour Challenges", "Real-world Problems", "Team Collaboration", "Prize Competitions"],
-    imageUrl: techConferenceImg,
-    color: "from-blue-600 to-purple-600"
-  },
-  {
-    id: 2,
-    title: "Conferences",
-    description: "Professional gatherings featuring industry experts, thought leaders, and cutting-edge research presentations.",
-    icon: <Presentation className="w-8 h-8" />,
-    features: ["Expert Speakers", "Panel Discussions", "Networking Sessions", "Industry Insights"],
-    imageUrl: designWorkshopImg,
-    color: "from-green-600 to-teal-600"
-  },
-  {
-    id: 3,
-    title: "Research Paper Presentations",
-    description: "Academic showcases where students and researchers present their findings and innovative solutions.",
-    icon: <FileText className="w-8 h-8" />,
-    features: ["Academic Research", "Peer Review", "Publication Support", "Knowledge Sharing"],
-    imageUrl: networkingEventImg,
-    color: "from-orange-600 to-red-600"
   }
 ];
 
-const EventsPage: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState<'All' | 'Tech' | 'Design' | 'Business' | 'Research'>('All');
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [showFeaturedEvent, setShowFeaturedEvent] = useState(false);
-  const [lightbulbGlow, setLightbulbGlow] = useState(false);
+const activities: Activity[] = [
+  {
+    id: 1,
+    title: 'Hackathons',
+    description:
+      'Intensive coding competitions where innovation meets collaboration. Solve real-world problems in 24-48 hours.',
+    icon: <Zap className="w-8 h-8" />,
+    features: ['24-48 Hour Challenges', 'Real-world Problems'],
+    imageUrl: techConferenceImg,
+    color: 'from-blue-600 to-purple-600',
+  },
+  {
+    id: 2,
+    title: 'Conferences',
+    description:
+      'Professional gatherings featuring industry experts, thought leaders, and cutting-edge research presentations.',
+    icon: <Sparkles className="w-8 h-8" />,
+    features: ['Expert Speakers', 'Networking Sessions'],
+    imageUrl: designWorkshopImg,
+    color: 'from-green-600 to-teal-600',
+  },
+  {
+    id: 3,
+    title: 'Workshops',
+    description:
+      'Hands-on sessions where participants can learn practical skills, explore new tools, and enhance their expertise.',
+    icon: <FileText className="w-8 h-8" />,
+    features: ['Interactive Labs', 'Skill Development'],
+    imageUrl: workshopImg,
+    color: 'from-purple-500 to-pink-500',
+  },
+  {
+    id: 4,
+    title: 'Seminars',
+    description:
+      'Focused discussions and presentations on emerging trends, research findings, and industry insights.',
+    icon: <Presentation className="w-8 h-8" />,
+    features: ['Knowledge Sharing', 'Interactive Q&A'],
+    imageUrl: seminarImg,
+    color: 'from-yellow-400 to-orange-400',
+  },
+  {
+    id: 5,
+    title: 'Competitions',
+    description:
+      'Engaging contests designed to challenge creativity, problem-solving, and technical skills among participants.',
+    icon: <Trophy className="w-8 h-8" />,
+    features: ['Prizes & Recognition', 'Skill Challenges'],
+    imageUrl: Code,
+    color: 'from-red-500 to-pink-500',
+  },
+  {
+    id: 6,
+    title: 'Innovation Labs',
+    description:
+      'Collaborative spaces where participants experiment with new ideas, prototype solutions, and push the boundaries of creativity.',
+    icon: <Lightbulb className="w-8 h-8" />,
+    features: ['Hands-on Prototyping', 'Creative Collaboration'],
+    imageUrl: techConferenceImg,
+    color: 'from-blue-500 to-indigo-500',
+  }
+];
 
-  const featuredEvent = events.find(event => event.featured) || events[0];
-  const filteredEvents = activeCategory === 'All'
-    ? events.filter(e => !e.featured)
-    : events.filter(event => event.category === activeCategory && !event.featured);
-
-  useEffect(() => {
-    const timer1 = setTimeout(() => setIsLoaded(true), 300);
-    const timer2 = setTimeout(() => setLightbulbGlow(true), 800);
-    const timer3 = setTimeout(() => setShowFeaturedEvent(true), 1500);
-
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
-      <div className="min-h-screen bg-black text-white font-sans overflow-hidden">
-        {/* ... hero section and featured events section */}
-
-        {/* What We Do Section */}
-        <section className="py-12 px-4 bg-black">
-          <div className="container mx-auto max-w-6xl">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent">
-                What We Do
-              </h2>
-              <p className="text-lg text-gray-400 max-w-3xl mx-auto">
-                We organize diverse events that foster learning, innovation, and collaboration in the tech community.
-              </p>
-            </div>
-            {/* Pass the activities data as a prop */}
-            <MagicBentoGrid activities={activities} />
-          </div>
-        </section>
-      </div>
-
-    };
-  }, []);
+// Enhanced Event Card Component with Advanced Animations
+const EventCard = ({ event, index }: { event: Event; index: number }) => {
+  const [isHovered, setIsHovered] = useState(false);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -207,270 +130,512 @@ const EventsPage: React.FC = () => {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     });
   };
 
   return (
-      <div className="min-h-screen bg-black text-white font-sans overflow-hidden">
-      {/* Enhanced Animations and Styles */}
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(2deg); }
-        }
-        @keyframes lightbulbGlow {
-          0% { 
-            filter: drop-shadow(0 0 0px rgba(34, 197, 94, 0));
-            transform: scale(1);
-          }
-          50% { 
-            filter: drop-shadow(0 0 30px rgba(34, 197, 94, 0.8)) drop-shadow(0 0 60px rgba(34, 197, 94, 0.4));
-            transform: scale(1.1);
-          }
-          100% { 
-            filter: drop-shadow(0 0 20px rgba(34, 197, 94, 0.6)) drop-shadow(0 0 40px rgba(34, 197, 94, 0.3));
-            transform: scale(1.05);
-          }
-        }
-        @keyframes revealSlide {
-          0% { 
-            transform: translateY(100px) rotateX(-45deg);
-            opacity: 0;
-            filter: blur(10px);
-          }
-          100% { 
-            transform: translateY(0) rotateX(0deg);
-            opacity: 1;
-            filter: blur(0px);
-          }
-        }
-        @keyframes morphReveal {
-          0% { 
-            transform: scale(0.3) rotate(-10deg);
-            opacity: 0;
-            border-radius: 50%;
-          }
-          50% {
-            transform: scale(0.8) rotate(5deg);
-            opacity: 0.7;
-            border-radius: 30px;
-          }
-          100% { 
-            transform: scale(1) rotate(0deg);
-            opacity: 1;
-            border-radius: 24px;
-          }
-        }
-        @keyframes slideInUp {
-          0% { transform: translateY(100px); opacity: 0; }
-          100% { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes shimmer {
-          0% { background-position: -200% center; }
-          100% { background-position: 200% center; }
-        }
-        @keyframes textReveal {
-          0% { 
-            transform: translateY(50px) rotateX(90deg);
-            opacity: 0;
-          }
-          100% { 
-            transform: translateY(0) rotateX(0deg);
-            opacity: 1;
-          }
-        }
-        @keyframes glowPulse {
-          0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.3), 0 0 40px rgba(34, 197, 94, 0.1); }
-          50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.6), 0 0 80px rgba(34, 197, 94, 0.2); }
-        }
-        
-        .animate-float { animation: float 6s ease-in-out infinite; }
-        .animate-lightbulb-glow { animation: lightbulbGlow 2s ease-out forwards; }
-        .animate-reveal-slide { animation: revealSlide 1.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .animate-morph-reveal { animation: morphReveal 1.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .animate-slide-in-up { animation: slideInUp 0.8s ease-out; }
-        .animate-text-reveal { animation: textReveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .animate-glow-pulse { animation: glowPulse 2s ease-in-out infinite; }
-        
-        .shimmer-text {
-          background: linear-gradient(90deg, #ffffff 25%, #22c55e 50%, #ffffff 75%);
-          background-size: 200% 100%;
-          animation: shimmer 3s ease-in-out infinite;
-          -webkit-background-clip: text;
-          background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-        
-        .perspective-1000 { perspective: 1000px; }
-        .transform-style-3d { transform-style: preserve-3d; }
-        
-        .card-transform {
-          transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .card-transform:hover {
-          transform: translateY(-20px) rotateX(10deg) rotateY(-5deg) scale(1.02);
-        }
-      `}</style>
+    <motion.div
+      initial={{ opacity: 0, y: 100, scale: 0.8, rotateX: 25 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+      animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+      exit={{ opacity: 0, y: -50, scale: 0.9, rotateX: -15 }}
+      transition={{
+        duration: 0.8,
+        delay: index * 0.15,
+        type: "spring",
+        stiffness: 80,
+        damping: 20
+      }}
+      whileHover={{
+        scale: 1.02,
+        rotateY: 2,
+        rotateX: -2,
+        transition: { duration: 0.3 }
+      }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      className="group relative rounded-3xl bg-gradient-to-br from-gray-900/90 to-gray-800/50 backdrop-blur-md p-8 border border-green-500/20 hover:border-green-400/50 transition-all duration-700 hover:shadow-2xl hover:shadow-green-500/20 overflow-hidden"
+    >
+      {/* Animated Background Glow */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-blue-500/5 to-purple-500/5 opacity-0"
+        animate={{
+          opacity: isHovered ? 1 : 0,
+          scale: isHovered ? 1.1 : 1,
+        }}
+        transition={{ duration: 0.5 }}
+      />
+
+      {/* Floating Particles Effect */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-green-400/30 rounded-full"
+            style={{
+              left: `${20 + i * 15}%`,
+              top: `${30 + (i % 2) * 40}%`,
+            }}
+            animate={{
+              y: isHovered ? [-10, -20, -10] : [0, -5, 0],
+              opacity: isHovered ? [0.3, 0.8, 0.3] : [0.1, 0.3, 0.1],
+              scale: isHovered ? [1, 1.5, 1] : [0.8, 1, 0.8],
+            }}
+            transition={{
+              duration: 2 + i * 0.2,
+              repeat: Infinity,
+              delay: i * 0.3,
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
+        {/* Enhanced Image Section */}
+        <motion.div
+          initial={{ opacity: 0, x: -80, rotateY: 25 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          animate={{ opacity: 1, x: 0, rotateY: 0 }}
+          transition={{ duration: 0.8, delay: index * 0.15 + 0.3 }}
+          className="relative overflow-hidden rounded-2xl group/image"
+        >
+          <motion.div
+            className="relative w-full h-96 overflow-hidden rounded-2xl"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.5 }}
+          >
+            <motion.img
+              src={event.imageUrl}
+              alt={event.title}
+              className="w-full h-full object-cover"
+              animate={{
+                scale: isHovered ? 1.15 : 1.05,
+              }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+            />
+
+            {/* Dynamic Overlay */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-green-500/20"
+              animate={{
+                opacity: isHovered ? 0.8 : 0.3,
+              }}
+              transition={{ duration: 0.5 }}
+            />
+
+            {/* Animated Border */}
+            <motion.div
+              className="absolute inset-0 border-2 border-green-400/0 rounded-2xl"
+              animate={{
+                borderColor: isHovered ? 'rgba(74, 222, 128, 0.5)' : 'rgba(74, 222, 128, 0)',
+              }}
+              transition={{ duration: 0.3 }}
+            />
+          </motion.div>
+        </motion.div>
+
+        {/* Enhanced Content Section */}
+        <motion.div
+          initial={{ opacity: 0, x: 80 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: index * 0.15 + 0.4 }}
+          className="space-y-8"
+        >
+          {/* Title with Character Animation */}
+          <motion.h3
+            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
+            animate={isHovered ? {
+              backgroundPosition: ['0%', '100%', '0%'],
+            } : {}}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            {event.title.split('').map((char, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.15 + 0.6 + i * 0.05 }}
+                whileHover={{
+                  y: -2,
+                  color: '#4ade80',
+                  transition: { duration: 0.2 }
+                }}
+                className="inline-block"
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </motion.span>
+            ))}
+          </motion.h3>
+
+          {/* Description with Typewriter Effect */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: index * 0.15 + 0.8 }}
+            className="text-gray-300 text-lg leading-relaxed"
+          >
+            {event.description}
+          </motion.p>
+
+          {/* Event Details with Staggered Animation */}
+          <motion.div
+            className="space-y-4"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.1,
+                  delayChildren: index * 0.15 + 1
+                }
+              }
+            }}
+          >
+            {[
+              // { icon: Calendar, text: formatDate(event.date) },
+              { icon: Calendar, text: event.date },
+              { icon: MapPin, text: event.location },
+              { icon: Users, text: `${event.attendees}+ innovators` }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                variants={{
+                  hidden: { opacity: 0, x: -30, scale: 0.8 },
+                  visible: { opacity: 1, x: 0, scale: 1 }
+                }}
+                whileHover={{
+                  x: 10,
+                  color: '#4ade80',
+                  transition: { duration: 0.2 }
+                }}
+                className="flex items-center gap-4 text-gray-300 cursor-pointer group/detail"
+              >
+                <motion.div
+                  whileHover={{ rotate: 360, scale: 1.2 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <item.icon className="w-6 h-6 text-green-500 group-hover/detail:text-green-400" />
+                </motion.div>
+                <span className="text-lg group-hover/detail:text-green-400 transition-colors duration-300">
+                  {item.text}
+                </span>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Enhanced Register Button */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ delay: index * 0.15 + 1.3, type: "spring", stiffness: 200 }}
+          >
+            <motion.button
+              whileHover={{
+                scale: 1.05,
+                boxShadow: '0 20px 40px rgba(74, 222, 128, 0.4)',
+              }}
+              whileTap={{ scale: 0.95 }}
+              className="relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-green-600 to-green-400 rounded-xl text-black font-semibold hover:from-green-500 hover:to-green-300 transition-all duration-300 shadow-lg overflow-hidden group/button"
+            >
+              {/* Button Shine Effect */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12"
+                animate={{
+                  x: isHovered ? ['100%', '-100%'] : '-100%',
+                }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              />
+
+              <span className="relative z-10">Register Now</span>
+              <motion.div
+                animate={isHovered ? { x: 5 } : { x: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ArrowRight className="w-5 h-5 relative z-10" />
+              </motion.div>
+            </motion.button>
+          </motion.div>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+};
+
+// Enhanced Bento Grid Component
+const MagicBentoGrid = ({ activities }: { activities: Activity[] }) => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {activities.map((activity, index) => (
+        <motion.div
+          key={activity.id}
+          initial={{ opacity: 0, y: 50, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{
+            duration: 0.8,
+            delay: index * 0.2,
+            type: "spring",
+            stiffness: 100
+          }}
+          className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-900/50 to-gray-800/30 border border-gray-700/50 hover:border-green-500/30 transition-all duration-500 hover:shadow-2xl hover:shadow-green-500/10"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            style={{ background: `linear-gradient(135deg, ${activity.color.replace('from-', '').replace(' to-', ', ')})` }} />
+
+          <div className="relative p-8 h-full flex flex-col">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="p-3 rounded-xl bg-gradient-to-r from-green-500/20 to-blue-500/20 group-hover:from-green-400/30 group-hover:to-blue-400/30 transition-all duration-500">
+                {activity.icon}
+              </div>
+              <h3 className="text-2xl font-bold text-white group-hover:text-green-300 transition-colors duration-300">
+                {activity.title}
+              </h3>
+            </div>
+
+            <p className="text-gray-300 text-lg mb-6 flex-grow group-hover:text-white transition-colors duration-300">
+              {activity.description}
+            </p>
+
+            <div className="space-y-2 mb-6">
+              {activity.features.map((feature, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.8 + (index * 0.2) + (idx * 0.1) }}
+                  className="flex items-center gap-2 text-gray-400 group-hover:text-green-300 transition-colors duration-300"
+                >
+                  <div className="w-2 h-2 rounded-full bg-green-500" />
+                  {feature}
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="flex justify-end">
+              <ArrowRight className="w-6 h-6 text-gray-500 group-hover:text-green-400 transform group-hover:translate-x-1 transition-all duration-300" />
+            </div>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  );
+};
+
+const EventsPage: React.FC = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [showHero, setShowHero] = useState(false);
+  const [showFeaturedEvent, setShowFeaturedEvent] = useState(false);
+  const [showActivities, setShowActivities] = useState(false);
+
+  useEffect(() => {
+    const timers = [
+      setTimeout(() => setIsLoaded(true), 100),
+      setTimeout(() => setShowHero(true), 300),
+      setTimeout(() => setShowFeaturedEvent(true), 800),
+      setTimeout(() => setShowActivities(true), 1200),
+    ];
+
+    return () => timers.forEach(clearTimeout);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white font-sans overflow-hidden">
+      {/* Enhanced Animated Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute -top-40 -right-40 w-80 h-80 bg-green-500/5 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl"
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.4, 0.7, 0.4],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/3 rounded-full blur-3xl"
+          animate={{
+            rotate: [0, 360],
+            scale: [1, 1.3, 1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+      </div>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-20 pb-16 px-4 md:px-8">
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,197,94,0.1)_0%,transparent_70%)]"></div>
-        </div>
+      <section className="relative overflow-hidden pt-20 pb-16 px-4">
+        <div className="relative container mx-auto text-center z-10">
+          <AnimatePresence>
+            {showHero && (
+              <>
+                <motion.div
+                  initial={{ scale: 0, rotate: -180 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{
+                    duration: 1,
+                    type: "spring",
+                    stiffness: 100
+                  }}
+                  className="mb-8"
+                >
+                  <Lightbulb className="w-20 h-20 mx-auto text-green-500 drop-shadow-2xl" />
+                </motion.div>
 
-        <div className={`relative container mx-auto max-w-7xl text-center transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className={`mb-8 ${lightbulbGlow ? 'animate-lightbulb-glow' : ''}`}>
-            <Lightbulb className="w-20 h-20 mx-auto text-green-500" />
-          </div>
+                <motion.h1
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="text-5xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-green-400 via-white to-green-400 bg-clip-text text-transparent"
+                >
+                  Step Into the Future
+                </motion.h1>
 
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 shimmer-text">
-            Step Into the Future
-          </h1>
+                <motion.p
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  className="text-lg md:text-2xl text-gray-300 max-w-4xl mx-auto mb-8"
+                >
+                  Explore events, workshops, and conferences crafted for innovators.
+                </motion.p>
 
-          <p className="text-lg md:text-2xl text-gray-300 max-w-4xl mx-auto mb-8 animate-slide-in-up" style={{ animationDelay: '0.5s' }}>
-            Explore events, workshops, and conferences crafted for the innovators of tomorrow.
-          </p>
-
-          <div className="flex justify-center items-center gap-4 animate-slide-in-up" style={{ animationDelay: '0.8s' }}>
-            <span className="text-green-400 font-semibold">Innovation Awaits</span>
-            <Zap className="w-6 h-6 text-green-500 animate-pulse" />
-          </div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                  className="inline-block px-8 py-3 bg-gradient-to-r from-green-600 to-green-400 rounded-full text-black font-semibold hover:from-green-500 hover:to-green-300 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-green-500/25 cursor-pointer"
+                >
+                  Explore Events
+                </motion.div>
+              </>
+            )}
+          </AnimatePresence>
         </div>
       </section>
 
-      {/* Featured IDEATHON Section - Completely Transformed */}
-      <section className="py-20 px-4 md:px-8 relative bg-black overflow-hidden perspective-1000">
-        {/* Animated background particles */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-green-900/5 via-black to-green-900/5"></div>
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-1 h-1 bg-green-500 rounded-full animate-pulse"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 2}s`,
-                animationDuration: `${2 + Math.random() * 3}s`
-              }}
-            />
-          ))}
-        </div>
-
+      {/* Enhanced Upcoming Events Section */}
+      <section className="py-20 px-4 relative">
         <div className="container mx-auto max-w-7xl relative z-10">
-          {/* Section Header with Reveal Animation */}
-          <div className={`text-center mb-16 ${showFeaturedEvent ? 'animate-text-reveal' : 'opacity-0'}`}>
-            <div className="inline-flex items-center gap-3 mb-4">
-              <Lightbulb className="w-8 h-8 text-green-500 animate-glow-pulse" />
-              <span className="text-green-400 font-semibold text-lg">Featured Event</span>
-            </div>
-            <h2 className="text-6xl md:text-7xl font-extrabold bg-gradient-to-r from-green-400 via-white to-green-400 bg-clip-text text-transparent">
-              Transforming Ideas
-            </h2>
-            <div className="w-32 h-1 bg-gradient-to-r from-transparent via-green-500 to-transparent mx-auto mt-6"></div>
-          </div>
+          <AnimatePresence>
+            {showFeaturedEvent && (
+              <>
+                {/* Enhanced Section Title */}
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, type: "spring", stiffness: 100 }}
+                  className="text-center mb-20 "
+                >
+                  <motion.h2
+                    className="text-5xl md:text-7xl font-extrabold bg-gradient-to-r from-green-400 via-white to-green-400 bg-clip-text text-transparent pb-6"
+                    style={{
+                      fontFamily: "'Orbitron', sans-serif",
+                      fontWeight: 700,
+                      fontStyle: "normal"
+                    }}
+                    animate={{
+                      backgroundPosition: ['0%', '100%', '0%'],
+                    }}
+                    transition={{
+                      duration: 8,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  >
+                    Upcoming Events
+                  </motion.h2>
 
-          {/* Main Featured Card with Morphing Reveal */}
-          <div className={`transform-style-3d ${showFeaturedEvent ? 'animate-morph-reveal' : 'opacity-0 scale-0'}`}>
-            <div className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl border-2 border-green-500/30 card-transform animate-glow-pulse">
-              {/* Glowing border effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-green-500/0 via-green-500/20 to-green-500/0 blur-xl"></div>
 
-              <div className="relative z-10 flex flex-col xl:flex-row items-center gap-12 p-12">
-                {/* Image Section with Advanced Animations */}
-                <div className="w-full xl:w-1/2 relative group/image">
-                  <div className="relative overflow-hidden rounded-2xl">
-                    <img
-                      src={featuredEvent.imageUrl}
-                      alt={featuredEvent.title}
-                      className="w-full h-96 object-cover transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
-                    />
+                  {/* Animated Underline */}
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: '100px' }}
+                    transition={{ delay: 0.5, duration: 0.8 }}
+                    className="mx-auto mt-4 h-1 bg-gradient-to-r from-green-400 to-blue-400 rounded-full"
+                  />
+                </motion.div>
 
-                    {/* Overlay effects */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-                    <div className="absolute inset-0 bg-green-500/10 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-                  </div>
-
-                  {/* Floating Prize Badge */}
-                  <div className="absolute -top-4 -right-4 bg-gradient-to-r from-green-400 to-green-600 text-black px-6 py-3 rounded-2xl font-bold text-lg shadow-2xl transform rotate-12 hover:rotate-0 transition-all duration-500 animate-float">
-                    <Trophy className="inline w-5 h-5 mr-2" />
-                    {featuredEvent.prize}
-                  </div>
-
-                  {/* Glowing corner accents */}
-                  <div className="absolute -top-2 -left-2 w-8 h-8 border-t-4 border-l-4 border-green-500 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-                  <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-4 border-r-4 border-green-500 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                {/* Enhanced Events Grid */}
+                <div className="space-y-16">
+                  <AnimatePresence>
+                    {events.map((event, index) => (
+                      <EventCard key={event.id ?? index} event={event} index={index} />
+                    ))}
+                  </AnimatePresence>
                 </div>
-
-                {/* Content Section with Staggered Reveals */}
-                <div className="w-full xl:w-1/2 text-center xl:text-left space-y-6">
-                  {/* Category Badge */}
-                  <div className={`inline-flex items-center gap-3 bg-gradient-to-r from-green-500/20 to-green-400/20 border border-green-500/30 text-green-400 px-6 py-3 rounded-full font-semibold backdrop-blur-sm ${showFeaturedEvent ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
-                    <Sparkles className="w-5 h-5" />
-                    Innovation Marathon
-                  </div>
-
-                  {/* Title with Character Reveal */}
-                  <h3 className={`text-4xl md:text-5xl font-bold text-white leading-tight ${showFeaturedEvent ? 'animate-text-reveal' : 'opacity-0'}`} style={{ animationDelay: '0.4s' }}>
-                    {featuredEvent.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className={`text-gray-300 text-lg leading-relaxed ${showFeaturedEvent ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.6s' }}>
-                    {featuredEvent.description}
-                  </p>
-
-                  {/* Event Details Grid */}
-                  <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-300 ${showFeaturedEvent ? 'animate-reveal-slide' : 'opacity-0'}`} style={{ animationDelay: '0.8s' }}>
-                    <div className="flex items-center gap-3 justify-center xl:justify-start group/detail">
-                      <Calendar className="w-6 h-6 text-green-500 group-hover/detail:scale-110 transition-transform" />
-                      <span className="group-hover/detail:text-white transition-colors">{formatDate(featuredEvent.date)}</span>
-                    </div>
-                    <div className="flex items-center gap-3 justify-center xl:justify-start group/detail">
-                      <MapPin className="w-6 h-6 text-green-500 group-hover/detail:scale-110 transition-transform" />
-                      <span className="group-hover/detail:text-white transition-colors">{featuredEvent.location}</span>
-                    </div>
-                    <div className="flex items-center gap-3 justify-center xl:justify-start group/detail">
-                      <Users className="w-6 h-6 text-green-500 group-hover/detail:scale-110 transition-transform" />
-                      <span className="group-hover/detail:text-white transition-colors">{featuredEvent.attendees}+ innovators</span>
-                    </div>
-                  </div>
-
-                  {/* CTA Button with Advanced Hover Effects */}
-                  <button className={`group/cta relative bg-gradient-to-r from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 text-black font-bold px-10 py-4 rounded-full transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-green-500/50 overflow-hidden ${showFeaturedEvent ? 'animate-morph-reveal' : 'opacity-0'}`} style={{ animationDelay: '1s' }}>
-
-                    {/* Button shine effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover/cta:translate-x-full transition-transform duration-1000"></div>
-
-                    <span className="relative flex items-center gap-3">
-                      <Lightbulb className="w-5 h-5 group-hover/cta:animate-pulse" />
-                      Ignite Your Innovation
-                      <ArrowRight className="w-5 h-5 transition-transform group-hover/cta:translate-x-2" />
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+              </>
+            )}
+          </AnimatePresence>
         </div>
       </section>
 
-        {/* What We Do Section */}
-        <section className="py-12 px-4 bg-black">
-          <div className="container mx-auto max-w-6xl">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent">
-                What We Do
-              </h2>
-              <p className="text-lg text-gray-400 max-w-3xl mx-auto">
-                We organize diverse events that foster learning, innovation, and collaboration in the tech community.
-              </p>
+      {/* What We Do Section */}
+      <AnimatePresence>
+        {showActivities && (
+          <motion.section
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            className="py-20 px-4"
+          >
+            <div className="container mx-auto max-w-6xl">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="text-center mb-16"
+              >
+                <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-green-400 to-white bg-clip-text text-transparent">
+                  What We Do
+                </h2>
+                <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+                  We organize diverse events that foster learning, innovation, and collaboration in the tech community.
+                </p>
+              </motion.div>
+
+              {/* React Bits Magic Bento Grid */}
+              <MagicBentoEvents
+                activities={activities}             
+                textAutoHide={true}                 
+                enableStars={true}                  
+                enableSpotlight={true}              
+                enableBorderGlow={true}             
+                disableAnimations={false}           
+                spotlightRadius={300}               
+                particleCount={12}                  
+                enableTilt={true}                   
+                glowColor="255, 255, 255"             
+                clickEffect={true}                  
+                enableMagnetism={true}              
+              />
             </div>
-            <MagicBentoGrid activities={activities} />
-          </div>
-        </section>
-      </div>
+          </motion.section>
+        )}
+      </AnimatePresence>
+
+    </div>
   );
 };
 

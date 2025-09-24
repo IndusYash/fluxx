@@ -37,7 +37,7 @@ export interface BentoProps {
 
 const DEFAULT_PARTICLE_COUNT = 12;
 const DEFAULT_SPOTLIGHT_RADIUS = 300;
-const DEFAULT_GLOW_COLOR = '132, 0, 255';
+const DEFAULT_GLOW_COLOR = '255, 255, 255';
 const MOBILE_BREAKPOINT = 768;
 
 // const cardData: BentoCardProps[] = [
@@ -684,11 +684,11 @@ const MagicBentoEvents: React.FC<BentoProps> = ({
             )}
 
             {/* Use the new data to render cards */}
-            <div className="bento-section grid gap-2 p-3 max-w-[54rem] select-none relative" ref={gridRef}>
-                <div className="card-responsive grid gap-2">
+            <div className="bento-section grid gap-6 p-3 w-full max-w-[1200px] mx-auto select-none relative" ref={gridRef}>
+                <div className="card-recard-responsive grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
                     {/* Iterate over the 'activities' prop */}
                     {activities.map((activity, index) => {
-                        const baseClassName = `card flex flex-col justify-between relative aspect-[4/3] min-h-[200px] w-full max-w-full p-5 rounded-[20px] border border-solid font-light overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] ${enableBorderGlow ? 'card--border-glow' : ''}`;
+                        const baseClassName = `card flex flex-col justify-between relative h-[250px] md:h-[280px] w-[300px] max-w-full p-5 rounded-[20px] border border-solid font-light overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] ${enableBorderGlow ? 'card--border-glow' : ''}`;
                         const cardStyle = {
                             backgroundColor: '#060010', // You can use activity.color here if you want to use the gradient effect from your original Activities array
                             borderColor: 'var(--border-color)',
