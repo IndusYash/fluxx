@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, MapPin, Users, ArrowRight } from 'lucide-react';
-import fluxxgfgImg from '@/assets/images/flux-x-gfg.png';
+import { Calendar, MapPin, Users, ArrowRight, Lightbulb } from 'lucide-react';
 
 export interface UpcomingEventsSectionProps { }
 
@@ -26,7 +25,7 @@ const events: EventProps[] = [
         date: '2025-XX-XX',
         description:
             "Join innovators, coders, and thinkers to brainstorm, build, and showcase groundbreaking solutions. Unleash your ideas, collaborate with peers, and be part of a game- changing experience!",
-        imageUrl: fluxxgfgImg,
+        imageUrl: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=600&fit=crop",
         isUpcoming: true,
         location: 'CSED, MMMUT, Gorakhpur',
         attendees: 1000,
@@ -35,6 +34,155 @@ const events: EventProps[] = [
         featured: true,
     }
 ];
+
+// Big White Glowing Bulb Component
+const BigWhiteBulb = () => {
+    const [isHovered, setIsHovered] = useState(false);
+
+    return (
+        <motion.div
+            className="relative inline-block"
+            onHoverStart={() => setIsHovered(true)}
+            onHoverEnd={() => setIsHovered(false)}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+        >
+            {/* Outer White Glow Ring */}
+            <motion.div
+                className="absolute inset-0 rounded-full"
+                animate={{
+                    boxShadow: isHovered 
+                        ? [
+                            '0 0 30px rgba(255, 255, 255, 0.3)',
+                            '0 0 60px rgba(255, 255, 255, 0.5)',
+                            '0 0 90px rgba(255, 255, 255, 0.4)',
+                            '0 0 30px rgba(255, 255, 255, 0.3)'
+                          ]
+                        : ['0 0 15px rgba(255, 255, 255, 0.1)']
+                }}
+                transition={{
+                    duration: isHovered ? 2.5 : 0.5,
+                    repeat: isHovered ? Infinity : 0,
+                    ease: "easeInOut"
+                }}
+            />
+            
+            {/* Main Bulb Container */}
+            <motion.div
+                className="relative w-20 h-20 rounded-full bg-gradient-to-br from-gray-100 to-white border-2 border-white/40 flex items-center justify-center overflow-hidden shadow-lg"
+                animate={{
+                    borderColor: isHovered 
+                        ? 'rgba(255, 255, 255, 0.9)' 
+                        : 'rgba(255, 255, 255, 0.4)',
+                    background: isHovered
+                        ? 'linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(248, 250, 252, 0.9))'
+                        : 'linear-gradient(135deg, rgb(243, 244, 246), rgb(255, 255, 255))'
+                }}
+                transition={{ duration: 0.4 }}
+            >
+                {/* White Light Particles */}
+                {isHovered && [...Array(10)].map((_, i) => (
+                    <motion.div
+                        key={i}
+                        className="absolute w-1 h-1 bg-white rounded-full"
+                        initial={{ 
+                            x: 0, 
+                            y: 0, 
+                            opacity: 0,
+                            scale: 0
+                        }}
+                        animate={{
+                            x: Math.cos((i * Math.PI * 2) / 10) * 35,
+                            y: Math.sin((i * Math.PI * 2) / 10) * 35,
+                            opacity: [0, 0.8, 0],
+                            scale: [0, 2, 0]
+                        }}
+                        transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            delay: i * 0.2,
+                            ease: "easeOut"
+                        }}
+                        style={{
+                            filter: 'drop-shadow(0 0 4px rgba(255, 255, 255, 0.8))'
+                        }}
+                    />
+                ))}
+                
+                {/* Inner White Glow Effect */}
+                <motion.div
+                    className="absolute inset-2 rounded-full"
+                    style={{
+                        background: 'radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%)'
+                    }}
+                    animate={{
+                        opacity: isHovered ? [0.4, 0.8, 0.4] : 0.2,
+                        scale: isHovered ? [1, 1.3, 1] : 1
+                    }}
+                    transition={{
+                        duration: 2,
+                        repeat: isHovered ? Infinity : 0,
+                        ease: "easeInOut"
+                    }}
+                />
+                
+                {/* Lightbulb Icon */}
+                <motion.div
+                    animate={{
+                        color: isHovered ? '#ffffff' : '#6b7280',
+                        filter: isHovered 
+                            ? 'drop-shadow(0 0 12px rgba(255, 255, 255, 0.9))'
+                            : 'drop-shadow(0 0 2px rgba(0, 0, 0, 0.1))'
+                    }}
+                    transition={{ duration: 0.3 }}
+                >
+                    <Lightbulb className="w-10 h-10 relative z-10" />
+                </motion.div>
+                
+                {/* White Filament Lines */}
+                <motion.div
+                    className="absolute inset-0 flex items-center justify-center"
+                    animate={{
+                        opacity: isHovered ? 0.7 : 0.3
+                    }}
+                    transition={{ duration: 0.3 }}
+                >
+                    {[...Array(4)].map((_, i) => (
+                        <motion.div
+                            key={i}
+                            className="absolute bg-white/60 rounded-full"
+                            style={{
+                                width: '1px',
+                                height: `${14 + i * 3}px`,
+                                transform: `rotate(${i * 45}deg)`
+                            }}
+                            animate={{
+                                boxShadow: isHovered
+                                    ? `0 0 6px rgba(255, 255, 255, 0.8)`
+                                    : '0 0 2px rgba(255, 255, 255, 0.3)'
+                            }}
+                            transition={{ duration: 0.3 }}
+                        />
+                    ))}
+                </motion.div>
+            </motion.div>
+            
+            {/* Pulsing White Base Glow */}
+            <motion.div
+                className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-16 h-3 bg-white/30 rounded-full blur-sm"
+                animate={{
+                    scaleX: isHovered ? [1, 1.8, 1] : 1,
+                    opacity: isHovered ? [0.3, 0.7, 0.3] : 0.2
+                }}
+                transition={{
+                    duration: 2.5,
+                    repeat: isHovered ? Infinity : 0,
+                    ease: "easeInOut"
+                }}
+            />
+        </motion.div>
+    );
+};
 
 const EventCard = ({ event, index }: { event: EventProps; index: number }) => {
     const [isHovered, setIsHovered] = useState(false);
@@ -219,29 +367,8 @@ const EventCard = ({ event, index }: { event: EventProps; index: number }) => {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ delay: index * 0.15 + 1.3, type: "spring", stiffness: 200 }}
                     >
-                        <motion.button
-                            whileHover={{
-                                scale: 1.05,
-                                boxShadow: '0 20px 40px rgba(74, 222, 128, 0.4)',
-                            }}
-                            whileTap={{ scale: 0.95 }}
-                            className="relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-green-600 to-green-400 rounded-xl text-black font-semibold hover:from-green-500 hover:to-green-300 transition-all duration-300 shadow-lg overflow-hidden group/button"
-                        >
-                            <motion.div
-                                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12"
-                                animate={{
-                                    x: isHovered ? ['100%', '-100%'] : '-100%',
-                                }}
-                                transition={{ duration: 0.8, delay: 0.2 }}
-                            />
-                            <span className="relative z-10">Register Now</span>
-                            <motion.div
-                                animate={isHovered ? { x: 5 } : { x: 0 }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                <ArrowRight className="w-5 h-5 relative z-10" />
-                            </motion.div>
-                        </motion.button>
+                     
+                            
                     </motion.div>
                 </motion.div>
             </div>
@@ -254,37 +381,112 @@ const UpcomingEvents: React.FC<UpcomingEventsSectionProps> = () => {
     const upcomingEvents = events.filter(event => event.isUpcoming);
 
     return (
-        <section className="py-20 px-4 relative">
+        <section className="py-20 px-4 relative bg-gradient-to-br from-gray-900 via-gray-800 to-black min-h-screen">
             <div className="container mx-auto max-w-7xl relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, type: "spring", stiffness: 100 }}
-                    className="text-center mb-20 "
+                    className="text-center mb-20"
                 >
-                    <motion.h2
-                        className="text-5xl md:text-7xl font-extrabold bg-gradient-to-r from-green-400 via-white to-green-400 bg-clip-text text-transparent pb-6"
-                        style={{
-                            fontFamily: "'Orbitron', sans-serif",
-                            fontWeight: 700,
-                            fontStyle: "normal"
-                        }}
-                        animate={{
-                            backgroundPosition: ['0%', '100%', '0%'],
-                        }}
-                        transition={{
-                            duration: 8,
-                            repeat: Infinity,
-                            ease: "linear"
-                        }}
-                    >
-                        Upcoming Events
-                    </motion.h2>
+                    {/* Title with Big White Bulb */}
+                    <div className="flex items-center justify-center gap-8 mb-6">
+                        <BigWhiteBulb />
+                        <motion.div 
+                            className="relative cursor-pointer"
+                            initial={{ filter: "blur(8px)", opacity: 0.3 }}
+                            animate={{ filter: "blur(0px)", opacity: 1 }}
+                            transition={{ 
+                                duration: 2,
+                                delay: 0.8,
+                                ease: "easeOut"
+                            }}
+                        >
+                            <motion.h2
+                                className="text-5xl md:text-7xl font-extrabold relative z-10 transition-all duration-500"
+                                style={{
+                                    fontFamily: "'Orbitron', sans-serif",
+                                    fontWeight: 700,
+                                    fontStyle: "normal",
+                                    color: '#e5e7eb',
+                                    textShadow: '0 0 2px rgba(156, 163, 175, 0.5)'
+                                }}
+                                whileHover={{
+                                    color: '#ffffff',
+                                    textShadow: `
+                                        0 0 5px rgba(74, 222, 128, 0.6),
+                                        0 0 10px rgba(74, 222, 128, 0.4),
+                                        0 0 15px rgba(74, 222, 128, 0.3),
+                                        0 0 20px rgba(34, 197, 94, 0.2),
+                                        0 0 30px rgba(34, 197, 94, 0.1)
+                                    `,
+                                    transition: { duration: 0.3 }
+                                }}
+                            >
+                                Upcoming Events
+                            </motion.h2>
+                            
+                            {/* Electric Lightning Effects - Only on hover */}
+                            {[...Array(8)].map((_, i) => (
+                                <motion.div
+                                    key={i}
+                                    className="absolute bg-green-400/80 opacity-0 pointer-events-none"
+                                    style={{
+                                        width: '1px',
+                                        height: `${Math.random() * 20 + 8}px`,
+                                        left: `${Math.random() * 100}%`,
+                                        top: `${Math.random() * 100}%`,
+                                        transform: `rotate(${Math.random() * 360}deg)`,
+                                        borderRadius: '0.5px',
+                                        filter: 'blur(0.3px)',
+                                        boxShadow: '0 0 4px rgba(74, 222, 128, 0.6)'
+                                    }}
+                                />
+                            ))}
+                            
+                            {/* Crackling Energy Lines - Only on hover */}
+                            {[...Array(4)].map((_, i) => (
+                                <motion.svg
+                                    key={`crack-${i}`}
+                                    className="absolute inset-0 w-full h-full pointer-events-none opacity-0"
+                                    viewBox="0 0 400 100"
+                                >
+                                    <motion.path
+                                        d={`M${Math.random() * 50} ${20 + Math.random() * 60} 
+                                           L${100 + Math.random() * 50} ${30 + Math.random() * 40}
+                                           L${200 + Math.random() * 50} ${25 + Math.random() * 50}
+                                           L${300 + Math.random() * 50} ${35 + Math.random() * 30}
+                                           L${350 + Math.random() * 50} ${20 + Math.random() * 60}`}
+                                        stroke="rgba(74, 222, 128, 0.7)"
+                                        strokeWidth="0.8"
+                                        fill="none"
+                                        style={{
+                                            filter: 'drop-shadow(0 0 3px rgba(74, 222, 128, 0.5))'
+                                        }}
+                                    />
+                                </motion.svg>
+                            ))}
+                            
+                            {/* Energy Orbs - Only on hover */}
+                            {[...Array(6)].map((_, i) => (
+                                <motion.div
+                                    key={`orb-${i}`}
+                                    className="absolute w-0.5 h-0.5 bg-green-400/70 rounded-full opacity-0 pointer-events-none"
+                                    style={{
+                                        left: `${15 + Math.random() * 70}%`,
+                                        top: `${15 + Math.random() * 70}%`,
+                                        boxShadow: '0 0 4px rgba(74, 222, 128, 0.6)'
+                                    }}
+                                />
+                            ))}
+                        </motion.div>
+                    </div>
+                    
                     <motion.div
                         initial={{ width: 0 }}
-                        animate={{ width: '100px' }}
+                        animate={{ width: '150px' }}
                         transition={{ delay: 0.5, duration: 0.8 }}
-                        className="mx-auto mt-4 h-1 bg-gradient-to-r from-green-400 to-blue-400 rounded-full"
+                        className="mx-auto mt-4 h-1 bg-gradient-to-r from-green-400 to-blue-400 rounded-full shadow-lg shadow-green-400/50"
                     />
                 </motion.div>
                 <div className="space-y-16">
