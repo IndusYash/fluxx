@@ -35,7 +35,7 @@ export interface BentoProps {
     enableMagnetism?: boolean;
 }
 
-const DEFAULT_PARTICLE_COUNT = 12;
+const DEFAULT_PARTICLE_COUNT = 15;
 const DEFAULT_SPOTLIGHT_RADIUS = 300;
 const DEFAULT_GLOW_COLOR = '255, 255, 255';
 const MOBILE_BREAKPOINT = 768;
@@ -224,7 +224,7 @@ const ParticleCard: React.FC<{
                     gsap.to(element, {
                         rotateX: 5,
                         rotateY: 5,
-                        duration: 0.3,
+                        duration: 0.05,
                         ease: 'power2.out',
                         transformPerspective: 1000
                     });
@@ -239,7 +239,7 @@ const ParticleCard: React.FC<{
                     gsap.to(element, {
                         rotateX: 0,
                         rotateY: 0,
-                        duration: 0.3,
+                        duration: 0.1,
                         ease: 'power2.out'
                     });
                 }
@@ -690,13 +690,16 @@ const MagicBentoEvents: React.FC<BentoProps> = ({
                     {activities.map((activity, index) => {
                         const baseClassName = `card flex flex-col justify-between relative h-[250px] md:h-[280px] w-[300px] max-w-full p-5 rounded-[20px] border border-solid font-light overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] ${enableBorderGlow ? 'card--border-glow' : ''}`;
                         const cardStyle = {
-                            backgroundColor: '#060010', // You can use activity.color here if you want to use the gradient effect from your original Activities array
+                            backgroundColor: 'transparent', 
                             borderColor: 'var(--border-color)',
-                            color: 'var(--white)',
+                            // color: 'var(--white)',
                             '--glow-x': '50%',
                             '--glow-y': '50%',
                             '--glow-intensity': '0',
-                            '--glow-radius': '200px'
+                            '--glow-radius': '200px',
+                            backgroundImage: `url(${activity.imageUrl})`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
                         } as React.CSSProperties;
 
                         if (enableStars) {
@@ -713,18 +716,39 @@ const MagicBentoEvents: React.FC<BentoProps> = ({
                                     enableMagnetism={enableMagnetism}
                                 >
                                     {/* Use data from the 'activity' object */}
-                                    <div className="flex flex-col h-full justify-between">
-                                        <div className="card__header flex justify-between gap-3 relative text-white">
-                                            <span className="card__label text-base">{activity.title}</span>
-                                            {activity.icon}
+                                    <div
+                                        key={activity.id}
+                                        className={baseClassName}
+                                        style={cardStyle}
+                                    >
+                                        {/* This is the nested div for the background image with reduced opacity */}
+                                        <div
+                                            className="absolute inset-0 z-0 opacity-10 group-hover:opacity-60 transition-opacity duration-300"
+                                            style={{
+                                                backgroundImage: `url(${activity.imageUrl})`,
+                                                backgroundSize: 'cover',
+                                                backgroundPosition: 'center',
+                                            }}>
                                         </div>
-                                        <div className="card__content flex flex-col relative text-white">
-                                            <h3 className={`card__title font-normal text-base m-0 mb-1 ${textAutoHide ? 'text-clamp-1' : ''}`}>
-                                                {activity.title}
-                                            </h3>
-                                            <p className={`card__description text-xs leading-5 opacity-90 ${textAutoHide ? 'text-clamp-2' : ''}`}>
-                                                {activity.description}
-                                            </p>
+
+                                        {/* The black overlay is now positioned correctly to cover the entire card */}
+                                        <div className="absolute inset-0 bg-black/60 group-hover:bg-black/30 transition-all duration-300"></div>
+
+                                        <div className="flex flex-col h-full justify-between relative z-10 p-5">
+                                            <div className="card__header flex justify-between gap-3 relative text-white">
+                                                <div className={`p-3 rounded-xl bg-gradient-to-r ${activity.color}`}>
+                                                    {activity.icon}
+                                                </div>
+                                                <span className="card__label text-base">{activity.title}</span>
+                                            </div>
+                                            <div className="card__content flex flex-col relative text-white">
+                                                <h3 className={`card__title font-normal text-base m-0 mb-1 ${textAutoHide ? 'text-clamp-1' : ''}`}>
+                                                    {activity.title}
+                                                </h3>
+                                                <p className={`card__description text-xs leading-5 opacity-90 ${textAutoHide ? 'text-clamp-2' : ''}`}>
+                                                    {activity.description}
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </ParticleCard>
