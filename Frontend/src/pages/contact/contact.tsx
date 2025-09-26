@@ -1,9 +1,20 @@
 import { useState } from 'react';
 import { SiGmail } from "react-icons/si";
 import { FaWhatsapp, FaInstagram } from "react-icons/fa";
+import { supabase } from "@/lib/supabase";
 
-export default function Contact() {
-  const [formData, setFormData] = useState({
+
+interface FormData {
+  name: string;
+  email: string;
+  company: string;
+  phone: string;
+  service: string;
+  message: string;
+}
+
+function contact() {
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     company: '',
@@ -13,6 +24,7 @@ export default function Contact() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -20,20 +32,50 @@ export default function Contact() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError(null);
     
-    // Simulate API call
-    setTimeout(() => {
-      console.log('Form submitted:', formData);
-      setIsSubmitting(false);
+    try {
+      const { data, error } = await supabase
+        .from('contact_submissions')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            company: formData.company || null,
+            phone: formData.phone || null,
+            service: formData.service || null,
+            message: formData.message,
+            status: 'new'
+          }
+        ]);
+
+      if (error) {
+        throw error;
+      }
+
+      console.log('Form submitted successfully:', data);
       setSubmitSuccess(true);
-      setFormData({ name: '', email: '', company: '', phone: '', service: '', message: '' });
+      setFormData({ 
+        name: '', 
+        email: '', 
+        company: '', 
+        phone: '', 
+        service: '', 
+        message: '' 
+      });
       
       // Reset success message after 5 seconds
       setTimeout(() => setSubmitSuccess(false), 5000);
-    }, 1500);
+      
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitError('Failed to submit form. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const toggleFaq = (index: number) => {
@@ -44,8 +86,8 @@ export default function Contact() {
     {
       question: "What services do you offer?",
       answer: "We are a coding society dedicated to hosting conferences, workshops, and hackathons to foster learning and innovation. Our mission is to connect tech enthusiasts, provide mentorship, and empower members with the latest industry insights."
-    }
-    ,{
+    },
+    {
       question: "How can I join the society?",
       answer: "Anyone interested in coding, technology, and innovation can join, regardless of experience level. Follow our social media handles for latest updates."
     },
@@ -58,27 +100,6 @@ export default function Contact() {
       answer: "Absolutely! We encourage students to contribute as volunteers, mentors, or event organizers to gain experience and network."
     }
   ];
-
-  // Commented out testimonials data for future use
-  /*
-  const testimonials = [
-    {
-      name: "Sarah Johnson",
-      position: "CEO, TechStart Inc.",
-      content: "Working with this team was an absolute pleasure. They delivered our project on time and exceeded our expectations. Their attention to detail and technical expertise is unmatched."
-    },
-    {
-      name: "Michael Chen",
-      position: "Marketing Director, GrowthCo",
-      content: "The digital transformation they implemented for our company resulted in a 40% increase in online engagement. Their strategic approach and technical skills are top-notch."
-    },
-    {
-      name: "Emily Rodriguez",
-      position: "Founder, EcoSolutions",
-      content: "As a non-profit, we needed an affordable yet professional solution. They created a beautiful website that perfectly represents our mission and has helped us increase donations significantly."
-    }
-  ];
-  */
 
   return (
     <div className="min-h-screen bg-black text-white py-12 px-4 sm:px-6 lg:px-8">
@@ -173,24 +194,24 @@ export default function Contact() {
               <div className="mt-12">
                 <h3 className="text-lg font-medium mb-4">Connect With Us</h3>
                 <div className="flex space-x-4">
-  {[
-    { name: "gmail", Icon: SiGmail, link: "mailto:flux@mmmut.ac.in" },
-    { name: "whatsapp", Icon: FaWhatsapp, link: "https://chat.whatsapp.com/F8O8hTu2aCZ6NKLeRVqJ0R?mode=ac_t" },
-    { name: "instagram", Icon: FaInstagram, link: "https://www.instagram.com/flux.mmmut?igsh=aHI5c3Z1dGZwOGI2" },
-  ].map(({ name, Icon, link }) => (
-    <a
-      key={name}
-      href={link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="h-12 w-12 rounded-full bg-purple-700 flex items-center justify-center hover:bg-purple-600 transition-colors duration-300"
-      aria-label={name}
-    >
-      <span className="sr-only">{name}</span>
-      <Icon className="h-6 w-6 text-white" />
-    </a>
-  ))}
-</div>
+                  {[
+                    { name: "gmail", Icon: SiGmail, link: "mailto:flux@mmmut.ac.in" },
+                    { name: "whatsapp", Icon: FaWhatsapp, link: "https://chat.whatsapp.com/F8O8hTu2aCZ6NKLeRVqJ0R?mode=ac_t" },
+                    { name: "instagram", Icon: FaInstagram, link: "https://www.instagram.com/flux.mmmut?igsh=aHI5c3Z1dGZwOGI2" },
+                  ].map(({ name, Icon, link }) => (
+                    <a
+                      key={name}
+                      href={link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="h-12 w-12 rounded-full bg-purple-700 flex items-center justify-center hover:bg-purple-600 transition-colors duration-300"
+                      aria-label={name}
+                    >
+                      <span className="sr-only">{name}</span>
+                      <Icon className="h-6 w-6 text-white" />
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -273,12 +294,12 @@ export default function Contact() {
                     className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-white transition duration-300"
                   >
                     <option value="">Select a service</option>
-                    <option value="web">Web Development</option>
-                    <option value="mobile">Mobile App Development</option>
-                    <option value="design">UI/UX Design</option>
-                    <option value="marketing">Digital Marketing</option>
-                    <option value="cloud">Cloud Solutions</option>
-                    <option value="consulting">IT Consulting</option>
+                    <option value="hackathon">Hackathon Participation</option>
+                    <option value="workshop">Workshop Registration</option>
+                    <option value="conference">Conference Attendance</option>
+                    <option value="mentorship">Mentorship Program</option>
+                    <option value="collaboration">Project Collaboration</option>
+                    <option value="volunteering">Volunteering</option>
                     <option value="other">Other</option>
                   </select>
                 </div>
@@ -295,7 +316,7 @@ export default function Contact() {
                     required
                     rows={5}
                     className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-white transition duration-300"
-                    placeholder="Tell us about your project..."
+                    placeholder="Tell us about your interest, questions, or how you'd like to get involved..."
                   ></textarea>
                 </div>
 
@@ -311,19 +332,30 @@ export default function Contact() {
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        Sending...
+                        Submitting...
                       </span>
                     ) : 'Send Message'}
                   </button>
                 </div>
               </form>
 
+              {/* Success Message */}
               {submitSuccess && (
                 <div className="mt-6 p-4 bg-green-900/30 text-green-300 rounded-lg border border-green-800 flex items-center">
                   <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                   <span>Thank you! Your message has been sent successfully.</span>
+                </div>
+              )}
+
+              {/* Error Message */}
+              {submitError && (
+                <div className="mt-6 p-4 bg-red-900/30 text-red-300 rounded-lg border border-red-800 flex items-center">
+                  <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  <span>{submitError}</span>
                 </div>
               )}
             </div>
@@ -369,40 +401,6 @@ export default function Contact() {
         </div>
       </div>
 
-      {/* Testimonials Section - COMMENTED OUT FOR FUTURE USE */}
-      {/*
-      <div className="max-w-6xl mx-auto mb-20">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">What Our Speakers Say</h2>
-          <p className="text-gray-400">Hear from speakers who have contributed in our events.</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <div key={index} className="bg-gray-900 rounded-xl p-6">
-              <div className="flex items-center mb-4">
-                <div className="h-12 w-12 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center text-white font-bold">
-                  {testimonial.name.charAt(0)}
-                </div>
-                <div className="ml-4">
-                  <div className="font-medium">{testimonial.name}</div>
-                  <div className="text-sm text-gray-400">{testimonial.position}</div>
-                </div>
-              </div>
-              <p className="text-gray-300 italic">"{testimonial.content}"</p>
-              <div className="flex mt-4">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      */}
-
       {/* Newsletter Section */}
       <div className="max-w-4xl mx-auto">
         <div className="bg-gradient-to-r from-purple-900 to-blue-900 rounded-2xl p-8 md:p-12">
@@ -434,3 +432,5 @@ export default function Contact() {
     </div>
   );
 }
+
+export default contact;
