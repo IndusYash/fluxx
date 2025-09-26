@@ -597,7 +597,7 @@ const InductionForm: React.FC = () => {
                       Showcase your work (GitHub, Portfolio, etc.)
                     </label>
                     <input
-                      type="url"
+                      type="text"
                       value={formData.githubProfile}
                       onChange={(e) => handleInputChange('githubProfile', e.target.value)}
                       disabled={!user}
