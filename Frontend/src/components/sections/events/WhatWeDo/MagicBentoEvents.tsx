@@ -21,7 +21,7 @@ export interface Activity {
 }
 
 export interface BentoProps {
-    activities: Activity[]; // Or a specific Activity[] interface
+    activities: Activity[]; 
     textAutoHide?: boolean;
     enableStars?: boolean;
     enableSpotlight?: boolean;
@@ -40,44 +40,6 @@ const DEFAULT_SPOTLIGHT_RADIUS = 300;
 const DEFAULT_GLOW_COLOR = '255, 255, 255';
 const MOBILE_BREAKPOINT = 768;
 
-// const cardData: BentoCardProps[] = [
-//     {
-//         color: '#060010',
-//         title: 'Analytics',
-//         description: 'Track user behavior',
-//         label: 'Insights'
-//     },
-//     {
-//         color: '#060010',
-//         title: 'Dashboard',
-//         description: 'Centralized data view',
-//         label: 'Overview'
-//     },
-//     {
-//         color: '#060010',
-//         title: 'Collaboration',
-//         description: 'Work together seamlessly',
-//         label: 'Teamwork'
-//     },
-//     {
-//         color: '#060010',
-//         title: 'Automation',
-//         description: 'Streamline workflows',
-//         label: 'Efficiency'
-//     },
-//     {
-//         color: '#060010',
-//         title: 'Integration',
-//         description: 'Connect favorite tools',
-//         label: 'Connectivity'
-//     },
-//     {
-//         color: '#060010',
-//         title: 'Security',
-//         description: 'Enterprise-grade protection',
-//         label: 'Protection'
-//     }
-// ];
 
 const createParticleElement = (x: number, y: number, color: string = DEFAULT_GLOW_COLOR): HTMLDivElement => {
     const el = document.createElement('div');

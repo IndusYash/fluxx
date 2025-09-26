@@ -4,18 +4,11 @@ import { Code, Presentation, FileText, Trophy, Lightbulb, Sparkles, Zap, ArrowRi
 import MagicBentoEvents from '@/components/sections/events/WhatWeDo/MagicBentoEvents';
 
 import hackathonImg from '@/assets/images/flux-x-gfg.png';
-import conferenceImg from '@/assets/images/flux-x-gfg.png';
-import labsImg from '@/assets/images/flux-x-gfg.png';
-import workshopImg from '@/assets/images/flux-x-gfg.png';
-import seminarImg from '@/assets/images/flux-x-gfg.png';
-import competitionImg from '@/assets/images/flux-x-gfg.png';
-
-// import hackathonImg from 'https://cdn.vectorstock.com/i/1000v/27/09/hackathon-round-icon-set-vector-28032709.jpg';
-// import conferenceImg from 'https://cdn.vectorstock.com/i/1000v/27/09/hackathon-round-icon-set-vector-28032709.jpg';
-// import labsImg from 'https://hitechlab.in/wp-content/uploads/2020/02/Hitechlab-moderlab-post-1170x725.jpg';
-// import workshopImg from 'https://t3.ftcdn.net/jpg/00/77/94/04/360_F_77940420_GpoP08HyIvbklcTTUYl20ItCOq2QEpxL.jpg';
-// import seminarImg from 'https://cdn.vectorstock.com/i/1000v/27/09/hackathon-round-icon-set-vector-28032709.jpg';
-// import competitionImg from 'https://akm-img-a-in.tosshub.com/businesstoday/images/story/202403/65f17ffaa9b4f-digital-competition-bill-heres-how-it-can-affect-the-big-tech-companies-132913392-16x9.jpg';
+import conferenceImg from '@/assets/images/conferenceImg.jpeg';
+import labsImg from '@/assets/images/labsImg.jpg';
+import workshopImg from '@/assets/images/workshopImg.jpg';
+import seminarImg from '@/assets/images/seminarImg.jpg';
+import competitionImg from '@/assets/images/competitionImg.webp';
 
 interface Activity {
     id: number;
