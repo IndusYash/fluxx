@@ -1,6 +1,5 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import { Variants } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 const textParent: Variants = {
@@ -29,230 +28,7 @@ const textChild: Variants = {
   },
 };
 
-// Floating Animation Variants - Right side bottom mein ghoomte rahega
-const floatingButtonVariants = {
-  animate: {
-    y: [0, -10, 0],
-    scale: [1, 1.05, 1],
-    rotate: [0, 2, -2, 0],
-    transition: {
-      y: {
-        duration: 2.5,
-        repeat: Infinity,
-        ease: "easeInOut",
-      },
-      scale: {
-        duration: 3,
-        repeat: Infinity,
-        ease: "easeInOut",
-      },
-      rotate: {
-        duration: 4,
-        repeat: Infinity,
-        ease: "easeInOut",
-      },
-    },
-  },
-};
-
-// Floating Join Now Button - Click pe induction page redirect
-const FloatingJoinButton = () => {
-  const navigate = useNavigate();
-  const [isVisible, setIsVisible] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
-
-  // 3 seconds baad show hoga
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleJoinNow = () => {
-    setIsClicked(true);
-    
-    // Click animation complete hone ke baad navigate
-    setTimeout(() => {
-      navigate("/join");
-    }, 300);
-  };
-
-  if (!isVisible) return null;
-
-  return (
-    <AnimatePresence>
-      <motion.div
-        className="fixed bottom-6 right-6 z-50"
-        initial={{ opacity: 0, scale: 0, x: 50, y: 50 }}
-        animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
-        exit={{ opacity: 0, scale: 0, x: 50, y: 50 }}
-        transition={{ type: "spring", damping: 15, stiffness: 300 }}
-      >
-        {/* Main floating button with text - CIRCULAR with text inside */}
-        <motion.button
-          onClick={handleJoinNow}
-          onHoverStart={() => setIsHovered(true)}
-          onHoverEnd={() => setIsHovered(false)}
-          className="relative group flex flex-col items-center justify-center w-24 h-24 rounded-full font-bold text-white shadow-2xl overflow-hidden"
-          variants={floatingButtonVariants}
-          animate="animate"
-          whileHover={{
-            scale: 1.1,
-            boxShadow: "0 0 40px rgba(16, 185, 129, 0.6)",
-          }}
-          whileTap={{ 
-            scale: 0.9,
-            boxShadow: "0 0 50px rgba(16, 185, 129, 0.8)",
-          }}
-          style={{
-            background: "linear-gradient(135deg, hsl(var(--primary)), #10b981, #059669)",
-            border: "2px solid rgba(16, 185, 129, 0.3)",
-            cursor: "pointer",
-            boxShadow: "0 8px 25px rgba(16, 185, 129, 0.4)",
-            fontFamily: "'Space Grotesk', 'Inter', sans-serif",
-          }}
-        >
-          {/* Rocket icon with animation */}
-          <motion.span
-            className="text-xl mb-1"
-            animate={{
-              rotate: isClicked ? [0, 15, -15, 0] : [0, 5, -5, 0],
-              scale: isClicked ? [1, 1.3, 1] : [1, 1.1, 1],
-            }}
-            transition={{
-              duration: isClicked ? 0.5 : 2,
-              repeat: isClicked ? 0 : Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            🚀
-          </motion.span>
-
-          {/* Induction Open Text */}
-          <motion.div
-            className="text-center leading-tight"
-            animate={isClicked ? { x: [0, 3, 0] } : {}}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="text-xs font-bold">Induction</div>
-            <div className="text-xs font-bold">Open</div>
-          </motion.div>
-
-          {/* Glowing ring animation */}
-          <motion.div
-            className="absolute inset-0 rounded-full border-2 border-primary/40"
-            animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.7, 0.2, 0.7],
-            }}
-            transition={{
-              duration: 2.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-
-          {/* Success checkmark animation on click */}
-          <AnimatePresence>
-            {isClicked && (
-              <motion.div
-                className="absolute inset-0 flex items-center justify-center rounded-full"
-                style={{
-                  background: "linear-gradient(135deg, #10b981, #059669)",
-                }}
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0, opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <motion.span
-                  className="text-2xl"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.1, type: "spring", damping: 15 }}
-                >
-                  ✓
-                </motion.span>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Floating particles around button */}
-          {!isClicked && [...Array(4)].map((_, i) => (
-            <motion.div
-              key={`particle-${i}`}
-              className="absolute w-1.5 h-1.5 bg-primary/60 rounded-full"
-              style={{
-                left: `${50 + Math.cos((i * 90 * Math.PI) / 180) * 40}px`,
-                top: `${50 + Math.sin((i * 90 * Math.PI) / 180) * 40}px`,
-              }}
-              animate={{
-                y: [0, -6, 0],
-                opacity: [0.4, 1, 0.4],
-                scale: [0.5, 1, 0.5],
-              }}
-              transition={{
-                duration: 2.5 + Math.random(),
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: i * 0.2,
-              }}
-            />
-          ))}
-        </motion.button>
-
-        {/* Enhanced tooltip - appears on hover */}
-        <AnimatePresence>
-          {isHovered && !isClicked && (
-            <motion.div
-              className="absolute bottom-28 right-0 bg-gradient-to-r from-gray-900 to-gray-800 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap border border-primary/30"
-              initial={{ opacity: 0, y: 10, scale: 0.8 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 10, scale: 0.8 }}
-              transition={{ duration: 0.2 }}
-              style={{
-                boxShadow: "0 4px 15px rgba(0, 0, 0, 0.3)",
-                fontFamily: "'Space Grotesk', sans-serif",
-              }}
-            >
-              <div className="flex items-center gap-2">
-                <span>🌟</span>
-                <span>Join FLUX Community!</span>
-              </div>
-              {/* Tooltip arrow */}
-              <div
-                className="absolute top-full right-6 w-0 h-0"
-                style={{
-                  borderLeft: "6px solid transparent",
-                  borderRight: "6px solid transparent",
-                  borderTop: "6px solid #1f2937",
-                }}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Click ripple effect */}
-        <AnimatePresence>
-          {isClicked && (
-            <motion.div
-              className="absolute inset-0 rounded-full bg-primary/30"
-              initial={{ scale: 1, opacity: 0.8 }}
-              animate={{ scale: 3, opacity: 0 }}
-              exit={{ scale: 0, opacity: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-            />
-          )}
-        </AnimatePresence>
-      </motion.div>
-    </AnimatePresence>
-  );
-};
-
-// Enhanced Typewriter Component (keeping existing)
+// Enhanced Typewriter Component
 const TypewriterMotto = () => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState("");
@@ -279,7 +55,7 @@ const TypewriterMotto = () => {
     }, typingSpeed);
 
     return () => clearTimeout(timeout);
-  }, [currentText, isDeleting, currentWordIndex]);
+  }, [currentText, isDeleting, currentWordIndex, words]);
 
   return (
     <span
@@ -336,7 +112,6 @@ const TypewriterMotto = () => {
 export default function Hero() {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const [intensity, setIntensity] = useState(1);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -346,8 +121,6 @@ export default function Hero() {
         const rect = sectionRef.current.getBoundingClientRect();
         const x = ((e.clientX - rect.left) / rect.width) * 100;
         const y = ((e.clientY - rect.top) / rect.height) * 100;
-
-        setMousePosition({ x, y });
 
         const centerX = 50;
         const centerY = 50;
@@ -588,32 +361,32 @@ export default function Hero() {
               className="flex flex-col sm:flex-row justify-center gap-4 pt-6"
             >
               <motion.div
-  whileHover={{ scale: 1.03, y: -2 }}
-  whileTap={{ scale: 0.97 }}
-  className="rounded-lg overflow-hidden shadow-md"
-  style={{
-    boxShadow: "0 0 20px rgba(16, 185, 129, 0.4)",
-  }}
->
-  <button
-    onClick={handleJoinClick}
-    className="
-      w-full sm:w-auto
-      px-4 sm:px-6 py-2 sm:py-3
-      bg-gradient-to-r from-[#707d7d] to-[#047481]
-      rounded-lg
-      hover:opacity-90
-      transition
-      text-white
-      font-semibold
-      text-center
-      text-sm sm:text-base
-    "
-    style={{ fontFamily: "'Space Grotesk', 'Inter', sans-serif" }}
-  >
-    🚀 Join FLUX
-  </button>
-</motion.div>
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                className="rounded-lg overflow-hidden shadow-md"
+                style={{
+                  boxShadow: "0 0 20px rgba(16, 185, 129, 0.4)",
+                }}
+              >
+                <button
+                  onClick={handleJoinClick}
+                  className="
+                    w-full sm:w-auto
+                    px-4 sm:px-6 py-2 sm:py-3
+                    bg-gradient-to-r from-[#707d7d] to-[#047481]
+                    rounded-lg
+                    hover:opacity-90
+                    transition
+                    text-white
+                    font-semibold
+                    text-center
+                    text-sm sm:text-base
+                  "
+                  style={{ fontFamily: "'Space Grotesk', 'Inter', sans-serif" }}
+                >
+                  🚀 Join FLUX
+                </button>
+              </motion.div>
 
 
 
@@ -668,9 +441,6 @@ export default function Hero() {
           </motion.div>
         </div>
       </section>
-
-      {/* Floating JOIN NOW Button - Right Bottom Corner */}
-      <FloatingJoinButton />
     </>
   );
 }
