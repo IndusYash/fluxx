@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
     { name: "Our Team", path: "/team" },
     { name: "Events", path: "/events" },
     { name: "Contact", path: "/contact" },
-    { name: "Induction", path: "/join" },
+//     { name: "Induction", path: "/join" },
   ];
   useEffect(() => {
     const handleScroll = () => {

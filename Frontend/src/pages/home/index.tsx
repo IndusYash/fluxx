@@ -1,7 +1,7 @@
 import Hero from "@/components/sections/home/Hero"
 import { motion } from "framer-motion"
 import Showcase from "@/components/sections/home/Showcase"
-import InductionCTA from "@/components/sections/home/InductionCTA"
+// import InductionCTA from "@/components/sections/home/InductionCTA"
 import FacultyPreview from "@/components/sections/home/FacultyPreview"
 import EventsPreview from "@/components/sections/home/EventsPreview"
 import ContactPreview from "@/components/sections/home/ContactPreview"
@@ -34,7 +34,7 @@ export default function HomePage() {
         <Showcase />
         <EventsPreview />
         <FacultyPreview />
-        <InductionCTA />
+        {/* <InductionCTA /> */}
         {!isMobile && <ContactPreview />}
       </motion.div>
     </>
