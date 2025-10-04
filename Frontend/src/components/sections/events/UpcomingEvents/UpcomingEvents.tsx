@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, MapPin, Users, ArrowRight, Lightbulb } from 'lucide-react';
+import { Calendar, MapPin, Users, ArrowRight, Lightbulb, Award } from 'lucide-react';
+import dimitrios from '/src/assets/images/dimitrios.png';
+
 
 export interface UpcomingEventsSectionProps { }
 
@@ -13,12 +15,26 @@ export interface EventProps {
     isUpcoming: boolean;
     location?: string;
     attendees?: number;
-    category: 'Tech' | 'Design' | 'Business' | 'Research';
+    category: 'Tech' | 'Design' | 'Business' | 'Innovation';
     prize?: string;
     featured?: boolean;
 }
 
 const events: EventProps[] = [
+    {
+        id: 2,
+        title: 'Expert Session: Responsible AI & Sustainability',
+        date: 'October 10, 2025',
+        description:
+            "An expert session on Advances in Defining and Modelling: a Reliable Framework for Responsible AI towards Sustainability will be conducted by Prof. Dr. Dimitrios A. Karras (PhD, Electrical & Computer Engineering).\n\nDesignations:\n1. Professor, National and Kapodistrian University of Athens (NKUA), Greece\n2. Professor, EPOKA University, Computer Engineering Dept., Tirana, Albania.",
+        imageUrl: dimitrios,
+        isUpcoming: true,
+        location: 'Alan Turing Hall, CSED',
+        attendees: 200,
+        category: 'Innovation',
+        prize: '',
+        featured: true,
+    },
     {
         id: 1,
         title: 'GFG IDEATHON 2025',
@@ -30,12 +46,12 @@ const events: EventProps[] = [
         location: 'CSED, MMMUT, Gorakhpur',
         attendees: 1000,
         category: 'Tech',
-        prize: '₹50,000',
+        prize: '',
         featured: true,
     }
 ];
 
-// Big White Glowing Bulb Component
+// Big White Glowing Bulb Component (unchanged)
 const BigWhiteBulb = () => {
     const [isHovered, setIsHovered] = useState(false);
 
@@ -47,17 +63,16 @@ const BigWhiteBulb = () => {
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
         >
-            {/* Outer White Glow Ring */}
             <motion.div
                 className="absolute inset-0 rounded-full"
                 animate={{
-                    boxShadow: isHovered 
+                    boxShadow: isHovered
                         ? [
                             '0 0 30px rgba(255, 255, 255, 0.3)',
                             '0 0 60px rgba(255, 255, 255, 0.5)',
                             '0 0 90px rgba(255, 255, 255, 0.4)',
                             '0 0 30px rgba(255, 255, 255, 0.3)'
-                          ]
+                        ]
                         : ['0 0 15px rgba(255, 255, 255, 0.1)']
                 }}
                 transition={{
@@ -66,13 +81,11 @@ const BigWhiteBulb = () => {
                     ease: "easeInOut"
                 }}
             />
-            
-            {/* Main Bulb Container */}
             <motion.div
                 className="relative w-20 h-20 rounded-full bg-gradient-to-br from-gray-100 to-white border-2 border-white/40 flex items-center justify-center overflow-hidden shadow-lg"
                 animate={{
-                    borderColor: isHovered 
-                        ? 'rgba(255, 255, 255, 0.9)' 
+                    borderColor: isHovered
+                        ? 'rgba(255, 255, 255, 0.9)'
                         : 'rgba(255, 255, 255, 0.4)',
                     background: isHovered
                         ? 'linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(248, 250, 252, 0.9))'
@@ -80,17 +93,11 @@ const BigWhiteBulb = () => {
                 }}
                 transition={{ duration: 0.4 }}
             >
-                {/* White Light Particles */}
                 {isHovered && [...Array(10)].map((_, i) => (
                     <motion.div
                         key={i}
                         className="absolute w-1 h-1 bg-white rounded-full"
-                        initial={{ 
-                            x: 0, 
-                            y: 0, 
-                            opacity: 0,
-                            scale: 0
-                        }}
+                        initial={{ x: 0, y: 0, opacity: 0, scale: 0 }}
                         animate={{
                             x: Math.cos((i * Math.PI * 2) / 10) * 35,
                             y: Math.sin((i * Math.PI * 2) / 10) * 35,
@@ -108,8 +115,6 @@ const BigWhiteBulb = () => {
                         }}
                     />
                 ))}
-                
-                {/* Inner White Glow Effect */}
                 <motion.div
                     className="absolute inset-2 rounded-full"
                     style={{
@@ -125,12 +130,10 @@ const BigWhiteBulb = () => {
                         ease: "easeInOut"
                     }}
                 />
-                
-                {/* Lightbulb Icon */}
                 <motion.div
                     animate={{
                         color: isHovered ? '#ffffff' : '#6b7280',
-                        filter: isHovered 
+                        filter: isHovered
                             ? 'drop-shadow(0 0 12px rgba(255, 255, 255, 0.9))'
                             : 'drop-shadow(0 0 2px rgba(0, 0, 0, 0.1))'
                     }}
@@ -138,8 +141,6 @@ const BigWhiteBulb = () => {
                 >
                     <Lightbulb className="w-10 h-10 relative z-10" />
                 </motion.div>
-                
-                {/* White Filament Lines */}
                 <motion.div
                     className="absolute inset-0 flex items-center justify-center"
                     animate={{
@@ -166,8 +167,6 @@ const BigWhiteBulb = () => {
                     ))}
                 </motion.div>
             </motion.div>
-            
-            {/* Pulsing White Base Glow */}
             <motion.div
                 className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-16 h-3 bg-white/30 rounded-full blur-sm"
                 animate={{
@@ -184,198 +183,202 @@ const BigWhiteBulb = () => {
     );
 };
 
+// Enhanced EventCard Component
 const EventCard = ({ event, index }: { event: EventProps; index: number }) => {
     const [isHovered, setIsHovered] = useState(false);
 
+    const getCategoryColor = (category: string) => {
+        switch (category) {
+            case 'Tech': return 'from-blue-500 to-cyan-400';
+            case 'Innovation': return 'from-purple-500 to-pink-400';
+            case 'Design': return 'from-orange-500 to-yellow-400';
+            case 'Business': return 'from-green-500 to-emerald-400';
+            default: return 'from-gray-500 to-gray-400';
+        }
+    };
+
     return (
         <motion.div
-            initial={{ opacity: 0, y: 100, scale: 0.8, rotateX: 25 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-            animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-            exit={{ opacity: 0, y: -50, scale: 0.9, rotateX: -15 }}
-            transition={{
-                duration: 0.8,
-                delay: index * 0.15,
-                type: "spring",
-                stiffness: 80,
-                damping: 20
-            }}
-            whileHover={{
-                scale: 1.02,
-                rotateY: 2,
-                rotateX: -2,
-                transition: { duration: 0.3 }
-            }}
+            initial={{ opacity: 0, y: 60, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
             onHoverStart={() => setIsHovered(true)}
             onHoverEnd={() => setIsHovered(false)}
-            className="group relative rounded-3xl bg-gradient-to-br from-gray-900/90 to-gray-800/50 backdrop-blur-md p-8 border border-green-500/20 hover:border-green-400/50 transition-all duration-700 hover:shadow-2xl hover:shadow-green-500/20 overflow-hidden"
+            className="relative group"
         >
+            {/* Main Card Container */}
             <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-blue-500/5 to-purple-500/5 opacity-0"
-                animate={{
-                    opacity: isHovered ? 1 : 0,
-                    scale: isHovered ? 1.1 : 1,
+                whileHover={{ 
+                    scale: 1.02,
+                    boxShadow: '0 20px 40px rgba(74, 222, 128, 0.15)'
                 }}
-                transition={{ duration: 0.5 }}
-            />
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                {[...Array(6)].map((_, i) => (
-                    <motion.div
-                        key={i}
-                        className="absolute w-2 h-2 bg-green-400/30 rounded-full"
-                        style={{
-                            left: `${20 + i * 15}%`,
-                            top: `${30 + (i % 2) * 40}%`,
-                        }}
-                        animate={{
-                            y: isHovered ? [-10, -20, -10] : [0, -5, 0],
-                            opacity: isHovered ? [0.3, 0.8, 0.3] : [0.1, 0.3, 0.1],
-                            scale: isHovered ? [1, 1.5, 1] : [0.8, 1, 0.8],
-                        }}
-                        transition={{
-                            duration: 2 + i * 0.2,
-                            repeat: Infinity,
-                            delay: i * 0.3,
-                        }}
-                    />
-                ))}
-            </div>
-            <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
+                transition={{ duration: 0.4 }}
+                className="relative bg-gradient-to-br from-gray-900/95 to-gray-800/90 backdrop-blur-sm rounded-3xl overflow-hidden border border-green-500/20 shadow-xl"
+            >
+                {/* Animated Border Glow */}
                 <motion.div
-                    initial={{ opacity: 0, x: -80, rotateY: 25 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    animate={{ opacity: 1, x: 0, rotateY: 0 }}
-                    transition={{ duration: 0.8, delay: index * 0.15 + 0.3 }}
-                    className="relative overflow-hidden rounded-2xl group/image"
+                    className="absolute inset-0 rounded-3xl"
+                    animate={{
+                        background: isHovered 
+                            ? 'linear-gradient(45deg, rgba(74, 222, 128, 0.3), rgba(34, 197, 94, 0.2), rgba(74, 222, 128, 0.3))' 
+                            : 'transparent'
+                    }}
+                    transition={{ duration: 0.5 }}
+                    style={{ padding: '2px' }}
                 >
-                    <motion.div
-                        className="relative w-full h-96 overflow-hidden rounded-2xl"
-                        whileHover={{ scale: 1.02 }}
-                        transition={{ duration: 0.5 }}
-                    >
-                        <motion.img
-                            src={event.imageUrl}
-                            alt={event.title}
-                            className="w-full h-full object-cover"
-                            animate={{
-                                scale: isHovered ? 1.15 : 1.05,
-                            }}
-                            transition={{ duration: 0.7, ease: "easeOut" }}
-                        />
-                        <motion.div
-                            className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-green-500/20"
-                            animate={{
-                                opacity: isHovered ? 0.8 : 0.3,
-                            }}
-                            transition={{ duration: 0.5 }}
-                        />
-                        <motion.div
-                            className="absolute inset-0 border-2 border-green-400/0 rounded-2xl"
-                            animate={{
-                                borderColor: isHovered ? 'rgba(74, 222, 128, 0.5)' : 'rgba(74, 222, 128, 0)',
-                            }}
-                            transition={{ duration: 0.3 }}
-                        />
-                    </motion.div>
+                    <div className="h-full w-full bg-gradient-to-br from-gray-900/95 to-gray-800/90 rounded-3xl" />
                 </motion.div>
-                <motion.div
-                    initial={{ opacity: 0, x: 80 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, delay: index * 0.15 + 0.4 }}
-                    className="space-y-8"
-                >
-                    <motion.h3
-                        className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
-                        animate={isHovered ? {
-                            backgroundPosition: ['0%', '100%', '0%'],
-                        } : {}}
-                        transition={{ duration: 2, repeat: Infinity }}
-                    >
-                        {event.title.split('').map((char, i) => (
-                            <motion.span
-                                key={i}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: index * 0.15 + 0.6 + i * 0.05 }}
-                                whileHover={{
-                                    y: -2,
-                                    color: '#4ade80',
-                                    transition: { duration: 0.2 }
-                                }}
-                                className="inline-block"
-                            >
-                                {char === ' ' ? '\u00A0' : char}
-                            </motion.span>
-                        ))}
-                    </motion.h3>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: index * 0.15 + 0.8 }}
-                        className="text-gray-300 text-lg leading-relaxed"
-                    >
-                        {event.description}
-                    </motion.p>
-                    <motion.div
-                        className="space-y-4"
-                        initial="hidden"
-                        animate="visible"
-                        variants={{
-                            visible: {
-                                transition: {
-                                    staggerChildren: 0.1,
-                                    delayChildren: index * 0.15 + 1
-                                }
-                            }
-                        }}
-                    >
-                        {[
-                            { icon: Calendar, text: event.date },
-                            { icon: MapPin, text: event.location },
-                            { icon: Users, text: `${event.attendees}+ innovators` }
-                        ].map((item, i) => (
-                            <motion.div
-                                key={i}
-                                variants={{
-                                    hidden: { opacity: 0, x: -30, scale: 0.8 },
-                                    visible: { opacity: 1, x: 0, scale: 1 }
-                                }}
-                                whileHover={{
-                                    x: 10,
-                                    color: '#4ade80',
-                                    transition: { duration: 0.2 }
-                                }}
-                                className="flex items-center gap-4 text-gray-300 cursor-pointer group/detail"
-                            >
+
+                {/* Content Container */}
+                <div className="relative z-10 p-8">
+                    <div className="grid lg:grid-cols-2 gap-8 items-start">
+                        {/* Image Section */}
+                        <motion.div
+                            className="relative group/image"
+                            whileHover={{ scale: 1.05 }}
+                            transition={{ duration: 0.4 }}
+                        >
+                            <div className="relative overflow-hidden rounded-2xl aspect-[2/3] w-full max-w-xs bg-black mx-auto">
+                                <img
+                                    src={event.imageUrl}
+                                    alt={event.title}
+                                    className="w-full h-full object-cover object-center"
+                                    loading="lazy"
+                                />
                                 <motion.div
-                                    whileHover={{ rotate: 360, scale: 1.2 }}
-                                    transition={{ duration: 0.5 }}
+                                    className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"
+                                    animate={{
+                                        opacity: isHovered ? 0.8 : 0.4
+                                    }}
+                                    transition={{ duration: 0.3 }}
+                                />
+                                {/* Category Badge */}
+                                <div className="absolute top-4 left-4">
+                                    <span className={`px-3 py-1 rounded-full text-xs font-semibold text-white bg-gradient-to-r ${getCategoryColor(event.category)} shadow-lg`}>
+                                        {event.category}
+                                    </span>
+                                </div>
+                                {/* Featured Badge */}
+                                {event.featured && (
+                                    <div className="absolute top-4 right-4">
+                                        <span className="px-3 py-1 rounded-full text-xs font-semibold text-black bg-gradient-to-r from-yellow-400 to-orange-400 shadow-lg flex items-center gap-1">
+                                            <Award size={12} />
+                                            Featured
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+                        </motion.div>
+
+                        {/* Content Section */}
+                        <div className="space-y-6">
+                            {/* Title */}
+                            <motion.h3
+                                className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent leading-tight"
+                                animate={isHovered ? {
+                                    backgroundPosition: ['0%', '100%', '0%']
+                                } : {}}
+                                transition={{ duration: 3, repeat: Infinity }}
+                            >
+                                {event.title}
+                            </motion.h3>
+
+                            {/* Description */}
+                          <div className="text-gray-300 text-base leading-relaxed">
+  <p>
+    An expert session on Advances in Defining and Modelling: a Reliable Framework for Responsible AI towards Sustainability 
+    will be conducted by <span className="font-bold text-blue-300">Prof. Dr. Dimitrios A. Karras</span> (PhD, Electrical & Computer Engineering).
+  </p>
+  <p className="mt-3"><span className="font-bold text-green-300">Designations:</span></p>
+  <p><span className="font-bold">1. Professor, National and Kapodistrian University of Athens (NKUA), Greece</span></p>
+  <p><span className="font-bold">2. Professor, EPOKA University, Computer Engineering Dept., Tirana, Albania</span></p>
+</div>
+
+
+                            {/* Event Details Grid */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <motion.div
+                                    className="flex items-center gap-3 p-3 rounded-xl bg-green-500/10 border border-green-500/20"
+                                    whileHover={{ backgroundColor: 'rgba(34, 197, 94, 0.15)' }}
                                 >
-                                    <item.icon className="w-6 h-6 text-green-500 group-hover/detail:text-green-400" />
+                                    <Calendar className="w-5 h-5 text-green-400" />
+                                    <div>
+                                        <p className="text-xs text-gray-400 uppercase tracking-wide">Date</p>
+                                        <p className="text-green-300 font-semibold">{event.date}</p>
+                                    </div>
                                 </motion.div>
-                                <span className="text-lg group-hover/detail:text-green-400 transition-colors duration-300">
-                                    {item.text}
-                                </span>
-                            </motion.div>
-                        ))}
-                    </motion.div>
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.5, y: 30 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        transition={{ delay: index * 0.15 + 1.3, type: "spring", stiffness: 200 }}
-                    >
-                     
-                            
-                    </motion.div>
-                </motion.div>
-            </div>
+
+                                {event.location && (
+                                    <motion.div
+                                        className="flex items-center gap-3 p-3 rounded-xl bg-blue-500/10 border border-blue-500/20"
+                                        whileHover={{ backgroundColor: 'rgba(59, 130, 246, 0.15)' }}
+                                    >
+                                        <MapPin className="w-5 h-5 text-blue-400" />
+                                        <div>
+                                            <p className="text-xs text-gray-400 uppercase tracking-wide">Location</p>
+                                            <p className="text-blue-300 font-semibold">{event.location}</p>
+                                        </div>
+                                    </motion.div>
+                                )}
+
+                                {event.attendees && (
+                                    <motion.div
+                                        className="flex items-center gap-3 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20"
+                                        whileHover={{ backgroundColor: 'rgba(168, 85, 247, 0.15)' }}
+                                    >
+                                        <Users className="w-5 h-5 text-purple-400" />
+                                        <div>
+                                            <p className="text-xs text-gray-400 uppercase tracking-wide">Expected</p>
+                                            <p className="text-purple-300 font-semibold">{event.attendees}+ Attendees</p>
+                                        </div>
+                                    </motion.div>
+                                )}
+
+                                {event.prize && (
+                                    <motion.div
+                                        className="flex items-center gap-3 p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20"
+                                        whileHover={{ backgroundColor: 'rgba(245, 158, 11, 0.15)' }}
+                                    >
+                                        <Award className="w-5 h-5 text-yellow-400" />
+                                        <div>
+                                            <p className="text-xs text-gray-400 uppercase tracking-wide">Prize Pool</p>
+                                            <p className="text-yellow-300 font-semibold">{event.prize}</p>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Subtle Background Effects */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    {[...Array(3)].map((_, i) => (
+                        <motion.div
+                            key={i}
+                            className="absolute w-1 h-1 bg-green-400/20 rounded-full"
+                            style={{
+                                left: `${30 + i * 25}%`,
+                                top: `${40 + (i % 2) * 30}%`,
+                            }}
+                            animate={{
+                                y: isHovered ? [-5, -10, -5] : [0, -3, 0],
+                                opacity: isHovered ? [0.2, 0.5, 0.2] : [0.1, 0.2, 0.1],
+                                scale: isHovered ? [1, 1.5, 1] : [0.8, 1, 0.8],
+                            }}
+                            transition={{
+                                duration: 2 + i * 0.3,
+                                repeat: Infinity,
+                                delay: i * 0.5,
+                            }}
+                        />
+                    ))}
+                </div>
+            </motion.div>
         </motion.div>
     );
 };
-
 
 const UpcomingEvents: React.FC<UpcomingEventsSectionProps> = () => {
     const upcomingEvents = events.filter(event => event.isUpcoming);
@@ -389,7 +392,6 @@ const UpcomingEvents: React.FC<UpcomingEventsSectionProps> = () => {
                     transition={{ duration: 1, type: "spring", stiffness: 100 }}
                     className="text-center mb-20"
                 >
-                    {/* Title with Big White Bulb */}
                     <div className="flex items-center justify-center gap-8 mb-6">
                         <BigWhiteBulb />
                         <motion.div 
@@ -425,63 +427,9 @@ const UpcomingEvents: React.FC<UpcomingEventsSectionProps> = () => {
                             >
                                 Upcoming Events
                             </motion.h2>
-                            
-                            {/* Electric Lightning Effects - Only on hover */}
-                            {[...Array(8)].map((_, i) => (
-                                <motion.div
-                                    key={i}
-                                    className="absolute bg-green-400/80 opacity-0 pointer-events-none"
-                                    style={{
-                                        width: '1px',
-                                        height: `${Math.random() * 20 + 8}px`,
-                                        left: `${Math.random() * 100}%`,
-                                        top: `${Math.random() * 100}%`,
-                                        transform: `rotate(${Math.random() * 360}deg)`,
-                                        borderRadius: '0.5px',
-                                        filter: 'blur(0.3px)',
-                                        boxShadow: '0 0 4px rgba(74, 222, 128, 0.6)'
-                                    }}
-                                />
-                            ))}
-                            
-                            {/* Crackling Energy Lines - Only on hover */}
-                            {[...Array(4)].map((_, i) => (
-                                <motion.svg
-                                    key={`crack-${i}`}
-                                    className="absolute inset-0 w-full h-full pointer-events-none opacity-0"
-                                    viewBox="0 0 400 100"
-                                >
-                                    <motion.path
-                                        d={`M${Math.random() * 50} ${20 + Math.random() * 60} 
-                                           L${100 + Math.random() * 50} ${30 + Math.random() * 40}
-                                           L${200 + Math.random() * 50} ${25 + Math.random() * 50}
-                                           L${300 + Math.random() * 50} ${35 + Math.random() * 30}
-                                           L${350 + Math.random() * 50} ${20 + Math.random() * 60}`}
-                                        stroke="rgba(74, 222, 128, 0.7)"
-                                        strokeWidth="0.8"
-                                        fill="none"
-                                        style={{
-                                            filter: 'drop-shadow(0 0 3px rgba(74, 222, 128, 0.5))'
-                                        }}
-                                    />
-                                </motion.svg>
-                            ))}
-                            
-                            {/* Energy Orbs - Only on hover */}
-                            {[...Array(6)].map((_, i) => (
-                                <motion.div
-                                    key={`orb-${i}`}
-                                    className="absolute w-0.5 h-0.5 bg-green-400/70 rounded-full opacity-0 pointer-events-none"
-                                    style={{
-                                        left: `${15 + Math.random() * 70}%`,
-                                        top: `${15 + Math.random() * 70}%`,
-                                        boxShadow: '0 0 4px rgba(74, 222, 128, 0.6)'
-                                    }}
-                                />
-                            ))}
                         </motion.div>
                     </div>
-                    
+
                     <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: '150px' }}
