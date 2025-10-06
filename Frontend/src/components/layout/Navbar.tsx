@@ -216,35 +216,7 @@ const Navbar: React.FC = () => {
       </motion.nav>
 
       {/* Floating Neon Cursor */}
-      <div className="fixed pointer-events-none z-30">
-        {[...Array(2)].map((_, i) => (
-          <motion.div
-            key={`cursor-particle-${i}`}
-            className="absolute rounded-full"
-            style={{
-              left: mousePosition.x,
-              top: mousePosition.y,
-              width: "8px",
-              height: "8px",
-              background: "#00FFC6",
-              boxShadow: "0 0 20px #00FFC6, 0 0 40px rgba(0,255,198,0.6)",
-              filter: "blur(0.5px)",
-            }}
-            animate={{
-              x: [0, Math.random() * 25 - 12, 0],
-              y: [0, Math.random() * 25 - 12, 0],
-              scale: [1, 1.3, 1],
-              opacity: [0.8, 1, 0.8],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              delay: i * 0.5,
-              ease: [0.4, 0, 0.2, 1],
-            }}
-          />
-        ))}
-      </div>
+      
     </>
   );
 };
