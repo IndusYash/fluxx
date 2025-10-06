@@ -155,19 +155,11 @@ export default function Hero() {
   };
 
   const handleExploreClick = () => {
-    if (isMobile) {
-      document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
-    } else {
-      navigate("/about");
-    }
+    navigate("/about");
   };
 
   const handleEventsClick = () => {
-    if (isMobile) {
-      document.getElementById("events")?.scrollIntoView({ behavior: "smooth" });
-    } else {
-      navigate("/events");
-    }
+   navigate("/events");
   };
 
   return (

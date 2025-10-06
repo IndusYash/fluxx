@@ -1,53 +1,12 @@
-import { useState } from "react";
-import type { ChangeEvent } from "react";
-import { FaWhatsapp, FaInstagram, FaLinkedin, FaArrowRight, FaCheck } from "react-icons/fa";
+import { FaWhatsapp, FaInstagram, FaLinkedin, FaMapMarkerAlt, FaEnvelope } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 import SectionWrapper from "../SectionWrapper";
 
-type Testimonial = {
-  text: string;
-  user: string;
-  img?: string;
-};
-
-// Commented out testimonials for future use
-/*
-const testimonials: Testimonial[] = [
-  { text: "WebFlux is where I found my tribe — developers and learners who actually care about growth.", user: "@AnanyaCodes" },
-  { text: "The seminars at WebFlux helped me land my first internship in tech. Highly recommend joining!", user: "@RaviDev" },
-  { text: "It's not just a society, it's an ecosystem for CSE students to learn, build, and collaborate.", user: "@PriyaBuilds" },
-  { text: "From hackathons to dev tasks, WebFlux keeps you challenged and inspired.", user: "@CodeWithAarav" },
-  { text: "As a newbie, I felt right at home. WebFlux members are super supportive and motivating.", user: "@IshaLearns" },
-  { text: "The WebFlux community turned my coding curiosity into real-world projects. Couldn't ask for more.", user: "@NeerajTech" },
-]
-*/
-
 export default function Footer() {
-  const [email, setEmail] = useState<string>("");
-  const [message, setMessage] = useState<string>("");
-  const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
-
-  const handleSubscribe = (): void => {
-    if (!email || !email.includes("@")) {
-      setMessage("Please enter a valid email address.");
-      setIsSubscribed(false);
-      return;
-    }
-    setMessage("🎉 Thanks for subscribing!");
-    setIsSubscribed(true);
-    setEmail("");
-    
-    // Reset message after 3 seconds
-    setTimeout(() => {
-      setMessage("");
-      setIsSubscribed(false);
-    }, 3000);
-  };
-
   const socialLinks = [
     {
       icon: SiGmail,
-      href: "flux@mmmut.ac.in",
+      href: "mailto:flux@mmmut.ac.in",
       color: "hover:text-red-400",
       label: "Gmail"
     },
@@ -81,147 +40,126 @@ export default function Footer() {
           }} />
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          {/* Top Row: Links + Newsletter */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Top Row: Brand, Quick Links, and Contact */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12 pb-16">
             
             {/* Brand Section */}
-            <div className="lg:col-span-1">
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+            <div>
+              <div className="mb-8">
+                <h3 className="text-2xl sm:text-3xl font-bold mb-3 bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
                   WebFlux
                 </h3>
-                <div className="w-12 h-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full mb-4"></div>
-                <p className="text-gray-300 leading-relaxed text-sm">
+                <div className="w-12 h-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full mb-4 animate-pulse"></div>
+                <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
                   A community of developers and tech enthusiasts building together
                   and pushing innovation forward.
                 </p>
               </div>
               
-              {/* Social Linksknk */}
-              <div className="flex gap-4">
-                {socialLinks.map((social, index) => (
-                  <a
-                    key={index}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`p-3 rounded-full bg-gray-900/80 backdrop-blur-sm border border-gray-800 ${social.color} transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-emerald-400/20 group`}
-                    title={social.label}
-                  >
-                    <social.icon className="w-5 h-5 transition-transform duration-300 group-hover:rotate-6" />
-                  </a>
-                ))}
+              {/* Social Media Section */}
+              <div className="space-y-4">
+                <h4 className="text-base sm:text-lg font-semibold text-emerald-400 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
+                  Connect With Us
+                </h4>
+                <div className="flex flex-wrap gap-3 sm:gap-4">
+                  {socialLinks.map((social, index) => (
+                    <a
+                      key={index}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`p-3 sm:p-3.5 rounded-full bg-gray-900/80 backdrop-blur-sm border border-gray-800 ${social.color} transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-400/30 group`}
+                      title={social.label}
+                    >
+                      <social.icon className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" />
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
 
             {/* Quick Links */}
             <div>
-              <h3 className="text-lg font-semibold mb-6 text-emerald-400">
+              <h3 className="text-base sm:text-lg font-semibold mb-6 text-emerald-400 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
                 Quick Links
               </h3>
-              <ul className="space-y-3">
+              <ul className="space-y-3 sm:space-y-4">
                 {[
                   { name: "Home", href: "/" },
-                  { name: "Our Team", href: "team" },
-                  { name: "Contact", href: "contact" }
+                  { name: "Our Team", href: "/team" },
+                  { name: "Events", href: "/events" },
+                  { name: "Faculty", href: "/faculty" },
+                  { name: "Contact", href: "/contact" }
                 ].map((link, index) => (
                   <li key={index}>
                     <a 
                       href={link.href} 
-                      className="text-gray-300 hover:text-white transition-colors duration-300 flex items-center group text-sm"
+                      className="text-gray-300 hover:text-white transition-all duration-300 flex items-center group text-sm sm:text-base hover:translate-x-2"
                     >
-                      <span className="w-2 h-2 bg-emerald-400 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                      {link.name}
+                      <span className="w-2 h-2 bg-emerald-400 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:animate-pulse"></span>
+                      <span className="relative">
+                        {link.name}
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+                      </span>
                     </a>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Resources */}
+            {/* Contact Section */}
             <div>
-              <h3 className="text-lg font-semibold mb-6 text-emerald-400">
-                Resources
+              <h3 className="text-base sm:text-lg font-semibold mb-6 text-emerald-400 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
+                Contact
               </h3>
-              <ul className="space-y-3">
-                {["Blog", "Privacy Policy", "Terms & Conditions"].map((item, index) => (
-                  <li key={index}>
-                    <a className="text-gray-300 hover:text-white transition-colors duration-300 cursor-pointer flex items-center group text-sm">
-                      <span className="w-2 h-2 bg-emerald-400 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Newsletter */}
-            <div className="lg:col-span-1">
-              <h3 className="text-lg font-semibold mb-6 text-emerald-400">
-                Join Our Newsletter
-              </h3>
-              <p className="text-gray-300 mb-6 text-sm leading-relaxed">
-                Stay updated with upcoming events, resources, and community highlights.
-              </p>
-              
-              <div className="space-y-4">
-                <div className="relative">
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setEmail(e.target.value)
-                    }
-                    className="w-full px-4 py-3 rounded-xl bg-gray-900/80 backdrop-blur-sm border border-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:border-emerald-400 text-white placeholder-gray-500 transition-all duration-300"
-                  />
+              <div className="space-y-4 sm:space-y-5">
+                {/* Address Card */}
+                <div className="group">
+                  <div className="flex items-start gap-3 p-4 rounded-xl bg-gray-900/50 backdrop-blur-sm border border-gray-800 hover:border-emerald-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-400/10 hover:bg-gray-900/70">
+                    <div className="mt-1 flex-shrink-0">
+                      <FaMapMarkerAlt className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform duration-300" />
+                    </div>
+                    <div>
+                      <p className="text-sm sm:text-base text-white leading-relaxed font-medium mb-1">
+                        Flux, Center of Excellence
+                      </p>
+                      <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
+                        Madan Mohan Malviya University of Technology
+                      </p>
+                      <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
+                        Gorakhpur, Uttar Pradesh 273010
+                      </p>
+                    </div>
+                  </div>
                 </div>
                 
-                <button
-                  onClick={handleSubscribe}
-                  disabled={isSubscribed}
-                  className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
-                    isSubscribed
-                      ? "bg-green-500 text-white"
-                      : "bg-gradient-to-r from-emerald-400 to-cyan-400 text-black hover:from-emerald-500 hover:to-cyan-500 hover:shadow-lg hover:shadow-emerald-400/25"
-                  }`}
+                {/* Email Card */}
+                <a 
+                  href="mailto:flux@mmmut.ac.in"
+                  className="flex items-center gap-3 p-4 rounded-xl bg-gray-900/50 backdrop-blur-sm border border-gray-800 hover:border-emerald-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-400/10 hover:bg-gray-900/70 group"
                 >
-                  {isSubscribed ? (
-                    <>
-                      <FaCheck className="w-4 h-4" />
-                      Subscribed!
-                    </>
-                  ) : (
-                    <>
-                      Subscribe
-                      <FaArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </>
-                  )}
-                </button>
-                
-                {message && (
-                  <div className={`text-sm p-3 rounded-lg transition-all duration-300 ${
-                    isSubscribed 
-                      ? "bg-green-500/10 text-green-400 border border-green-500/20" 
-                      : "bg-red-500/10 text-red-400 border border-red-500/20"
-                  }`}>
-                    {message}
-                  </div>
-                )}
+                  <FaEnvelope className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform duration-300" />
+                  <span className="text-sm sm:text-base text-gray-300 group-hover:text-white transition-colors duration-300">
+                    flux@mmmut.ac.in
+                  </span>
+                </a>
               </div>
             </div>
           </div>
 
           {/* Bottom Section */}
-          <div className="border-t border-gray-800 pt-8 pb-8">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <div className="text-gray-400 text-sm">
+          <div className="border-t border-gray-800 pt-6 sm:pt-8 pb-6 sm:pb-8">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
+              <div className="text-gray-400 text-xs sm:text-sm text-center sm:text-left">
                 © {new Date().getFullYear()} WebFlux. All rights reserved.
               </div>
               
-              <div className="flex items-center gap-6 text-sm text-gray-400">
-                <span className="hidden sm:block">Built with ❤️ by WebFlux Team</span>
+              <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-xs sm:text-sm text-gray-400">
+                <span className="text-center">Built with ❤️ by WebFlux Team</span>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                   <span>Active Community</span>
