@@ -30,13 +30,13 @@ const textChild: Variants = {
 };
 
 // Minimalist Floating Animation
-const floatingButtonVariants = {
+const floatingButtonVariants: Variants = {
   animate: {
     y: [0, -8, 0],
     transition: {
       duration: 2.5,
       repeat: Infinity,
-      ease: "easeInOut",
+      ease: [0.42, 0, 0.58, 1],
     },
   },
 };
@@ -59,7 +59,7 @@ const FloatingJoinButton = () => {
   const handleJoinNow = () => {
     setIsClicked(true);
     setTimeout(() => {
-      navigate("/join");
+      navigate("/events");
     }, 350);
   };
 
