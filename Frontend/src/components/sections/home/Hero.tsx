@@ -414,13 +414,13 @@ export default function Hero() {
   onClick={handleEventsClick}
   className="
     relative
-    w-[600px]
+    w-[90%] sm:w-[400px] md:w-[500px] lg:w-[600px]
     mx-auto
     rounded-[2rem]
     text-white
     font-semibold
     text-center
-    text-lg
+    text-base sm:text-lg
     overflow-hidden
     group
     border border-transparent
@@ -429,14 +429,14 @@ export default function Hero() {
   style={{
     fontFamily: "'Space Grotesk', 'Inter', sans-serif",
   }}
-  aria-label="AI: Advances in Defining and Modelling Session"
+  aria-label='AI: Advances in Defining and Modelling Session'
 >
   {/* Glowing border effect */}
   <div
     className="
       absolute inset-0
       rounded-[2rem]
-      bg-gradient-to-r from-[#0A0A0F]/60 to-[#E0FFF8]/50
+      bg-gradient-to-r from-[#00ffc6]/30 to-[#00bfa5]/20
       blur-[1px]
       opacity-80
       animate-pulse
@@ -447,7 +447,7 @@ export default function Hero() {
   <div
     className="
       relative
-      px-6 py-4
+      px-4 sm:px-6 py-3 sm:py-4
       bg-gradient-to-br from-black/60 via-neutral-900/70 to-black/80
       backdrop-blur-xl
       rounded-[2rem]
@@ -468,10 +468,11 @@ export default function Hero() {
         textShadow: "0 0 12px rgba(0, 255, 198, 0.5)",
       }}
     >
-       AI: Advances in Defining and Modelling
+      🧠 AI: Advances in Defining and Modelling
     </span>
   </div>
 </motion.button>
+
       
 
 
