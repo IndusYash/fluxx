@@ -1,6 +1,7 @@
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import StarBorder from '../../ui/StarBorder';
 
 const textParent: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -360,7 +361,7 @@ export default function Hero() {
               variants={textChild}
               className="flex flex-col sm:flex-row justify-center gap-4 pt-6"
             >
-              <motion.div
+              {/* <motion.div
                 whileHover={{ scale: 1.03, y: -2 }}
                 whileTap={{ scale: 0.97 }}
                 className="rounded-lg overflow-hidden shadow-md"
@@ -387,9 +388,7 @@ export default function Hero() {
                   🚀 Join FLUX
                 </button>
               </motion.div>
-
-
-
+              
               <motion.button
                 onClick={handleExploreClick}
                 whileHover={{ scale: 1.03, y: -2 }}
@@ -398,7 +397,84 @@ export default function Hero() {
                 style={{ boxShadow: "0 0 15px rgba(16, 185, 129, 0.2)" }}
               >
                 🔥 Explore FLUX
-              </motion.button>
+              </motion.button> */}
+              
+            <motion.button
+  whileTap={{ scale: 0.97 }}
+  whileHover={{
+    scale: 1.05,
+    y: -4,
+    boxShadow: "0 0 30px rgba(0, 255, 198, 0.7)",
+  }}
+  transition={{
+    type: "spring",
+    stiffness: 300,
+    damping: 22,
+  }}
+  onClick={handleEventsClick}
+  className="
+    relative
+    w-[600px]
+    mx-auto
+    rounded-[2rem]
+    text-white
+    font-semibold
+    text-center
+    text-lg
+    overflow-hidden
+    group
+    border border-transparent
+    shadow-[0_0_10px_rgba(0,255,198,0.6)]
+  "
+  style={{
+    fontFamily: "'Space Grotesk', 'Inter', sans-serif",
+  }}
+  aria-label="AI: Advances in Defining and Modelling Session"
+>
+  {/* Glowing border effect */}
+  <div
+    className="
+      absolute inset-0
+      rounded-[2rem]
+      bg-gradient-to-r from-[#0A0A0F]/60 to-[#E0FFF8]/50
+      blur-[1px]
+      opacity-80
+      animate-pulse
+    "
+  />
+
+  {/* Inner glass container */}
+  <div
+    className="
+      relative
+      px-6 py-4
+      bg-gradient-to-br from-black/60 via-neutral-900/70 to-black/80
+      backdrop-blur-xl
+      rounded-[2rem]
+      border border-[#00ffc6]/40
+      shadow-[inset_0_0_10px_rgba(0,255,198,0.2)]
+      flex items-center justify-center
+      transition-all duration-300 ease-out
+    "
+  >
+    {/* Text with glow */}
+    <span
+      className="
+        text-white
+        tracking-wide
+        drop-shadow-[0_0_8px_rgba(0,255,198,0.4)]
+      "
+      style={{
+        textShadow: "0 0 12px rgba(0, 255, 198, 0.5)",
+      }}
+    >
+       AI: Advances in Defining and Modelling
+    </span>
+  </div>
+</motion.button>
+      
+
+
 
               {/* <motion.button
                 onClick={handleEventsClick}
