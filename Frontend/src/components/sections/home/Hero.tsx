@@ -1,7 +1,7 @@
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
+import { Variants } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import StarBorder from '../../ui/StarBorder';
 
 const textParent: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -29,7 +29,265 @@ const textChild: Variants = {
   },
 };
 
-// Enhanced Typewriter Component
+// Minimalist Floating Animation
+const floatingButtonVariants = {
+  animate: {
+    y: [0, -8, 0],
+    transition: {
+      duration: 2.5,
+      repeat: Infinity,
+      ease: "easeInOut",
+    },
+  },
+};
+
+// Modern Minimalist Floating Button
+const FloatingJoinButton = () => {
+  const navigate = useNavigate();
+  const [isHovered, setIsHovered] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleJoinNow = () => {
+    setIsClicked(true);
+    setTimeout(() => {
+      navigate("/events");
+    }, 350);
+  };
+
+  return (
+    <motion.div
+      className="fixed bottom-8 right-8 z-50"
+      initial={{ opacity: 0, scale: 0.8, y: 20 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ type: "spring", damping: 20, stiffness: 300 }}
+    >
+      {/* Sleek Modern Button */}
+      <motion.button
+        onClick={handleJoinNow}
+        onHoverStart={() => setIsHovered(true)}
+        onHoverEnd={() => setIsHovered(false)}
+        className="relative group"
+        variants={floatingButtonVariants}
+        animate="animate"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        style={{
+          fontFamily: "'Inter', sans-serif",
+        }}
+      >
+        {/* Main Button Container */}
+        <div
+          className="relative flex items-center gap-3 px-5 py-3.5 rounded-2xl font-semibold text-white shadow-lg overflow-hidden transition-all duration-300"
+          style={{
+            background: "linear-gradient(135deg, #10b981, #059669)",
+            boxShadow: "0 8px 24px rgba(16, 185, 129, 0.4)",
+          }}
+        >
+          {/* Hover Overlay */}
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: "linear-gradient(135deg, #059669, #047857)",
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isHovered ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
+          />
+
+          {/* Content */}
+          <div className="relative flex items-center gap-3">
+            {/* Icon */}
+            <motion.div
+              className="flex items-center justify-center w-9 h-9 rounded-xl bg-white/20"
+              animate={{
+                rotate: isClicked ? [0, 360] : 0,
+              }}
+              transition={{ duration: 0.5 }}
+            >
+              <span className="text-xl">🚀</span>
+            </motion.div>
+
+            {/* Text */}
+            <div className="text-left">
+              <div className="text-sm font-bold leading-tight">
+                Expert AI Session
+              </div>
+              <div className="text-xs opacity-90 leading-tight">
+                Registration Open
+              </div>
+            </div>
+          </div>
+
+          {/* Pulse Ring */}
+          <motion.div
+            className="absolute inset-0 rounded-2xl border-2 border-white/30"
+            animate={{
+              scale: [1, 1.05, 1],
+              opacity: [0.5, 0.2, 0.5],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </div>
+
+        {/* Badge Notification */}
+        <motion.div
+          className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 flex items-center justify-center text-xs font-bold text-white border-2 border-white"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.3, type: "spring", stiffness: 500 }}
+        >
+          <motion.div
+            animate={{
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            !
+          </motion.div>
+        </motion.div>
+      </motion.button>
+
+      {/* Sleek Tooltip Card */}
+      <AnimatePresence>
+        {isHovered && !isClicked && (
+          <motion.div
+            className="absolute bottom-full right-0 mb-3 w-64"
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+          >
+            <div
+              className="relative bg-white rounded-2xl shadow-xl p-5 border"
+              style={{
+                borderColor: "rgba(16, 185, 129, 0.2)",
+                boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15)",
+              }}
+            >
+              {/* Header */}
+              <div className="flex items-start gap-3 mb-3">
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
+                  style={{
+                    background: "linear-gradient(135deg, #10b981, #059669)",
+                  }}
+                >
+                  ✨
+                </div>
+                <div className="flex-1">
+                  <h4
+                    className="font-bold text-base mb-1"
+                    style={{ color: "#1f2937" }}
+                  >
+                    Expert AI Session
+                  </h4>
+                  <p className="text-xs text-gray-500">
+                    Limited spots available
+                  </p>
+                </div>
+              </div>
+
+              {/* Features */}
+              <div className="space-y-2 mb-4">
+                {[
+                  { icon: "🎯", text: "Live interactive workshop" },
+                  { icon: "🤝", text: "Network with experts" },
+                  { icon: "🎁", text: "Exclusive resources" },
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    className="flex items-center gap-2 text-sm text-gray-700"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                  >
+                    <span className="text-base">{item.icon}</span>
+                    <span>{item.text}</span>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* CTA */}
+              <div
+                className="flex items-center justify-between py-2 px-3 rounded-lg"
+                style={{
+                  background: "linear-gradient(135deg, #f0fdf4, #dcfce7)",
+                }}
+              >
+                <span
+                  className="text-xs font-semibold"
+                  style={{ color: "#047857" }}
+                >
+                  Click to register
+                </span>
+                <motion.span
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  →
+                </motion.span>
+              </div>
+
+              {/* Arrow */}
+              <div
+                className="absolute top-full right-8 w-0 h-0"
+                style={{
+                  borderLeft: "8px solid transparent",
+                  borderRight: "8px solid transparent",
+                  borderTop: "8px solid white",
+                  filter: "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))",
+                }}
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Success Overlay */}
+      <AnimatePresence>
+        {isClicked && (
+          <motion.div
+            className="absolute inset-0 flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-xl"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <motion.span
+                className="text-3xl"
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ delay: 0.1 }}
+                style={{ color: "#10b981" }}
+              >
+                ✓
+              </motion.span>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+};
+
+// TypewriterMotto component remains the same
 const TypewriterMotto = () => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState("");
@@ -56,7 +314,7 @@ const TypewriterMotto = () => {
     }, typingSpeed);
 
     return () => clearTimeout(timeout);
-  }, [currentText, isDeleting, currentWordIndex, words]);
+  }, [currentText, isDeleting, currentWordIndex]);
 
   return (
     <span
@@ -113,6 +371,7 @@ const TypewriterMotto = () => {
 export default function Hero() {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const [intensity, setIntensity] = useState(1);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -122,6 +381,8 @@ export default function Hero() {
         const rect = sectionRef.current.getBoundingClientRect();
         const x = ((e.clientX - rect.left) / rect.width) * 100;
         const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+        setMousePosition({ x, y });
 
         const centerX = 50;
         const centerY = 50;
@@ -141,7 +402,6 @@ export default function Hero() {
     }
   }, []);
 
-  // Dynamically track screen width for responsiveness
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const updateMobile = () => setIsMobile(window.innerWidth < 768);
@@ -151,7 +411,7 @@ export default function Hero() {
   }, []);
 
   const handleJoinClick = () => {
-    navigate("/join");
+    navigate("/events");
   };
 
   const handleExploreClick = () => {
@@ -163,20 +423,15 @@ export default function Hero() {
   };
 
   const handleEventsClick = () => {
-    if (isMobile) {
-      document.getElementById("events")?.scrollIntoView({ behavior: "smooth" });
-    } else {
-      navigate("/events");
-    }
+    navigate("/events");
   };
 
   return (
     <>
       <section
         ref={sectionRef}
-        className="relative min-h-[600px] md:min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/90 px-4 md:px-8"
+        className="relative min-h-[600px] md:min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/90 px-4 md:px-8"
       >
-        {/* FLUX Background Watermark - hide on mobile */}
         {!isMobile && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <motion.span
@@ -211,13 +466,12 @@ export default function Hero() {
           </div>
         )}
 
-        {/* Content - keeping all existing content same */}
         <div className="relative z-20 text-center max-w-full sm:max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             variants={textParent}
             initial="hidden"
             animate="visible"
-            className="space-y-4"
+            className="space-y-6"
           >
             <motion.div variants={textChild} className="space-y-3">
               <h1
@@ -262,10 +516,9 @@ export default function Hero() {
               </motion.h2>
             </motion.div>
 
-            {/* Rest of existing content */}
             <motion.div
               variants={textChild}
-              className="space-y-4 max-w-3xl mx-auto"
+              className="space-y-6 max-w-3xl mx-auto"
             >
               <p
                 className="text-base sm:text-lg text-gray-200 leading-relaxed font-medium"
@@ -316,7 +569,7 @@ export default function Hero() {
                 of computing.
               </p>
 
-              <div className="flex flex-col sm:flex-row justify-center gap-4 pt-3">
+              <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
                 {["Innovation Hub", "Research Excellence", "Future Tech"].map(
                   (label, i) => (
                     <motion.div
@@ -357,140 +610,83 @@ export default function Hero() {
               </div>
             </motion.div>
 
-            <motion.div
-              variants={textChild}
-              className="flex flex-col sm:flex-row justify-center gap-4 pt-6"
-            >
-              {/* <motion.div
-                whileHover={{ scale: 1.03, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                className="rounded-lg overflow-hidden shadow-md"
-                style={{
-                  boxShadow: "0 0 20px rgba(16, 185, 129, 0.4)",
-                }}
-              >
-                <button
-                  onClick={handleJoinClick}
-                  className="
-                    w-full sm:w-auto
-                    px-4 sm:px-6 py-2 sm:py-3
-                    bg-gradient-to-r from-[#707d7d] to-[#047481]
-                    rounded-lg
-                    hover:opacity-90
-                    transition
-                    text-white
-                    font-semibold
-                    text-center
-                    text-sm sm:text-base
-                  "
-                  style={{ fontFamily: "'Space Grotesk', 'Inter', sans-serif" }}
-                >
-                  🚀 Join FLUX
-                </button>
-              </motion.div>
-              
-              <motion.button
-                onClick={handleExploreClick}
-                whileHover={{ scale: 1.03, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                className="rounded-lg border-2 border-primary/50 bg-primary/10 backdrop-blur-sm overflow-hidden px-6 py-3 text-center text-gray-300 font-semibold"
-                style={{ boxShadow: "0 0 15px rgba(16, 185, 129, 0.2)" }}
-              >
-                🔥 Explore FLUX
-              </motion.button> */}
-              
             <motion.button
-  whileTap={{ scale: 0.97 }}
-  whileHover={{
-    scale: 1.05,
-    y: -4,
-    boxShadow: "0 0 30px rgba(0, 255, 198, 0.7)",
-  }}
-  transition={{
-    type: "spring",
-    stiffness: 300,
-    damping: 22,
-  }}
-  onClick={handleEventsClick}
-  className="
-    relative
-    w-[90%] sm:w-[400px] md:w-[500px] lg:w-[600px]
-    mx-auto
-    rounded-[2rem]
-    text-white
-    font-semibold
-    text-center
-    text-base sm:text-lg
-    overflow-hidden
-    group
-    border border-transparent
-    shadow-[0_0_10px_rgba(0,255,198,0.6)]
-  "
-  style={{
-    fontFamily: "'Space Grotesk', 'Inter', sans-serif",
-  }}
-  aria-label='AI: Advances in Defining and Modelling Session'
->
-  {/* Glowing border effect */}
-  <div
-    className="
-      absolute inset-0
-      rounded-[2rem]
-      bg-gradient-to-r from-[#00ffc6]/30 to-[#00bfa5]/20
-      blur-[1px]
-      opacity-80
-      animate-pulse
-    "
-  />
+              whileTap={{ scale: 0.97 }}
+              whileHover={{
+                scale: 1.05,
+                y: -4,
+                boxShadow: "0 0 30px rgba(0, 255, 198, 0.7)",
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 22,
+              }}
+              onClick={handleEventsClick}
+              className="
+                relative
+                w-[90%] sm:w-[400px] md:w-[500px] lg:w-[600px]
+                mx-auto
+                rounded-[2rem]
+                text-white
+                font-semibold
+                text-center
+                text-base sm:text-lg
+                overflow-hidden
+                group
+                border border-transparent
+                shadow-[0_0_10px_rgba(0,255,198,0.6)]
+              "
+              style={{
+                fontFamily: "'Space Grotesk', 'Inter', sans-serif",
+              }}
+              aria-label='AI: Advances in Defining and Modelling Session'
+            >
+              {/* Glowing border effect */}
+              <div
+                className="
+                  absolute inset-0
+                  rounded-[2rem]
+                  bg-gradient-to-r from-[#00ffc6]/30 to-[#00bfa5]/20
+                  blur-[1px]
+                  opacity-80
+                  animate-pulse
+                "
+              />
 
-  {/* Inner glass container */}
-  <div
-    className="
-      relative
-      px-4 sm:px-6 py-3 sm:py-4
-      bg-gradient-to-br from-black/60 via-neutral-900/70 to-black/80
-      backdrop-blur-xl
-      rounded-[2rem]
-      border border-[#00ffc6]/40
-      shadow-[inset_0_0_10px_rgba(0,255,198,0.2)]
-      flex items-center justify-center
-      transition-all duration-300 ease-out
-    "
-  >
-    {/* Text with glow */}
-    <span
-      className="
-        text-white
-        tracking-wide
-        drop-shadow-[0_0_8px_rgba(0,255,198,0.4)]
-      "
-      style={{
-        textShadow: "0 0 12px rgba(0, 255, 198, 0.5)",
-      }}
-    >
-      🧠 AI: Advances in Defining and Modelling
-    </span>
-  </div>
-</motion.button>
-
-      
-
-
-
-              {/* <motion.button
-                onClick={handleEventsClick}
-                whileHover={{ scale: 1.03, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                className="rounded-lg border-2 border-primary/50 bg-primary/10 backdrop-blur-sm overflow-hidden px-6 py-3 text-center text-gray-300 font-semibold"
-                style={{ boxShadow: "0 0 15px rgba(16, 185, 129, 0.2)" }}
+              {/* Inner glass container */}
+              <div
+                className="
+                  relative
+                  px-4 sm:px-6 py-3 sm:py-4
+                  bg-gradient-to-br from-black/60 via-neutral-900/70 to-black/80
+                  backdrop-blur-xl
+                  rounded-[2rem]
+                  border border-[#00ffc6]/40
+                  shadow-[inset_0_0_10px_rgba(0,255,198,0.2)]
+                  flex items-center justify-center
+                  transition-all duration-300 ease-out
+                "
               >
-                ⚡ Upcoming Events
-              </motion.button> */}
-            </motion.div>
+                {/* Text with glow */}
+                <span
+                  className="
+                    text-white
+                    tracking-wide
+                    drop-shadow-[0_0_8px_rgba(0,255,198,0.4)]
+                  "
+                  style={{
+                    textShadow: "0 0 12px rgba(0, 255, 198, 0.5)",
+                  }}
+                >
+                  🧠 AI: Advances in Defining and Modelling
+                </span>
+              </div>
+            </motion.button>
 
             <motion.div
               variants={textChild}
-              className="pt-4 overflow-hidden"
+              className="pt-6 overflow-hidden"
               onHoverStart={() => setIsHovered(true)}
               onHoverEnd={() => setIsHovered(false)}
             >
@@ -518,6 +714,9 @@ export default function Hero() {
           </motion.div>
         </div>
       </section>
+
+      <FloatingJoinButton />
     </>
   );
 }
+
