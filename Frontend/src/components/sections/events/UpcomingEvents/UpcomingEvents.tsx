@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, MapPin, Users, ArrowRight, Lightbulb, Award } from 'lucide-react';
 import dimitrios from '/src/assets/images/dimitrios.png';
 
+const RAW_API_BASE = (import.meta.env as any).VITE_API_BASE_URL ?? (import.meta.env as any).VITE_API_BASE ?? '/api';
+const API_BASE = (RAW_API_BASE || '/api').replace(/\/+$/, ''); // remove trailing slash
 
 export interface UpcomingEventsSectionProps { }
 
@@ -184,8 +186,20 @@ const BigWhiteBulb = () => {
 };
 
 // Enhanced EventCard Component
-const EventCard = ({ event, index }: { event: EventProps; index: number }) => {
+const EventCard = ({ event, index, showRegister }: { event: EventProps; index: number; showRegister?: boolean }) => {
     const [isHovered, setIsHovered] = useState(false);
+
+    // Registration modal and form state
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [name, setName] = useState('');
+    const [branch, setBranch] = useState('');
+    const [year, setYear] = useState('');
+    const [rollNo, setRollNo] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const getCategoryColor = (category: string) => {
         switch (category) {
@@ -194,6 +208,75 @@ const EventCard = ({ event, index }: { event: EventProps; index: number }) => {
             case 'Design': return 'from-orange-500 to-yellow-400';
             case 'Business': return 'from-green-500 to-emerald-400';
             default: return 'from-gray-500 to-gray-400';
+        }
+    };
+
+    // Simple client-side validation
+    const validateForm = () => {
+        if (!name.trim() || !branch.trim() || !year.trim() || !rollNo.trim() || !phone.trim() || !email.trim()) {
+            setErrorMessage('Please fill in all fields.');
+            return false;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setErrorMessage('Please enter a valid email.');
+            return false;
+        }
+        const phoneRegex = /^[0-9]{7,15}$/;
+        if (!phoneRegex.test(phone)) {
+            setErrorMessage('Please enter a valid phone number (digits only).');
+            return false;
+        }
+        setErrorMessage('');
+        return true;
+    };
+
+    const submitRegistration = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!validateForm()) return;
+
+        setLoading(true);
+        setErrorMessage('');
+        setSuccessMessage('');
+
+        try {
+            const res = await fetch(`${API_BASE}/applications`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    eventId: event.id,
+                    name,
+                    branch,
+                    year,
+                    rollNo,
+                    phone,
+                    email
+                })
+            });
+
+            if (!res.ok) {
+                const errText = await res.text();
+                throw new Error(errText || 'Request failed');
+            }
+
+            setSuccessMessage('Registration successful! We will contact you via email or phone.');
+            // Optionally clear form
+            setName('');
+            setBranch('');
+            setYear('');
+            setRollNo('');
+            setPhone('');
+            setEmail('');
+
+            // Close modal after a short delay
+            setTimeout(() => {
+                setIsModalOpen(false);
+                setSuccessMessage('');
+            }, 1500);
+        } catch (err: any) {
+            setErrorMessage(err.message || 'Registration failed. Please try again.');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -209,7 +292,7 @@ const EventCard = ({ event, index }: { event: EventProps; index: number }) => {
         >
             {/* Main Card Container */}
             <motion.div
-                whileHover={{ 
+                whileHover={{
                     scale: 1.02,
                     boxShadow: '0 20px 40px rgba(74, 222, 128, 0.15)'
                 }}
@@ -296,6 +379,19 @@ const EventCard = ({ event, index }: { event: EventProps; index: number }) => {
 </div>
 
 
+                            {/* Register Button (only for the first event when showRegister is true) */}
+                            {showRegister && (
+                                <div className="pt-2">
+                                    <button
+                                        onClick={() => setIsModalOpen(true)}
+                                        className="inline-flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-full font-semibold shadow-lg"
+                                    >
+                                        Register Now
+                                        <ArrowRight className="w-4 h-4" />
+                                    </button>
+                                </div>
+                            )}
+
                             {/* Event Details Grid */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <motion.div
@@ -376,6 +472,51 @@ const EventCard = ({ event, index }: { event: EventProps; index: number }) => {
                     ))}
                 </div>
             </motion.div>
+
+            {/* Registration Modal */}
+            <AnimatePresence>
+                {isModalOpen && (
+                    <motion.div
+                        className="fixed inset-0 z-50 flex items-center justify-center px-4"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                    >
+                        <div className="absolute inset-0 bg-black/60" onClick={() => setIsModalOpen(false)} />
+                        <motion.form
+                            className="relative z-10 w-full max-w-lg bg-gray-900 rounded-2xl p-6 shadow-xl border border-gray-700"
+                            initial={{ y: 40, opacity: 0, scale: 0.98 }}
+                            animate={{ y: 0, opacity: 1, scale: 1 }}
+                            exit={{ y: 30, opacity: 0, scale: 0.98 }}
+                            onSubmit={submitRegistration}
+                        >
+                            <h3 className="text-xl font-bold mb-3">Register for: <span className="font-semibold text-green-300">{event.title}</span></h3>
+                            <p className="text-sm text-gray-400 mb-4">Fill the form and submit. We'll save your info for this event.</p>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <input className="bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-sm" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
+                                <input className="bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-sm" placeholder="Branch" value={branch} onChange={(e) => setBranch(e.target.value)} required />
+                                <input className="bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-sm" placeholder="Year" value={year} onChange={(e) => setYear(e.target.value)} required />
+                                <input className="bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-sm" placeholder="Roll No." value={rollNo} onChange={(e) => setRollNo(e.target.value)} required />
+                                <input className="bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-sm" placeholder="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} required />
+                                <input className="bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-sm" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                            </div>
+
+                            {errorMessage && <p className="text-sm text-red-400 mt-3">{errorMessage}</p>}
+                            {successMessage && <p className="text-sm text-green-300 mt-3">{successMessage}</p>}
+
+                            <div className="mt-4 flex items-center justify-end gap-3">
+                                <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 rounded-md bg-gray-700 hover:bg-gray-600 text-sm">
+                                    Cancel
+                                </button>
+                                <button type="submit" disabled={loading} className="px-4 py-2 rounded-full bg-green-500 hover:bg-green-600 text-white font-semibold">
+                                    {loading ? 'Registering...' : 'Submit'}
+                                </button>
+                            </div>
+                        </motion.form>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </motion.div>
     );
 };
@@ -440,7 +581,8 @@ const UpcomingEvents: React.FC<UpcomingEventsSectionProps> = () => {
                 <div className="space-y-16">
                     <AnimatePresence>
                         {upcomingEvents.map((event, index) => (
-                            <EventCard key={event.id ?? index} event={event} index={index} />
+                            // Pass showRegister to the very first event (index === 0)
+                            <EventCard key={event.id ?? index} event={event} index={index} showRegister={index === 0} />
                         ))}
                     </AnimatePresence>
                 </div>
