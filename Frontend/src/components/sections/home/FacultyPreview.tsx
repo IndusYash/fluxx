@@ -101,13 +101,7 @@ export default function FacultyPreview() {
   }, []);
 
   const handleFacultyClick = () => {
-    if (isMobile) {
-      document
-        .getElementById("faculty")
-        ?.scrollIntoView({ behavior: "smooth" });
-    } else {
-      navigate("/faculty");
-    }
+    navigate("/faculty");
   };
 
   return (

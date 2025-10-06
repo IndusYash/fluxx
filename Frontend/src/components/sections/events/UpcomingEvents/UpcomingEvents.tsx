@@ -255,8 +255,30 @@ const EventCard = ({ event, index, showRegister }: { event: EventProps; index: n
             });
 
             if (!res.ok) {
-                const errText = await res.text();
-                throw new Error(errText || 'Request failed');
+                // Try to parse JSON error payload if provided
+                let data: any = null;
+                try {
+                    data = await res.json();
+                } catch (_) {
+                    data = null;
+                }
+
+                // Map common status codes to user-friendly messages, prefer server message if present
+                let message = data?.message || data?.error || null;
+
+                if (!message) {
+                    if (res.status === 409) {
+                        message = 'It looks like this entry already exists for this event.';
+                    } else if (res.status === 400 || res.status === 422) {
+                        message = 'Invalid submission. Please check your form fields and try again.';
+                    } else if (res.status >= 500) {
+                        message = 'Server error. Please try again later.';
+                    } else {
+                        message = `Request failed with status ${res.status}.`;
+                    }
+                }
+
+                throw new Error(message);
             }
 
             setSuccessMessage('Registration successful! We will contact you via email or phone.');
@@ -274,7 +296,15 @@ const EventCard = ({ event, index, showRegister }: { event: EventProps; index: n
                 setSuccessMessage('');
             }, 1500);
         } catch (err: any) {
-            setErrorMessage(err.message || 'Registration failed. Please try again.');
+            // Tailor network/connection errors differently from server responses
+            let friendly = 'Registration failed. Please try again.';
+            if (err instanceof TypeError || /Failed to fetch/i.test(String(err.message || ''))) {
+                friendly = 'Unable to connect to the server. Please check your network or try again later.';
+            } else if (err.message) {
+                // Use the message thrown above (server-provided or mapped)
+                friendly = err.message;
+            }
+            setErrorMessage(friendly);
         } finally {
             setLoading(false);
         }
@@ -371,7 +401,8 @@ const EventCard = ({ event, index, showRegister }: { event: EventProps; index: n
                           <div className="text-gray-300 text-base leading-relaxed">
   <p>
     An expert session on Advances in Defining and Modelling: a Reliable Framework for Responsible AI towards Sustainability 
-    will be conducted by <span className="font-bold text-blue-300">Prof. Dr. Dimitrios A. Karras</span> (PhD, Electrical & Computer Engineering).
+    will be conducted by <span className="font-bold text-blue-300">Prof. Dr. Dimitrios A. Karras</span> (PhD, Electrical & Computer Engineering). <span className="font-bold text-white-300">𝐀𝐥𝐥 𝐭𝐡𝐞 𝐩𝐚𝐫𝐭𝐢𝐜𝐢𝐩𝐚𝐧𝐭𝐬 𝐰𝐢𝐥𝐥 𝐫𝐞𝐜𝐞𝐢𝐯𝐞 𝐚 𝐂𝐞𝐫𝐭𝐢𝐟𝐢𝐜𝐚𝐭𝐞 𝐨𝐟 𝐏𝐚𝐫𝐭𝐢𝐜𝐢𝐩𝐚𝐭𝐢𝐨𝐧.
+</span>
   </p>
   <p className="mt-3"><span className="font-bold text-green-300">Designations:</span></p>
   <p><span className="font-bold">1. Professor, National and Kapodistrian University of Athens (NKUA), Greece</span></p>
