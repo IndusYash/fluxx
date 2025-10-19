@@ -1,7 +1,7 @@
 import React from 'react';
 import TeamCard from "@/components/TeamCard";
-import { Mail, Instagram, Linkedin, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
+// removed contact-related imports
+
 import aryanImage from "../../assets/images/Aryan.webp";
 import ashishImage from "../../assets/images/ashish.jpg";
 import shivammishraImage from "../../assets/images/shivamPic.jpg";
@@ -21,6 +21,32 @@ import Prad from "../../assets/images/Pradyuman.webp";
 import Aviral from "../../assets/images/Aviral.jpg";
 import Anushka from "../../assets/images/Anuphoto - Anushka Singh.jpg";
 
+
+// Sophomore member images
+import abhigyanVardhanImage from "../../assets/images/AbhigyanVardhan.jpg";
+import adityaPratapImage from "../../assets/images/AdityaPratap .jpg";
+import anshikaTripathiImage from "../../assets/images/AnshikaTripathi  .jpg";
+import anushkaChaudharyImage from "../../assets/images/AnushkaChaudhary .jpg";
+import atulKumarImage from "../../assets/images/AtulThakur.png";
+import auchityaKumarImage from "../../assets/images/AuchityaKumar.jpg";
+import ayushSharmaImage from "../../assets/images/AyushSharma.png";
+import devanshKumarImage from "../../assets/images/DevanshKumar.jpg";
+import divejSinghImage from "../../assets/images/DivejSingh.jpg";
+import harshVermaImage from "../../assets/images/HarshVerma.jpg";
+import jaiKumarImage from "../../assets/images/JaiKumar.jpg";
+import mohdAqdasImage from "../../assets/images/MohdAqdas.jpg";
+import nikhilJaiswalImage from "../../assets/images/NikhilJaiswal .jpg";
+import prakharShuklaImage from "../../assets/images/PrakharShukla.jpg";
+import priyaSinghImage from "../../assets/images/PriyaSingh.jpg";
+import princeSahuImage from "../../assets/images/PrinceSahu.jpg";
+import rishiImage from "../../assets/images/Rishi.jpg";
+import rohanJaiswalImage from "../../assets/images/RohanJaiswal .jpg";
+import sameerChauhanImage from "../../assets/images/SameerSingh.jpg";
+import stutiTripathiImage from "../../assets/images/StutiTripathi .jpg";
+import sudeekshaImage from "../../assets/images/Sudeeksha.jpg";
+import surajKumarImage from "../../assets/images/SurajKumar .jpg";
+
+
 interface TeamMember {
   name: string;
   role: string;
@@ -30,20 +56,14 @@ interface TeamMember {
   image: string;
 }
 
-interface ContactInfo {
-  icon: React.ReactNode;
-  label: string;
-  description?: string;
-  value: string;
-  link: string;
-  buttonText: string | null;
-}
 
 const Team: React.FC = () => {
   // Default placeholder for missing images
-  const defaultImage = "/path/to/default-placeholder.png"; // Add your placeholder image path
+  const defaultImage = "../../assets/images/3m.jpg"; // Add your placeholder image path
+
 
   const teamMembers: TeamMember[] = [
+    // --- seniors, final year, pre-final year members ---
     {
       name: "Aman Kumar Rawat",
       role: "ME-Pre Final Year",
@@ -70,7 +90,7 @@ const Team: React.FC = () => {
       role: "CSE-Pre Final Year",
       email: "anuskajiya@gmail.com", 
       linkedin: "https://www.linkedin.com/in/anushkasingh-a18a25318/",  
-     image: Anushka || defaultImage
+      image: Anushka || defaultImage
     },
     {
       name: "Ashish Kumar Yadav",
@@ -82,9 +102,9 @@ const Team: React.FC = () => {
     {
       name: "Aviral Omar", 
       role: "ChE-Pre Final Year",
-      email: "N/A", // Changed from empty string
-      linkedin: "N/A", // Changed from empty string
-      image: Aviral // Use placeholder for missing image
+      email: "N/A",
+      linkedin: "N/A",
+      image: Aviral || defaultImage
     },
     {
       name: "Aryan S Shandilya",
@@ -162,9 +182,178 @@ const Team: React.FC = () => {
       email: "2023021270@mmmut.ac.in",
       linkedin: "https://www.linkedin.com/in/yashvardhann/",
       image: threeMImage || defaultImage
-    }
+    },
+
+    // --- sophomore year members (added from your image/table) ---
+{
+    name: "Abhigyan Vardhan Singh",
+    role: "Sophomore Year, IT",
+    email: "abhigyansingh590@gmail.com ",
+    linkedin: "https://www.linkedin.com/in/abhigyan-vardhan-singh-81aa292a5?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    image: abhigyanVardhanImage || defaultImage,
+  },
+  {
+    name: "Aditya Pratap Singh",
+    role: "Sophomore Year, ECE",
+    email: "adityasingh.mails@gmail.com",
+    linkedin: "https://www.linkedin.com/in/adityaprasingh",
+    image: adityaPratapImage,
+  },
+  {
+    name: "Anshika Tripathi",
+    role: "Sophomore Year, BBA",
+    email: "anshikaatripathiii@gmail.com ",
+    linkedin: "https://www.linkedin.com/in/anshika-tripathi-421a26265",
+    image: anshikaTripathiImage
+  },
+  {
+    name: "Anushka Chaudhary",
+    role: "Sophomore Year, CSE",
+    email: "chaudharyanushka085@gmail.com ",
+    linkedin: "https://www.linkedin.com/in/anushka-chaudhary-2b371b316/",
+    image: anushkaChaudharyImage,
+  },
+  {
+    name: "Atul Kumar Thakur",
+    role: "Sophomore Year, IT",
+    email: "atulkumarthakur155@gmail.com",
+    linkedin: "https://www.linkedin.com/in/atul1574",
+    image: atulKumarImage,
+  },
+  {
+    name: "Auchitya Kumar Shukla",
+    role: "Sophomore Year, BBA",
+    email: "auchityashukla16@gmail.com",
+    linkedin: "https://www.linkedin.com/in/auchitya-shukla-b6ab252b4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    image: auchityaKumarImage,
+  },
+  {
+    name: "Ayush Sharma",
+    role: "Sophomore Year, IT",
+    email: "ayushsharma172005@gmail.com ",
+    linkedin: "https://www.linkedin.com/in/ayush-sharma-20b516325?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app ",
+    image: ayushSharmaImage,
+  },
+  {
+    name: "Devansh Kumar Yadav",
+    role: "Sophomore Year, CSE",
+    email: " dkyadav020806@gmail.com ",
+    linkedin: "https://www.linkedin.com/in/devansh-kumar-yadav-4a8146329?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app ",
+    image: devanshKumarImage,
+  },
+  {
+    name: "Divej Singh",
+    role: "Sophomore Year, CSE",
+    email: "divejsingh3@gmail.com ",
+    linkedin: "https://www.linkedin.com/in/divej-singh-0b6261326?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    image: divejSinghImage,
+  },
+  {
+    name: "Harsh Verma",
+    role: "Sophomore Year, CSE",
+    email: "verma.harsh7370@gmail.com ",
+    linkedin: "https://www.linkedin.com/in/harsh-verma-07974533b",
+    image: harshVermaImage,
+  },
+  {
+    name: "Jai Kumar Singh",
+    role: "Sophomore Year, CSE",
+    email: "jaikumarsingh1920@gmail.com ",
+    linkedin: "https://www.linkedin.com/in/jai-kumar-singh-9b3152319",
+    image: jaiKumarImage,
+  },
+  {
+    name: "Mohd Aqdas",
+    role: "Sophomore Year, CSE",
+    email: "aqdas26india@gmail.com",
+    linkedin: "https://www.linkedin.com/in/mohd-aqdas-a05456336?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app ",
+    image: mohdAqdasImage,
+  },
+  {
+    name: "Nikhil Jaiswal",
+    role: "Sophomore Year, IT",
+    email: "nikhiljais9984@gmail.com ",
+    linkedin: "https://www.linkedin.com/in/nikhil-jaiswal-980a1132b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    image: nikhilJaiswalImage,
+  },
+  {
+    name: "Prakhar Shukla",
+    role: "Sophomore Year, CSE",
+    email: "prakharshukla89508@gmail.com ",
+    linkedin: "https://www.linkedin.com/in/prakhar-shukla-22aa10316",
+    image: prakharShuklaImage,
+  },
+    {
+    name: "Prince Sahu",
+    role: "Sophomore Year, CSE",
+    email: "sahuprinceguru@gmail.com ",
+    linkedin: "https://linkedin.com/in/prince-sahu-552382326/ ",
+    image: princeSahuImage,
+  },
+  {
+    name: "Priya Singh",
+    role: "Sophomore Year, CSE",
+    email: "singhshruti4131@gmail.com ",
+    linkedin: "https://www.linkedin.com/in/priya-singh-393bb82b7",
+    image: priyaSinghImage,
+  },
+
+  {
+    name: "Rishi",
+    role: "Sophomore Year, IT",
+    email: "rishidiwakar925@gmail.com",
+    linkedin: "https://www.linkedin.com/in/rishi-diwakar-a87b86263/",
+    image: rishiImage,
+  },
+  {
+    name: "Rohan Jaiswal",
+    role: "Sophomore Year, CSE",
+    email: "rohanjaiswal611@gmail.com ",
+    linkedin: " https://www.linkedin.com/in/rohan-jaiswal-807338328?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    image: rohanJaiswalImage,
+  },
+  {
+    name: "Sameer Singh Chauhan",
+    role: "Sophomore Year, CSE",
+    email: " itx.sameersinghchauhan@gmail.com",
+    linkedin: "https://www.linkedin.com/in/sameer-singh-chauhan-606992356",
+    image: sameerChauhanImage,
+  },
+  {
+    name: "Stuti Tripathi",
+    role: "Sophomore Year, CSE",
+    email: "stuticse28@gmail.com ",
+    linkedin: "https://www.linkedin.com/in/stuti-tripathi-534440328",
+    image: stutiTripathiImage,
+  },
+  {
+    name: "Sudeeksha",
+    role: "Sophomore Year, IT",
+    email: "sudeeksha.prakash04@gmail.com ",
+    linkedin: "https://www.linkedin.com/in/sudeeksha-sudeeksha-45ba4228b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    image: sudeekshaImage,
+  },
+  {
+    name: "Suraj Kumar",
+    role: "Sophomore Year, CSE",
+    email: "st12365489@gmail.com ",
+    linkedin: "https://www.linkedin.com/in/suraj-thakur7080933",
+    image: surajKumarImage,
+  },
   ].filter(member => member.name && member.role); // Filter out any incomplete entries
 
+  // helper to remove year words from role for display
+  const cleanRole = (role: string) =>
+    role
+      .replace(/\b(Sophomore|Final Year|Pre Final Year|Pre-Final Year|Final|Pre Final Yearr|Pre Final|Pre-Final|Year)\b/gi, "")
+      .replace(/[-_/]+/g, " ")
+      .replace(/\s{2,}/g, " ")
+      .trim();
+  
+  // split into groups: Sophomore vs others (pre-final)
+  const sophomoreMembers = teamMembers.filter(m => /Sophomore/i.test(m.role));
+  const preFinalMembers = teamMembers.filter(m => !/Sophomore/i.test(m.role));
+ 
   const president: TeamMember = {
     name: "Shivam Rai",
     role: "President",
@@ -173,39 +362,7 @@ const Team: React.FC = () => {
     linkedin: "https://www.linkedin.com/in/shivam-rai-a64b84298/", 
     image: presidentImage || defaultImage
   };
-
-  const contactInfo: ContactInfo[] = [
-    {
-      icon: <Mail className="h-5 w-5" />,
-      label: "Email",
-      description: "Drop us a line at:",
-      value: "flux@mmmut.ac.in",
-      link: "mailto:flux@mmmut.ac.in", 
-      buttonText: null
-    },
-    {
-      icon: <Instagram className="h-5 w-5" />,
-      label: "Instagram", 
-      value: "FLUX",
-      link: "https://instagram.com/flux.mmmut",
-      buttonText: "Connect"
-    },
-    {
-      icon: <Linkedin className="h-5 w-5" />,
-      label: "LinkedIn",
-      value: "FLUX", 
-      link: "https://www.linkedin.com/company/flux-mmm/",
-      buttonText: "Connect"
-    },
-    {
-      icon: <MapPin className="h-5 w-5" />,
-      label: "Location",
-      value: "CSED, MMMUT, Tech District, Gorakhpur, U.P.",
-      link: "https://www.google.com/maps/search/?api=1&query=CSED+MMMUT+Tech+District+Gorakhpur+UP", 
-      buttonText: "View Map"
-    }
-  ];
-
+ 
   return (
     <div className="min-h-screen bg-background">
       <div className="h-16 md:h-20"></div>
@@ -226,6 +383,7 @@ const Team: React.FC = () => {
             </p>
           </div>
 
+
           {/* President Card */}
           <div className="flex justify-center mb-16">
             <div className="w-full max-w-lg animate-fade-up animate-delay-700 transform hover:scale-105 transition-all duration-500">
@@ -245,81 +403,59 @@ const Team: React.FC = () => {
             </div>
           </div>
 
+
           {/* Team Members Grid */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
-            {teamMembers.map((member: TeamMember, index: number) => (
+          <div className="mb-10 text-center">
+            <h2 className="text-2xl md:text-3xl font-semibold text-foreground mb-4">Team Pre-Final Year</h2>
+          </div>
+          {/* Use flex-wrap so rows with <4 items center; card widths tuned for 4-per-row at lg */}
+          <div className="flex flex-wrap justify-center gap-6 lg:gap-8">
+            {preFinalMembers.map((member: TeamMember, index: number) => (
               <div
-                key={`${member.name}-${index}`} // Better key using name + index
-                className={`group animate-fade-up animate-delay-${Math.min(800 + index * 100, 1600)} transform hover:scale-105 transition-all duration-500`}
+                key={`pre-${member.name}-${index}`}
+                className={`group animate-fade-up animate-delay-${Math.min(800 + index * 100, 1600)} transform hover:scale-105 transition-all duration-500 flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2`}
               >
-                <div className="relative">
+                <div className="relative w-full max-w-[34rem] mx-auto">
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/40 via-purple-600/40 to-pink-500/40 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-700 animate-spin-slow"></div>
                   <div className="absolute -top-2 -right-2 w-2 h-2 bg-primary/60 rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
                   <div className="absolute -bottom-2 -left-2 w-1.5 h-1.5 bg-purple-500/60 rounded-full opacity-0 group-hover:opacity-100 animate-pulse delay-300"></div>
-                  
                   <div className="relative transform transition-all duration-300 hover:scale-110 hover:-translate-y-2 hover:rotate-1">
-                    <TeamCard member={member} index={index + 1} />
+                    {/* show cleaned role (no year / no "Executive Member") */}
+                    <TeamCard member={{ ...member, role: cleanRole(member.role) }} index={index + 1} />
                   </div>
                 </div>
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-card/20">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 animate-fade-up animate-delay-200">
-              <span className="text-foreground">Get in </span>
-              <span className="bg-gradient-primary bg-clip-text text-transparent">Touch</span>
-            </h2>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-up animate-delay-500">
-              Ready to join our community? Here's how you can reach us.
-            </p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {contactInfo.map((info: ContactInfo, index: number) => (
-              <div
-                key={info.label}
-                className={`group gradient-card rounded-xl p-6 text-center animate-fade-up animate-delay-${700 + index * 100} hover:shadow-2xl hover:shadow-primary/25 transition-all duration-500`}
-              >
-                <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
-                  {info.icon}
-                </div>
-                <h3 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
-                  {info.label}
-                </h3>
-                
-                {info.label === "Email" ? (
-                  <div className="mb-3">
-                    <p className="text-sm text-muted-foreground mb-1">{info.description}</p>
-                    <a href={info.link} className="text-sm hover:text-primary transition-colors">
-                      {info.value}
-                    </a>
+           
+           {/* Team Sophomore Year */}
+           <div className="mt-14 mb-6 text-center">
+             <h2 className="text-2xl md:text-3xl font-semibold text-foreground mb-4">Team Sophomore Year</h2>
+           </div>
+          <div className="flex flex-wrap justify-center gap-6 lg:gap-8">
+            {sophomoreMembers.map((member: TeamMember, index: number) => {
+              const branch = (member.role || "").split(",").pop()?.trim() || cleanRole(member.role);
+              return (
+                <div
+                  key={`soph-${member.name}-${index}`}
+                  className={`group animate-fade-up animate-delay-${Math.min(900 + index * 80, 1600)} transform hover:scale-105 transition-all duration-500 flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2`}
+                >
+                  <div className="relative w-full max-w-[34rem] mx-auto">
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/40 via-purple-600/40 to-pink-500/40 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-700 animate-spin-slow"></div>
+                    <div className="absolute -top-2 -right-2 w-2 h-2 bg-primary/60 rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
+                    <div className="absolute -bottom-2 -left-2 w-1.5 h-1.5 bg-purple-500/60 rounded-full opacity-0 group-hover:opacity-100 animate-pulse delay-300"></div>
+                    <div className="relative transform transition-all duration-300 hover:scale-110 hover:-translate-y-2 hover:rotate-1">
+                      {/* show branch as role */}
+                      <TeamCard member={{ ...member, role: branch }} index={preFinalMembers.length + index + 1} />
+                    </div>
                   </div>
-                ) : (
-                  <p className="text-sm text-muted-foreground mb-3">{info.value}</p>
-                )}
-
-                {info.buttonText && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    asChild
-                    className="group-hover:bg-primary/10 group-hover:border-primary/50 transition-all duration-300"
-                  >
-                    <a href={info.link} target="_blank" rel="noopener noreferrer">
-                      {info.buttonText}
-                    </a>
-                  </Button>
-                )}
-              </div>
-            ))}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
+
 
       <div className="h-16 md:h-20"></div>
       
@@ -372,5 +508,6 @@ const Team: React.FC = () => {
     </div>
   );
 };
+
 
 export default Team;
