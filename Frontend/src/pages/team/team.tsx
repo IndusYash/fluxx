@@ -6,7 +6,7 @@ import aryanImage from "../../assets/images/Aryan.webp";
 import ashishImage from "../../assets/images/ashish.jpg";
 import shivammishraImage from "../../assets/images/shivamPic.jpg";
 import shivamsinghImage from "../../assets/images/shivamsingh.jpg";
-import vmishraImage from "../../assets/images/vmishra.jpg";
+import vmishraImage from "../../assets/images/Vish.jpg";
 import ysvImage from "../../assets/images/ysv.jpg";
 import threeMImage from "../../assets/images/3m.jpg";
 import presidentImage from "../../assets/images/president.jpg";
