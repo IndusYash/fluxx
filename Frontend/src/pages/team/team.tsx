@@ -101,7 +101,7 @@ const Team: React.FC = () => {
     },
     {
       name: "Aviral Omar", 
-      role: "ChE-Pre Final Year",
+      role: "CHE-Pre Final Year",
       email: "N/A",
       linkedin: "N/A",
       image: Aviral || defaultImage

@@ -23,7 +23,7 @@ export interface EventProps {
 }
 
 const events: EventProps[] = [
-  {
+  /*{
     id: 2,
     title: 'Expert Session: Responsible AI & Sustainability',
     date: 'October 10, 2025',
@@ -36,14 +36,14 @@ const events: EventProps[] = [
     category: 'Innovation',
     prize: '',
     featured: true,
-  },
+  },*/
   {
-    id: 1,
-    title: 'GFG IDEATHON 2025',
-    date: '2025-XX-XX',
+    id: 2,
+    title: 'IDEATHON 2025',
+    date: '2025-12-XX',
     description:
       "Join innovators, coders, and thinkers to brainstorm, build, and showcase groundbreaking solutions. Unleash your ideas, collaborate with peers, and be part of a game- changing experience!",
-    imageUrl: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=600&fit=crop",
+    imageUrl: "src/assets/images/ideathon.jpg",
     isUpcoming: true,
     location: 'CSED, MMMUT, Gorakhpur',
     attendees: 1000,
@@ -372,7 +372,7 @@ const EventCard = ({ event, index, showRegister }: { event: EventProps; index: n
               </motion.h3>
 
               {/* Description (conditional) */}
-              {index === 0 ? (
+              {index === 1 ? (
                 // HARDCODED HTML FOR FIRST CARD
                 <div className="text-gray-300 text-base leading-relaxed">
                   <p>

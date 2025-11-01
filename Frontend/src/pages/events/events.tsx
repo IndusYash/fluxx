@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-
 import HeroSection from '../../components/sections/events/HeroSection';
 import UpcomingEventsSection from '../../components/sections/events/UpcomingEvents';
 import Timeline from '../../components/sections/events/timeline'; // Changed to uppercase 'Timeline'
@@ -20,33 +19,33 @@ const EventsPage: React.FC = () => {
   const timelineEvents: TimelineEvent[] = [
     {
       id: 1,
-      name: "AI & Machine Learning Workshop",
-      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=300&h=200&fit=crop",
+      name: "Responsible AI & Sustainability Workshop",
+      image: "/src/assets/images/xpert_talk.jpg",
       date: "October 10, 2025",
-      week: "WEEK ONE",
-      phase: "UNDERSTAND",
-      description: "Deep dive into AI fundamentals",
-      attendees: 120
+      icon: "WEEK ONE",       
+      phase: "Workshop",
+      description: "The expert session on Responsible AI by Prof. Dr. Dimitrios A. Karras was a great success, with 300+ participants gaining valuable insights and earning e-certificates for their participation.",
+      attendees: 300
     },
     {
       id: 2,
-      name: "Hackathon 2025",
-      image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=300&h=200&fit=crop",
-      date: "September 22, 2025",
-      week: "WEEK TWO",
-      phase: "DIVERGE",
-      description: "48-hour coding marathon with exciting challenges",
+      name: "Ideathon 2025",
+      image: "https://images.unsplash.com/photo-1638029202288-451a89e0d55f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aGFja2F0aG9ufGVufDB8fDB8fHww&fm=jpg&q=60&w=3000",
+      date: "December XX, 2025",
+      icon: "WEEK TWO",
+      phase: "Upcoming: HACKATHON",
+      description: "Ideathon, our flagship hackathon, brought together passionate innovators and problem-solvers to design real-world tech solutions through creativity, teamwork, and cutting-edge ideas.",
       attendees: 200
     },
     {
       id: 3,
-      name: "Design Thinking Bootcamp",
-      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=300&h=200&fit=crop",
-      date: "August 15, 2025",
-      week: "WEEK THREE",
-      phase: "CONVERGE",
-      description: "Learn the art of human-centered design",
-      attendees: 85
+      name: "Orientation",
+      image: "https://www.fz-juelich.de/en/ias/ias-9/news-and-events/news/ias-9-minisymposium-on-research-data-management/dsc_2794.jpg/@@images/image/great",
+      date: "January XX, 20XX",
+      icon: "WEEK THREE",
+      phase: "Upcoming: ORIENTATION",
+      description: "The Grand Level Orientation of Flux is set to welcome a new wave of innovators and tech enthusiasts. The event will introduce students to Flux’s domains and projects, inspiring collaboration, creativity, and a passion for technology.",
+      attendees: 100
     }
   ];
 
@@ -97,7 +96,7 @@ const EventsPage: React.FC = () => {
       {isLoaded && (
         <>
           <HeroSection />
-          <UpcomingEventsSection />
+          {<UpcomingEventsSection />}
           {/* <WhatWeDoSection /> */}
           <Timeline events={timelineEvents} /> {/* Changed to uppercase 'Timeline' */}
         </>
