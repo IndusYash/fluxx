@@ -5,7 +5,7 @@ import { Calendar, Users, Lightbulb, Code2, Atom } from 'lucide-react';
 interface TimelineEvent {
   id: number;
   name: string;
-  image: string;
+  imageUrl: string;
   date: string;
   icon: string;
   phase: string;
@@ -94,7 +94,7 @@ const Timeline: React.FC<TimelineProps> = ({ events, latestEvent }) => {
                         onMouseLeave={() => setHoveredEvent(null)}
                       >
                         <motion.img
-                          src={event.image}
+                          src={event.imageUrl}
                           alt={event.name}
                           whileHover={{ scale: 1.05, filter: 'brightness(1.12)' }}
                           transition={{ duration: 0.4, type: 'tween' }}
@@ -263,7 +263,7 @@ const Timeline: React.FC<TimelineProps> = ({ events, latestEvent }) => {
                         onMouseLeave={() => setHoveredEvent(null)}
                       >
                         <motion.img
-                          src={event.image}
+                          src={event.imageUrl}
                           alt={event.name}
                           whileHover={{ scale: 1.05, filter: 'brightness(1.12)' }}
                           transition={{ duration: 0.4, type: 'tween' }}

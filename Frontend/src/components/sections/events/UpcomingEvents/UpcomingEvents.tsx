@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, MapPin, Users, ArrowRight, Lightbulb, Award } from 'lucide-react';
 import dimitrios from '/src/assets/images/dimitrios.png';
-
+import ideathon from '/src/assets/images/ideathon.jpg';
 const RAW_API_BASE = (import.meta.env as any).VITE_API_BASE_URL ?? (import.meta.env as any).VITE_API_BASE ?? '/api';
 const API_BASE = (RAW_API_BASE || '/api').replace(/\/+$/, ''); // remove trailing slash
 
@@ -43,7 +43,7 @@ const events: EventProps[] = [
     date: '2025-12-XX',
     description:
       "Join innovators, coders, and thinkers to brainstorm, build, and showcase groundbreaking solutions. Unleash your ideas, collaborate with peers, and be part of a game- changing experience!",
-    imageUrl: "src/assets/images/ideathon.jpg",
+    imageUrl: ideathon,
     isUpcoming: true,
     location: 'CSED, MMMUT, Gorakhpur',
     attendees: 1000,

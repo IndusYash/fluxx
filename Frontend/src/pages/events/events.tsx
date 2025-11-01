@@ -4,7 +4,9 @@ import HeroSection from '../../components/sections/events/HeroSection';
 import UpcomingEventsSection from '../../components/sections/events/UpcomingEvents';
 import Timeline from '../../components/sections/events/timeline'; // Changed to uppercase 'Timeline'
 import type { TimelineEvent, LatestEvent } from '../../components/sections/events/timeline';
-
+import xpert_talk from '/src/assets/images/xpert_talk.jpg';
+import orientation from '/src/assets/images/orientation_2.jpg';
+import hackathon from '/src/assets/images/hackathon.jpg';
 // import WhatWeDoSection from '../../components/sections/events/WhatWeDo';
 
 const EventsPage: React.FC = () => {
@@ -20,7 +22,7 @@ const EventsPage: React.FC = () => {
     {
       id: 1,
       name: "Responsible AI & Sustainability Workshop",
-      image: "/src/assets/images/xpert_talk.jpg",
+      imageUrl: xpert_talk,
       date: "October 10, 2025",
       icon: "WEEK ONE",       
       phase: "Workshop",
@@ -30,7 +32,7 @@ const EventsPage: React.FC = () => {
     {
       id: 2,
       name: "Ideathon 2025",
-      image: "https://images.unsplash.com/photo-1638029202288-451a89e0d55f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aGFja2F0aG9ufGVufDB8fDB8fHww&fm=jpg&q=60&w=3000",
+      imageUrl: hackathon,
       date: "December XX, 2025",
       icon: "WEEK TWO",
       phase: "Upcoming: HACKATHON",
@@ -40,7 +42,7 @@ const EventsPage: React.FC = () => {
     {
       id: 3,
       name: "Orientation",
-      image: "https://www.fz-juelich.de/en/ias/ias-9/news-and-events/news/ias-9-minisymposium-on-research-data-management/dsc_2794.jpg/@@images/image/great",
+      imageUrl: orientation,
       date: "January XX, 20XX",
       icon: "WEEK THREE",
       phase: "Upcoming: ORIENTATION",
