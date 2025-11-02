@@ -128,7 +128,7 @@ export default function Footer() {
                         Flux, Center of Excellence
                       </p>
                       <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
-                        Madan Mohan Malvaiya University of Technology
+                        Madan Mohan Malaviya University of Technology
                       </p>
                       <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
                         Gorakhpur, Uttar Pradesh 273010
