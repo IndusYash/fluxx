@@ -129,7 +129,7 @@ const Timeline: React.FC<TimelineProps> = ({ events, latestEvent }) => {
                               </motion.p>
                               <div className="flex items-center text-sm text-gray-400">
                                 <Users className="w-4 h-4 mr-2 text-green-400" />
-                                <span>{event.attendees} attended</span>
+                                <span>{event.name === 'Ideathon 2025' || event.name === 'Orientation' ? `Expected ${event.attendees}+ attended` : `${event.attendees} attended`}</span>
                               </div>
                             </motion.div>
                           )}
@@ -286,7 +286,7 @@ const Timeline: React.FC<TimelineProps> = ({ events, latestEvent }) => {
                               <p className="text-sm text-gray-300 mb-3">{event.description}</p>
                               <div className="flex items-center text-sm text-gray-400">
                                 <Users className="w-4 h-4 mr-2 text-blue-400" />
-                                <span>{event.attendees} attended</span>
+                                <span>{event.name === 'Ideathon 2025' || event.name === 'Orientation' ? `Expected ${event.attendees}+ attended` : `${event.attendees} attended`}</span>
                               </div>
                             </motion.div>
                           )}
