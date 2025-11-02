@@ -37,7 +37,7 @@ const EventsPage: React.FC = () => {
       icon: "WEEK TWO",
       phase: "Upcoming: HACKATHON",
       description: "Ideathon, our flagship hackathon, brought together passionate innovators and problem-solvers to design real-world tech solutions through creativity, teamwork, and cutting-edge ideas.",
-      attendees: 200
+      attendees: 300
     },
     {
       id: 3,
@@ -47,8 +47,7 @@ const EventsPage: React.FC = () => {
       icon: "WEEK THREE",
       phase: "Upcoming: ORIENTATION",
       description: "The Grand Level Orientation of Flux is set to welcome a new wave of innovators and tech enthusiasts. The event will introduce students to Flux’s domains and projects, inspiring collaboration, creativity, and a passion for technology.",
-      attendees: 100
-    }
+      attendees: 300   }
   ];
 
 
