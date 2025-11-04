@@ -102,8 +102,8 @@ const Team: React.FC = () => {
     {
       name: "Aviral Omar", 
       role: "CHE-Pre Final Year",
-      email: "N/A",
-      linkedin: "N/A",
+      email: "aviralmaster@gmail.com",
+      linkedin: "https://www.linkedin.com/in/aviral-omar-763878294?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
       image: Aviral || defaultImage
     },
     {
