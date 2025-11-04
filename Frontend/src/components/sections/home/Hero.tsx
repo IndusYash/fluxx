@@ -360,6 +360,7 @@ export default function Hero() {
               variants={textChild}
               className="flex flex-col sm:flex-row justify-center gap-4 pt-6"
             >
+              {/* 
               <motion.div
                 whileHover={{ scale: 1.03, y: -2 }}
                 whileTap={{ scale: 0.97 }}
@@ -378,6 +379,7 @@ export default function Hero() {
                   🚀 Join FLUX
                 </button>
               </motion.div>
+              */}
 
               <motion.button
                 onClick={handleExploreClick}
