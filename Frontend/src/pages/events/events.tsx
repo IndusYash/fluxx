@@ -7,6 +7,8 @@ import type { TimelineEvent, LatestEvent } from '../../components/sections/event
 import xpert_talk from '/src/assets/images/xpert_talk.jpg';
 import orientation from '/src/assets/images/orientation_2.jpg';
 import hackathon from '/src/assets/images/hackathon.jpg';
+import expert from '/src/assets/images/expert.jpg';
+
 // import WhatWeDoSection from '../../components/sections/events/WhatWeDo';
 
 const EventsPage: React.FC = () => {
@@ -31,6 +33,16 @@ const EventsPage: React.FC = () => {
     },
     {
       id: 2,
+      name: "Artificial Intelligence Evolution and Future",
+      imageUrl: expert,
+      date: "November 16, 2025",
+      icon: "WEEK TWO",
+      phase: "Workshop",
+      description: "The session with Er. Shivesh Sinha, Sr. Technical Program Manager at Intel USA, offered deep insights into the evolution of AI, emerging technological shifts and the rapidly transforming future shaped by intelligent systems.",
+      attendees: 300
+    },
+    {
+      id: 3,
       name: "Ideathon 2025",
       imageUrl: hackathon,
       date: "December XX, 2025",
@@ -40,14 +52,15 @@ const EventsPage: React.FC = () => {
       attendees: 300
     },
     {
-      id: 3,
+      id: 4,
       name: "Orientation",
       imageUrl: orientation,
       date: "January XX, 20XX",
       icon: "WEEK THREE",
       phase: "Upcoming: ORIENTATION",
       description: "The Grand Level Orientation of Flux is set to welcome a new wave of innovators and tech enthusiasts. The event will introduce students to Flux’s domains and projects, inspiring collaboration, creativity, and a passion for technology.",
-      attendees: 300   }
+      attendees: 300   },
+     
   ];
 
 
