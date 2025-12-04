@@ -10,7 +10,6 @@ import FacultyPage from "@/pages/faculty/FacultyPage";
 import EventsPage from "@/pages/events/events";
 import ContactPage from "@/pages/contact/contact";
 import TeamPage from "@/pages/team/team";
-import Ideathon from "@/pages/Ideathon/Ideathon";
 import FDPDetailsPage from "@/components/sections/events/UpcomingEvents/fdp";
 // import Application from "@/pages/induction/Application"; // if needed later
 
@@ -33,27 +32,26 @@ export default function App() {
           {/* Mobile Routes */}
           {isMobile ? (
             <Route element={<MobileLayout />}>
-              <Route path="/" element={<HomePage isMobile={isMobile} />} />
-              <Route path="/about" element={<AboutPage isMobile={isMobile} />} />
-              <Route path="/faculty" element={<FacultyPage isMobile={isMobile} />} />
-              <Route path="/events" element={<EventsPage isMobile={isMobile} />} />
-              <Route path="/team" element={<TeamPage isMobile={isMobile} />} />
-              <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
-              <Route path="/ideathon" element={<Ideathon isMobile={isMobile} />} />
-              {/* <Route path="/join" element={<Application isMobile={isMobile} />} /> */}
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/faculty" element={<FacultyPage />} />
+              <Route path="/events" element={<EventsPage />} />
+              <Route path="/events/fdp" element={<FDPDetailsPage />} />
+              <Route path="/team" element={<TeamPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              {/* <Route path="/join" element={<Application />} /> */}
             </Route>
           ) : (
             // Desktop Routes
             <Route element={<Layout />}>
-              <Route path="/" element={<HomePage isMobile={isMobile} />} />
-              <Route path="/about" element={<AboutPage isMobile={isMobile} />} />
-              <Route path="/faculty" element={<FacultyPage isMobile={isMobile} />} />
-              <Route path="/events" element={<EventsPage isMobile={isMobile} />} />
-              <Route path="/team" element={<TeamPage isMobile={isMobile} />} />
-              <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
-              Route path="/events/fdp" element={<FDPDetailsPage />} />
-              <Route path="/ideathon" element={<Ideathon isMobile={isMobile} />} />
-              {/* <Route path="/join" element={<Application isMobile={isMobile} />} /> */}
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/faculty" element={<FacultyPage />} />
+              <Route path="/events" element={<EventsPage />} />
+              <Route path="/events/fdp" element={<FDPDetailsPage />} />
+              <Route path="/team" element={<TeamPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              {/* <Route path="/join" element={<Application />} /> */}
             </Route>
           )}
         </Routes>
