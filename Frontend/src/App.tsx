@@ -10,7 +10,7 @@ import FacultyPage from "@/pages/faculty/FacultyPage";
 import EventsPage from "@/pages/events/events";
 import ContactPage from "@/pages/contact/contact";
 import TeamPage from "@/pages/team/team";
-import Ideathon from "@/pages/ideathon/Ideathon";
+import Ideathon from "@/pages/Ideathon/Ideathon";
 // import Application from "@/pages/induction/Application"; // if needed later
 
 import { Toaster } from "@/components/ui/toaster";
