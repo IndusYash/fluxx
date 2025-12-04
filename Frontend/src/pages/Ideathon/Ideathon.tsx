@@ -6,24 +6,37 @@ const MemoizedHeroSection = memo(HeroSection);
 
 const Ideathon = () => {
   const [timeLeft, setTimeLeft] = useState({
-    hours: 24,
+    hours: 0,
     minutes: 0,
     seconds: 0
   });
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(prev => {
-        if (prev.seconds > 0) {
-          return { ...prev, seconds: prev.seconds - 1 };
-        } else if (prev.minutes > 0) {
-          return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
-        } else if (prev.hours > 0) {
-          return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
-        }
-        return prev;
-      });
-    }, 1000);
+    // Set your global countdown end time here
+    // Example: December 10, 2025 at 8:00 PM IST
+    const globalEndTime = new Date('2025-12-05T20:00:00+05:30').getTime();
+    
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const distance = globalEndTime - now;
+
+      if (distance > 0) {
+        const hours = Math.floor(distance / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        setTimeLeft({ hours, minutes, seconds });
+      } else {
+        // Countdown finished
+        setTimeLeft({ hours: 0, minutes: 0, seconds: 0 });
+      }
+    };
+
+    // Update immediately
+    updateCountdown();
+
+    // Update every second
+    const timer = setInterval(updateCountdown, 1000);
 
     return () => clearInterval(timer);
   }, []);
@@ -62,7 +75,7 @@ const Ideathon = () => {
           justifyContent: 'center',
           gap: '1rem'
         }}>
-          <span>Going Live In:</span>
+          <span>Going Live</span>
           <span style={{
             fontSize: '2.5rem',
             fontWeight: 'bold',
