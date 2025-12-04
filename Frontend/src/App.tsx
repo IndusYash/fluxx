@@ -11,6 +11,8 @@ import EventsPage from "@/pages/events/events";
 import ContactPage from "@/pages/contact/contact";
 import TeamPage from "@/pages/team/team";
 import FDPDetailsPage from "@/components/sections/events/UpcomingEvents/fdp";
+import Ideathon from "@/pages/Ideathon/Ideathon";
+
 // import Application from "@/pages/induction/Application"; // if needed later
 
 import { Toaster } from "@/components/ui/toaster";
@@ -39,6 +41,7 @@ export default function App() {
               <Route path="/events/fdp" element={<FDPDetailsPage />} />
               <Route path="/team" element={<TeamPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/Ideathon" element={<Ideathon />} />
               {/* <Route path="/join" element={<Application />} /> */}
             </Route>
           ) : (
@@ -51,6 +54,7 @@ export default function App() {
               <Route path="/events/fdp" element={<FDPDetailsPage />} />
               <Route path="/team" element={<TeamPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/ideathon" element={<Ideathon />} />
               {/* <Route path="/join" element={<Application />} /> */}
             </Route>
           )}
