@@ -1,21 +1,41 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
-long long solve(long long n) {
-    if (n <= 3) return 1;
-    return 2 * solve(n / 4);
+
+vector<long long> primes = {2, 3, 5, 7, 11, 13, 17, 19};
+
+
+long long gcd(long long a, long long b) {
+    while (b) {
+        long long temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
 }
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
     int t;
     cin >> t;
     while (t--) {
-        long long n;
+        int n;
         cin >> n;
-        cout << solve(n) << "\n";
+        vector<long long> a(n);
+        for (int i = 0; i < n; ++i)
+            cin >> a[i];
+        long long answer = -1;
+        for (long long p : primes) {
+            for (int i = 0; i < n; ++i) {
+                if (gcd(a[i], p) == 1) {
+                    answer = p;
+                    break;
+                }
+            }
+            if (answer != -1) break;
+        }
+        cout << answer << endl;
     }
     return 0;
 }
