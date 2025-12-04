@@ -51,6 +51,7 @@ export default function App() {
               <Route path="/events" element={<EventsPage isMobile={isMobile} />} />
               <Route path="/team" element={<TeamPage isMobile={isMobile} />} />
               <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
+              Route path="/events/fdp" element={<FDPDetailsPage />} />
               <Route path="/ideathon" element={<Ideathon isMobile={isMobile} />} />
               {/* <Route path="/join" element={<Application isMobile={isMobile} />} /> */}
             </Route>
