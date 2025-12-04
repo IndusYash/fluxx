@@ -10,6 +10,7 @@ import FacultyPage from "@/pages/faculty/FacultyPage";
 import EventsPage from "@/pages/events/events";
 import ContactPage from "@/pages/contact/contact";
 import TeamPage from "@/pages/team/team";
+import Ideathon from "@/pages/ideathon/Ideathon";
 // import Application from "@/pages/induction/Application"; // if needed later
 
 import { Toaster } from "@/components/ui/toaster";
@@ -37,6 +38,7 @@ export default function App() {
               <Route path="/events" element={<EventsPage isMobile={isMobile} />} />
               <Route path="/team" element={<TeamPage isMobile={isMobile} />} />
               <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
+              <Route path="/ideathon" element={<Ideathon isMobile={isMobile} />} />
               {/* <Route path="/join" element={<Application isMobile={isMobile} />} /> */}
             </Route>
           ) : (
@@ -48,6 +50,7 @@ export default function App() {
               <Route path="/events" element={<EventsPage isMobile={isMobile} />} />
               <Route path="/team" element={<TeamPage isMobile={isMobile} />} />
               <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
+              <Route path="/ideathon" element={<Ideathon isMobile={isMobile} />} />
               {/* <Route path="/join" element={<Application isMobile={isMobile} />} /> */}
             </Route>
           )}
