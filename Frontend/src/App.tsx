@@ -11,6 +11,7 @@ import EventsPage from "@/pages/events/events";
 import ContactPage from "@/pages/contact/contact";
 import TeamPage from "@/pages/team/team";
 import Ideathon from "@/pages/Ideathon/Ideathon";
+import FDPDetailsPage from "@/components/sections/events/UpcomingEvents/fdp";
 // import Application from "@/pages/induction/Application"; // if needed later
 
 import { Toaster } from "@/components/ui/toaster";
