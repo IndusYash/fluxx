@@ -34,7 +34,6 @@ const events: EventProps[] = [
     imageUrl: atalFdp,
     isUpcoming: true,
     location: 'MMMUT Gorakhpur (Online Mode)',
-    attendees: 300,
     category: 'Innovation',
     prize: '',
     featured: true,
