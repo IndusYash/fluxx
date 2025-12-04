@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Calendar, MapPin, Users, ArrowRight, Lightbulb, Award } from 'lucide-react';
-import dimitrios from '/src/assets/images/dimitrios.png';
-import ideathon from '/src/assets/images/ideathon.jpg';
+import dimitrios from '@/assets/images/dimitrios.png';
+import ideathon from '@/assets/images/ideathon.jpg';
+import atalFdp from '@/assets/images/atalFdp.jpeg';
 const RAW_API_BASE = (import.meta.env as any).VITE_API_BASE_URL ?? (import.meta.env as any).VITE_API_BASE ?? '/api';
 const API_BASE = (RAW_API_BASE || '/api').replace(/\/+$/, ''); // remove trailing slash
 
@@ -23,20 +25,20 @@ export interface EventProps {
 }
 
 const events: EventProps[] = [
-  /*{
-    id: 2,
-    title: 'Expert Session: Responsible AI & Sustainability',
-    date: 'October 10, 2025',
+  {
+    id: 1,
+    title: 'ATAL Faculty Development Programme',
+    date: 'January 19-24, 2026',
     description:
-      "An expert session on Advances in Defining and Modelling: a Reliable Framework for Responsible AI towards Sustainability will be conducted by Prof. Dr. Dimitrios A. Karras (PhD, Electrical & Computer Engineering).\n\nDesignations:\n1. Professor, National and Kapodistrian University of Athens (NKUA), Greece\n2. Professor, EPOKA University, Computer Engineering Dept., Tirana, Albania.",
-    imageUrl: dimitrios,
+      "Advanced Deep Dive into the Hidden Mathematical Science of Mechanistic Interpretability",
+    imageUrl: atalFdp,
     isUpcoming: true,
-    location: 'Alan Turing Hall, CSED',
-    attendees: 200,
+    location: 'MMMUT Gorakhpur (Online Mode)',
+    attendees: 300,
     category: 'Innovation',
     prize: '',
     featured: true,
-  },*/
+  },
   {
     id: 2,
     title: 'IDEATHON 2025',
@@ -184,6 +186,7 @@ const BigWhiteBulb = () => {
 };
 
 const EventCard = ({ event, index, showRegister }: { event: EventProps; index: number; showRegister?: boolean }) => {
+  const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
 
   // Registration modal and form state
@@ -392,13 +395,23 @@ const EventCard = ({ event, index, showRegister }: { event: EventProps; index: n
 
               {showRegister && (
                 <div className="pt-2">
-                  <button
-                    onClick={() => setIsModalOpen(true)}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-full font-semibold shadow-lg"
-                  >
-                    Register Now
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
+                  {event.id === 1 ? (
+                    <button
+                      onClick={() => navigate('/events/fdp')}
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-full font-semibold shadow-lg"
+                    >
+                      View Details
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => setIsModalOpen(true)}
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-full font-semibold shadow-lg"
+                    >
+                      Register Now
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  )}
                 </div>
               )}
 
