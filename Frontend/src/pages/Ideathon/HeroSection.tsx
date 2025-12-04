@@ -1,5 +1,5 @@
 import Hyperspeed from '../../components/Hyperspeed';
-import { hyperspeedPresets } from '../../components/HyperspeedPresets';
+import { hyperspeedPresets } from '../../components/HyperSpeedPresets';
 
 const HeroSection = () => {
   return (
