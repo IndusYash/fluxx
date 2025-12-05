@@ -189,7 +189,7 @@ export const hyperspeedPresets = {
     onSpeedUp: () => {},
     onSlowDown: () => {},
     distortion: 'deepDistortion',
-    length: 400,
+    length: 300,
     roadWidth: 18,
     islandWidth: 2,
     lanesPerRoad: 3,
@@ -212,14 +212,20 @@ export const hyperspeedPresets = {
     carShiftX: [-0.2, 0.2],
     carFloorSeparation: [0.05, 1],
     colors: {
-      roadColor: 0x080808,
-      islandColor: 0x0a0a0a,
-      background: 0x000000,
-      shoulderLines: 0x131318,
-      brokenLines: 0x131318,
-      leftCars: [0xff322f, 0xa33010, 0xa81508],
-      rightCars: [0xfdfdf0, 0xf3dea0, 0xe2bb88],
-      sticks: 0xfdfdf0
-    }
+  roadColor: 0x080808,
+  islandColor: 0x0a0a0a,
+  background: 0x000000,
+  shoulderLines: 0x131318,
+  brokenLines: 0x131318,
+
+  // 🔵 Updated: Cool blue neon shades
+  leftCars: [0x00b7ff, 0x0077ff, 0x00f2ff],
+
+  // You can keep rightCars or also update — here is a soft cyan/white mix
+  rightCars: [0xdffaff, 0xbbe4ff, 0x8ecfff],
+
+  sticks: 0x00f2ff // glowing blue sticks
+}
+
   }
 };

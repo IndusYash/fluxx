@@ -956,9 +956,9 @@ class App {
     container.appendChild(this.renderer.domElement);
 
     this.camera = new THREE.PerspectiveCamera(options.fov, container.offsetWidth / container.offsetHeight, 0.1, 10000);
-    this.camera.position.z = -5;
-    this.camera.position.y = 8;
-    this.camera.position.x = 0;
+    this.camera.position.z = -6;
+    this.camera.position.y = 6;
+    this.camera.position.x = 3;
 
     this.scene = new THREE.Scene();
     this.scene.background = null;
