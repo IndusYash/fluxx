@@ -22,7 +22,7 @@ export interface TeamPayload {
   member1: MemberPayload;
   member2: MemberPayload;
   member3: MemberPayload;
-  member4: MemberPayload;
+  member4?: MemberPayload;
 }
 
 export async function uploadFile(file: File, type: 'pdf' | 'image') {

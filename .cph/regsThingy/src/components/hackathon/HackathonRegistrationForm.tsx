@@ -25,8 +25,9 @@ const PROJECTS = [
   { id: '8', name: 'Cybersecurity Threat Detection' },
 ];
 
-const MIN_TEAM_SIZE = 2;
-const MAX_TEAM_SIZE = 5;
+// Total team size (including leader)
+const MIN_TEAM_SIZE = 4; // minimum total members including leader
+const MAX_TEAM_SIZE = 5; // maximum total members including leader
 
 const createEmptyMember = (): TeamMember => ({
   name: '',
@@ -35,6 +36,7 @@ const createEmptyMember = (): TeamMember => ({
   rollNumber: '',
   branch: '',
   year: '',
+  
 });
 
 interface FormErrors {
@@ -52,7 +54,9 @@ const HackathonRegistrationForm: React.FC = () => {
   const [pptFile, setPptFile] = useState<File | null>(null);
   const [teamPhoto, setTeamPhoto] = useState<File | null>(null);
   const [leader, setLeader] = useState<TeamMember>(createEmptyMember());
-  const [members, setMembers] = useState<TeamMember[]>([createEmptyMember()]);
+  // initialize with minimum required additional members (MIN_TEAM_SIZE - 1)
+  const initialMembers = Array.from({ length: Math.max(1, MIN_TEAM_SIZE - 1) }, () => createEmptyMember());
+  const [members, setMembers] = useState<TeamMember[]>(initialMembers);
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -86,7 +90,12 @@ const HackathonRegistrationForm: React.FC = () => {
   };
 
   const validatePhone = (phone: string) => {
-    return /^[\d\s+\-()]{10,}$/.test(phone);
+    // frontend-only: enforce exactly 10 digits (numbers only)
+    return /^\d{10}$/.test(phone);
+  };
+
+  const validateRoll = (roll: string) => {
+    return /^\d{10}$/.test(roll);
   };
 
   const validateLeader = (member: TeamMember): Partial<Record<keyof TeamMember, string>> => {
@@ -95,11 +104,13 @@ const HackathonRegistrationForm: React.FC = () => {
     if (!member.name?.trim()) memberErrors.name = 'Name is required';
     if (!member.email?.trim()) memberErrors.email = 'Email is required';
     else if (!validateEmail(member.email || '')) memberErrors.email = 'Invalid email format';
-    if (!member.phone?.trim()) memberErrors.phone = 'Phone is required';
-    else if (!validatePhone(member.phone || '')) memberErrors.phone = 'Invalid phone format';
-    if (!member.rollNumber?.trim()) memberErrors.rollNumber = 'Roll number is required';
+  if (!member.phone?.trim()) memberErrors.phone = 'Phone is required';
+  else if (!validatePhone(member.phone || '')) memberErrors.phone = 'Phone must be exactly 10 digits';
+  if (!member.rollNumber?.trim()) memberErrors.rollNumber = 'Roll number is required';
+  else if (!validateRoll(member.rollNumber || '')) memberErrors.rollNumber = 'Roll must be exactly 10 digits';
     if (!member.branch?.trim()) memberErrors.branch = 'Branch is required';
     if (!member.year?.trim()) memberErrors.year = 'Year is required';
+    
 
     return memberErrors;
   };
@@ -110,6 +121,7 @@ const HackathonRegistrationForm: React.FC = () => {
     if (!member.name?.trim()) memberErrors.name = 'Name is required';
     if (!member.branch?.trim()) memberErrors.branch = 'Branch is required';
     if (!member.year?.trim()) memberErrors.year = 'Year is required';
+    
 
     return memberErrors;
   };
@@ -122,11 +134,11 @@ const HackathonRegistrationForm: React.FC = () => {
     if (!pptFile) newErrors.pptFile = 'PPT file is required';
     if (!teamPhoto) newErrors.teamPhoto = 'Team photo is required';
 
-    // The backend expects leader + 4 members (member1..member4). Ensure exactly 4 members
-    if (members.length !== 4) {
-      // set a members error so hasErrors becomes true
-      newErrors.members = [{ name: 'Please provide exactly 4 additional members' } as any];
-      toast.error('Please provide exactly 4 additional members (total 5 including leader)');
+    // Enforce total team size between MIN_TEAM_SIZE and MAX_TEAM_SIZE (including leader)
+    const total = 1 + members.length;
+    if (total < MIN_TEAM_SIZE || total > MAX_TEAM_SIZE) {
+      newErrors.members = [{ name: `Team size must be between ${MIN_TEAM_SIZE} and ${MAX_TEAM_SIZE} (including leader)` } as any];
+      toast.error(`Team size must be between ${MIN_TEAM_SIZE} and ${MAX_TEAM_SIZE} (including leader)`);
     }
 
     const leaderErrors = validateLeader(leader);
@@ -136,6 +148,7 @@ const HackathonRegistrationForm: React.FC = () => {
     if (membersErrors.some((e) => Object.keys(e).length > 0)) {
       newErrors.members = membersErrors;
     }
+
 
     setErrors(newErrors);
 
@@ -202,20 +215,19 @@ const HackathonRegistrationForm: React.FC = () => {
         year: m.year || '',
       });
 
-      // members array should have exactly 4 elements
-      const [m1, m2, m3, m4] = members;
-
+      // Build payload depending on how many additional members were provided (3 or 4)
       const payload: TeamPayload = {
         teamName,
         projectName,
         pptLink: pptUrl,
         imageLink: photoUrl,
         leader: mapLeader(leader),
-        member1: mapMemberSmall(m1),
-        member2: mapMemberSmall(m2),
-        member3: mapMemberSmall(m3),
-        member4: mapMemberSmall(m4),
-      };
+        member1: mapMemberSmall(members[0]),
+        member2: mapMemberSmall(members[1]),
+        member3: mapMemberSmall(members[2]),
+        // include member4 only if present
+        ...(members[3] ? { member4: mapMemberSmall(members[3]) } : {}),
+      } as TeamPayload;
 
       await submitTeam(payload);
 
@@ -228,8 +240,8 @@ const HackathonRegistrationForm: React.FC = () => {
       setProjectId('');
       setPptFile(null);
       setTeamPhoto(null);
-      setLeader(createEmptyMember());
-      setMembers([createEmptyMember()]);
+  setLeader(createEmptyMember());
+  setMembers(initialMembers);
       setErrors({});
     } catch (error) {
       const msg = error?.message || 'Submission failed';
@@ -247,13 +259,17 @@ const HackathonRegistrationForm: React.FC = () => {
     if (!teamName.trim()) return false;
     if (!projectId) return false;
     if (!pptFile || !teamPhoto) return false;
-    if (members.length !== 4) return false;
+    // additional members must be between MIN_TEAM_SIZE-1 and MAX_TEAM_SIZE-1
+    if (members.length < MIN_TEAM_SIZE - 1 || members.length > MAX_TEAM_SIZE - 1) return false;
 
     // basic leader checks (don't show toasts here)
     if (!leader.name?.trim()) return false;
     if (!leader.email?.trim()) return false;
     if (!leader.phone?.trim()) return false;
-    if (!leader.rollNumber?.trim()) return false;
+  if (!leader.rollNumber?.trim()) return false;
+  // enforce frontend format requirements before enabling submit
+  if (!validatePhone(leader.phone || '')) return false;
+  if (!validateRoll(leader.rollNumber || '')) return false;
     if (!leader.branch?.trim()) return false;
     if (!leader.year?.trim()) return false;
 
@@ -263,6 +279,7 @@ const HackathonRegistrationForm: React.FC = () => {
       if (!m.branch?.trim()) return false;
       if (!m.year?.trim()) return false;
     }
+
 
     return true;
   };
@@ -288,6 +305,14 @@ const HackathonRegistrationForm: React.FC = () => {
           <p className="text-muted-foreground max-w-lg mx-auto">
             Register your team and showcase your innovative ideas. Fill in all details carefully.
           </p>
+          {/* <div className="text-sm text-foreground/80 max-w-lg mx-auto space-y-2">
+            <strong className="block text-foreground">IMPORTANT</strong>
+            <ul className="list-disc list-inside text-sm text-muted-foreground">
+              <li>Teams must have between {MIN_TEAM_SIZE} and {MAX_TEAM_SIZE} members (including the leader).</li>
+              <li>A Team must include at least one female member.</li>
+              <li>File limits: PPT (PDF) ≤ 2 MB; Team photo ≤ 1 MB.</li>
+            </ul>
+          </div> */}
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-8">
@@ -345,15 +370,17 @@ const HackathonRegistrationForm: React.FC = () => {
               onChange={setPptFile}
               error={errors.pptFile}
             />
+            <p className="text-xs text-muted-foreground mt-1">Max file size: 2 MB. Accepted format: PDF.</p>
 
             <FileUpload
               accept="image/*"
-              label="Team Photo"
+              label="Team Photo (make collage of all members)"
               type="image"
               value={teamPhoto}
               onChange={setTeamPhoto}
               error={errors.teamPhoto}
             />
+            <p className="text-xs text-muted-foreground mt-1">Max file size: 1 MB. Accepted formats: JPG, PNG, GIF, etc.</p>
           </section>
 
           {/* Team Leader Section */}

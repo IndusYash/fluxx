@@ -55,6 +55,8 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({
 
   const YEARS = ['1', '2', '3', '4'];
 
+  
+
   return (
     <div
       className={cn(
@@ -75,9 +77,9 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({
             <h3 className="font-semibold text-foreground">
               {isLeader ? 'Team Leader' : `Member ${index}`}
             </h3>
-            {isLeader && (
+            {/* {isLeader && (
               <span className="text-xs text-primary">Primary Contact</span>
-            )}
+            )} */}
           </div>
         </div>
         {onRemove && (
@@ -203,7 +205,6 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({
           // Member: empty to keep grid consistent
           <div />
         )}
-
         {isLeader ? (
           // Leader: Year
           <div className="space-y-2">
@@ -223,6 +224,8 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({
         ) : (
           <div />
         )}
+
+        
 
       </div>
 
