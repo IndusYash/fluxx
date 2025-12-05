@@ -34,6 +34,7 @@ const events: EventProps[] = [
     imageUrl: atalFdp,
     isUpcoming: true,
     location: 'MMMUT Gorakhpur (Online Mode)',
+    attendees: 300,
     category: 'Innovation',
     prize: '',
     featured: true,
@@ -374,23 +375,23 @@ const EventCard = ({ event, index, showRegister }: { event: EventProps; index: n
               </motion.h3>
 
               {/* Description (conditional) */}
-              {event.id === 1 ? (
-                 // HARDCODED HTML FOR FIRST CARD
-                 <div className="text-gray-300 text-base leading-relaxed">
-                   <p>
-                     An expert session on Advances in Defining and Modelling: a Reliable Framework for Responsible AI towards Sustainability 
-                     will be conducted by <span className="font-bold text-blue-300">Prof. Dr. Dimitrios A. Karras</span> (PhD, Electrical &amp; Computer Engineering). <span className="font-bold text-white-300">𝐀𝐥𝐥 𝐭𝐡𝐞 𝐩𝐚𝐫𝐭𝐢𝐜𝐢𝐩𝐚𝐧𝐭𝐬 𝐰𝐢𝐥𝐥 𝐫𝐞𝐜𝐞𝐢𝐯𝐞 𝐚 𝐂𝐞𝐫𝐭𝐢𝐟𝐢𝐜𝐚𝐭𝐞 𝐨𝐟 𝐏𝐚𝐫𝐭𝐢𝐜𝐢𝐩𝐚𝐭𝐢𝐨𝐧.
-                       </span>
-                   </p>
-                   <p className="mt-3"><span className="font-bold text-green-300">Designations:</span></p>
-                   <p><span className="font-bold">1. Professor, National and Kapodistrian University of Athens (NKUA), Greece</span></p>
-                   <p><span className="font-bold">2. Professor, EPOKA University, Computer Engineering Dept., Tirana, Albania</span></p>
-                 </div>
-               ) : (
-                 <div className="text-gray-300 text-base leading-relaxed whitespace-pre-line">
-                   {event.description}
-                 </div>
-               )}
+              {index === 1 ? (
+                // HARDCODED HTML FOR FIRST CARD
+                <div className="text-gray-300 text-base leading-relaxed">
+                  <p>
+                    An expert session on Advances in Defining and Modelling: a Reliable Framework for Responsible AI towards Sustainability 
+                    will be conducted by <span className="font-bold text-blue-300">Prof. Dr. Dimitrios A. Karras</span> (PhD, Electrical &amp; Computer Engineering). <span className="font-bold text-white-300">𝐀𝐥𝐥 𝐭𝐡𝐞 𝐩𝐚𝐫𝐭𝐢𝐜𝐢𝐩𝐚𝐧𝐭𝐬 𝐰𝐢𝐥𝐥 𝐫𝐞𝐜𝐞𝐢𝐯𝐞 𝐚 𝐂𝐞𝐫𝐭𝐢𝐟𝐢𝐜𝐚𝐭𝐞 𝐨𝐟 𝐏𝐚𝐫𝐭𝐢𝐜𝐢𝐩𝐚𝐭𝐢𝐨𝐧.
+                    </span>
+                  </p>
+                  <p className="mt-3"><span className="font-bold text-green-300">Designations:</span></p>
+                  <p><span className="font-bold">1. Professor, National and Kapodistrian University of Athens (NKUA), Greece</span></p>
+                  <p><span className="font-bold">2. Professor, EPOKA University, Computer Engineering Dept., Tirana, Albania</span></p>
+                </div>
+              ) : (
+                <div className="text-gray-300 text-base leading-relaxed whitespace-pre-line">
+                  {event.description}
+                </div>
+              )}
 
               {showRegister && (
                 <div className="pt-2">
