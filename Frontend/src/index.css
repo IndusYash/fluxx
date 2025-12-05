@@ -75,6 +75,24 @@ body {
     /* Shadows */
     --shadow-flux: 0 10px 30px -10px hsl(var(--flux-primary) / 0.3);
     --shadow-glow: 0 0 40px hsl(var(--flux-primary-glow) / 0.2);
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 10px rgba(0,255,198,0.3),
+      0 0 22px rgba(0,255,198,0.25);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 18px rgba(0,255,198,0.6),
+      0 0 35px rgba(0,255,198,0.5);
+    transform: scale(1.06);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 1.6s ease-in-out infinite;
+}
 
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

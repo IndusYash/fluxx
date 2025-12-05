@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
     { name: "Our Team", path: "/team" },
     { name: "Events", path: "/events" },
     { name: "Contact", path: "/contact" },
-    { name: "Ideathon", path: "/Ideathon" },
+    { name: "Ideathon", path: "/ideathon" },
   ];
 
   useEffect(() => {
@@ -148,18 +148,21 @@ const Navbar: React.FC = () => {
       </Link>
 
       {/* Active underline */}
-      {location.pathname === link.path && (
-        <motion.div
-          className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#00FFC6]"
-          layoutId="activeTab"
-          style={{ boxShadow: "0 0 6px rgba(0,255,198,0.6)" }}
-        />
-      )}
+      {location.pathname.toLowerCase() === link.path.toLowerCase() && (
+  <motion.div
+    layoutId="activeTab"
+    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#00FFC6]"
+    style={{ boxShadow: "0 0 6px rgba(0,255,198,0.6)" }}
+    transition={{
+      layout: { type: "spring", stiffness: 350, damping: 30 },
+      duration: 0.35
+    }}
+  />
+)}
+
     </motion.li>
   ))}
 </ul>
-
-
           {/* Social Icons (Desktop) */}
           <div className="hidden md:flex items-center gap-6">
             {[SiGmail, FaWhatsapp, FaInstagram, FaLinkedin].map((Icon, i) => (

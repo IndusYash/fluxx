@@ -41,7 +41,7 @@ export default function App() {
               <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
 
               {/* 🆕 IDEATHON */}
-              <Route path="/ideathon" element={<Ideathon />} />
+              <Route path="/ideathon" element={<Ideathon isMobile={isMobile}/>} />
             </Route>
           ) : (
             // Desktop Routes
@@ -55,7 +55,7 @@ export default function App() {
               <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
 
               {/* 🆕 IDEATHON */}
-              <Route path="/ideathon" element={<Ideathon />} />
+              <Route path="/ideathon" element={<Ideathon isMobile={isMobile}/>} />
             </Route>
           )}
         </Routes>

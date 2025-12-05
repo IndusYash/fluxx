@@ -164,6 +164,15 @@ export default function Hero() {
     }
   };
 
+  const handleEvent = () => {
+  if (isMobile) {
+    document.getElementById("ideathon")?.scrollIntoView({ behavior: "smooth" });
+  } else {
+    navigate("/ideathon");  // 🔥 redirect to Ideathon route
+  }
+};
+
+
   const handleEventsClick = () => {
     if (isMobile) {
       document.getElementById("events")?.scrollIntoView({ behavior: "smooth" });
@@ -381,7 +390,7 @@ export default function Hero() {
               </motion.div>
               */}
 
-              <motion.button
+              {/* <motion.button
                 onClick={handleExploreClick}
                 whileHover={{ scale: 1.03, y: -2 }}
                 whileTap={{ scale: 0.97 }}
@@ -389,9 +398,35 @@ export default function Hero() {
                 style={{ boxShadow: "0 0 15px rgba(16, 185, 129, 0.2)" }}
               >
                 🔥 Explore FLUX
-              </motion.button>
+              </motion.button> */}
+                  <motion.button
+  onClick={handleEvent}
+  initial={{ scale: 1 }}
+  animate={{ scale: [1, 1.04, 1] }}
+  transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+  whileHover={{ scale: 1.08, y: -2 }}
+  whileTap={{ scale: 0.94 }}
+  className="
+    w-full sm:w-auto                /* full width on mobile */
+    max-w-[280px] sm:max-w-none    /* avoid overflow */
+    text-sm sm:text-lg font-extrabold
+    tracking-wider
+    rounded-xl
+    border-2 border-[#6CFFF7]/40
+    bg-[#6CFFF7]/10 backdrop-blur-md
+    px-6 py-3 sm:px-10 sm:py-4
+    text-[#E5FFFB]
+    shadow-[0_0_12px_rgba(108,255,247,0.35)]
+    animate-pulse-glow
+  "
+  style={{ cursor: "pointer" }}
+>
+  🚀 Ideathon Registration
+</motion.button>
 
-              <motion.button
+
+
+              {/* <motion.button
                 onClick={handleEventsClick}
                 whileHover={{ scale: 1.03, y: -2 }}
                 whileTap={{ scale: 0.97 }}
@@ -399,7 +434,7 @@ export default function Hero() {
                 style={{ boxShadow: "0 0 15px rgba(16, 185, 129, 0.2)" }}
               >
                 ⚡ Upcoming Events
-              </motion.button>
+              </motion.button> */}
             </motion.div>
 
             <motion.div
