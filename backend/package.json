@@ -1,30 +1,25 @@
+
 {
-  "name": "flux-dbms-backend",
+  "name": "backend",
   "version": "1.0.0",
-  "description": "Simple Express + MongoDB backend to accept application form data",
-  "main": "index.js",
+  "type": "module",
+  "main": "brain.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "build": "echo 'No build step for backend'"
+    "start": "node brain.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
+  "engines": {
+    "node": "18.x"
+  },
   "dependencies": {
+    "@supabase/supabase-js": "^2.86.2",
+    "bcryptjs": "^3.0.2",
+    "cloudinary": "^2.8.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "firebase-admin": "^13.5.0",
-    "joi": "^17.9.2",
-    "mongoose": "^7.5.0",
-    "morgan": "^1.10.0",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
-  },
-  "devDependencies": {
-    "@types/react": "^19.1.12",
-    "@types/react-dom": "^19.1.9",
-    "nodemon": "^3.1.10"
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.19.0",
+    "multer": "^2.0.2",
+    "streamifier": "^0.1.1"
   }
 }
