@@ -11,7 +11,7 @@ import EventsPage from "@/pages/events/events";
 import ContactPage from "@/pages/contact/contact";
 import TeamPage from "@/pages/team/team";
 import FDPDetailsPage from "@/components/sections/events/UpcomingEvents/fdp";
-// import Application from "@/pages/induction/Application"; // if needed later
+import Ideathon from "@/pages/Ideathon/Ideathon"; // ✅ Correct import added
 
 import { Toaster } from "@/components/ui/toaster";
 
@@ -39,7 +39,9 @@ export default function App() {
               <Route path="/events/fdp" element={<FDPDetailsPage />} />
               <Route path="/team" element={<TeamPage isMobile={isMobile} />} />
               <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
-              {/* <Route path="/join" element={<Application isMobile={isMobile} />} /> */}
+
+              {/* 🆕 IDEATHON */}
+              <Route path="/ideathon" element={<Ideathon />} />
             </Route>
           ) : (
             // Desktop Routes
@@ -51,7 +53,9 @@ export default function App() {
               <Route path="/events/fdp" element={<FDPDetailsPage />} />
               <Route path="/team" element={<TeamPage isMobile={isMobile} />} />
               <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
-              {/* <Route path="/join" element={<Application isMobile={isMobile} />} /> */}
+
+              {/* 🆕 IDEATHON */}
+              <Route path="/ideathon" element={<Ideathon />} />
             </Route>
           )}
         </Routes>
