@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Calendar, MapPin, Users, ArrowRight, ArrowLeft, Award, BookOpen, Target, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import satvikImg from '@/assets/images/SatvikSir.jpg';
@@ -33,7 +33,7 @@ const FDPDetailsPage: React.FC = () => {
           transition={{
             duration: 4,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: 'easeInOut',
           }}
         />
         <motion.div
@@ -46,7 +46,7 @@ const FDPDetailsPage: React.FC = () => {
           transition={{
             duration: 4,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: 'easeInOut',
           }}
         />
         <motion.div
@@ -58,7 +58,7 @@ const FDPDetailsPage: React.FC = () => {
           transition={{
             duration: 8,
             repeat: Infinity,
-            ease: "linear"
+            ease: 'linear',
           }}
         />
       </div>
@@ -108,10 +108,7 @@ const FDPDetailsPage: React.FC = () => {
             whileHover={{ scale: 1.05, y: -5 }}
             whileTap={{ scale: 0.98 }}
           >
-            <motion.div
-              whileHover={{ rotate: 360 }}
-              transition={{ duration: 0.5 }}
-            >
+            <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.5 }}>
               <Calendar className="w-7 h-7 text-green-400 flex-shrink-0" />
             </motion.div>
             <div>
@@ -124,10 +121,7 @@ const FDPDetailsPage: React.FC = () => {
             whileHover={{ scale: 1.05, y: -5 }}
             whileTap={{ scale: 0.98 }}
           >
-            <motion.div
-              whileHover={{ rotate: 360 }}
-              transition={{ duration: 0.5 }}
-            >
+            <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.5 }}>
               <MapPin className="w-7 h-7 text-blue-400 flex-shrink-0" />
             </motion.div>
             <div>
@@ -140,10 +134,7 @@ const FDPDetailsPage: React.FC = () => {
             whileHover={{ scale: 1.05, y: -5 }}
             whileTap={{ scale: 0.98 }}
           >
-            <motion.div
-              whileHover={{ rotate: 360 }}
-              transition={{ duration: 0.5 }}
-            >
+            <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.5 }}>
               <Users className="w-7 h-7 text-purple-400 flex-shrink-0" />
             </motion.div>
             <div>
@@ -212,52 +203,12 @@ const FDPDetailsPage: React.FC = () => {
               About the Programme
             </h3>
             <p className="text-gray-300 leading-relaxed text-lg group-hover:text-gray-200 transition-colors">
-              AICTE Training and Learning (ATAL) Academy sponsored Faculty Development Programme 
-              organized by the Department of Computer Science & Engineering, MMMUT Gorakhpur. 
-              This program provides a comprehensive exploration of mechanistic interpretability, 
-              a key area of AI research dedicated to uncovering and understanding the underlying computational 
+              AICTE Training and Learning (ATAL) Academy sponsored Faculty Development Programme
+              organized by the Department of Computer Science & Engineering, MMMUT Gorakhpur.
+              This program provides a comprehensive exploration of mechanistic interpretability,
+              a key area of AI research dedicated to uncovering and understanding the underlying computational
               mechanisms and representations learned by neural networks.
             </p>
-          </motion.div>
-
-          {/* Organisers */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.65 }}
-            className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 rounded-2xl p-6 border border-indigo-500/20 hover:border-indigo-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-indigo-500/10 backdrop-blur-sm"
-          >
-            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-              <motion.span
-                className="w-1.5 h-8 bg-gradient-to-b from-indigo-400 to-purple-600 rounded-full"
-                whileHover={{ scaleY: 1.2 }}
-              ></motion.span>
-              Organisers
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {[
-                { img: satvikImg, name: 'Dr. Satvik Vats', title: 'Assistant Professor, CSED, MMMUT Gorakhpur' },
-                { img: shantanuImg, name: 'Dr. Shantanu Shahi', title: 'Assistant Professor, CSED, MMMUT Gorakhpur' }
-              ].map((organiser, index) => (
-                <motion.div
-                  key={index}
-                  className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-500/5 border border-indigo-500/20 hover:border-indigo-400/40 transition-all duration-300 group cursor-pointer"
-                  whileHover={{ scale: 1.03, x: 5 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.1, rotate: -5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <img src={organiser.img} alt={organiser.name} className="w-20 h-20 rounded-full object-cover border-2 border-indigo-500/30 shadow-lg shadow-indigo-500/20 group-hover:border-indigo-400/60" />
-                  </motion.div>
-                  <div>
-                    <p className="text-white font-bold text-lg mb-1 group-hover:text-indigo-300 transition-colors">{organiser.name}</p>
-                    <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">{organiser.title}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
           </motion.div>
 
           {/* Key Topics */}
@@ -283,7 +234,7 @@ const FDPDetailsPage: React.FC = () => {
                 'Bayesian and probabilistic approaches to interpreting neural models',
                 'Tools for identifying circuits and structures within large language models',
                 'Global and sparse explanations in interpretability',
-                'Ethics, explainability, and responsible AI governance'
+                'Ethics, explainability, and responsible AI governance',
               ].map((topic, index) => (
                 <motion.li
                   key={index}
@@ -295,7 +246,9 @@ const FDPDetailsPage: React.FC = () => {
                   <motion.span
                     className="text-blue-400 mt-1 text-xl font-bold"
                     animate={{ scale: hoveredCard === index ? 1.3 : 1 }}
-                  >•</motion.span>
+                  >
+                    •
+                  </motion.span>
                   <span className="group-hover:text-blue-200">{topic}</span>
                 </motion.li>
               ))}
@@ -320,9 +273,9 @@ const FDPDetailsPage: React.FC = () => {
               {[
                 'Gain mathematical clarity on core mechanistic interpretability concepts',
                 'Learn practical tools and methods to analyze neural networks at different levels',
-                'Understand interpretability\'s role in AI safety and value alignment',
+                "Understand interpretability's role in AI safety and value alignment",
                 'Explore emerging trends in interpretability for large models, RL, and vision',
-                'Recognize ethical and governance issues linked to interpretability'
+                'Recognize ethical and governance issues linked to interpretability',
               ].map((objective, index) => (
                 <motion.li
                   key={index}
@@ -336,7 +289,9 @@ const FDPDetailsPage: React.FC = () => {
                     className="text-purple-400 mt-1 text-xl font-bold"
                     whileHover={{ scale: 1.5, rotate: 360 }}
                     transition={{ duration: 0.3 }}
-                  >✓</motion.span>
+                  >
+                    ✓
+                  </motion.span>
                   <span className="group-hover:text-purple-200 text-base">{objective}</span>
                 </motion.li>
               ))}
@@ -359,11 +314,14 @@ const FDPDetailsPage: React.FC = () => {
             </h3>
             <ul className="space-y-3">
               {[
-                { text: 'Faculty members, research scholars, and PG scholars of AICTE-approved institutions', highlight: false },
+                {
+                  text: 'Faculty members, research scholars, and PG scholars of AICTE-approved institutions',
+                  highlight: false,
+                },
                 { text: 'Industry personnel are eligible to apply', highlight: false },
                 { text: 'NO CHARGE for registration, course, and certification', highlight: true },
                 { text: 'Certificates will be issued to participants registered on ATAL Portal', highlight: false },
-                { text: 'Selection is based on a first-come, first-served basis', highlight: false }
+                { text: 'Selection is based on a first-come, first-served basis', highlight: false },
               ].map((item, index) => (
                 <motion.li
                   key={index}
@@ -376,8 +334,16 @@ const FDPDetailsPage: React.FC = () => {
                   <motion.span
                     className="text-yellow-400 mt-1 text-xl font-bold"
                     whileHover={{ scale: 1.3, x: 5 }}
-                  >→</motion.span>
-                  <span className={`group-hover:text-yellow-100 text-base ${item.highlight ? 'font-bold text-yellow-300 bg-yellow-500/10 px-2 py-1 rounded' : ''}`}>
+                  >
+                    →
+                  </motion.span>
+                  <span
+                    className={`group-hover:text-yellow-100 text-base ${
+                      item.highlight
+                        ? 'font-bold text-yellow-300 bg-yellow-500/10 px-2 py-1 rounded'
+                        : ''
+                    }`}
+                  >
                     {item.text}
                   </span>
                 </motion.li>
@@ -385,7 +351,7 @@ const FDPDetailsPage: React.FC = () => {
             </ul>
           </motion.div>
 
-          {/* Coordinators */}
+          {/* Programme Coordinators (moved ABOVE) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -401,9 +367,27 @@ const FDPDetailsPage: React.FC = () => {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                { img: rakeshImg, role: 'Convener', name: 'Dr. Rakesh Kumar', title: 'Professor & HOD, CSE', email: 'rkcs@mmmut.ac.in' },
-                { img: satyaImg, role: 'Coordinator', name: 'Dr. Satya Prakash Yadav', title: 'Associate Professor, CSE', email: 'spycs@mmmut.ac.in' },
-                { img: shwetImg, role: 'Co-Coordinator', name: 'Dr. Shwet Ketu', title: 'Assistant Professor, CSE', email: 'skcse@mmmut.ac.in' }
+                {
+                  img: rakeshImg,
+                  role: 'Convener',
+                  name: 'Dr. Rakesh Kumar',
+                  title: 'Professor & HOD, CSE',
+                  email: 'rkcs@mmmut.ac.in',
+                },
+                {
+                  img: satyaImg,
+                  role: 'Coordinator',
+                  name: 'Dr. Satya Prakash Yadav',
+                  title: 'Associate Professor, CSE',
+                  email: 'spycs@mmmut.ac.in',
+                },
+                {
+                  img: shwetImg,
+                  role: 'Co-Coordinator',
+                  name: 'Dr. Shwet Ketu',
+                  title: 'Assistant Professor, CSE',
+                  email: 'skcse@mmmut.ac.in',
+                },
               ].map((coord, index) => (
                 <motion.div
                   key={index}
@@ -411,19 +395,77 @@ const FDPDetailsPage: React.FC = () => {
                   whileHover={{ scale: 1.05, y: -5 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <motion.div
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <img src={coord.img} alt={coord.name} className="w-24 h-24 rounded-full object-cover border-4 border-pink-500/30 mb-4 shadow-lg shadow-pink-500/20 group-hover:border-pink-400/60" />
+                  <motion.div whileHover={{ scale: 1.1, rotate: 5 }} transition={{ duration: 0.3 }}>
+                    <img
+                      src={coord.img}
+                      alt={coord.name}
+                      className="w-24 h-24 rounded-full object-cover border-4 border-pink-500/30 mb-4 shadow-lg shadow-pink-500/20 group-hover:border-pink-400/60"
+                    />
                   </motion.div>
-                  <p className="text-pink-400 font-bold mb-2 text-sm uppercase tracking-wider">{coord.role}</p>
+                  <p className="text-pink-400 font-bold mb-2 text-sm uppercase tracking-wider">
+                    {coord.role}
+                  </p>
                   <p className="text-white font-bold text-lg mb-1">{coord.name}</p>
                   <p className="text-sm text-gray-400 mb-2">{coord.title}</p>
                   <motion.p
                     className="text-xs text-pink-300/70 hover:text-pink-300 transition-colors px-3 py-1 bg-pink-500/10 rounded-full"
                     whileHover={{ scale: 1.05 }}
-                  >{coord.email}</motion.p>
+                  >
+                    {coord.email}
+                  </motion.p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Organisers (now BELOW) */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 rounded-2xl p-6 border border-indigo-500/20 hover:border-indigo-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-indigo-500/10 backdrop-blur-sm"
+          >
+            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+              <motion.span
+                className="w-1.5 h-8 bg-gradient-to-b from-indigo-400 to-purple-600 rounded-full"
+                whileHover={{ scaleY: 1.2 }}
+              ></motion.span>
+              Organisers
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {[
+                {
+                  img: satvikImg,
+                  name: 'Dr. Satvik Vats',
+                  title: 'Assistant Professor, CSED, MMMUT Gorakhpur',
+                },
+                {
+                  img: shantanuImg,
+                  name: 'Dr. Shantanu Shahi',
+                  title: 'Assistant Professor, CSED, MMMUT Gorakhpur',
+                },
+              ].map((organiser, index) => (
+                <motion.div
+                  key={index}
+                  className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-500/5 border border-indigo-500/20 hover:border-indigo-400/40 transition-all duration-300 group cursor-pointer"
+                  whileHover={{ scale: 1.03, x: 5 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div whileHover={{ scale: 1.1, rotate: -5 }} transition={{ duration: 0.3 }}>
+                    <img
+                      src={organiser.img}
+                      alt={organiser.name}
+                      className="w-20 h-20 rounded-full object-cover border-2 border-indigo-500/30 shadow-lg shadow-indigo-500/20 group-hover:border-indigo-400/60"
+                    />
+                  </motion.div>
+                  <div>
+                    <p className="text-white font-bold text-lg mb-1 group-hover:text-indigo-300 transition-colors">
+                      {organiser.name}
+                    </p>
+                    <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
+                      {organiser.title}
+                    </p>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -433,13 +475,10 @@ const FDPDetailsPage: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
+            transition={{ delay: 0.8 }}
             className="flex justify-center pt-8 pb-12"
           >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <a
                 href="https://atalacademy.aicte.gov.in/signup"
                 target="_blank"
@@ -454,12 +493,12 @@ const FDPDetailsPage: React.FC = () => {
                   transition={{
                     duration: 2,
                     repeat: Infinity,
-                    ease: "linear"
+                    ease: 'linear',
                   }}
                 />
                 <motion.span
                   animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
                 >
                   <Sparkles className="w-6 h-6" />
                 </motion.span>
