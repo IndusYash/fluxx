@@ -3,6 +3,7 @@ import React from 'react';
 
 const ModernCountdownTimer = ({ timeLeft }) => {
   const countdownDisplay = useMemo(() => ({
+    days: String(timeLeft.days).padStart(2, '0'),
     hours: String(timeLeft.hours).padStart(2, '0'),
     minutes: String(timeLeft.minutes).padStart(2, '0'),
     seconds: String(timeLeft.seconds).padStart(2, '0')
@@ -130,6 +131,13 @@ const ModernCountdownTimer = ({ timeLeft }) => {
         <div className="countdown-label-text font-extrabold">Going Live In</div>
         
         <div className="countdown-units">
+          <div className="countdown-box">
+            <div className="countdown-number">{countdownDisplay.days}</div>
+            <div className="countdown-unit-label">Days</div>
+          </div>
+
+          <div className="countdown-separator">:</div>
+
           <div className="countdown-box">
             <div className="countdown-number">{countdownDisplay.hours}</div>
             <div className="countdown-unit-label">Hours</div>
