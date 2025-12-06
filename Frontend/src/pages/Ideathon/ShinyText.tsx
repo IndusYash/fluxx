@@ -8,6 +8,8 @@ interface ShinyTextProps {
   style?: React.CSSProperties; // <-- ADD THIS
 }
 
+
+
 const ShinyText: React.FC<ShinyTextProps> = ({
   text,
   disabled = false,

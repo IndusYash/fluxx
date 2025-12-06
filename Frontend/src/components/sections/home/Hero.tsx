@@ -144,13 +144,14 @@ export default function Hero() {
     }
   }, []);
 
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const updateMobile = () => setIsMobile(window.innerWidth < 768);
-    updateMobile();
-    window.addEventListener("resize", updateMobile);
-    return () => window.removeEventListener("resize", updateMobile);
-  }, []);
+  // Location: Lines ~147-153
+const [isMobile, setIsMobile] = useState(false);
+useEffect(() => {
+  const updateMobile = () => setIsMobile(window.innerWidth < 768);
+  updateMobile();
+  window.addEventListener("resize", updateMobile);
+  return () => window.removeEventListener("resize", updateMobile);
+}, []);
 
   const handleJoinClick = () => {
     navigate("/events");
@@ -164,13 +165,10 @@ export default function Hero() {
     }
   };
 
-  const handleEvent = () => {
-  if (isMobile) {
-    document.getElementById("ideathon")?.scrollIntoView({ behavior: "smooth" });
-  } else {
-    navigate("/ideathon");  // 🔥 redirect to Ideathon route
-  }
+ const handleEvent = () => {
+  navigate("/ideathon"); // 🔥 same behavior for mobile & desktop
 };
+
 
 
   const handleEventsClick = () => {
@@ -402,27 +400,26 @@ export default function Hero() {
                   <motion.button
   onClick={handleEvent}
   initial={{ scale: 1 }}
-  animate={{ scale: [1, 1.04, 1] }}
+  animate={{ scale: [1, 1.04, 1] }} 
   transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-  whileHover={{ scale: 1.08, y: -2 }}
-  whileTap={{ scale: 0.94 }}
-  className="
-    w-full sm:w-auto                /* full width on mobile */
-    max-w-[280px] sm:max-w-none    /* avoid overflow */
-    text-sm sm:text-lg font-extrabold
-    tracking-wider
-    rounded-xl
-    border-2 border-[#6CFFF7]/40
-    bg-[#6CFFF7]/10 backdrop-blur-md
-    px-6 py-3 sm:px-10 sm:py-4
-    text-[#E5FFFB]
-    shadow-[0_0_12px_rgba(108,255,247,0.35)]
-    animate-pulse-glow
-  "
-  style={{ cursor: "pointer" }}
+  whileHover={{ scale: 1.14, y: -3 }}
+  whileTap={{ scale: 0.95 }}
+  className="rounded-xl border-2 bg-transparent backdrop-blur-md font-extrabold tracking-wider pointer-events-auto"
+  style={{
+    minWidth: "320px",
+    padding: "1.2rem 2rem",
+    fontSize: "1.25rem",
+    color: "#E5FFFB",
+    borderColor: "rgba(108, 255, 247, 0.45)",
+    cursor: "pointer",
+    boxShadow:
+      "0 0 10px rgba(108,255,247,0.45)," +
+      "0 0 28px rgba(108,255,247,0.35)",
+  }}
 >
   🚀 Ideathon Registration
 </motion.button>
+
 
 
 

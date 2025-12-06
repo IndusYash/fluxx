@@ -116,13 +116,13 @@ const ModernCountdownTimer = ({ timeLeft }) => {
   }
 
   @media (max-width: 768px) {
-    .countdown-units {
-      gap: 0.5rem;
-    }
-    .countdown-box {
-      padding: 0.6rem 0.9rem;
-    }
+  .countdown-units {
+    gap: 0.5rem;
   }
+  .countdown-box {
+    padding: 0.6rem 0.9rem; /* Not too big on small phones */
+  }
+}
 `}</style>
 
 

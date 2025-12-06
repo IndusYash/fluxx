@@ -1,0 +1,46 @@
+/* Base breakpoint already working */
+@media (max-width: 480px) {
+  .overlay-container {
+    top: 48% !important;
+  }
+}
+
+/* Smaller phones like iPhone SE, 410px */
+@media (max-width: 410px) {
+  .overlay-container {
+    top: 46% !important;
+  }
+
+  .overlay-container .ideathon-title {
+    font-size: clamp(1.9rem, 7vw, 3.6rem) !important;
+    letter-spacing: 0.08em !important;
+  }
+}
+
+/* Very small phones like Redmi 6A ~360px */
+@media (max-width: 360px) {
+  .overlay-container {
+    top: 44% !important;
+  }
+
+  .overlay-container .ideathon-title {
+    font-size: clamp(1.7rem, 6vw, 3.2rem) !important;
+  }
+}
+
+/* Tiny screens <330px */
+@media (max-width: 330px) {
+  .overlay-container {
+    top: 42% !important;
+  }
+
+  .overlay-container .ideathon-title {
+    font-size: clamp(1.4rem, 5vw, 2.8rem) !important;
+  }
+}
+@media (max-width: 768px) {
+  .hyperspeed-bg {
+    width: 220vw !important;
+    height: 160vh !important;
+  }
+}
