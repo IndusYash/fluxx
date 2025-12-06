@@ -16,3 +16,11 @@
 .nav-link:hover {
   text-shadow: 0px 0px 8px rgba(16, 185, 129, 0.6);
 }
+/* 🔥 Mobile menu active highlight */
+.mobile-nav-item.active {
+  color: #10b981; /* text-primary green */
+  font-weight: 700;
+  text-shadow: 0px 0px 8px rgba(16, 185, 129, 0.7);
+  transform: scale(1.05);
+  transition: all 0.25s ease-in-out;
+}

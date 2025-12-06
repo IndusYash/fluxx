@@ -397,28 +397,38 @@ useEffect(() => {
               >
                 🔥 Explore FLUX
               </motion.button> */}
-                  <motion.button
-  onClick={handleEvent}
-  initial={{ scale: 1 }}
-  animate={{ scale: [1, 1.04, 1] }} 
-  transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-  whileHover={{ scale: 1.14, y: -3 }}
-  whileTap={{ scale: 0.95 }}
-  className="rounded-xl border-2 bg-transparent backdrop-blur-md font-extrabold tracking-wider pointer-events-auto"
+              <div
   style={{
-    minWidth: "320px",
-    padding: "1.2rem 2rem",
-    fontSize: "1.25rem",
-    color: "#E5FFFB",
-    borderColor: "rgba(108, 255, 247, 0.45)",
-    cursor: "pointer",
-    boxShadow:
-      "0 0 10px rgba(108,255,247,0.45)," +
-      "0 0 28px rgba(108,255,247,0.35)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
   }}
 >
-  🚀 Ideathon Registration
-</motion.button>
+  <motion.button
+    onClick={handleEvent}
+    initial={{ scale: 1 }}
+    animate={{ scale: [1, 1.04, 1] }}
+    transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+    whileHover={{ scale: 1.14, y: -3 }}
+    whileTap={{ scale: 0.95 }}
+    className="rounded-xl border-2 bg-transparent backdrop-blur-md font-extrabold tracking-wider pointer-events-auto"
+    style={{
+    width: "clamp(240px, 80vw, 340px)",
+      padding: "1.2rem 2rem",
+      fontSize: "1.25rem",
+      color: "#E5FFFB",
+      borderColor: "rgba(108, 255, 247, 0.45)",
+      cursor: "pointer",
+      boxShadow:
+        "0 0 10px rgba(108,255,247,0.45)," +
+        "0 0 28px rgba(108,255,247,0.35)",
+    }}
+  >
+    🚀 Ideathon Registration
+  </motion.button>
+</div>
+
 
 
 
