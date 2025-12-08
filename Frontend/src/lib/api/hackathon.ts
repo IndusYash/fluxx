@@ -11,6 +11,7 @@ export interface MemberPayload {
   name: string;
   branch: string;
   year: string;
+  roll: string;
 }
 
 export interface TeamPayload {
@@ -65,12 +66,12 @@ export async function submitTeam(team: TeamPayload) {
   return payload;
 }
 
-export async function checkTeamExists(teamName?: string, leaderRoll?: string,leaderPhone?: string,leaderEmail?: string) {
+export async function checkTeamExists(teamName?: string, leaderRoll?: string,leaderPhone?: string,leaderEmail?: string,rolls?: string[]) {
   const BASE = (import.meta as any).env?.VITE_REG_API_URL || '/';
   const res = await fetch(`${BASE}/api/ideathonTeam/check`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ teamName, leaderRoll,leaderPhone,leaderEmail }),
+    body: JSON.stringify({ teamName, leaderRoll,leaderPhone,leaderEmail,rolls }),
   });
 
   const payload = await res.json().catch(() => ({}));

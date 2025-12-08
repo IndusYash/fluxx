@@ -137,6 +137,20 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({
           </div>
         )}
 
+        {/* Member: Roll Number (for non-leaders) - span full width to keep layout tidy */}
+        {!isLeader && (
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">Roll Number</label>
+            <Input
+              placeholder="Enter roll number"
+              value={member.rollNumber || ''}
+              onChange={(e) => handleChange('rollNumber', e.target.value)}
+              className={errors.rollNumber ? 'border-destructive' : ''}
+            />
+            {errors.rollNumber && <p className="text-xs text-destructive">{errors.rollNumber}</p>}
+          </div>
+        )}
+
         {isLeader ? (
           // Leader: Phone
           <div className="space-y-2">

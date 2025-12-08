@@ -162,6 +162,10 @@ const HackathonRegistrationForm: React.FC = () => {
     if (!member.name?.trim()) memberErrors.name = "Name is required";
     if (!member.branch?.trim()) memberErrors.branch = "Branch is required";
     if (!member.year?.trim()) memberErrors.year = "Year is required";
+    if (!member.rollNumber?.trim())
+      memberErrors.rollNumber = "Roll number is required";
+    else if (!validateRoll(member.rollNumber || ""))
+      memberErrors.rollNumber = "Roll must be exactly 10 digits";
 
     return memberErrors;
   };
@@ -231,17 +235,20 @@ const HackathonRegistrationForm: React.FC = () => {
       const leaderRoll = leader.rollNumber || "";
       const leaderPhone = leader.phone || "";
       const leaderEmail = leader.email || "";
+      const allRolls = [leader.rollNumber, ...members.map((m) => m.rollNumber)];
       const check = await checkTeamExists(
         teamName,
         leaderRoll,
         leaderPhone,
-        leaderEmail
+        leaderEmail,
+        allRolls
       );
       if (check.exists) {
-        const which = check.field || "team";
-        throw new Error(
-          `A record already exists for ${which}. Please change the ${which} and try again.`
-        );
+        let which = check.field || "team";
+        if (which === "roll") {
+          which = "a team member's roll number";
+        }
+        throw new Error(`A record already exists for ${which}.`);
         // throw new Error(
         //   `A record already exists for ${which}. Please change the ${which} and try again.`
         // );
@@ -275,6 +282,7 @@ const HackathonRegistrationForm: React.FC = () => {
         name: m.name,
         branch: m.branch || "",
         year: m.year || "",
+        roll: m.rollNumber || "",
       });
 
       // Build payload depending on how many additional members were provided (3 or 4)
@@ -349,6 +357,19 @@ const HackathonRegistrationForm: React.FC = () => {
       if (!m.name?.trim()) return false;
       if (!m.branch?.trim()) return false;
       if (!m.year?.trim()) return false;
+    }
+    // check duplicate rolls inside team
+    const allRolls = [leader.rollNumber, ...members.map((m) => m.rollNumber)];
+    const normalized = allRolls.map((r) =>
+      String(r || "")
+        .trim()
+        .toLowerCase()
+    );
+    const set = new Set();
+
+    for (const r of normalized) {
+      if (set.has(r)) return false; // ❌ duplicate → disable button
+      set.add(r);
     }
 
     return true;
