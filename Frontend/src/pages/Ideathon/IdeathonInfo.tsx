@@ -77,7 +77,7 @@ const IdeathonInfo: React.FC = () => {
                     variants={itemVariants}
                     className="text-center mb-12"
                 >
-                    <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight drop-shadow-lg mb-2">
+                    <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight drop-shadow-lg mb-2 py-12">
                         <span className="text-primary">IDEATHON : </span>KEY HIGHLIGHT</h2>
 
 

@@ -430,9 +430,6 @@ useEffect(() => {
 </div>
 
 
-
-
-
               {/* <motion.button
                 onClick={handleEventsClick}
                 whileHover={{ scale: 1.03, y: -2 }}

@@ -385,6 +385,16 @@ const EventCard = ({ event, index, showRegister }: { event: EventProps; index: n
                   {event.description}
                 </div>
               )}
+              {/* View Detail button for Ideathon */}
+              {event.title?.toLowerCase().includes('ideathon') && (
+                <button
+                  onClick={() => navigate('/ideathon')}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-full font-semibold shadow-lg mt-2"
+                >
+                  View Detail
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              )}
 
               {showRegister && (
                 <div className="pt-2">
