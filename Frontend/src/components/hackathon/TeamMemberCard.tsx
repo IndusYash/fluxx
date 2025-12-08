@@ -42,15 +42,15 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({
 
   const BRANCHES = [
     'CSE',
-    'ECE',
-    'ME',
-    'CE',
-    'EE',
     'IT',
     'IOT',
-    'CHe',
+    'ECE',
+    'EE',
+    'ME',
+    'CE',
+    'ChE',
+    'BBA',
     'BPharma',
-    'Other',
   ];
 
   const YEARS = ['1', '2', '3', '4'];
