@@ -2,6 +2,7 @@ import React from "react";
 import { Calendar, Globe, Trophy, BadgeCheck, Users, FileText } from "lucide-react";
 import { motion, Variants } from "framer-motion";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -62,6 +63,7 @@ const guidelines = [
 ];
 
 const IdeathonInfo: React.FC = () => {
+    const navigate = useNavigate();
     const [tooltip, setTooltip] = useState<string | null>(null);
     const [tooltipPos, setTooltipPos] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
 
@@ -239,7 +241,8 @@ const IdeathonInfo: React.FC = () => {
                                     <button
                                         className="register-now-btn"
                                         onClick={() => {
-                                            window.open("#", "_blank");
+                                            navigate('/ideathon/register');
+                                            // navigate('/');
                                         }}
                                     >
                                         Register Now
