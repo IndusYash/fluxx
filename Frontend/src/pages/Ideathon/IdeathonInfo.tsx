@@ -241,8 +241,8 @@ const IdeathonInfo: React.FC = () => {
                                     <button
                                         className="register-now-btn"
                                         onClick={() => {
-                                            // navigate('/ideathon/register');
-                                            navigate('/');
+                                            navigate('/ideathon/register');
+                                            // navigate('/');
                                         }}
                                     >
                                         Register Now

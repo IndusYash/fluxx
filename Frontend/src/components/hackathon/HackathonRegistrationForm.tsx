@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Plus, Rocket, Users, Sparkles ,Info, FileText, ExternalLink} from "lucide-react";
+import {
+  Plus,
+  Rocket,
+  Users,
+  Sparkles,
+  Info,
+  FileText,
+  ExternalLink,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -18,6 +26,7 @@ import {
   TeamPayload,
   checkTeamExists,
 } from "../../lib/api/hackathon";
+import projectsJson from "../../projects.json";
 
 // const PROJECTS = [
 //   { id: "1", name: "AI-Powered Healthcare Assistant" },
@@ -74,32 +83,33 @@ const HackathonRegistrationForm: React.FC = () => {
     "All" | "Simple" | "Medium" | "Moderate" | "Advanced"
   >("All");
   useEffect(() => {
-    const url = `${(import.meta as any).env?.BASE_URL || import.meta.env.BASE_URL || 'https://hackathonorg.onrender.com'}projects.json`;
-    fetch(url)
-      .then((res) => {
-        if (!res.ok) throw new Error('network');
-        return res.json();
-      })
-      .then((data) => setProjects(data))
-      .catch(() => toast({ title: 'Failed to load project list', variant: 'destructive',className: "bg-[#0f1117]" }));
+    setProjects(projectsJson);
   }, []);
 
   const addMember = () => {
     if (members.length < MAX_TEAM_SIZE - 1) {
-  setMembers([...members, createEmptyMember()]);
-  toast({ title: 'Team member added' });
+      setMembers([...members, createEmptyMember()]);
+      toast({ title: "Team member added" });
     } else {
-      toast({ title: `Maximum ${MAX_TEAM_SIZE} members allowed (including leader)`, variant: 'destructive',className: "bg-[#0f1117]" });
+      toast({
+        title: `Maximum ${MAX_TEAM_SIZE} members allowed (including leader)`,
+        variant: "destructive",
+        className: "bg-[#0f1117]",
+      });
     }
   };
 
   const removeMember = (index: number) => {
     if (members.length > MIN_TEAM_SIZE - 1) {
       const newMembers = members.filter((_, i) => i !== index);
-  setMembers(newMembers);
-  toast({ title: 'Team member removed' });
+      setMembers(newMembers);
+      toast({ title: "Team member removed" });
     } else {
-      toast({ title: `Minimum ${MIN_TEAM_SIZE} members required (including leader)`, variant: 'destructive',className: "bg-[#0f1117]" });
+      toast({
+        title: `Minimum ${MIN_TEAM_SIZE} members required (including leader)`,
+        variant: "destructive",
+        className: "bg-[#0f1117]",
+      });
     }
   };
 
@@ -172,7 +182,11 @@ const HackathonRegistrationForm: React.FC = () => {
           name: `Team size must be between ${MIN_TEAM_SIZE} and ${MAX_TEAM_SIZE} (including leader)`,
         } as any,
       ];
-      toast({ title: `Team size must be between ${MIN_TEAM_SIZE} and ${MAX_TEAM_SIZE} (including leader)`, variant: 'destructive',className: "bg-[#0f1117]" });
+      toast({
+        title: `Team size must be between ${MIN_TEAM_SIZE} and ${MAX_TEAM_SIZE} (including leader)`,
+        variant: "destructive",
+        className: "bg-[#0f1117]",
+      });
     }
 
     const leaderErrors = validateLeader(leader);
@@ -194,7 +208,11 @@ const HackathonRegistrationForm: React.FC = () => {
       newErrors.members?.some((e) => Object.keys(e).length > 0);
 
     if (hasErrors) {
-      toast({ title: 'Please fix all errors before submitting', variant: 'destructive',className: "bg-[#0f1117]" });
+      toast({
+        title: "Please fix all errors before submitting",
+        variant: "destructive",
+        className: "bg-[#0f1117]",
+      });
     }
 
     return !hasErrors;
@@ -213,7 +231,12 @@ const HackathonRegistrationForm: React.FC = () => {
       const leaderRoll = leader.rollNumber || "";
       const leaderPhone = leader.phone || "";
       const leaderEmail = leader.email || "";
-      const check = await checkTeamExists(teamName, leaderRoll,leaderPhone,leaderEmail);
+      const check = await checkTeamExists(
+        teamName,
+        leaderRoll,
+        leaderPhone,
+        leaderEmail
+      );
       if (check.exists) {
         const which = check.field || "team";
         throw new Error(
@@ -270,7 +293,11 @@ const HackathonRegistrationForm: React.FC = () => {
 
       await submitTeam(payload);
 
-      toast({ title: 'Registration submitted successfully!', description: 'Your team has been registered for the hackathon.',className: "bg-[#0f1117]" });
+      toast({
+        title: "Registration submitted successfully!",
+        description: "Your team has been registered for the hackathon.",
+        className: "bg-[#0f1117]",
+      });
 
       // Reset form after successful submission
       setTeamName("");
@@ -282,7 +309,12 @@ const HackathonRegistrationForm: React.FC = () => {
       setErrors({});
     } catch (error) {
       const msg = error?.message || "Submission failed";
-      toast({ title: msg, description: 'Please try again later.', variant: 'destructive',className: "bg-[#0f1117]" });
+      toast({
+        title: msg,
+        description: "Please try again later.",
+        variant: "destructive",
+        className: "bg-[#0f1117]",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -402,8 +434,10 @@ const HackathonRegistrationForm: React.FC = () => {
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium text-foreground">Select Project</label>
-                  
+                  <label className="text-sm font-medium text-foreground">
+                    Select Project
+                  </label>
+
                   <Button
                     type="button"
                     variant="ghost"
@@ -415,11 +449,11 @@ const HackathonRegistrationForm: React.FC = () => {
                   </Button>
                 </div>
 
-                <Select value={projectId} onValueChange={setProjectId} >
+                <Select value={projectId} onValueChange={setProjectId}>
                   <SelectTrigger
                     className={errors.projectId ? "border-destructive" : ""}
                   >
-                    <SelectValue placeholder="Choose a project"  />
+                    <SelectValue placeholder="Choose a project" />
                   </SelectTrigger>
                   <SelectContent className="bg-[#0f1117] text-white">
                     {projects.map((p) => (
@@ -591,7 +625,10 @@ const HackathonRegistrationForm: React.FC = () => {
                     onClick={() => {
                       setProjectId(p.id.toString());
                       setShowProjectDetails(false);
-                      toast({ title: `Selected: ${p.name}`,className: "bg-[#0f1117]" });
+                      toast({
+                        title: `Selected: ${p.name}`,
+                        className: "bg-[#0f1117]",
+                      });
                     }}
                   >
                     <h3 className="font-semibold">{p.name}</h3>
