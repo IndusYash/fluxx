@@ -40,6 +40,14 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({
     onChange({ ...member, [field]: value ?? '' });
   };
 
+  // live validation: show immediate feedback while typing
+  const phoneValue = member.phone || '';
+  const phoneDigits = phoneValue.replace(/\D/g, '');
+  const livePhoneError = phoneValue && phoneDigits.length !== 10 ? 'Phone must be exactly 10 digits' : undefined;
+
+  const rollValue = member.rollNumber || '';
+  const rollDigits = rollValue.replace(/\D/g, '');
+  const liveRollError = rollValue && rollDigits.length !== 10 ? 'Roll must be exactly 10 digits' : undefined;
   const BRANCHES = [
     'CSE',
     'IT',
@@ -147,7 +155,7 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({
               onChange={(e) => handleChange('rollNumber', e.target.value)}
               className={errors.rollNumber ? 'border-destructive' : ''}
             />
-            {errors.rollNumber && <p className="text-xs text-destructive">{errors.rollNumber}</p>}
+            {(errors.rollNumber || liveRollError) && <p className="text-xs text-destructive">{errors.rollNumber || liveRollError}</p>}
           </div>
         )}
 
@@ -162,7 +170,7 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({
               onChange={(e) => handleChange('phone', e.target.value)}
               className={errors.phone ? 'border-destructive' : ''}
             />
-            {errors.phone && <p className="text-xs text-destructive">{errors.phone}</p>}
+            {(errors.phone || livePhoneError) && <p className="text-xs text-destructive">{errors.phone || livePhoneError}</p>}
           </div>
         ) : (
           // Member: Year (select)
@@ -192,7 +200,7 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({
               onChange={(e) => handleChange('rollNumber', e.target.value)}
               className={errors.rollNumber ? 'border-destructive' : ''}
             />
-            {errors.rollNumber && <p className="text-xs text-destructive">{errors.rollNumber}</p>}
+            {(errors.rollNumber || liveRollError) && <p className="text-xs text-destructive">{errors.rollNumber || liveRollError}</p>}
           </div>
         ) : (
           // Member: (empty cell to keep grid alignment) -> show nothing in second column row 2? We'll show Branch already, so put an empty div

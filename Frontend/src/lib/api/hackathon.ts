@@ -19,6 +19,8 @@ export interface TeamPayload {
   projectName: string;
   pptLink: string;
   imageLink: string;
+  // ordered mentor preference names
+  mentors?: string[];
   leader: LeaderPayload;
   member1: MemberPayload;
   member2: MemberPayload;
