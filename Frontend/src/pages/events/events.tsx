@@ -45,7 +45,7 @@ const EventsPage: React.FC = () => {
       id: 3,
       name: "Ideathon 2025",
       imageUrl: hackathon,
-      date: "December XX, 2025",
+      date: "December 10-19, 2025",
       icon: "WEEK TWO",
       phase: "Upcoming: HACKATHON",
       description: "Ideathon, our flagship hackathon, brought together passionate innovators and problem-solvers to design real-world tech solutions through creativity, teamwork, and cutting-edge ideas.",
