@@ -12,25 +12,23 @@ const HeroSection = () => {
         overflow: "hidden",
         margin: 0,
         padding: 0,
+        zIndex: 0,
       }}
     >
-      <div
-        className="hyperspeed-bg"
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
+     <div
+  className="hyperspeed-bg"
+  style={{
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    overflow: "hidden",
+    pointerEvents: "none",
+  }}
+>
 
-          // Base oversize (desktop)
-          width: "160vw",
-          height: "140vh",
 
-          pointerEvents: "none",
-          zIndex: 1,
-          backfaceVisibility: "hidden",
-        }}
-      >
         <Hyperspeed effectOptions={hyperspeedPresets.six} />
       </div>
     </section>

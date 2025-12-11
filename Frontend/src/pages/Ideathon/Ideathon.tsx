@@ -48,30 +48,33 @@ const Ideathon = () => {
       width: "100%",
       minHeight: "100vh",   // 👈 allow page to grow
       overflow: "hidden",
+      zIndex: 1,
     }}
   >
     <MemoizedHeroSection />
 
     {/* Overlay */}
-    <div
-      ref={containerRef}
-      style={{
-        position: "absolute",
-        top: "55%",   // slight adjustment
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        textAlign: "center",
-        display: "flex",
-        flexDirection: "column",
-        gap: "1.5rem",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 50,
-        pointerEvents: "auto",
-        width: "100%",
-        paddingInline: "1rem",
-      }}
-    >
+   <div
+  ref={containerRef}
+  style={{
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "1.5rem",
+    textAlign: "center",
+    zIndex: 50,
+    pointerEvents: "auto",
+    paddingInline: "1rem",
+    paddingTop: "5rem", // ensures content never hides under navbar
+  }}
+>
+
       {/* Title */}
       <div style={{ width: "100%", maxWidth: "800px" }}>
         <ShinyText

@@ -68,7 +68,7 @@ export default function MobileNavbar() {
   return (
     <>
       {/* Top Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-[60] bg-card/80 backdrop-blur border-b border-border">
+          <nav className="fixed top-0 left-0 right-0 z-[9999] bg-card/80 backdrop-blur border-b border-border">
         <div className="flex items-center justify-between h-16 px-4">
           <img
             src={logo}
