@@ -12,6 +12,7 @@ import ContactPage from "@/pages/contact/contact";
 import TeamPage from "@/pages/team/team";
 import FDPDetailsPage from "@/components/sections/events/UpcomingEvents/fdp";
 import Ideathon from "@/pages/Ideathon/Ideathon"; // ✅ Correct import added
+import IdeathonRegister from "@/pages/Ideathon/Register";
 
 import { Toaster } from "@/components/ui/toaster";
 
@@ -42,6 +43,7 @@ export default function App() {
 
               {/* 🆕 IDEATHON */}
               <Route path="/ideathon" element={<Ideathon isMobile={isMobile}/>} />
+              <Route path="/ideathon/register" element={<IdeathonRegister />} />
             </Route>
           ) : (
             // Desktop Routes
@@ -56,6 +58,7 @@ export default function App() {
 
               {/* 🆕 IDEATHON */}
               <Route path="/ideathon" element={<Ideathon isMobile={isMobile}/>} />
+              <Route path="/ideathon/register" element={<IdeathonRegister />} />
             </Route>
           )}
         </Routes>

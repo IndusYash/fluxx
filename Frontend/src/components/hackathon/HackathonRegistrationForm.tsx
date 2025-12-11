@@ -1,5 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Plus, Rocket, Users, Sparkles ,Info} from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import {
+  Plus,
+  Rocket,
+  Users,
+  Sparkles,
+  Info,
+  FileText,
+  ExternalLink,
+  ChevronDown,
+  X,
+  User,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -11,13 +22,14 @@ import {
 } from "@/components/ui/select";
 import TeamMemberCard, { TeamMember } from "./TeamMemberCard";
 import FileUpload from "./FileUpload";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 import {
   uploadFile,
   submitTeam,
   TeamPayload,
   checkTeamExists,
-} from "@/lib/api/hackathon";
+} from "../../lib/api/hackathon";
+import projectsJson from "../../projects.json";
 
 // const PROJECTS = [
 //   { id: "1", name: "AI-Powered Healthcare Assistant" },
@@ -50,6 +62,7 @@ interface FormErrors {
   teamPhoto?: string;
   leader?: Partial<Record<keyof TeamMember, string>>;
   members?: Partial<Record<keyof TeamMember, string>>[];
+  mentors?: string;
 }
 
 const HackathonRegistrationForm: React.FC = () => {
@@ -67,6 +80,76 @@ const HackathonRegistrationForm: React.FC = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Hardcoded mentors with expertise
+  const MENTORS = [
+    { name: "Dr. Akshi Kumar", expertise: "" },
+    { name: "Dr. Devesh Dubey", expertise: "" },
+    { name: "Dr. Rajesh Kumar Srivastava", expertise: "" },
+    { name: "Dr. Rakesh Kumar", expertise: "" },
+    { name: "Dr. P. K. Singh", expertise: "" },
+    { name: "Dr. Birendra Kumar Sharma", expertise: "" },
+    { name: "Dr. Lokendra Singh Umrao", expertise: "" },
+    { name: "Dr. Ritesh Maurya", expertise: "" },
+    { name: "Dr. Satya Prakash Yadav", expertise: "" },
+    { name: "Dr. Shailendra Pratap Singh", expertise: "" },
+    { name: "Dr. Meenu", expertise: "" }, // Replaced Smt.
+    { name: "Dr. Abhishek Verma", expertise: "" },
+    { name: "Dr. Amit Kumar Dwivedi", expertise: "" },
+    { name: "Dr. Anu Raj", expertise: "" },
+    { name: "Dr. Avaneesh Singh", expertise: "" },
+    { name: "Dr. M. K. Srivastava", expertise: "" },
+    { name: "Dr. Manish Kumar Gupta", expertise: "" },
+    { name: "Dr. Ninni Singh", expertise: "" },
+    { name: "Dr. Pawan Kumar Mall", expertise: "" },
+    { name: "Dr. Pradeep Kumar Singh", expertise: "" },
+    { name: "Dr. Raj kumar", expertise: "" },
+    { name: "Dr. Ram Kumar", expertise: "" },
+    { name: "Dr. Rohit Kumar Tiwari", expertise: "" },
+    { name: "Dr. Sanjay Kumar", expertise: "" },
+    { name: "Dr. Satvik Vats", expertise: "" },
+    { name: "Dr. Satya Prakash Maurya", expertise: "" },
+    { name: "Dr. Shailesh Kumar", expertise: "" },
+    { name: "Dr. Shantanu Shahi", expertise: "" },
+    { name: "Dr. Shwet Ketu", expertise: "" },
+    { name: "Dr. Sumit Kumar", expertise: "" },
+    { name: "Dr. Sushil Kumar Saroj", expertise: "" },
+    { name: "Dr. Swapnita Srivastava", expertise: "" },
+    { name: "Dr. Vimal Kumar", expertise: "" },
+    { name: "Dr. Vipul Narayan", expertise: "" },
+];
+
+  // selected mentors in preference order (store names)
+  const [selectedMentors, setSelectedMentors] = useState<string[]>([]);
+  const [showMentorDropdown, setShowMentorDropdown] = useState(false);
+  const [mentorSearch, setMentorSearch] = useState("");
+  const mentorDropdownRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const onDocClick = (e: MouseEvent) => {
+      if (!mentorDropdownRef.current) return;
+      if (mentorDropdownRef.current.contains(e.target as Node)) return;
+      setShowMentorDropdown(false);
+    };
+    document.addEventListener("click", onDocClick);
+    return () => document.removeEventListener("click", onDocClick);
+  }, []);
+
+  const toggleMentor = (name: string) => {
+    if (selectedMentors.includes(name)) {
+      setSelectedMentors(selectedMentors.filter((m) => m !== name));
+      return;
+    }
+    if (selectedMentors.length >= 5) {
+      toast({ title: "You can only select up to 5 mentors", variant: "destructive", className: "bg-[#0f1117]" });
+      return;
+    }
+    setSelectedMentors([...selectedMentors, name]);
+  };
+
+  const removeSelectedMentor = (index: number) => {
+    setSelectedMentors(selectedMentors.filter((_, i) => i !== index));
+  };
+
   // Dynamic projects
   const [projects, setProjects] = useState<any[]>([]);
   const [showProjectDetails, setShowProjectDetails] = useState(false);
@@ -74,20 +157,19 @@ const HackathonRegistrationForm: React.FC = () => {
     "All" | "Simple" | "Medium" | "Moderate" | "Advanced"
   >("All");
   useEffect(() => {
-    fetch("/projects.json")
-      .then((res) => res.json())
-      .then((data) => setProjects(data))
-      .catch(() => toast.error("Failed to load project list"));
+    setProjects(projectsJson);
   }, []);
 
   const addMember = () => {
     if (members.length < MAX_TEAM_SIZE - 1) {
       setMembers([...members, createEmptyMember()]);
-      toast.success("Team member added");
+      toast({ title: "Team member added" });
     } else {
-      toast.error(
-        `Maximum ${MAX_TEAM_SIZE} members allowed (including leader)`
-      );
+      toast({
+        title: `Maximum ${MAX_TEAM_SIZE} members allowed (including leader)`,
+        variant: "destructive",
+        className: "bg-[#0f1117]",
+      });
     }
   };
 
@@ -95,11 +177,13 @@ const HackathonRegistrationForm: React.FC = () => {
     if (members.length > MIN_TEAM_SIZE - 1) {
       const newMembers = members.filter((_, i) => i !== index);
       setMembers(newMembers);
-      toast.info("Team member removed");
+      toast({ title: "Team member removed" });
     } else {
-      toast.error(
-        `Minimum ${MIN_TEAM_SIZE} members required (including leader)`
-      );
+      toast({
+        title: `Minimum ${MIN_TEAM_SIZE} members required (including leader)`,
+        variant: "destructive",
+        className: "bg-[#0f1117]",
+      });
     }
   };
 
@@ -133,11 +217,11 @@ const HackathonRegistrationForm: React.FC = () => {
       memberErrors.email = "Invalid email format";
     if (!member.phone?.trim()) memberErrors.phone = "Phone is required";
     else if (!validatePhone(member.phone || ""))
-      memberErrors.phone = "Phone must be exactly 10 digits";
+      memberErrors.phone = "Phone must be exactly 10 digits (numbers only)";
     if (!member.rollNumber?.trim())
       memberErrors.rollNumber = "Roll number is required";
     else if (!validateRoll(member.rollNumber || ""))
-      memberErrors.rollNumber = "Roll must be exactly 10 digits";
+      memberErrors.rollNumber = "Roll must be exactly 10 digits (numbers only)";
     if (!member.branch?.trim()) memberErrors.branch = "Branch is required";
     if (!member.year?.trim()) memberErrors.year = "Year is required";
 
@@ -152,6 +236,10 @@ const HackathonRegistrationForm: React.FC = () => {
     if (!member.name?.trim()) memberErrors.name = "Name is required";
     if (!member.branch?.trim()) memberErrors.branch = "Branch is required";
     if (!member.year?.trim()) memberErrors.year = "Year is required";
+    if (!member.rollNumber?.trim())
+      memberErrors.rollNumber = "Roll number is required";
+    else if (!validateRoll(member.rollNumber || ""))
+      memberErrors.rollNumber = "Roll must be exactly 10 digits (numbers only)";
 
     return memberErrors;
   };
@@ -172,9 +260,11 @@ const HackathonRegistrationForm: React.FC = () => {
           name: `Team size must be between ${MIN_TEAM_SIZE} and ${MAX_TEAM_SIZE} (including leader)`,
         } as any,
       ];
-      toast.error(
-        `Team size must be between ${MIN_TEAM_SIZE} and ${MAX_TEAM_SIZE} (including leader)`
-      );
+      toast({
+        title: `Team size must be between ${MIN_TEAM_SIZE} and ${MAX_TEAM_SIZE} (including leader)`,
+        variant: "destructive",
+        className: "bg-[#0f1117]",
+      });
     }
 
     const leaderErrors = validateLeader(leader);
@@ -185,6 +275,11 @@ const HackathonRegistrationForm: React.FC = () => {
       newErrors.members = membersErrors;
     }
 
+    // mentors: require exactly 5 preferences
+    if (selectedMentors.length !== 5) {
+      newErrors.mentors = "Please select exactly 5 mentor preferences.";
+    }
+
     setErrors(newErrors);
 
     const hasErrors =
@@ -193,10 +288,15 @@ const HackathonRegistrationForm: React.FC = () => {
       newErrors.pptFile ||
       newErrors.teamPhoto ||
       newErrors.leader ||
-      newErrors.members?.some((e) => Object.keys(e).length > 0);
+      newErrors.members?.some((e) => Object.keys(e).length > 0) ||
+      newErrors.mentors;
 
     if (hasErrors) {
-      toast.error("Please fix all errors before submitting");
+      toast({
+        title: "Please fix all errors before submitting",
+        variant: "destructive",
+        className: "bg-[#0f1117]",
+      });
     }
 
     return !hasErrors;
@@ -213,12 +313,35 @@ const HackathonRegistrationForm: React.FC = () => {
     try {
       // 1) Check duplicates first to avoid uploading files unnecessarily
       const leaderRoll = leader.rollNumber || "";
-      const check = await checkTeamExists(teamName, leaderRoll);
+      const leaderPhone = leader.phone || "";
+      const leaderEmail = leader.email || "";
+      const allRolls = [leader.rollNumber, ...members.map((m) => m.rollNumber)];
+      const check = await checkTeamExists(
+        teamName,
+        leaderRoll,
+        leaderPhone,
+        leaderEmail,
+        allRolls
+      );
       if (check.exists) {
-        const which = check.field || "team";
-        throw new Error(
-          `A record already exists for ${which}. Please change the ${which} and try again.`
-        );
+        const field = check.field || "team";
+        let message = "Please use a different value.";
+        // Distinguish leader roll vs other member roll duplicates
+        if (field === "leaderRoll") {
+          message = "Your leader's roll number is already registered with us.";
+        } else if (field === "roll" || field === "memberRoll") {
+          message = "One of your team member is already registered with us.";
+        } else if (field === "leaderPhone") {
+          message = "Please use a different phone number of leader.";
+        }else if(field === "phone"){
+          message = "Please use a different phone number.";
+        }
+         else if (field === "leaderEmail" || field === "email") {
+          message = "Please use a different email address.";
+        } else if (field === "teamName" || field === "team") {
+          message = "This team name is already taken.";
+        }
+        throw new Error(message);
       }
 
       // 2) upload files to backend upload endpoints
@@ -249,6 +372,7 @@ const HackathonRegistrationForm: React.FC = () => {
         name: m.name,
         branch: m.branch || "",
         year: m.year || "",
+        roll: m.rollNumber || "",
       });
 
       // Build payload depending on how many additional members were provided (3 or 4)
@@ -257,6 +381,8 @@ const HackathonRegistrationForm: React.FC = () => {
         projectName,
         pptLink: pptUrl,
         imageLink: photoUrl,
+        // include ordered mentor preferences
+        mentors: selectedMentors,
         leader: mapLeader(leader),
         member1: mapMemberSmall(members[0]),
         member2: mapMemberSmall(members[1]),
@@ -265,10 +391,15 @@ const HackathonRegistrationForm: React.FC = () => {
         ...(members[3] ? { member4: mapMemberSmall(members[3]) } : {}),
       } as TeamPayload;
 
+      // eslint-disable-next-line no-console
+      console.log("Submitting team payload:", payload);
+
       await submitTeam(payload);
 
-      toast.success("Registration submitted successfully!", {
+      toast({
+        title: "Registration submitted successfully!",
         description: "Your team has been registered for the hackathon.",
+        className: "bg-[#0f1117]",
       });
 
       // Reset form after successful submission
@@ -280,10 +411,31 @@ const HackathonRegistrationForm: React.FC = () => {
       setMembers(initialMembers);
       setErrors({});
     } catch (error) {
-      const msg = error?.message || "Submission failed";
-      toast.error(msg, {
-        description: "Please try again later.",
-      });
+      const raw = error?.message || "Submission failed";
+      // If backend returned a duplicate key message like "leader.phone already exists"
+      // normalize it to a friendlier explanation for the user.
+      const dupMatch = String(raw).match(/([\w.]+)\s+already exists/i);
+      if (dupMatch) {
+        const field = dupMatch[1].toLowerCase();
+        let friendly = "Please use a different value.";
+        if (field.includes("phone")) friendly = "Please use a different phone number.";
+        else if (field.includes("leader") && field.includes("roll")) friendly = "Please use a different leader roll number.";
+        else if (field.includes("roll")) friendly = "Please use a different team member roll number.";
+        else if (field.includes("email")) friendly = "Please use a different email address.";
+        else if (field.includes("teamname") || field.includes("team")) friendly = "Please use a different team name.";
+
+        toast({
+          title: friendly,
+          variant: "destructive",
+          className: "bg-[#0f1117]",
+        });
+      } else {
+        toast({
+          title: raw,
+          variant: "destructive",
+          className: "bg-[#0f1117]",
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -319,6 +471,21 @@ const HackathonRegistrationForm: React.FC = () => {
       if (!m.branch?.trim()) return false;
       if (!m.year?.trim()) return false;
     }
+    // require exactly 5 mentor preferences
+    if (selectedMentors.length !== 5) return false;
+    // check duplicate rolls inside team
+    const allRolls = [leader.rollNumber, ...members.map((m) => m.rollNumber)];
+    const normalized = allRolls.map((r) =>
+      String(r || "")
+        .trim()
+        .toLowerCase()
+    );
+    const set = new Set();
+
+    for (const r of normalized) {
+      if (set.has(r)) return false; // ❌ duplicate → disable button
+      set.add(r);
+    }
 
     return true;
   };
@@ -348,6 +515,16 @@ const HackathonRegistrationForm: React.FC = () => {
             Register your team and showcase your innovative ideas. Fill in all
             details carefully.
           </p>
+          <a
+            href="https://drive.google.com/file/d/10A1EUv5Fe46u0G9hwkCrFA8xgDzsGjA3/view?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-primary/20 to-accent/20 border border-primary/30 text-foreground hover:from-primary/30 hover:to-accent/30 hover:border-primary/50 transition-all duration-300 group"
+          >
+            <FileText className="w-4 h-4 text-primary" />
+            <span className="font-medium">Problem Statement</span>
+            <ExternalLink className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary transition-colors" />
+          </a>
           {/* <div className="text-sm text-foreground/80 max-w-lg mx-auto space-y-2">
             <strong className="block text-foreground">IMPORTANT</strong>
             <ul className="list-disc list-inside text-sm text-muted-foreground">
@@ -392,18 +569,21 @@ const HackathonRegistrationForm: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground">
-                  Select Project
-                </label>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setShowProjectDetails(true)}
-                  className="h-auto py-1 px-2 text-xs text-primary"
-                >
-                  <Info className="w-3 h-3 mr-1" /> View Details
-                </Button>
+                <div className="flex items-center justify-between">
+                  <label className="text-sm font-medium text-foreground">
+                    Select Project
+                  </label>
+
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowProjectDetails(true)}
+                    className="h-auto py-1 px-2 text-xs text-primary ml-3"
+                  >
+                    <Info className="w-3 h-3 mr-1" /> View Details
+                  </Button>
+                </div>
 
                 <Select value={projectId} onValueChange={setProjectId}>
                   <SelectTrigger
@@ -411,7 +591,7 @@ const HackathonRegistrationForm: React.FC = () => {
                   >
                     <SelectValue placeholder="Choose a project" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-[#0f1117] text-white">
                     {projects.map((p) => (
                       <SelectItem key={p.id} value={p.id.toString()}>
                         {p.name}
@@ -450,8 +630,107 @@ const HackathonRegistrationForm: React.FC = () => {
             </p>
           </section>
 
+                {/* Mentor Preference Section */}
+                <section className="glass-card p-6 space-y-4">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                      <Sparkles className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold text-foreground">Mentor Preference</h2>
+                      <p className="text-sm text-muted-foreground">Rank mentors by your preference</p>
+                      <p className="text-sm text-foreground/80 mt-2">Select exactly 5 mentors ({selectedMentors.length}/5 selected)</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    {/* Selected chips */}
+                    <div className="flex flex-wrap gap-2">
+                      {selectedMentors.length === 0 && (
+                        <p className="text-xs text-muted-foreground">No mentors selected yet.</p>
+                      )}
+                      {selectedMentors.map((name, idx) => (
+                        <div key={name} className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-card">
+                          <div className="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center text-sm font-medium">{idx + 1}</div>
+                          <div className="text-sm">{name}</div>
+                          <button type="button" onClick={() => removeSelectedMentor(idx)} className="ml-2 p-1">
+                            <X className="w-4 h-4 text-destructive" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Search bar + dropdown */}
+                    <div className="relative" ref={mentorDropdownRef}>
+                      <div className="flex items-center gap-2">
+                        <Input
+                          placeholder="Search and select mentors…"
+                          value={mentorSearch}
+                          onChange={(e) => setMentorSearch(e.target.value)}
+                          onFocus={() => setShowMentorDropdown(true)}
+                          className="flex-1"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowMentorDropdown((s) => !s)}
+                          className="p-2 rounded border border-border bg-card"
+                          aria-label="Toggle mentors dropdown"
+                        >
+                          <ChevronDown className="w-4 h-4" />
+                        </button>
+                      </div>
+
+                      {showMentorDropdown && (
+                        <div className="absolute z-40 mt-2 w-full max-h-72 overflow-auto rounded border border-border bg-black p-3 shadow-lg">
+                          <Input
+                            placeholder="Search by name"
+                            value={mentorSearch}
+                            onChange={(e) => setMentorSearch(e.target.value)}
+                            className="w-full mb-2"
+                          />
+
+                          <div className="space-y-1">
+                            {MENTORS.filter((opt) => {
+                              const q = mentorSearch.trim().toLowerCase();
+                              if (!q) return true;
+                              return (
+                                opt.name.toLowerCase().includes(q) ||
+                                opt.expertise.toLowerCase().includes(q)
+                              );
+                            }).map((opt) => {
+                              const isSelected = selectedMentors.includes(opt.name);
+                              const selIndex = selectedMentors.indexOf(opt.name);
+                              return (
+                                <button
+                                  key={opt.name}
+                                  type="button"
+                                  onClick={() => toggleMentor(opt.name)}
+                                  className={`w-full text-left px-3 py-2 rounded flex items-center justify-between ${isSelected ? "bg-primary/10 border border-primary" : "hover:bg-primary/5"}`}
+                                >
+                                  <div className="flex items-center gap-3">
+                                    <User className="w-6 h-6 text-muted-foreground/80" />
+                                    <div className="flex flex-col text-left">
+                                      <span className="text-sm text-foreground">{opt.name}</span>
+                                      <span className="text-xs text-muted-foreground">{opt.expertise}</span>
+                                    </div>
+                                  </div>
+                                  {isSelected && (
+                                    <div className="ml-2">
+                                      <div className="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center text-xs font-medium">{selIndex + 1}</div>
+                                    </div>
+                                  )}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </section>
+
           {/* Team Leader Section */}
-          <section className="space-y-4">
+          <section className="glass-card p-6 space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
                 <Users className="w-5 h-5 text-primary" />
@@ -509,7 +788,7 @@ const HackathonRegistrationForm: React.FC = () => {
               variant="glow"
               size="lg"
               disabled={isSubmitting || !isReadyToSubmit()}
-              className="min-w-[200px]"
+              className="min-w-[200px] bg-[#16A34A]"
             >
               {isSubmitting ? (
                 <span className="flex items-center gap-2">
@@ -547,13 +826,13 @@ const HackathonRegistrationForm: React.FC = () => {
               </Button>
             </div>
 
-            <div className="p-4 flex justify-end items-center gap-3">
+            {/* <div className="p-4 flex justify-end items-center gap-3">
               <span className="text-sm">Difficulty:</span>
 
               <select
                 value={difficultyFilter}
                 onChange={(e) => setDifficultyFilter(e.target.value as any)}
-                className="bg-background border rounded px-3 py-2 text-sm"
+                className="bg-black border rounded px-3 py-2 text-sm"
               >
                 <option value="All">All</option>
                 <option value="Simple">Simple</option>
@@ -561,7 +840,7 @@ const HackathonRegistrationForm: React.FC = () => {
                 <option value="Moderate">Moderate</option>
                 <option value="Advanced">Advanced</option>
               </select>
-            </div>
+            </div> */}
 
             <div className="overflow-y-auto p-4 space-y-4">
               {projects
@@ -581,12 +860,15 @@ const HackathonRegistrationForm: React.FC = () => {
                     onClick={() => {
                       setProjectId(p.id.toString());
                       setShowProjectDetails(false);
-                      toast.success(`Selected: ${p.name}`);
+                      toast({
+                        title: `Selected: ${p.name}`,
+                        className: "bg-[#0f1117]",
+                      });
                     }}
                   >
                     <h3 className="font-semibold">{p.name}</h3>
-                    <p className="text-xs">Domain: {p.domain}</p>
-                    <p className="text-xs">Difficulty: {p.difficulty}</p>
+                    <p className="text-xs">Theme: {p.domain}</p>
+                    {/* <p className="text-xs">Difficulty: {p.difficulty}</p> */}
 
                     <p className="text-sm mt-2 whitespace-pre-line">
                       <strong>Problem Statement:</strong>

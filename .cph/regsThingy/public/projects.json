@@ -1,0 +1,402 @@
+[
+  {
+    "name": "Automated Scientific Literature Synthesis Engine",
+    "domain": "AI for Research / NLP",
+    "difficulty": "Advanced",
+    "problemStatement": "Researchers face information overload with the exponential growth of academic papers, making it difficult to quickly synthesize state-of-the-art findings, compare methodologies, and identify research gaps manually.",
+    "expectedSolution": "Architect a sophisticated NLP-based Research Assistant capable of ingesting and parsing multiple academic papers to produce a structured comparative analysis. The system should automatically extract, correlate, and tabulate key methodologies, experimental results, and research gaps, effectively synthesizing a “State of the Art” summary that significantly reduces the time required for literature review.",
+    "id": 1
+  },
+  {
+    "name": "Reality Drift Detector – Spot Manipulated Real-World Scenes",
+    "domain": "AI Security / Deepfake Detection",
+    "difficulty": "Advanced",
+    "problemStatement": "The proliferation of hyper-realistic AI-generated media poses a severe threat to information integrity, creating an urgent need for accessible forensic tools to verify the authenticity of digital visual content.",
+    "expectedSolution": "Engineer a Deepfake Detection Framework capable of analyzing visual media for minute forensic anomalies, such as lighting inconsistencies, unnatural distortions, or pixel artifacts. The interface should highlight potentially manipulated regions and provide a confidence score regarding the media's authenticity, helping users distinguish between genuine and synthetic content.",
+    "id": 2
+  },
+  {
+    "name": "MicroLoan Risk Predictor for Small Vendors",
+    "domain": "FinTech / Social Impact",
+    "difficulty": "Moderate",
+    "problemStatement": "Unbanked street vendors and small businesses lack formal credit histories/collateral, excluding them from financial systems despite having consistent digital transaction footprints.",
+    "expectedSolution": "Architect an Alternative Credit Scoring Algorithm that evaluates digital transaction history and operational consistency rather than traditional collateral. The model should generate a \"Trust Score\" to assist financial institutions in assessing micro-loan eligibility for unbanked street vendors, fostering financial inclusion.",
+    "id": 3
+  },
+  {
+    "name": "Real-Time Personalized Analogy Generator",
+    "domain": "EdTech + Generative AI",
+    "difficulty": "Moderate",
+    "problemStatement": "Complex academic concepts are often abstract and difficult to grasp, and educators lack tools to instantly generate personalized, relatable explanations that align with a student's specific interests.",
+    "expectedSolution": "Build a Context-Aware Generative AI Application where users input complex academic concepts, and the engine dynamically generates explanatory analogies mapped to their specific interests (e.g., sports, gaming). The output should be a text-based simplification tailored to the learner's cognitive preference, making abstract theories immediately relatable.",
+    "id": 4
+  },
+  {
+    "name": "AI-Powered Classroom Attention & Fatigue Analyzer",
+    "domain": "Educational AI / Computer Vision",
+    "difficulty": "Moderate",
+    "problemStatement": "Educators lack real-time, objective data on student engagement and fatigue during lectures, making it difficult to adapt teaching strategies dynamically without using invasive surveillance methods.",
+    "expectedSolution": "Develop a Privacy-First Computer Vision System that estimates aggregate class engagement by analyzing student posture and movement patterns, strictly without using facial recognition. The system should render a real-time Engagement Heatmap, providing instructors with immediate feedback on lecture effectiveness and student fatigue levels.",
+    "id": 5
+  },
+  {
+    "name": "Blockchain-Backed Seed Authenticity Ledger",
+    "domain": "Blockchain + Agriculture",
+    "difficulty": "Moderate",
+    "problemStatement": "The agricultural supply chain is often compromised by counterfeit or low-quality seeds, causing significant financial losses to farmers who lack a verifiable method to confirm product origin and certification.",
+    "expectedSolution": "Implement a Supply Chain Verification System utilizing blockchain technology. The solution should allow farmers to scan QR codes on seed packets to retrieve an immutable history of origin, lab testing, and certification, ensuring they are purchasing authentic, high-quality seeds and protecting them from fraud.",
+    "id": 6
+  },
+  {
+    "name": "System to Detect Early Signs of Nutrient Deficiencies",
+    "domain": "Health AI",
+    "difficulty": "Moderate",
+    "problemStatement": "Early signs of nutritional deficiencies are often visible physically but overlooked due to a lack of accessible, non-invasive screening tools, leading to preventable long-term health issues.",
+    "expectedSolution": "Create a Computer Vision Diagnostic Tool capable of analyzing user-uploaded images for dermatological signs of deficiency, such as skin pallor or nail discoloration. The system should provide preliminary health insights and dietary recommendations, serving as an accessible first-step screening tool for nutritional health.",
+    "id": 7
+  },
+  {
+    "name": "AI for Hyper-Efficient Energy Management",
+    "domain": "Energy AI / IoT",
+    "difficulty": "Moderate",
+    "problemStatement": "Institutional buildings suffer from massive energy wastage due to inefficient, manual control of lighting and heavy appliances in unoccupied or partially used zones.",
+    "expectedSolution": "Architect a Smart Energy Automation System that leverages occupancy detection algorithms to autonomously control lighting and appliances. The solution should visualize real-time consumption metrics and calculate potential cost savings via an analytical dashboard, helping institutions reduce their carbon footprint and electricity overheads.",
+    "id": 8
+  },
+  {
+    "name": "Smart Farming–Highway Synergy Network",
+    "domain": "Logistics / AgriTech",
+    "difficulty": "Moderate",
+    "problemStatement": "Small-scale farmers struggle with high transport costs for produce, while highway logistics trucks often return empty after deliveries, creating a massive inefficiency in the supply chain.",
+    "expectedSolution": "Create a Logistics Aggregation Platform connecting farmers with highway transport operators. The marketplace should facilitate the booking of empty cargo space on trucks returning from deliveries, providing farmers with affordable transport for their produce while optimizing the utilization of logistics fleets.",
+    "id": 9
+  },
+  {
+    "name": "Drone-Based Micro Delivery for Campus Logistics",
+    "domain": "Drone Tech / Robotics",
+    "difficulty": "Moderate",
+    "problemStatement": "Intra-campus logistics for moving documents, lab samples, or small equipment are slow and labor-intensive, requiring a secure, autonomous solution for rapid point-to-point transport.",
+    "expectedSolution": "Simulate or prototype an Autonomous Aerial Delivery System designed for the secure, short-range transport of lightweight items within a geofenced campus environment. The system should feature live status telemetry and safety protocols to automate the movement of documents or samples between buildings.",
+    "id": 10
+  },
+  {
+    "name": "AI Tool for Learning Endangered Micro-Dialects",
+    "domain": "Linguistics + AI / Cultural Heritage",
+    "difficulty": "Advanced",
+    "problemStatement": "Indigenous languages and micro-dialects are disappearing rapidly, and current AI models require massive datasets that do not exist for these low-resource languages, making preservation difficult.",
+    "expectedSolution": "Architect a Few-Shot Learning NLP Model capable of training on extremely limited audio or text datasets. The system should generate educational narratives, vocabulary guides, and pronunciation aids to assist indigenous communities in preserving and revitalizing endangered dialects that lack large-scale digital resources.",
+    "id": 11
+  },
+  {
+    "name": "Smart Hospital Resource & Bed Availability Tracker",
+    "domain": "HealthTech / Civic Tech",
+    "difficulty": "Simple",
+    "problemStatement": "The lack of centralized, real-time visibility into hospital bed and critical resource availability across a city leads to critical delays in patient admission and emergency response.",
+    "expectedSolution": "Develop a Centralized Hospital Inventory Dashboard that allows medical staff to update bed occupancy and resource status in real-time. This provides patients and emergency responders with a transparent, live view of resource availability across multiple facilities, reducing critical delays in patient admission.",
+    "id": 12
+  },
+  {
+    "name": "AI-Driven Multi-Sensor Smart Cane for Visually Impaired",
+    "domain": "Assistive Tech / Embedded Systems",
+    "difficulty": "Moderate",
+    "problemStatement": "Visually impaired individuals face significant safety risks from dynamic obstacles (vehicles) and overhead hazards that traditional canes cannot detect.",
+    "expectedSolution": "Design an Intelligent Assistive Mobility Device integrating LiDAR and ultrasonic sensor arrays. The system must process environmental data via an embedded AI model to detect dynamic obstacles and overhead hazards, providing real-time haptic and auditory guidance to the user while syncing telemetry with a companion mobile application.",
+    "id": 13
+  },
+  {
+    "name": "Intelligent AI-Based Waste Sorting Bin",
+    "domain": "Smart Cities / Environmental Engineering",
+    "difficulty": "Moderate",
+    "problemStatement": "Manual waste segregation is inefficient and error-prone, leading to lower recycling rates and overflowing public bins due to a lack of real-time monitoring.",
+    "expectedSolution": "Engineer an Automated Waste Segregation Unit utilizing computer vision and load cells to classify refuse into recyclable categories. The system should feature a cloud-connected dashboard for real-time fill-level monitoring and route optimization for municipal collection services, promoting efficient urban sanitation.",
+    "id": 14
+  },
+  {
+    "name": "AI-Enabled Smart Helmet for Accident Prevention",
+    "domain": "Transportation Safety / IoT Hardware",
+    "difficulty": "Moderate",
+    "problemStatement": "Two-wheeler accidents have high fatality rates due to delayed emergency response and a lack of mechanisms to detect dangerous driving behaviors or falls in real-time.",
+    "expectedSolution": "Prototype a Smart Safety Helmet embedded with IMU, alcohol sensors, and GPS modules. The device must utilize an edge-AI algorithm to detect erratic driving patterns or high-impact collisions, automatically triggering a distress signal with precise geolocation to emergency responders and designated contacts.",
+    "id": 15
+  },
+  {
+    "name": "IoT + AI Based Smart Water Quality Guardian",
+    "domain": "Rural Development / Environmental IoT",
+    "difficulty": "Moderate",
+    "problemStatement": "Rural communities lack access to affordable, real-time water quality testing, leading to the consumption of unsafe water and the spread of waterborne diseases.",
+    "expectedSolution": "Develop a Portable IoT Hydro-Analytics Node capable of measuring critical parameters like turbidity and pH. The system should employ a machine learning classifier to determine water potability in real-time, transmitting contamination trends to a centralized community health dashboard for proactive intervention.",
+    "id": 16
+  },
+  {
+    "name": "AI-Powered Indoor Fire Prediction Device",
+    "domain": "Safety Engineering / IoT Systems",
+    "difficulty": "Moderate",
+    "problemStatement": "Traditional fire alarms only react after smoke or fire is present. There is a need for a predictive system that can detect pre-ignition conditions to prevent disasters before they start.",
+    "expectedSolution": "Architect a Multi-Modal Fire Prevention System fusing data from thermal, smoke, and gas sensors. The solution must utilize a predictive AI model to identify pre-ignition conditions or thermal runaway, dispatching instantaneous alerts to local fire departments and building occupants to prevent catastrophic incidents.",
+    "id": 17
+  },
+  {
+    "name": "Smart AI-Driven Traffic Light System",
+    "domain": "Smart Transportation / Embedded AI",
+    "difficulty": "Advanced",
+    "problemStatement": "Static traffic timers contribute to congestion and often delay emergency vehicles. A dynamic system is needed to adjust signal timing based on real-time traffic density.",
+    "expectedSolution": "Construct an Adaptive Traffic Control System leveraging computer vision and infrared sensors to analyze vehicular density. The AI engine should dynamically modulate signal timing cycles to minimize congestion latency and prioritize the transit of emergency vehicles through intersections.",
+    "id": 18
+  },
+  {
+    "name": "AI-Powered Early Detection of Structural Cracks",
+    "domain": "Civil Engineering / IoT Sensors",
+    "difficulty": "Moderate",
+    "problemStatement": "Infrastructure failures often occur without warning because structural fatigue and micro-cracks are difficult to detect during manual visual inspections.",
+    "expectedSolution": "Design a Structural Health Monitoring (SHM) Node that analyzes vibration frequencies and acoustic resonance patterns. The system should deploy an anomaly detection algorithm to identify early signs of material fatigue or micro-cracks, generating predictive maintenance reports for civil engineering authorities.",
+    "id": 19
+  },
+  {
+    "name": "Smart Agriculture Pod with Automated Spray Control",
+    "domain": "Agriculture / Robotics",
+    "difficulty": "Moderate",
+    "problemStatement": "Broad-spectrum pesticide spraying wastes chemicals and harms the environment. Farmers need a precision tool to detect and treat only the specific plants affected by pests.",
+    "expectedSolution": "Build a Precision Agriculture Robotic Unit equipped with multispectral cameras and soil sensors. The device must utilize computer vision to identify specific pest infestations and execute targeted micro-spraying operations, thereby reducing chemical usage and optimizing crop health through localized treatment.",
+    "id": 20
+  },
+  {
+    "name": "AI-Assisted Real-Time Sign Language to Speech Converter",
+    "domain": "Assistive Hardware / Wearable Tech",
+    "difficulty": "Advanced",
+    "problemStatement": "People with speech impairments often face communication barriers. There is a need for a wearable device that translates sign language gestures into audible speech instantly.",
+    "expectedSolution": "Create a Wearable Sensory Glove integrated with flex sensors and accelerometers to capture hand kinematics. The system should process these gesture data streams through a classification model to convert Sign Language into audible speech in real-time, bridging communication gaps for the speech-impaired.",
+    "id": 21
+  },
+  {
+    "name": "Smart IoT Air Ventilation & Airflow Optimizer",
+    "domain": "Smart Buildings / HVAC Automation",
+    "difficulty": "Moderate",
+    "problemStatement": "Poor indoor air quality leads to \"Sick Building Syndrome,\" yet standard HVAC systems run on fixed schedules rather than adapting to actual air quality or occupancy needs.",
+    "expectedSolution": "Develop an Intelligent HVAC Control System utilizing CO₂ and environmental sensors to monitor indoor air quality. The AI controller should predict zones of stagnation and autonomously modulate fan speeds and ventilation dampers to ensure optimal airflow and energy efficiency.",
+    "id": 22
+  },
+  {
+    "name": "AI-Based Smart Drowsiness Detector for Workers",
+    "domain": "Industrial Safety / Biomedical AI",
+    "difficulty": "Moderate",
+    "problemStatement": "Industrial accidents are frequently caused by worker fatigue or microsleeps, which are difficult to supervise manually in high-risk environments.",
+    "expectedSolution": "Engineer a Wearable Industrial Safety Device capable of monitoring physiological markers such as pulse rate and blink frequency. The system must employ a fatigue detection algorithm to identify microsleeps or exhaustion, triggering haptic alerts to the worker and safety logs to supervisors.",
+    "id": 23
+  },
+  {
+    "name": "Flood Prediction & Automated Village Siren System",
+    "domain": "Disaster Management / IoT",
+    "difficulty": "Moderate",
+    "problemStatement": "Vulnerable riverbank communities often receive flood warnings too late. A localized, automated early warning system is needed to trigger alerts based on real-time water levels.",
+    "expectedSolution": "Construct a Solar-Powered Hydrological Station that tracks water levels and flow velocity. The system should leverage a predictive model to forecast flood risks and automatically activate local siren networks while broadcasting SMS evacuation alerts to vulnerable communities.",
+    "id": 24
+  },
+  {
+    "name": "AI-Powered Smart Cooking Gas Leak Detector",
+    "domain": "Household Safety / Embedded Systems",
+    "difficulty": "Simple",
+    "problemStatement": "Domestic gas leaks are a major fire hazard, and standard alarms often trigger false positives or lack the ability to actively shut off the gas supply.",
+    "expectedSolution": "Design a Smart Kitchen Safety Node integrating gas concentration and thermal sensors. The AI logic must distinguish between minor leaks, cooking fumes, and critical hazards, automatically actuating a solenoid valve to cut off the gas supply and notifying users via a mobile interface.",
+    "id": 25
+  },
+  {
+    "name": "AI-Powered Smart Cooking Gas Leak Detector",
+    "domain": "Household Safety / Embedded Systems",
+    "difficulty": "Simple",
+    "problemStatement": "Domestic gas leaks are a major fire hazard, and standard alarms often trigger false positives or lack the ability to actively shut off the gas supply.",
+    "expectedSolution": "Design a Smart Kitchen Safety Node integrating gas concentration and thermal sensors. The AI logic must distinguish between minor leaks, cooking fumes, and critical hazards, automatically actuating a solenoid valve to cut off the gas supply and notifying users via a mobile interface.",
+    "id": 26
+  },
+  {
+    "name": "AI-Enabled Smart Waste Segregation Bin",
+    "domain": "Smart City / Waste Management",
+    "difficulty": "Simple",
+    "problemStatement": "Manual segregation of dry, wet, and recyclable waste often leads to contamination and inefficient recycling.",
+    "expectedSolution": "Build an AI-powered dustbin that uses image sensors to classify waste types and auto-segregate them into compartments, while sending fill-level data to municipal dashboards.",
+    "id": 27
+  },
+  {
+    "name": "AI-Based Smart Kirana Store Shelf Manager",
+    "domain": "Retail Automation",
+    "difficulty": "Simple",
+    "problemStatement": "Small shops struggle with inventory visibility, expired stock, and restocking delays.",
+    "expectedSolution": "Develop an IoT camera + AI module that detects low stock, tracks expiration, and sends auto-restock alerts to shopkeepers or suppliers through a mobile app.",
+    "id": 28
+  },
+  {
+    "name": "Intelligent Asset Tracking & Anti-Theft Node",
+    "domain": "Logistics / IoT Security",
+    "difficulty": "Simple",
+    "problemStatement": "Valuable items in campuses or offices frequently go missing due to lack of real-time tracking.",
+    "expectedSolution": "Create a compact IoT tag with BLE + GPS + motion sensing; use AI anomaly detection to identify unusual movement patterns and trigger alerts.",
+    "id": 29
+  },
+  {
+    "name": "AI-Driven Lost & Found Identification System",
+    "domain": "Campus Automation / Vision AI",
+    "difficulty": "Simple",
+    "problemStatement": "Lost items are often unclaimed in public places due to improper categorization and identification.",
+    "expectedSolution": "Build a smart kiosk where users upload images of lost items; AI vision models match appearance patterns with found items and notify users.",
+    "id": 30
+  },
+  {
+    "name": "Smart Attendance & Face Analytics System for Rural Schools",
+    "domain": "EdTech / Computer Vision",
+    "difficulty": "Medium",
+    "problemStatement": "Manual attendance is time-consuming and prone to manipulation in low-resource schools.",
+    "expectedSolution": "Design a low-cost edge device with a camera for automated presence detection, face recognition, and real-time attendance updates to teachers’ dashboards.",
+    "id": 31
+  },
+  {
+    "name": "Gamified Eco-Behavior Monitoring in Schools",
+    "domain": "Environmental Education",
+    "difficulty": "Simple",
+    "problemStatement": "Students lack motivation to consistently follow eco-friendly practices.",
+    "expectedSolution": "Create IoT sensors tracking energy usage, water usage, and waste levels; convert these metrics into rewards/points on a gamified mobile app to drive behavior change.",
+    "id": 32
+  },
+  {
+    "name": "Smart Counterfeit Medicine Detector",
+    "domain": "Healthcare / Quality Control",
+    "difficulty": "Medium",
+    "problemStatement": "Fake or degraded medicines are hard to identify visually.",
+    "expectedSolution": "Build a handheld device using spectral sensors + AI models that identify anomalies in pill composition or packaging, and report quality scores on a connected app.",
+    "id": 33
+  },
+  {
+    "name": "AI-Based Unauthorized Construction Monitoring System",
+    "domain": "Urban Governance / Smart City",
+    "difficulty": "Medium",
+    "problemStatement": "Illegal constructions go unnoticed until they become major regulatory issues.",
+    "expectedSolution": "Use drone-captured or CCTV images and ML models to detect new structural changes; raise real-time alerts to city authorities.",
+    "id": 34
+  },
+  {
+    "name": "AI-Powered Indoor Air Quality & Health Safety Node",
+    "domain": "Smart Home / Environmental Safety",
+    "difficulty": "Simple",
+    "problemStatement": "Indoor pollution (CO₂, VOCs, humidity) is rising but often goes unnoticed.",
+    "expectedSolution": "Create a multi-sensor air monitoring device that uses AI to classify safe/unsafe conditions and control fans, purifiers, or send alerts.",
+    "id": 35
+  },
+  {
+    "name": "Intelligent Energy Theft Detection in Households",
+    "domain": "Energy / Smart Grid",
+    "difficulty": "Medium",
+    "problemStatement": "Electricity theft leads to massive revenue loss and unstable supply.",
+    "expectedSolution": "Build smart energy meters using IoT + ML anomaly detection to identify irregular consumption and report suspicious patterns to providers.",
+    "id": 36
+  },
+  {
+    "name": "AI-Integrated Smart Farming Pest Detection Node",
+    "domain": "AgriTech",
+    "difficulty": "Simple",
+    "problemStatement": "Farmers face crop losses due to delayed identification of pests and plant diseases.",
+    "expectedSolution": "Design a portable IoT camera module that scans leaves, runs lightweight AI models on-device, and alerts farmers about detected pests or diseases through a mobile interface.",
+    "id": 37
+  },
+  {
+    "name": "AI-Based Smart Parking Occupancy & Violation Detection",
+    "domain": "Smart Mobility",
+    "difficulty": "Simple",
+    "problemStatement": "Vehicles often park in no-parking zones or block entries due to lack of monitoring.",
+    "expectedSolution": "Develop an edge-based vision system that uses cameras + AI to detect empty parking slots, illegal parking, and send alerts to authorities or users in real-time.",
+    "id": 38
+  },
+  {
+    "name": "Smart Pet Health & Activity Tracker",
+    "domain": "Animal Care / Wearable IoT",
+    "difficulty": "Simple",
+    "problemStatement": "Pet owners often miss early signs of illness or behavioral changes due to lack of continuous monitoring.",
+    "expectedSolution": "Build a lightweight pet collar with sensors to track movement, heart rate, temperature, and sleep cycles. Use AI models to detect abnormal patterns and send alerts to owners via a mobile dashboard.",
+    "id": 39
+  },
+  {
+    "name": "Personalized Career & Skill Growth Advisor",
+    "domain": "EdTech / AI Guidance Systems",
+    "difficulty": "Medium",
+    "problemStatement": "Students and young professionals struggle to identify skill gaps and choose suitable career paths based on industry demand.",
+    "expectedSolution": "Create an AI-driven platform that analyzes user skills, interests, performance data, and job market trends to generate personalized career paths, recommended courses, and skill development roadmaps.",
+    "id": 40
+  },
+  {
+    "name": "Smart Wastewater Treatment & Quality Monitoring System",
+    "domain": "Environment / Industrial IoT",
+    "difficulty": "Medium",
+    "problemStatement": "Manual wastewater testing is slow, inconsistent, and often leads to untreated discharge into water bodies.",
+    "expectedSolution": "Develop an IoT-based water quality monitoring system using pH, turbidity, chemical, and microbial sensors. AI models classify contamination levels and optimize treatment cycles automatically.",
+    "id": 41
+  },
+  {
+    "name": "Drone-Assisted Parcel Delivery & Landing Guidance System",
+    "domain": "Logistics / UAV Automation",
+    "difficulty": "Medium",
+    "problemStatement": "Traditional parcel delivery is slow in remote or high-traffic areas, and drones often face landing inaccuracies.",
+    "expectedSolution": "Build an autonomous drone with GPS, vision sensors, and AI-based landing guidance to identify safe drop zones and deliver packages efficiently, with real-time tracking and obstacle detection.",
+    "id": 42
+  },
+  {
+    "name": "AI-Driven Food Expiry & Nutrition Analyzer for Households",
+    "domain": "Smart Kitchen / Consumer IoT",
+    "difficulty": "Simple",
+    "problemStatement": "Families often waste food due to forgetting expiry dates and lack of nutritional awareness for daily meals.",
+    "expectedSolution": "Create a kitchen assistant using barcode scanning or image recognition to detect food items, predict freshness levels, track expiry, and suggest nutritional meal plans based on inventory.",
+    "id": 43
+  },
+  {
+    "name": "Predictive Women Safety Alert & Risk Detection System",
+    "domain": "Public Safety / Mobile AI",
+    "difficulty": "Medium",
+    "problemStatement": "Women’s safety is at risk due to delayed access to help and inability to detect high-risk situations early.",
+    "expectedSolution": "Build an AI-powered personal safety app using GPS, audio cues, motion sensors, and environmental data to predict unsafe zones or situations. The system triggers alerts, shares live location, and connects to emergency contacts automatically.",
+    "id": 44
+  },
+  {
+    "name": "Urban Heat Island Mapping Device + Cooling Strategy Planner",
+    "domain": "Climate Tech / Smart City Hardware",
+    "difficulty": "Medium",
+    "problemStatement": "Rapid urban heating goes undetected due to absence of localized temperature and humidity sensing networks.",
+    "expectedSolution": "Create a distributed sensor node (temperature, humidity, light reflectance, surface heat sensors) placed across an area. All nodes send real-time data to a web GIS dashboard that maps heat islands and recommends cooling strategies like shade nets, cool pavements, and green roofs.",
+    "id": 45
+  },
+  {
+    "name": "Smart Water Distribution Digital Twin + Sensor Network",
+    "domain": "Smart Infrastructure Hardware",
+    "difficulty": "Medium",
+    "problemStatement": "Water networks lack real-time visibility into pressure, leakage, and flow variations.",
+    "expectedSolution": "Deploy pressure, flow, and leak detection sensors across pipelines. Data is transmitted to a digital-twin web interface that simulates real-time flow, predicts leaks, and suggests optimized valve operations.",
+    "id": 46
+  },
+  {
+    "name": "Chemical Spill Detection & Toxicity Monitoring Kit",
+    "domain": "Industrial Safety Hardware",
+    "difficulty": "Medium",
+    "problemStatement": "Chemical spills require immediate detection and prediction, but current response is manual and slow.",
+    "expectedSolution": "Build a portable spill-detection device equipped with gas sensors, thermal sensors, and chemical reaction readings. The device sends data to a web application that predicts toxicity radius, vapor cloud formation, and safety perimeters.",
+    "id": 47
+  },
+  {
+    "name": "Smart Machine Health Monitoring Sensor Hub",
+    "domain": "Manufacturing Hardware / Industrial IoT",
+    "difficulty": "Medium",
+    "problemStatement": "Machines fail unexpectedly because vibration, load, and temperature data are not monitored continuously.",
+    "expectedSolution": "Install edge devices on machines that measure vibration, temperature, rpm, torque, and cycle count. Data syncs to a web portal that visualizes machine health, predicts failures, and benchmarks efficiency.",
+    "id": 48
+  },
+  {
+    "name": "Construction Safety Wearable + Site Monitoring Station",
+    "domain": "Safety Hardware / Smart Wearables",
+    "difficulty": "Medium",
+    "problemStatement": "Construction sites lack active safety monitoring, resulting in avoidable accidents.",
+    "expectedSolution": "Provide workers with a wearable safety device that tracks fall events, fatigue levels, gas exposure, and PPE compliance. A central site safety hub collects data and displays risk analytics on a web dashboard.",
+    "id": 49
+  },
+  {
+    "name": "Physical Stress & Material Failure Testing Device + Web Visualizer",
+    "domain": "Digital Simulation / Material Testing Hardware",
+    "difficulty": "Medium",
+    "problemStatement": "Students and designers cannot physically test material failure without expensive labs.",
+    "expectedSolution": "Build a small-scale tensile/bending testing device with sensors for load and deformation. A web portal visualizes stress-strain curves, failure modes, deformation animation, and performance metrics.",
+    "id": 50
+  }
+]

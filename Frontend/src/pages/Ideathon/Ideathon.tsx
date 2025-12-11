@@ -18,7 +18,7 @@ const Ideathon = () => {
   });
 
   useEffect(() => {
-    const globalEndTime = new Date("2025-12-10T20:00:00+05:30").getTime();
+    const globalEndTime = new Date("2025-12-16T23:59:59+05:30").getTime();
 
     const updateCountdown = () => {
       const now = new Date().getTime();

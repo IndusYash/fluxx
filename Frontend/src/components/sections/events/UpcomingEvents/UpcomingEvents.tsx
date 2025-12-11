@@ -42,12 +42,12 @@ const events: EventProps[] = [
   {
     id: 2,
     title: 'IDEATHON 2025',
-    date: '2025-12-XX',
+    date: 'December 10-19, 2025',
     description:
       "Join innovators, coders, and thinkers to brainstorm, build, and showcase groundbreaking solutions. Unleash your ideas, collaborate with peers, and be part of a game- changing experience!",
     imageUrl: ideathon,
     isUpcoming: true,
-    location: 'CSED, MMMUT, Gorakhpur',
+    location: 'CESD, MMMUT, Gorakhpur',
     attendees: 1000,
     category: 'Tech',
     prize: '',

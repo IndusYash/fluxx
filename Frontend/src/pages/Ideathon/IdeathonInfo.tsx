@@ -2,6 +2,7 @@ import React from "react";
 import { Calendar, Globe, Trophy, BadgeCheck, Users, FileText } from "lucide-react";
 import { motion, Variants } from "framer-motion";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -9,14 +10,14 @@ const infoCards = [
     {
         icon: <Calendar className="w-10 h-10 text-primary" />,
         title: "Event Dates",
-        desc: "XX-XX-XXXX",
+        desc: "December 10-19, 2025",
         gradient: "from-blue-500/40 to-cyan-400/40",
         glowColor: "rgba(59, 130, 246, 0.3)",
     },
     {
         icon: <Globe className="w-10 h-10 text-primary animate-spin-slow" />,
         title: "Mode",
-        desc: "Hybrid (Online & MMMUT Campus)",
+        desc: "Offline",
         gradient: "from-green-500/40 to-emerald-400/40",
         glowColor: "rgba(34, 197, 94, 0.3)",
     },
@@ -52,16 +53,17 @@ const guidelines = [
     {
         icon: <Users className="text-primary w-5 h-5" />, // Team Size
         title: "Team Size :",
-        details: "4-5 members"
+        details: "3-4 members"
     },
     {
         icon: <FileText className="text-primary w-5 h-5" />, // Submission Format
         title: "Submission Format :",
-        details: "PDF, Max X Pages"
+        details: "PPT "
     },
 ];
 
 const IdeathonInfo: React.FC = () => {
+    const navigate = useNavigate();
     const [tooltip, setTooltip] = useState<string | null>(null);
     const [tooltipPos, setTooltipPos] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
 
@@ -173,15 +175,15 @@ const IdeathonInfo: React.FC = () => {
                     {/* Stage 1 */}
                     <div className="relative z-10 flex-1 min-w-[220px] max-w-xs py-10 bg-card/80 border-2 border-primary rounded-2xl p-6 shadow-[0_0_32px_8px_rgba(6,182,212,0.4)] text-center text-white font-semibold stage-double-border">
                         <div className="text-primary text-lg font-bold mb-2">STAGE 1</div>
-                        <div className="text-base font-medium mb-1">REGISTRATION & IDEA SUBMISSION</div>
-                        <div className="text-primary/80 text-sm">(XX-XX-XXXX)</div>
+                        <div className="text-base font-medium mb-1">REGISTRATION & PPT SUBMISSION</div>
+                        <div className="text-primary/80 text-sm">December 10-15, 2025</div>
                     </div>
                    
                     {/* Stage 2 */}
                     <div className="relative z-10 flex-1 min-w-[220px] max-w-xs py-10 bg-card/80 border-2 border-primary rounded-2xl p-6 shadow-[0_0_32px_8px_rgba(6,182,212,0.4)] text-center text-white font-semibold stage-double-border">
                         <div className="text-primary text-lg font-bold mb-2">STAGE 2</div>
                         <div className="text-base font-medium mb-1">SHORTLISTING & MENTORSHIP</div>
-                        <div className="text-primary/80 text-sm">(XX-XX-XXXX)</div>
+                        <div className="text-primary/80 text-sm">December 17, 2025</div>
                     </div>
                     {/* Connector (optional, can be removed for more separation) */}
                     {/* <div className="hidden md:block absolute left-2/3 top-1/2 w-1/3 h-0 border-t-2 border-dashed border-cyan-400 z-0" style={{transform: 'translateY(-50%)'}}></div> */}
@@ -189,7 +191,7 @@ const IdeathonInfo: React.FC = () => {
                     <div className="relative z-10 flex-1 min-w-[220px] max-w-xs py-10 bg-card/80 border-2 border-primary rounded-2xl p-6 shadow-[0_0_32px_8px_rgba(6,182,212,0.4)] text-center text-white font-semibold stage-double-border">
                         <div className="text-primary text-lg font-bold mb-2">STAGE 3</div>
                         <div className="text-base font-medium mb-1">FINAL PRESENTATION <span className="text-white font-normal">| WINNERS</span></div>
-                        <div className="text-primary/80 text-sm">(XX-XX-XXXX)</div>
+                        <div className="text-primary/80 text-sm">December 18, 2025</div>
                     </div>
                 </div>
                                 </section>
@@ -239,7 +241,8 @@ const IdeathonInfo: React.FC = () => {
                                     <button
                                         className="register-now-btn"
                                         onClick={() => {
-                                            window.open("#", "_blank");
+                                            // navigate('/ideathon/register');
+                                            navigate('/');
                                         }}
                                     >
                                         Register Now
