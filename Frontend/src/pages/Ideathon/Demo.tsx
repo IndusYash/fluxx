@@ -128,7 +128,7 @@ const ModernCountdownTimer = ({ timeLeft }) => {
 
 
       <div className="modern-countdown-container">
-        <div className="countdown-label-text font-extrabold">Going Live In</div>
+        <div className="countdown-label-text font-extrabold">Registrations closing in</div>
         
         <div className="countdown-units">
           <div className="countdown-box">

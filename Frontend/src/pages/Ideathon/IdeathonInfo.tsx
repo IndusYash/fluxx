@@ -24,7 +24,7 @@ const infoCards = [
     {
         icon: <Trophy className="w-10 h-10 text-primary animate-pulse" />,
         title: "Prize Pool",
-        desc: "₹50,000+ & Incubation",
+        desc: "Exciting Goodies, Certificates & Patent Grants,etc",
         gradient: "from-yellow-400/40 to-orange-400/40",
         glowColor: "rgba(251, 191, 36, 0.3)",
     },
