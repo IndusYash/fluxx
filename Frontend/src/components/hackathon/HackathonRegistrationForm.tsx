@@ -306,10 +306,9 @@ const HackathonRegistrationForm: React.FC = () => {
           message = "One of your team member is already registered with us.";
         } else if (field === "leaderPhone") {
           message = "Please use a different phone number of leader.";
-        }else if(field === "phone"){
+        } else if (field === "phone") {
           message = "Please use a different phone number.";
-        }
-         else if (field === "leaderEmail" || field === "email") {
+        } else if (field === "leaderEmail" || field === "email") {
           message = "Please use a different email address.";
         } else if (field === "teamName" || field === "team") {
           message = "This team name is already taken.";
@@ -391,11 +390,16 @@ const HackathonRegistrationForm: React.FC = () => {
       if (dupMatch) {
         const field = dupMatch[1].toLowerCase();
         let friendly = "Please use a different value.";
-        if (field.includes("phone")) friendly = "Please use a different phone number.";
-        else if (field.includes("leader") && field.includes("roll")) friendly = "Please use a different leader roll number.";
-        else if (field.includes("roll")) friendly = "Please use a different team member roll number.";
-        else if (field.includes("email")) friendly = "Please use a different email address.";
-        else if (field.includes("teamname") || field.includes("team")) friendly = "Please use a different team name.";
+        if (field.includes("phone"))
+          friendly = "Please use a different phone number.";
+        else if (field.includes("leader") && field.includes("roll"))
+          friendly = "Please use a different leader roll number.";
+        else if (field.includes("roll"))
+          friendly = "Please use a different team member roll number.";
+        else if (field.includes("email"))
+          friendly = "Please use a different email address.";
+        else if (field.includes("teamname") || field.includes("team"))
+          friendly = "Please use a different team name.";
 
         toast({
           title: friendly,
@@ -579,12 +583,27 @@ const HackathonRegistrationForm: React.FC = () => {
 
             <FileUpload
               accept=".pdf"
-              label="Upload PPT (PDF format)"
+              label={
+                <div className="flex items-center justify-between w-full">
+                  <span>Upload PPT</span>
+
+                  <a
+                    href="https://docs.google.com/presentation/d/1IHBSY2qVtRHYhEK4Oand0FPVZPilFR_m/edit?usp=sharing&ouid=114694869162685465444&rtpof=true&sd=true"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 text-sm text-blue-300 hover:text-blue-200 transition-color"
+                  >
+                    <FileText className="w-4 h-4" />
+                    Download Template
+                  </a>
+                </div>
+              }
               type="pdf"
               value={pptFile}
               onChange={setPptFile}
               error={errors.pptFile}
             />
+
             <p className="text-xs text-muted-foreground mt-1">
               Max file size: 2 MB. Accepted format: PDF.
             </p>
@@ -602,28 +621,32 @@ const HackathonRegistrationForm: React.FC = () => {
             </p>
           </section>
 
-                {/* Mentor Preference (simple, optional) */}
-                <section className="glass-card p-6 space-y-4">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                      <Sparkles className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <h2 className="text-xl font-semibold text-foreground">Mentor Preference (optional)</h2>
-                      {/* <p className="text-sm text-muted-foreground">Enter a preferred mentor's name if you have one. Leave blank to let us assign one.</p> */}
-                    </div>
-                  </div>
+          {/* Mentor Preference (simple, optional) */}
+          <section className="glass-card p-6 space-y-4">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                <Sparkles className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h2 className="text-xl font-semibold text-foreground">
+                  Mentor Preference (optional)
+                </h2>
+                {/* <p className="text-sm text-muted-foreground">Enter a preferred mentor's name if you have one. Leave blank to let us assign one.</p> */}
+              </div>
+            </div>
 
-                  <div className="space-y-2">
-                    <Input
-                      placeholder="Mentor name"
-                      value={mentorPreference}
-                      onChange={(e) => setMentorPreference(e.target.value)}
-                      className="w-full"
-                    />
-                    <p className="text-xs text-muted-foreground">If left blank we'll provide a mentor.</p>
-                  </div>
-                </section>
+            <div className="space-y-2">
+              <Input
+                placeholder="Mentor name"
+                value={mentorPreference}
+                onChange={(e) => setMentorPreference(e.target.value)}
+                className="w-full"
+              />
+              <p className="text-xs text-muted-foreground">
+                If left blank we'll provide a mentor.
+              </p>
+            </div>
+          </section>
 
           {/* Team Leader Section */}
           <section className="glass-card p-6 space-y-4">
