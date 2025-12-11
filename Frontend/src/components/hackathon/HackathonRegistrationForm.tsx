@@ -80,7 +80,8 @@ const HackathonRegistrationForm: React.FC = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Hardcoded mentors with expertise
+  /*
+  // Hardcoded mentors with expertise (commented out - revamp in progress)
   const MENTORS = [
     { name: "Dr. Akshi Kumar", expertise: "" },
     { name: "Dr. Devesh Dubey", expertise: "" },
@@ -116,39 +117,14 @@ const HackathonRegistrationForm: React.FC = () => {
     { name: "Dr. Swapnita Srivastava", expertise: "" },
     { name: "Dr. Vimal Kumar", expertise: "" },
     { name: "Dr. Vipul Narayan", expertise: "" },
-];
+  ];
 
-  // selected mentors in preference order (store names)
-  const [selectedMentors, setSelectedMentors] = useState<string[]>([]);
-  const [showMentorDropdown, setShowMentorDropdown] = useState(false);
-  const [mentorSearch, setMentorSearch] = useState("");
-  const mentorDropdownRef = useRef<HTMLDivElement | null>(null);
+  // New simple mentor preference (single optional field)
+  const [mentorPreference, setMentorPreference] = useState<string>("");
+  */
 
-  useEffect(() => {
-    const onDocClick = (e: MouseEvent) => {
-      if (!mentorDropdownRef.current) return;
-      if (mentorDropdownRef.current.contains(e.target as Node)) return;
-      setShowMentorDropdown(false);
-    };
-    document.addEventListener("click", onDocClick);
-    return () => document.removeEventListener("click", onDocClick);
-  }, []);
-
-  const toggleMentor = (name: string) => {
-    if (selectedMentors.includes(name)) {
-      setSelectedMentors(selectedMentors.filter((m) => m !== name));
-      return;
-    }
-    if (selectedMentors.length >= 5) {
-      toast({ title: "You can only select up to 5 mentors", variant: "destructive", className: "bg-[#0f1117]" });
-      return;
-    }
-    setSelectedMentors([...selectedMentors, name]);
-  };
-
-  const removeSelectedMentor = (index: number) => {
-    setSelectedMentors(selectedMentors.filter((_, i) => i !== index));
-  };
+  // Single optional mentor preference (front-end only). If empty, we'll send 'none'.
+  const [mentorPreference, setMentorPreference] = useState<string>("");
 
   // Dynamic projects
   const [projects, setProjects] = useState<any[]>([]);
@@ -275,10 +251,7 @@ const HackathonRegistrationForm: React.FC = () => {
       newErrors.members = membersErrors;
     }
 
-    // mentors: require exactly 5 preferences
-    if (selectedMentors.length !== 5) {
-      newErrors.mentors = "Please select exactly 5 mentor preferences.";
-    }
+    // mentors: optional single preference handled client-side
 
     setErrors(newErrors);
 
@@ -381,8 +354,8 @@ const HackathonRegistrationForm: React.FC = () => {
         projectName,
         pptLink: pptUrl,
         imageLink: photoUrl,
-        // include ordered mentor preferences
-        mentors: selectedMentors,
+        // include single optional mentor preference (send 'none' when empty)
+        mentors: [mentorPreference?.trim() || "none"],
         leader: mapLeader(leader),
         member1: mapMemberSmall(members[0]),
         member2: mapMemberSmall(members[1]),
@@ -471,8 +444,7 @@ const HackathonRegistrationForm: React.FC = () => {
       if (!m.branch?.trim()) return false;
       if (!m.year?.trim()) return false;
     }
-    // require exactly 5 mentor preferences
-    if (selectedMentors.length !== 5) return false;
+    // mentor preference is optional now; no blocking check
     // check duplicate rolls inside team
     const allRolls = [leader.rollNumber, ...members.map((m) => m.rollNumber)];
     const normalized = allRolls.map((r) =>
@@ -630,102 +602,26 @@ const HackathonRegistrationForm: React.FC = () => {
             </p>
           </section>
 
-                {/* Mentor Preference Section */}
+                {/* Mentor Preference (simple, optional) */}
                 <section className="glass-card p-6 space-y-4">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
                       <Sparkles className="w-5 h-5 text-primary" />
                     </div>
                     <div>
-                      <h2 className="text-xl font-semibold text-foreground">Mentor Preference</h2>
-                      <p className="text-sm text-muted-foreground">Rank mentors by your preference</p>
-                      <p className="text-sm text-foreground/80 mt-2">Select exactly 5 mentors ({selectedMentors.length}/5 selected)</p>
+                      <h2 className="text-xl font-semibold text-foreground">Mentor Preference (optional)</h2>
+                      {/* <p className="text-sm text-muted-foreground">Enter a preferred mentor's name if you have one. Leave blank to let us assign one.</p> */}
                     </div>
                   </div>
 
-                  <div className="space-y-3">
-                    {/* Selected chips */}
-                    <div className="flex flex-wrap gap-2">
-                      {selectedMentors.length === 0 && (
-                        <p className="text-xs text-muted-foreground">No mentors selected yet.</p>
-                      )}
-                      {selectedMentors.map((name, idx) => (
-                        <div key={name} className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-card">
-                          <div className="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center text-sm font-medium">{idx + 1}</div>
-                          <div className="text-sm">{name}</div>
-                          <button type="button" onClick={() => removeSelectedMentor(idx)} className="ml-2 p-1">
-                            <X className="w-4 h-4 text-destructive" />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Search bar + dropdown */}
-                    <div className="relative" ref={mentorDropdownRef}>
-                      <div className="flex items-center gap-2">
-                        <Input
-                          placeholder="Search and select mentors…"
-                          value={mentorSearch}
-                          onChange={(e) => setMentorSearch(e.target.value)}
-                          onFocus={() => setShowMentorDropdown(true)}
-                          className="flex-1"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowMentorDropdown((s) => !s)}
-                          className="p-2 rounded border border-border bg-card"
-                          aria-label="Toggle mentors dropdown"
-                        >
-                          <ChevronDown className="w-4 h-4" />
-                        </button>
-                      </div>
-
-                      {showMentorDropdown && (
-                        <div className="absolute z-40 mt-2 w-full max-h-72 overflow-auto rounded border border-border bg-black p-3 shadow-lg">
-                          <Input
-                            placeholder="Search by name"
-                            value={mentorSearch}
-                            onChange={(e) => setMentorSearch(e.target.value)}
-                            className="w-full mb-2"
-                          />
-
-                          <div className="space-y-1">
-                            {MENTORS.filter((opt) => {
-                              const q = mentorSearch.trim().toLowerCase();
-                              if (!q) return true;
-                              return (
-                                opt.name.toLowerCase().includes(q) ||
-                                opt.expertise.toLowerCase().includes(q)
-                              );
-                            }).map((opt) => {
-                              const isSelected = selectedMentors.includes(opt.name);
-                              const selIndex = selectedMentors.indexOf(opt.name);
-                              return (
-                                <button
-                                  key={opt.name}
-                                  type="button"
-                                  onClick={() => toggleMentor(opt.name)}
-                                  className={`w-full text-left px-3 py-2 rounded flex items-center justify-between ${isSelected ? "bg-primary/10 border border-primary" : "hover:bg-primary/5"}`}
-                                >
-                                  <div className="flex items-center gap-3">
-                                    <User className="w-6 h-6 text-muted-foreground/80" />
-                                    <div className="flex flex-col text-left">
-                                      <span className="text-sm text-foreground">{opt.name}</span>
-                                      <span className="text-xs text-muted-foreground">{opt.expertise}</span>
-                                    </div>
-                                  </div>
-                                  {isSelected && (
-                                    <div className="ml-2">
-                                      <div className="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center text-xs font-medium">{selIndex + 1}</div>
-                                    </div>
-                                  )}
-                                </button>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      )}
-                    </div>
+                  <div className="space-y-2">
+                    <Input
+                      placeholder="Mentor name"
+                      value={mentorPreference}
+                      onChange={(e) => setMentorPreference(e.target.value)}
+                      className="w-full"
+                    />
+                    <p className="text-xs text-muted-foreground">If left blank we'll provide a mentor.</p>
                   </div>
                 </section>
 
