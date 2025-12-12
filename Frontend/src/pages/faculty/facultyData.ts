@@ -3,9 +3,10 @@ import shwetSir from '../../assets/images/shwetSir.jpeg';
 import SatyaSir from '../../assets/images/SatyaSir.jpeg';
 
 import hod from '../../assets/images/RakeshSir.jpg';
-import jpSaini from '../../assets/images/JPSaini.jpg';  // Correct image
-import bkSharma from '../../assets/images/BKSharma.jpg';  // New image import
-import shantanu from '../../assets/images/shantanu.jpg'
+import jpSaini from '../../assets/images/jpSaini.jpg';
+import bkSharma from '../../assets/images/bkSharma.jpg';
+import shantanu from '../../assets/images/shantanu.jpg';
+
 export interface FacultyMember {
   id: number;
   name: string;
@@ -45,7 +46,7 @@ export interface FacultyMember {
   phdSupervised?: number;
   additionalInfo?: string;
 }
-//recommit
+
 export const facultyData: FacultyMember[] = [
 
   // ⭐ UNDER GUIDANCE — Prof. J.P. Saini
@@ -54,9 +55,7 @@ export const facultyData: FacultyMember[] = [
     name: "Prof. J.P. Saini",
     title: "Hon'ble Vice Chancellor",
     department: "",
-    specialization: [
-      
-    ],
+    specialization: [],
     email: "",
     phone: "+91-XXXXXXXXXX",
     profileImage: jpSaini,
@@ -88,7 +87,6 @@ export const facultyData: FacultyMember[] = [
     description:
       "Leading the Computer Science and Engineering department with extensive expertise in mobile computing and distributed systems.",
     isHOD: true,
-
     qualification: "PhD / IIT Roorkee",
     teachingExperienceUG: 32,
     teachingExperiencePG: 28,
@@ -100,7 +98,7 @@ export const facultyData: FacultyMember[] = [
     additionalInfo: "Recipient of Best Teacher Award."
   },
 
-  // 👨‍🏫 FACULTY COORDINATORS — Dr. Satya Prakash Yadav
+  // ⭐ Dr. Satya Prakash Yadav
   {
     id: 2,
     name: "Dr. Satya Prakash Yadav",
@@ -126,11 +124,11 @@ export const facultyData: FacultyMember[] = [
     organisations: "10+"
   },
 
-  // 👨‍🏫 FACULTY COORDINATORS — Dr. Satvik Vats
+  // ⭐ Dr. B.K Sharma
   {
     id: 3,
     name: "Dr. B.K Sharma",
-    title: "Assosiate Professor",
+    title: "Associate Professor",
     department: "Computer Science & Engineering",
     specialization: [
       "Internet of Things (IoT)",
@@ -144,7 +142,6 @@ export const facultyData: FacultyMember[] = [
     description:
       "Specializing in Algorithms, Image Processing, IPR & ML/DL",
     linkedinUrl: "https://www.linkedin.com/in/dr-birendra-kumar-sharma-286633380",
-    
     citations: "1500+",
     patents: "5+",
     internationalConferences: "4+",
@@ -152,9 +149,8 @@ export const facultyData: FacultyMember[] = [
     organisations: "5+",
     review: "12"
   },
-  
 
-  // 👨‍🏫 FACULTY COORDINATORS — Dr. Shwet Ketu
+  // ⭐ Dr. Shwet Ketu
   {
     id: 4,
     name: "Dr. Shwet Ketu",
@@ -180,8 +176,10 @@ export const facultyData: FacultyMember[] = [
     organisations: "5+",
     review: "10"
   },
+
+  // ⭐ Dr. Satvik Vats
   {
-    id: 3,
+    id: 5,
     name: "Dr. Satvik Vats",
     title: "Assistant Professor",
     department: "Computer Science and Engineering",
@@ -199,8 +197,10 @@ export const facultyData: FacultyMember[] = [
     booksPublished: "4+",
     internationalPublications: "18+"
   },
+
+  // ⭐ Dr. Shantanu Shahi
   {
-    id: 5,
+    id: 6,
     name: "Dr. Shantanu Shahi",
     title: "Assistant Professor",
     department: "Computer Science & Engineering",
@@ -216,7 +216,6 @@ export const facultyData: FacultyMember[] = [
     description:
       "Specializing in face recognition algorithms, deep learning, and IoT applications.",
     linkedinUrl: "https://www.linkedin.com/in/dr-shantanu-shahi-5a1b8325b",
-    
     citations: "1000+",
     patents: "6+",
     internationalConferences: "4+",
@@ -224,17 +223,11 @@ export const facultyData: FacultyMember[] = [
     organisations: "5+",
     review: "10"
   }
-  
 ];
 
 // ---------------------------------------------
-// EXPORT SEPARATE LISTS FOR TWO SECTIONS
+// EXPORT SEPARATE LISTS
 // ---------------------------------------------
 
-export const underGuidance = facultyData.filter(
-  (f) => f.id === 0 || f.id === 1
-);
-
-export const facultyCoordinators = facultyData.filter(
-  (f) => f.id >= 2
-);
+export const underGuidance = facultyData.filter((f) => f.id === 0 || f.id === 1);
+export const facultyCoordinators = facultyData.filter((f) => f.id >= 2);
