@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Calendar, MapPin, ArrowRight, ArrowLeft, Award, BookOpen, Target, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import satvikImg from '@/assets/images/SatvikSir.jpg';
-import shantanuImg from '@/assets/images/ShantanuSir.jpg';
+import shantanuImg from '@/assets/images/shantanu.jpg';
 import rakeshImg from '@/assets/images/RakeshSir.jpg';
 import satyaImg from '@/assets/images/SatyaSir.jpeg';
 import shwetImg from '@/assets/images/shwetSir.jpeg';

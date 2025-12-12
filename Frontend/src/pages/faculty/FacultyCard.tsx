@@ -9,119 +9,140 @@ interface FacultyCardProps {
 const FacultyCard: React.FC<FacultyCardProps> = ({ faculty }) => {
   // Helper function to render metrics based on faculty ID
   const renderMetrics = () => {
-    switch (faculty.id) {
-      case 0: // Prof. Rakesh Kumar (HOD) - Display with "+" sign
-        return (
-          <>
-            {faculty.teachingExperienceUG && (
-              <MetricItem value={`${faculty.teachingExperienceUG}+`} label="UG Years" />
-            )}
-            {faculty.teachingExperiencePG && (
-              <MetricItem value={`${faculty.teachingExperiencePG}+`} label="PG Years" />
-            )}
-            {faculty.seminarsOrganised && (
-              <MetricItem value={`${faculty.seminarsOrganised}+`} label="Seminars Org" />
-            )}
-            {faculty.seminarsAttended && (
-              <MetricItem value={`${faculty.seminarsAttended}+`} label="Seminars Att" />
-            )}
-            {faculty.mtechSupervised && (
-              <MetricItem value={`${faculty.mtechSupervised}+`} label="M.Tech" />
-            )}
-            {faculty.phdSupervised && (
-              <MetricItem value={`${faculty.phdSupervised}+`} label="Ph.D" />
-            )}
-          </>
-        );
-      
-      case 1: // Dr. Satya Prakash Yadav
-        return (
-          <>
-            {faculty.articles && (
-              <MetricItem value={faculty.articles} label="Articles" />
-            )}
-            {faculty.citations && (
-              <MetricItem value={faculty.citations} label="Citations" />
-            )}
-            {faculty.experience && (
-              <MetricItem value={`${faculty.experience}+`} label="Years" />
-            )}
-            {faculty.booksPublished && (
-              <MetricItem value={faculty.booksPublished} label="Books" />
-            )}
-            {faculty.organisations && (
-              <MetricItem value={faculty.organisations} label="Orgs" />
-            )}
-          </>
-        );
-      
-      case 2: // Dr. Satvik Vats
-        return (
-          <>
-            {faculty.patents && (
-              <MetricItem value={faculty.patents} label="Patents" />
-            )}
-             {faculty.citations && (
-              <MetricItem value={faculty.citations} label="Citations" />
-            )}
-            {faculty.projectPublications && (
-              <MetricItem value={faculty.projectPublications} label="Projects" />
-            )}
-            {faculty.booksPublished && (
-              <MetricItem value={faculty.booksPublished} label="Books" />
-            )}
-            {faculty.internationalPublications && (
-              <MetricItem value={faculty.internationalPublications} label="Intl Pubs" />
-            )}
-          </>
-        );
-      
-      case 3: // Dr. Shwet Ketu
-        return (
-          <>
-          {faculty.citations && (
-              <MetricItem value={faculty.citations} label="Citations" />
-            )}
-            {faculty.patents && (
-              <MetricItem value={faculty.patents} label="Patents" />
-            )}
-            {faculty.internationalConferences && (
-              <MetricItem value={faculty.internationalConferences} label="Intl Conf" />
-            )}
-            {faculty.internationalPublications && (
-              <MetricItem value={faculty.internationalPublications} label="Intl Pubs" />
-            )}
-            {faculty.organisations && (
-              <MetricItem value={faculty.organisations} label="Orgs" />
-            )}
-            {faculty.review && (
-              <MetricItem value={`${faculty.review}+`} label="Reviews" />
-            )}
-          </>
-        );
-      
-      case 4: // Dr. Shantanu Shahi
-        return (
-          <>
-            {faculty.skills && (
-              <MetricItem value={`${faculty.skills}+`} label="Skills" />
-            )}
-            {faculty.areasOfExpertise && (
-              <MetricItem value={faculty.areasOfExpertise} label="Areas" />
-            )}
-            {faculty.review && (
-              <MetricItem value={`${faculty.review}+`} label="Reviews" />
-            )}
-            {faculty.publications && (
-              <MetricItem value={`${faculty.publications}+`} label="Publications" />
-            )}
-          </>
-        );
-      
-      default:
-        return null;
-    }
-  };
+  // UNDER GUIDANCE (Both: Saini + Rakesh)
+  if (faculty.id === 100 || faculty.id === 101) {
+    return (
+      <>
+        {faculty.teachingExperienceUG && (
+          <MetricItem value={`${faculty.teachingExperienceUG}+`} label="UG Years" />
+        )}
+        {faculty.teachingExperiencePG && (
+          <MetricItem value={`${faculty.teachingExperiencePG}+`} label="PG Years" />
+        )}
+        {faculty.seminarsOrganised && (
+          <MetricItem value={`${faculty.seminarsOrganised}+`} label="Seminars Org" />
+        )}
+        {faculty.seminarsAttended && (
+          <MetricItem value={`${faculty.seminarsAttended}+`} label="Seminars Att" />
+        )}
+        {faculty.mtechSupervised && (
+          <MetricItem value={`${faculty.mtechSupervised}+`} label="M.Tech" />
+        )}
+        {faculty.phdSupervised && (
+          <MetricItem value={`${faculty.phdSupervised}+`} label="Ph.D" />
+        )}
+      </>
+    );
+  }
+
+  // FACULTY COORDINATORS (existing logic)
+  switch (faculty.id) {
+    case 1:
+      return (
+        <>
+          {faculty.articles && <MetricItem value={faculty.articles} label="Articles" />}
+          {faculty.citations && <MetricItem value={faculty.citations} label="Citations" />}
+          {faculty.experience && <MetricItem value={`${faculty.experience}+`} label="Years" />}
+          {faculty.booksPublished && <MetricItem value={faculty.booksPublished} label="Books" />}
+          {faculty.organisations && <MetricItem value={faculty.organisations} label="Orgs" />}
+        </>
+      );
+
+    case 2:
+      return (
+        <>
+          {faculty.patents && <MetricItem value={faculty.patents} label="Patents" />}
+          {faculty.citations && <MetricItem value={faculty.citations} label="Citations" />}
+          {faculty.projectPublications && <MetricItem value={faculty.projectPublicications} label="Projects" />}
+          {faculty.booksPublished && <MetricItem value={faculty.booksPublished} label="Books" />}
+          {faculty.internationalPublications && (
+            <MetricItem value={faculty.internationalPublications} label="Intl Pubs" />
+          )}
+        </>
+      );
+
+    case 3:
+      return (
+        <>
+          {faculty.citations && <MetricItem value={faculty.citations} label="Citations" />}
+          {faculty.patents && <MetricItem value={faculty.patents} label="Patents" />}
+          {faculty.internationalConferences && (
+            <MetricItem value={faculty.internationalConferences} label="Intl Conf" />
+          )}
+          {faculty.internationalPublications && (
+            <MetricItem value={faculty.internationalPublications} label="Intl Pubs" />
+          )}
+          {faculty.organisations && <MetricItem value={faculty.organisations} label="Orgs" />}
+          {faculty.review && <MetricItem value={`${faculty.review}+`} label="Reviews" />}
+        </>
+      );
+
+      case 4:
+      return (
+        <>
+          {faculty.citations && <MetricItem value={faculty.citations} label="Citations" />}
+          {faculty.patents && <MetricItem value={faculty.patents} label="Patents" />}
+          {faculty.internationalConferences && (
+            <MetricItem value={faculty.internationalConferences} label="Intl Conf" />
+          )}
+          {faculty.internationalPublications && (
+            <MetricItem value={faculty.internationalPublications} label="Intl Pubs" />
+          )}
+          {faculty.organisations && <MetricItem value={faculty.organisations} label="Orgs" />}
+          {faculty.review && <MetricItem value={`${faculty.review}+`} label="Reviews" />}
+        </>
+      );
+      case 5:
+      return (
+        <>
+          {faculty.citations && <MetricItem value={faculty.citations} label="Citations" />}
+          {faculty.patents && <MetricItem value={faculty.patents} label="Patents" />}
+          {faculty.internationalConferences && (
+            <MetricItem value={faculty.internationalConferences} label="Intl Conf" />
+          )}
+          {faculty.internationalPublications && (
+            <MetricItem value={faculty.internationalPublications} label="Intl Pubs" />
+          )}
+          {faculty.organisations && <MetricItem value={faculty.organisations} label="Orgs" />}
+          {faculty.review && <MetricItem value={`${faculty.review}+`} label="Reviews" />}
+        </>
+      );
+      case 6:
+      return (
+        <>
+          {faculty.citations && <MetricItem value={faculty.citations} label="Citations" />}
+          {faculty.patents && <MetricItem value={faculty.patents} label="Patents" />}
+          {faculty.internationalConferences && (
+            <MetricItem value={faculty.internationalConferences} label="Intl Conf" />
+          )}
+          {faculty.internationalPublications && (
+            <MetricItem value={faculty.internationalPublications} label="Intl Pubs" />
+          )}
+          {faculty.organisations && <MetricItem value={faculty.organisations} label="Orgs" />}
+          {faculty.review && <MetricItem value={`${faculty.review}+`} label="Reviews" />}
+        </>
+      );
+      case 7:
+      return (
+        <>
+          {faculty.citations && <MetricItem value={faculty.citations} label="Citations" />}
+          {faculty.patents && <MetricItem value={faculty.patents} label="Patents" />}
+          {faculty.internationalConferences && (
+            <MetricItem value={faculty.internationalConferences} label="Intl Conf" />
+          )}
+          {faculty.internationalPublications && (
+            <MetricItem value={faculty.internationalPublications} label="Intl Pubs" />
+          )}
+          {faculty.organisations && <MetricItem value={faculty.organisations} label="Orgs" />}
+          {faculty.review && <MetricItem value={`${faculty.review}+`} label="Reviews" />}
+        </>
+      );
+
+    default:
+      return null;
+  }
+};
+
 
   return (
     <div className="relative w-full h-full
