@@ -43,8 +43,8 @@ import projectsJson from "../../projects.json";
 // ];
 
 // Total team size (including leader)
-const MIN_TEAM_SIZE = 4; // minimum total members including leader
-const MAX_TEAM_SIZE = 5; // maximum total members including leader
+const MIN_TEAM_SIZE = 3; // minimum total members including leader
+const MAX_TEAM_SIZE = 4; // maximum total members including leader
 
 const createEmptyMember = (): TeamMember => ({
   name: "",
@@ -348,7 +348,7 @@ const HackathonRegistrationForm: React.FC = () => {
       });
 
       // Build payload depending on how many additional members were provided (3 or 4)
-      const payload: TeamPayload = {
+      const payloadBase: any = {
         teamName,
         projectName,
         pptLink: pptUrl,
@@ -356,12 +356,15 @@ const HackathonRegistrationForm: React.FC = () => {
         // include single optional mentor preference (send 'none' when empty)
         mentors: [mentorPreference?.trim() || "none"],
         leader: mapLeader(leader),
-        member1: mapMemberSmall(members[0]),
-        member2: mapMemberSmall(members[1]),
-        member3: mapMemberSmall(members[2]),
-        // include member4 only if present
-        ...(members[3] ? { member4: mapMemberSmall(members[3]) } : {}),
-      } as TeamPayload;
+      };
+
+      // include members only when they exist to avoid accessing undefined
+      if (members[0]) payloadBase.member1 = mapMemberSmall(members[0]);
+      if (members[1]) payloadBase.member2 = mapMemberSmall(members[1]);
+      if (members[2]) payloadBase.member3 = mapMemberSmall(members[2]);
+      if (members[3]) payloadBase.member4 = mapMemberSmall(members[3]);
+
+      const payload: TeamPayload = payloadBase as TeamPayload;
 
       // eslint-disable-next-line no-console
       console.log("Submitting team payload:", payload);
