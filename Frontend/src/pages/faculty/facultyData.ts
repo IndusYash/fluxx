@@ -45,7 +45,7 @@ export interface FacultyMember {
   phdSupervised?: number;
   additionalInfo?: string;
 }
-
+//recommit
 export const facultyData: FacultyMember[] = [
 
   // ⭐ UNDER GUIDANCE — Prof. J.P. Saini
