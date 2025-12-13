@@ -143,11 +143,11 @@ export const facultyData: FacultyMember[] = [
       "Specializing in Algorithms, Image Processing, IPR & ML/DL",
     linkedinUrl: "https://www.linkedin.com/in/dr-birendra-kumar-sharma-286633380",
     citations: "1500+",
-    patents: "5+",
+    patents: "9+",
     internationalConferences: "4+",
     internationalPublications: "17+",
     organisations: "5+",
-    review: "12"
+    booksPublished: "8+"
   },
 
   // ⭐ Dr. Shwet Ketu
