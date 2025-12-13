@@ -147,7 +147,8 @@ export const facultyData: FacultyMember[] = [
     internationalConferences: "4+",
     internationalPublications: "17+",
     organisations: "5+",
-    booksPublished: "8+"
+    review: "12",
+    booksPublished: "8+",
   },
 
   // ⭐ Dr. Shwet Ketu
