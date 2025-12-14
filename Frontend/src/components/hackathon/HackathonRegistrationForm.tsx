@@ -43,8 +43,8 @@ import projectsJson from "../../projects.json";
 // ];
 
 // Total team size (including leader)
-const MIN_TEAM_SIZE = 3; // minimum total members including leader
-const MAX_TEAM_SIZE = 4; // maximum total members including leader
+const MIN_TEAM_SIZE = 2; // minimum total members including leader
+const MAX_TEAM_SIZE = 5; // maximum total members including leader
 
 const createEmptyMember = (): TeamMember => ({
   name: "",
