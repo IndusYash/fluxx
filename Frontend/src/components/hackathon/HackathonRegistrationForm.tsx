@@ -591,7 +591,8 @@ const HackathonRegistrationForm: React.FC = () => {
                   <span>Upload PPT</span>
 
                   <a
-                    href="https://docs.google.com/presentation/d/1IHBSY2qVtRHYhEK4Oand0FPVZPilFR_m/edit?usp=sharing&ouid=114694869162685465444&rtpof=true&sd=true"
+                    href="https://docs.google.com/presentation/d/1IHBSY2qVtRHYhEK4Oand0FPVZPilFR_m/export/pptx
+"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-1 text-sm text-blue-300 hover:text-blue-200 transition-color"
