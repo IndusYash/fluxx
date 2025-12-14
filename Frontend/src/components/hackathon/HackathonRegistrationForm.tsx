@@ -68,7 +68,6 @@ interface FormErrors {
 const HackathonRegistrationForm: React.FC = () => {
   const [teamName, setTeamName] = useState("");
   const [projectId, setProjectId] = useState("");
-  const [pptFile, setPptFile] = useState<File | null>(null);
   const [teamPhoto, setTeamPhoto] = useState<File | null>(null);
   const [leader, setLeader] = useState<TeamMember>(createEmptyMember());
   // initialize with minimum required additional members (MIN_TEAM_SIZE - 1)
@@ -225,7 +224,6 @@ const HackathonRegistrationForm: React.FC = () => {
 
     if (!teamName.trim()) newErrors.teamName = "Team name is required";
     if (!projectId) newErrors.projectId = "Please select a project";
-    if (!pptFile) newErrors.pptFile = "PPT file is required";
     if (!teamPhoto) newErrors.teamPhoto = "Team photo is required";
 
     // Enforce total team size between MIN_TEAM_SIZE and MAX_TEAM_SIZE (including leader)
@@ -258,7 +256,6 @@ const HackathonRegistrationForm: React.FC = () => {
     const hasErrors =
       newErrors.teamName ||
       newErrors.projectId ||
-      newErrors.pptFile ||
       newErrors.teamPhoto ||
       newErrors.leader ||
       newErrors.members?.some((e) => Object.keys(e).length > 0) ||
@@ -316,15 +313,12 @@ const HackathonRegistrationForm: React.FC = () => {
         throw new Error(message);
       }
 
-      // 2) upload files to backend upload endpoints
-      if (!pptFile || !teamPhoto) {
+      // 2) upload files to backend upload endpoints (only team photo now)
+      if (!teamPhoto) {
         throw new Error("Missing files");
       }
 
-      const [pptUrl, photoUrl] = await Promise.all([
-        uploadFile(pptFile, "pdf"),
-        uploadFile(teamPhoto, "image"),
-      ]);
+      const photoUrl = await uploadFile(teamPhoto, "image");
 
       // 2) build payload matching backend teamModel
       const selected = projects.find((p) => p.id.toString() === projectId);
@@ -351,7 +345,6 @@ const HackathonRegistrationForm: React.FC = () => {
       const payloadBase: any = {
         teamName,
         projectName,
-        pptLink: pptUrl,
         imageLink: photoUrl,
         // include single optional mentor preference (send 'none' when empty)
         mentors: [mentorPreference?.trim() || "none"],
@@ -380,7 +373,6 @@ const HackathonRegistrationForm: React.FC = () => {
       // Reset form after successful submission
       setTeamName("");
       setProjectId("");
-      setPptFile(null);
       setTeamPhoto(null);
       setLeader(createEmptyMember());
       setMembers(initialMembers);
@@ -426,7 +418,7 @@ const HackathonRegistrationForm: React.FC = () => {
   const isReadyToSubmit = () => {
     if (!teamName.trim()) return false;
     if (!projectId) return false;
-    if (!pptFile || !teamPhoto) return false;
+    if (!teamPhoto) return false;
     // additional members must be between MIN_TEAM_SIZE-1 and MAX_TEAM_SIZE-1
     if (
       members.length < MIN_TEAM_SIZE - 1 ||
@@ -583,34 +575,6 @@ const HackathonRegistrationForm: React.FC = () => {
                 )}
               </div>
             </div>
-
-            <FileUpload
-              accept=".pdf"
-              label={
-                <div className="flex items-center justify-between w-full">
-                  <span>Upload PPT</span>
-
-                  <a
-                    href="https://docs.google.com/presentation/d/1IHBSY2qVtRHYhEK4Oand0FPVZPilFR_m/export/pptx
-"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1 text-sm text-blue-300 hover:text-blue-200 transition-color"
-                  >
-                    <FileText className="w-4 h-4" />
-                    Download Template
-                  </a>
-                </div>
-              }
-              type="pdf"
-              value={pptFile}
-              onChange={setPptFile}
-              error={errors.pptFile}
-            />
-
-            <p className="text-xs text-muted-foreground mt-1">
-              Max file size: 2 MB. Accepted format: PDF.
-            </p>
 
             <FileUpload
               accept="image/*"
