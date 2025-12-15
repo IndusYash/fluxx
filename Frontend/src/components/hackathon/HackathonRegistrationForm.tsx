@@ -496,6 +496,9 @@ const HackathonRegistrationForm: React.FC = () => {
             <span className="font-medium">Problem Statement</span>
             <ExternalLink className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary transition-colors" />
           </a>
+          <div className="mt-3">
+            <a href="/ideathon/upload-ppt" className="text-sm text-primary underline">Already registered? Upload PPT</a>
+          </div>
           {/* <div className="text-sm text-foreground/80 max-w-lg mx-auto space-y-2">
             <strong className="block text-foreground">IMPORTANT</strong>
             <ul className="list-disc list-inside text-sm text-muted-foreground">

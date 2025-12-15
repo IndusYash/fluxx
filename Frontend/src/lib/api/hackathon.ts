@@ -85,3 +85,37 @@ export async function checkTeamExists(teamName?: string, leaderRoll?: string,lea
 
   return payload as { exists: boolean; field?: string };
 }
+
+export async function rollExists(roll: string) {
+  const BASE = (import.meta as any).env?.VITE_REG_API_URL || '/';
+  const res = await fetch(`${BASE}/api/ideathonTeam/roll-exists`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ roll }),
+  });
+
+  const payload = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const msg = payload?.message || 'Check failed';
+    throw new Error(msg);
+  }
+
+  return payload as { exists: boolean; message?: string };
+}
+
+export async function attachPpt(roll: string, pptLink: string) {
+  const BASE = (import.meta as any).env?.VITE_REG_API_URL || '/';
+  const res = await fetch(`${BASE}/api/ideathonTeam/attach-ppt`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ roll, pptLink }),
+  });
+
+  const payload = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const msg = payload?.message || 'Attach failed';
+    throw new Error(msg);
+  }
+
+  return payload;
+}
