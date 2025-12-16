@@ -509,197 +509,28 @@ const HackathonRegistrationForm: React.FC = () => {
           </div> */}
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
-          {/* Team Info Section */}
-          <section className="glass-card p-6 space-y-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                <Rocket className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold text-foreground">
-                  Team Information
-                </h2>
-                <p className="text-sm text-muted-foreground">
-                  Basic details about your team
-                </p>
-              </div>
-            </div>
+        {/*
+          Registration form temporarily disabled.
+          The original form JSX is commented out below to preserve implementation.
+        */}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground">
-                  Team Name
-                </label>
-                <Input
-                  placeholder="Enter your team name"
-                  value={teamName}
-                  onChange={(e) => setTeamName(e.target.value)}
-                  className={errors.teamName ? "border-destructive" : ""}
-                />
-                {errors.teamName && (
-                  <p className="text-xs text-destructive">{errors.teamName}</p>
-                )}
-              </div>
+        {/*
+        <form onSubmit={handleSubmit} className="space-y-8"> ... (original form content hidden) ... </form>
+        */}
 
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium text-foreground">
-                    Select Project
-                  </label>
-
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setShowProjectDetails(true)}
-                    className="h-auto py-1 px-2 text-xs text-primary ml-3"
-                  >
-                    <Info className="w-3 h-3 mr-1" /> View Details
-                  </Button>
-                </div>
-
-                <Select value={projectId} onValueChange={setProjectId}>
-                  <SelectTrigger
-                    className={errors.projectId ? "border-destructive" : ""}
-                  >
-                    <SelectValue placeholder="Choose a project" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[#0f1117] text-white">
-                    {projects.map((p) => (
-                      <SelectItem key={p.id} value={p.id.toString()}>
-                        {p.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {errors.projectId && (
-                  <p className="text-xs text-destructive">{errors.projectId}</p>
-                )}
-              </div>
-            </div>
-
-            <FileUpload
-              accept="image/*"
-              label="Team Photo (make collage of all members)"
-              type="image"
-              value={teamPhoto}
-              onChange={setTeamPhoto}
-              error={errors.teamPhoto}
-            />
-            <p className="text-xs text-muted-foreground mt-1">
-              Max file size: 1 MB. Accepted formats: JPG, PNG, GIF, etc.
-            </p>
-          </section>
-
-          {/* Mentor Preference (simple, optional) */}
-          <section className="glass-card p-6 space-y-4">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold text-foreground">
-                  Mentor Preference (optional)
-                </h2>
-                {/* <p className="text-sm text-muted-foreground">Enter a preferred mentor's name if you have one. Leave blank to let us assign one.</p> */}
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Input
-                placeholder="Mentor name"
-                value={mentorPreference}
-                onChange={(e) => setMentorPreference(e.target.value)}
-                className="w-full"
-              />
-              <p className="text-xs text-muted-foreground">
-                If left blank we'll provide a mentor.
-              </p>
-            </div>
-          </section>
-
-          {/* Team Leader Section */}
-          <section className="glass-card p-6 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                <Users className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold text-foreground">
-                  Team Members
-                </h2>
-                {/* <p className="text-sm text-muted-foreground">
-                  {totalMembers} of {MAX_TEAM_SIZE} members (min {MIN_TEAM_SIZE})
-                </p> */}
-              </div>
-            </div>
-
-            <TeamMemberCard
-              member={leader}
-              index={0}
-              onChange={setLeader}
-              isLeader
-              errors={errors.leader}
-            />
-
-            {members.map((member, index) => (
-              <TeamMemberCard
-                key={index}
-                member={member}
-                index={index + 1}
-                onChange={(m) => updateMember(index, m)}
-                onRemove={
-                  members.length > MIN_TEAM_SIZE - 1
-                    ? () => removeMember(index)
-                    : undefined
-                }
-                errors={errors.members?.[index]}
-              />
-            ))}
-
-            {members.length < MAX_TEAM_SIZE - 1 && (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={addMember}
-                className="w-full border-dashed border-2 hover:border-primary hover:bg-primary/5"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                Add Team Member
-              </Button>
-            )}
-          </section>
-
-          {/* Submit Button */}
-          <div className="flex justify-center pt-4">
-            <Button
-              type="submit"
-              variant="glow"
-              size="lg"
-              disabled={isSubmitting || !isReadyToSubmit()}
-              className="min-w-[200px] bg-[#16A34A]"
-            >
-              {isSubmitting ? (
-                <span className="flex items-center gap-2">
-                  <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                  Submitting...
-                </span>
-              ) : (
-                <span className="flex items-center gap-2">
-                  <Rocket className="w-4 h-4" />
-                  Register Team
-                </span>
-              )}
-            </Button>
-          </div>
-        </form>
+        <div className="glass-card p-8 text-center">
+          <h2 className="text-2xl font-semibold">Registrations Closed</h2>
+          <p className="mt-3 text-muted-foreground">We are no longer accepting new team registrations at this time.</p>
+          <p className="mt-4">
+            If your team is already registered and you need to upload a PPT, please use the <a href="/ideathon/upload-ppt" className="text-primary underline">Upload PPT</a> page.
+          </p>
+        </div>
 
         {/* Footer */}
         <div className="text-center mt-8 text-sm text-muted-foreground">
-          <p>
+          {/* <p>
             All fields are mandatory. Make sure all information is accurate.
-          </p>
+          </p> */}
         </div>
       </div>
       {showProjectDetails && (
