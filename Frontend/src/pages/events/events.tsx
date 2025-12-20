@@ -28,7 +28,7 @@ const EventsPage: React.FC = () => {
       imageUrl: ideathoncomp,
       date: "December 17-19, 2025",
       icon: "WEEK TWO",
-      phase: "Ideathon",
+      phase: "HACKATHON",
       description:
         "The Ideathon 2025, organized from 17th to 19th December 2025, was a great success, witnessing enthusiastic participation, innovative ideas, and collaborative problem-solving throughout the event.",
       attendees: 500,
@@ -55,19 +55,19 @@ const EventsPage: React.FC = () => {
         "The session with Er. Shivesh Sinha, Sr. Technical Program Manager at Intel USA, offered deep insights into the evolution of AI, emerging technological shifts and the rapidly transforming future shaped by intelligent systems.",
       attendees: 300,
     },
+    // {
+    //   id: 4,
+    //   name: "Ideathon 2025",
+    //   imageUrl: hackathon,
+    //   date: "December 10-19, 2025",
+    //   icon: "WEEK TWO",
+    //   phase: "Upcoming: HACKATHON",
+    //   description:
+    //     "Ideathon, our flagship hackathon, brought together passionate innovators and problem-solvers to design real-world tech solutions through creativity, teamwork, and cutting-edge ideas.",
+    //   attendees: 300,
+    // },
     {
       id: 4,
-      name: "Ideathon 2025",
-      imageUrl: hackathon,
-      date: "December 10-19, 2025",
-      icon: "WEEK TWO",
-      phase: "Upcoming: HACKATHON",
-      description:
-        "Ideathon, our flagship hackathon, brought together passionate innovators and problem-solvers to design real-world tech solutions through creativity, teamwork, and cutting-edge ideas.",
-      attendees: 300,
-    },
-    {
-      id: 5,
       name: "Orientation",
       imageUrl: orientation,
       date: "January XX, 20XX",
