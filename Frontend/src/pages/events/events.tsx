@@ -5,6 +5,7 @@ import UpcomingEventsSection from '../../components/sections/events/UpcomingEven
 import Timeline from '../../components/sections/events/timeline'; // Changed to uppercase 'Timeline'
 import type { TimelineEvent, LatestEvent } from '../../components/sections/events/timeline';
 import xpert_talk from '/src/assets/images/xpert_talk.jpg';
+import ideathoncomp from "/src/assets/images/ideathoncomp.jpg";
 import orientation from '/src/assets/images/orientation_2.jpg';
 import hackathon from '/src/assets/images/hackathon.jpg';
 import expert from '/src/assets/images/expert.jpg';
@@ -23,44 +24,59 @@ const EventsPage: React.FC = () => {
   const timelineEvents: TimelineEvent[] = [
     {
       id: 1,
-      name: "Responsible AI & Sustainability Workshop",
-      imageUrl: xpert_talk,
-      date: "October 10, 2025",
-      icon: "WEEK ONE",       
+      name: "Ideathon 2025",
+      imageUrl: ideathoncomp,
+      date: "December 17-19, 2025",
+      icon: "WEEK TWO",
       phase: "Workshop",
-      description: "The expert session on Responsible AI by Prof. Dr. Dimitrios A. Karras was a great success, with 300+ participants gaining valuable insights and earning e-certificates for their participation.",
-      attendees: 300
+      description:
+        "The Ideathon 2025, organized from 17th to 19th December 2025, was a great success, witnessing enthusiastic participation, innovative ideas, and collaborative problem-solving throughout the event.",
+      attendees: 500,
     },
     {
       id: 2,
+      name: "Responsible AI & Sustainability Workshop",
+      imageUrl: xpert_talk,
+      date: "October 10, 2025",
+      icon: "WEEK ONE",
+      phase: "Workshop",
+      description:
+        "The expert session on Responsible AI by Prof. Dr. Dimitrios A. Karras was a great success, with 300+ participants gaining valuable insights and earning e-certificates for their participation.",
+      attendees: 300,
+    },
+    {
+      id: 3,
       name: "Artificial Intelligence Evolution and Future",
       imageUrl: expert,
       date: "November 16, 2025",
       icon: "WEEK TWO",
       phase: "Workshop",
-      description: "The session with Er. Shivesh Sinha, Sr. Technical Program Manager at Intel USA, offered deep insights into the evolution of AI, emerging technological shifts and the rapidly transforming future shaped by intelligent systems.",
-      attendees: 300
+      description:
+        "The session with Er. Shivesh Sinha, Sr. Technical Program Manager at Intel USA, offered deep insights into the evolution of AI, emerging technological shifts and the rapidly transforming future shaped by intelligent systems.",
+      attendees: 300,
     },
     {
-      id: 3,
+      id: 4,
       name: "Ideathon 2025",
       imageUrl: hackathon,
       date: "December 10-19, 2025",
       icon: "WEEK TWO",
       phase: "Upcoming: HACKATHON",
-      description: "Ideathon, our flagship hackathon, brought together passionate innovators and problem-solvers to design real-world tech solutions through creativity, teamwork, and cutting-edge ideas.",
-      attendees: 300
+      description:
+        "Ideathon, our flagship hackathon, brought together passionate innovators and problem-solvers to design real-world tech solutions through creativity, teamwork, and cutting-edge ideas.",
+      attendees: 300,
     },
     {
-      id: 4,
+      id: 5,
       name: "Orientation",
       imageUrl: orientation,
       date: "January XX, 20XX",
       icon: "WEEK THREE",
       phase: "Upcoming: ORIENTATION",
-      description: "The Grand Level Orientation of Flux is set to welcome a new wave of innovators and tech enthusiasts. The event will introduce students to Flux’s domains and projects, inspiring collaboration, creativity, and a passion for technology.",
-      attendees: 300   },
-     
+      description:
+        "The Grand Level Orientation of Flux is set to welcome a new wave of innovators and tech enthusiasts. The event will introduce students to Flux’s domains and projects, inspiring collaboration, creativity, and a passion for technology.",
+      attendees: 300,
+    },
   ];
 
 
