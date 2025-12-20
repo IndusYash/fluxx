@@ -28,7 +28,7 @@ const EventsPage: React.FC = () => {
       imageUrl: ideathoncomp,
       date: "December 17-19, 2025",
       icon: "WEEK TWO",
-      phase: "Workshop",
+      phase: "Ideathon",
       description:
         "The Ideathon 2025, organized from 17th to 19th December 2025, was a great success, witnessing enthusiastic participation, innovative ideas, and collaborative problem-solving throughout the event.",
       attendees: 500,
