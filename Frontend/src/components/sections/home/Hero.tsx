@@ -405,7 +405,7 @@ useEffect(() => {
     width: "100%",
   }}
 >
-  <motion.button
+  {/* <motion.button
     onClick={handleEvent}
     initial={{ scale: 1 }}
     animate={{ scale: [1, 1.04, 1] }}
@@ -426,7 +426,7 @@ useEffect(() => {
     }}
   >
     🚀 Ideathon Registration
-  </motion.button>
+  </motion.button> */}
 </div>
 
 
