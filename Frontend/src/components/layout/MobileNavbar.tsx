@@ -11,7 +11,6 @@ const sections = [
   { id: "events", label: "Events", path: "/events" },
   { id: "team", label: "Team", path: "/team" },
   { id: "contact", label: "Contact", path: "/contact" },
-  { id: "ideathon", label: "Ideathon", path: "/ideathon" },
 ];
 
 export default function MobileNavbar() {
