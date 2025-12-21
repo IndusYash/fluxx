@@ -46,17 +46,6 @@ const EventsPage: React.FC = () => {
     },
     {
       id: 3,
-      name: "Responsible AI & Sustainability Workshop",
-      imageUrl: xpert_talk,
-      date: "October 10, 2025",
-      icon: "WEEK ONE",
-      phase: "Workshop",
-      description:
-        "The expert session on Responsible AI by Prof. Dr. Dimitrios A. Karras was a great success, with 300+ participants gaining valuable insights and earning e-certificates for their participation.",
-      attendees: 300,
-    },
-    {
-      id: 4,
       name: "Artificial Intelligence Evolution and Future",
       imageUrl: expert,
       date: "November 16, 2025",
@@ -64,6 +53,17 @@ const EventsPage: React.FC = () => {
       phase: "Workshop",
       description:
         "The session with Er. Shivesh Sinha, Sr. Technical Program Manager at Intel USA, offered deep insights into the evolution of AI, emerging technological shifts and the rapidly transforming future shaped by intelligent systems.",
+      attendees: 300,
+    },
+        {
+      id: 4,
+      name: "Responsible AI & Sustainability Workshop",
+      imageUrl: xpert_talk,
+      date: "October 10, 2025",
+      icon: "WEEK ONE",
+      phase: "Workshop",
+      description:
+        "The expert session on Responsible AI by Prof. Dr. Dimitrios A. Karras was a great success, with 300+ participants gaining valuable insights and earning e-certificates for their participation.",
       attendees: 300,
     },
     // {
