@@ -24,6 +24,17 @@ const EventsPage: React.FC = () => {
   const timelineEvents: TimelineEvent[] = [
     {
       id: 1,
+      name: "Orientation",
+      imageUrl: orientation,
+      date: "January XX, 20XX",
+      icon: "WEEK THREE",
+      phase: "Upcoming: ORIENTATION",
+      description:
+        "The Grand Level Orientation of Flux is set to welcome a new wave of innovators and tech enthusiasts. The event will introduce students to Flux’s domains and projects, inspiring collaboration, creativity, and a passion for technology.",
+      attendees: 300,
+    },
+    {
+      id: 2,
       name: "Ideathon 2025",
       imageUrl: ideathoncomp,
       date: "December 17-19, 2025",
@@ -34,7 +45,7 @@ const EventsPage: React.FC = () => {
       attendees: 500,
     },
     {
-      id: 2,
+      id: 3,
       name: "Responsible AI & Sustainability Workshop",
       imageUrl: xpert_talk,
       date: "October 10, 2025",
@@ -45,7 +56,7 @@ const EventsPage: React.FC = () => {
       attendees: 300,
     },
     {
-      id: 3,
+      id: 4,
       name: "Artificial Intelligence Evolution and Future",
       imageUrl: expert,
       date: "November 16, 2025",
@@ -66,17 +77,7 @@ const EventsPage: React.FC = () => {
     //     "Ideathon, our flagship hackathon, brought together passionate innovators and problem-solvers to design real-world tech solutions through creativity, teamwork, and cutting-edge ideas.",
     //   attendees: 300,
     // },
-    {
-      id: 4,
-      name: "Orientation",
-      imageUrl: orientation,
-      date: "January XX, 20XX",
-      icon: "WEEK THREE",
-      phase: "Upcoming: ORIENTATION",
-      description:
-        "The Grand Level Orientation of Flux is set to welcome a new wave of innovators and tech enthusiasts. The event will introduce students to Flux’s domains and projects, inspiring collaboration, creativity, and a passion for technology.",
-      attendees: 300,
-    },
+ 
   ];
 
 
