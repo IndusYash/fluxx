@@ -24,7 +24,6 @@ import Anushka from "../../assets/images/Anuphoto - Anushka Singh.jpg";
 
 // Sophomore member images
 import abhigyanVardhanImage from "../../assets/images/AbhigyanVardhan.jpg";
-import adityaPratapImage from "../../assets/images/AdityaPratap .jpg";
 import anshikaTripathiImage from "../../assets/images/AnshikaTripathi  .jpg";
 import anushkaChaudharyImage from "../../assets/images/AnushkaChaudhary .jpg";
 import atulKumarImage from "../../assets/images/AtulThakur.png";
@@ -34,7 +33,6 @@ import devanshKumarImage from "../../assets/images/DevanshKumar.jpg";
 import divejSinghImage from "../../assets/images/DivejSingh.jpg";
 import harshVermaImage from "../../assets/images/HarshVerma.jpg";
 import jaiKumarImage from "../../assets/images/JaiKumar.jpg";
-import mohdAqdasImage from "../../assets/images/MohdAqdas.jpg";
 import nikhilJaiswalImage from "../../assets/images/NikhilJaiswal .jpg";
 import prakharShuklaImage from "../../assets/images/PrakharShukla.jpg";
 import priyaSinghImage from "../../assets/images/PriyaSingh.jpg";
@@ -192,13 +190,7 @@ const Team: React.FC = () => {
     linkedin: "https://www.linkedin.com/in/abhigyan-vardhan-singh-81aa292a5?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
     image: abhigyanVardhanImage || defaultImage,
   },
-  {
-    name: "Aditya Pratap Singh",
-    role: "Sophomore Year, ECE",
-    email: "adityasingh.mails@gmail.com",
-    linkedin: "https://www.linkedin.com/in/adityaprasingh",
-    image: adityaPratapImage,
-  },
+ 
   {
     name: "Anshika Tripathi",
     role: "Sophomore Year, BBA",
@@ -261,13 +253,6 @@ const Team: React.FC = () => {
     email: "jaikumarsingh1920@gmail.com ",
     linkedin: "https://www.linkedin.com/in/jai-kumar-singh-9b3152319",
     image: jaiKumarImage,
-  },
-  {
-    name: "Mohd Aqdas",
-    role: "Sophomore Year, CSE",
-    email: "aqdas26india@gmail.com",
-    linkedin: "https://www.linkedin.com/in/mohd-aqdas-a05456336?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app ",
-    image: mohdAqdasImage,
   },
   {
     name: "Nikhil Jaiswal",
