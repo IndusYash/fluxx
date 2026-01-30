@@ -22,7 +22,7 @@ const TeamCard = ({ member, index }: TeamCardProps) => {
   const imageSrc = (!member.image || member.image === "/placeholder.svg") ? sampleAvatar : member.image;
 
   return (
-    <div className="bg-card rounded-xl p-6 h-full shadow-lg hover:shadow-2xl transition-all duration-300 group">
+    <div className="bg-black rounded-xl p-6 h-full shadow-lg hover:shadow-2xl transition-all duration-300 group">
       {/* Larger Profile Image */}
       <div className="flex justify-center mb-4">
         {imageSrc && !imgError ? (
