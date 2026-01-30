@@ -349,7 +349,7 @@ const Team: React.FC = () => {
   };
  
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-black">
       <div className="h-16 md:h-20"></div>
       
       <section className="pt-12 pb-16 px-4 sm:px-6 lg:px-8">

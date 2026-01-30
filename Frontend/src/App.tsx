@@ -11,7 +11,7 @@ import EventsPage from "@/pages/events/events";
 import ContactPage from "@/pages/contact/contact";
 import TeamPage from "@/pages/team/team";
 import FDPDetailsPage from "@/components/sections/events/UpcomingEvents/fdp";
-
+import IdeathonPage from "@/pages/Ideathon/Ideathon";
 
 import { Toaster } from "@/components/ui/toaster";
 
@@ -39,7 +39,7 @@ export default function App() {
               <Route path="/events/fdp" element={<FDPDetailsPage />} />
               <Route path="/team" element={<TeamPage isMobile={isMobile} />} />
               <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
-
+              <Route path="/ideathon" element={<IdeathonPage />} />
           
             </Route>
           ) : (
@@ -52,7 +52,7 @@ export default function App() {
               <Route path="/events/fdp" element={<FDPDetailsPage />} />
               <Route path="/team" element={<TeamPage isMobile={isMobile} />} />
               <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
-
+              <Route path="/ideathon" element={<IdeathonPage />} />
               
             </Route>
           )}

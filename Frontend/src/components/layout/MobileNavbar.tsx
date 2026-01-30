@@ -9,6 +9,7 @@ const sections = [
   { id: "about", label: "About", path: "/about" },
   { id: "faculty", label: "Faculty", path: "/faculty" },
   { id: "events", label: "Events", path: "/events" },
+  { id: "ideathon", label: "Ideathon", path: "/ideathon" },
   { id: "team", label: "Team", path: "/team" },
   { id: "contact", label: "Contact", path: "/contact" },
 ];

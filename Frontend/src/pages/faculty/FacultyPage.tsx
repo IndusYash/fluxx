@@ -2,58 +2,71 @@ import React, { useEffect, useRef, useState } from "react";
 import FacultyCard from "./FacultyCard";
 import { underGuidance, facultyCoordinators } from "./facultyData";
 
-// Optimized viewport detection hook
-function useOnScreen(ref: React.RefObject<HTMLDivElement>) {
-  const [isIntersecting, setIntersecting] = useState(false);
+const FacultyPage: React.FC = () => {
+  const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => setIntersecting(entry.isIntersecting),
-      { threshold: 0.2 }
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('data-card-id');
+            if (id) {
+              setVisibleCards((prev) => new Set(prev).add(id));
+              observerRef.current?.unobserve(entry.target);
+            }
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -50px 0px' }
     );
-    if (ref.current) observer.observe(ref.current);
 
-    return () => ref.current && observer.unobserve(ref.current);
-  }, [ref]);
+    return () => {
+      observerRef.current?.disconnect();
+    };
+  }, []);
 
-  return isIntersecting;
-}
+  const cardRef = (element: HTMLDivElement | null, id: string) => {
+    if (element && observerRef.current) {
+      element.setAttribute('data-card-id', id);
+      observerRef.current.observe(element);
+    }
+  };
 
-const FacultyPage: React.FC = () => {
   return (
     <>
       <style>
         {`
-          @keyframes fadeInUp {
-            from { opacity: 0; transform: translate3d(0, 30px, 0); }
-            to { opacity: 1; transform: translate3d(0, 0, 0); }
+          @keyframes fadeSlideUp {
+            from { 
+              opacity: 0;
+              transform: translateY(30px);
+            }
+            to { 
+              opacity: 1;
+              transform: translateY(0);
+            }
           }
 
-          @keyframes slideInLeft {
-            from { opacity: 0; transform: translate3d(-50px, 0, 0); }
-            to { opacity: 1; transform: translate3d(0, 0, 0); }
-          }
-
-          @keyframes slideInRight {
-            from { opacity: 0; transform: translate3d(50px, 0, 0); }
-            to { opacity: 1; transform: translate3d(0, 0, 0); }
-          }
-
-          @keyframes gentleFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-          }
-
-          @keyframes gradientFlow {
-            0% { background-position: 0% 50%; }
+          @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
           }
 
-          .animate-fadeInUp { animation: fadeInUp 0.8s ease-out forwards; }
-          .animate-slideInLeft { animation: slideInLeft 0.8s ease-out forwards; }
-          .animate-slideInRight { animation: slideInRight 0.8s ease-out forwards; }
-          .animate-gentleFloat { animation: gentleFloat 4s ease-in-out infinite; }
+          .card-animate {
+            opacity: 0;
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+          }
+
+          .card-visible {
+            animation: fadeSlideUp 0.7s ease-out forwards;
+          }
+
+          .gradient-text {
+            background-size: 200% auto;
+            animation: gradientShift 3s ease-in-out infinite;
+          }
 
           .faculty-grid {
             display: grid;
@@ -79,7 +92,7 @@ const FacultyPage: React.FC = () => {
             <div className="max-w-6xl mx-auto">
 
               <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                <span className="inline-block animate-gradientFlow bg-gradient-to-r from-blue-400 via-purple-500 to-blue-400 bg-clip-text text-transparent">
+                <span className="inline-block gradient-text bg-gradient-to-r from-blue-400 via-purple-500 to-blue-400 bg-clip-text text-transparent">
                   UNDER GUIDANCE
                 </span>
               </h1>
@@ -90,17 +103,15 @@ const FacultyPage: React.FC = () => {
 
               <div className="flex justify-center flex-col gap-10">
                 {underGuidance.map((faculty, index) => {
-                  const ref = useRef<HTMLDivElement>(null);
-                  const isVisible = useOnScreen(ref);
-
+                  const cardId = `under-guidance-${faculty.id}`;
                   return (
                     <div
                       key={faculty.id}
-                      ref={ref}
-                      className={`max-w-4xl mx-auto ${
-                        isVisible ? "animate-fadeInUp" : "opacity-0"
+                      ref={(el) => cardRef(el, cardId)}
+                      className={`max-w-4xl mx-auto card-animate ${
+                        visibleCards.has(cardId) ? 'card-visible' : ''
                       }`}
-                      style={{ animationDelay: `${index * 200}ms` }}
+                      style={{ animationDelay: visibleCards.has(cardId) ? `${index * 0.1}s` : '0s' }}
                     >
                       <FacultyCard faculty={faculty} />
                     </div>
@@ -117,7 +128,7 @@ const FacultyPage: React.FC = () => {
             <div className="max-w-6xl mx-auto">
 
               <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                <span className="inline-block animate-gradientFlow bg-gradient-to-r from-green-400 via-emerald-500 to-green-400 bg-clip-text text-transparent">
+                <span className="inline-block gradient-text bg-gradient-to-r from-green-400 via-emerald-500 to-green-400 bg-clip-text text-transparent">
                   FACULTY COORDINATORS
                 </span>
               </h1>
@@ -128,21 +139,15 @@ const FacultyPage: React.FC = () => {
 
               <div className="faculty-grid">
                 {facultyCoordinators.map((faculty, index) => {
-                  const ref = useRef<HTMLDivElement>(null);
-                  const isVisible = useOnScreen(ref);
-
+                  const cardId = `coordinator-${faculty.id}`;
                   return (
                     <div
                       key={faculty.id}
-                      ref={ref}
-                      className={`${
-                        isVisible
-                          ? index % 2 === 0
-                            ? "animate-slideInLeft"
-                            : "animate-slideInRight"
-                          : "opacity-0"
+                      ref={(el) => cardRef(el, cardId)}
+                      className={`card-animate ${
+                        visibleCards.has(cardId) ? 'card-visible' : ''
                       }`}
-                      style={{ animationDelay: `${index * 200}ms` }}
+                      style={{ animationDelay: visibleCards.has(cardId) ? `${index * 0.08}s` : '0s' }}
                     >
                       <FacultyCard faculty={faculty} />
                     </div>

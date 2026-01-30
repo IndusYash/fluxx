@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Calendar, MapPin, Users, ArrowRight, Lightbulb, Award } from 'lucide-react';
 import dimitrios from '@/assets/images/dimitrios.png';
 import ideathon from '@/assets/images/ideathon.jpg';
-import atalFdp from '@/assets/images/atalFdp.jpeg';
+import orientation from '@/assets/images/orientation_2.jpg';
 const RAW_API_BASE = (import.meta.env as any).VITE_API_BASE_URL ?? (import.meta.env as any).VITE_API_BASE ?? '/api';
 const API_BASE = (RAW_API_BASE || '/api').replace(/\/+$/, ''); // remove trailing slash
 
@@ -27,15 +27,15 @@ export interface EventProps {
 const events: EventProps[] = [
   {
     id: 1,
-    title: 'ATAL Faculty Development Programme',
-    date: 'January 19-24, 2026',
+    title: 'Induction 2026',
+    date: 'Coming Soon',
     description:
-      "Advanced Deep Dive into the Hidden Mathematical Science of Mechanistic Interpretability",
-    imageUrl: atalFdp,
+      "The Grand Level Induction of Flux is set to welcome a new wave of innovators and tech enthusiasts. Join us to explore Flux's domains, exciting projects, and opportunities to collaborate, innovate, and shape the future of technology.",
+    imageUrl: orientation,
     isUpcoming: true,
-    location: 'MMMUT Gorakhpur (Online Mode)',
-    attendees: 300,
-    category: 'Innovation',
+    location: 'MMMUT Gorakhpur',
+    attendees: 500,
+    category: 'Tech',
     prize: '',
     featured: true,
   }
@@ -360,17 +360,11 @@ const EventCard = ({ event, index, showRegister }: { event: EventProps; index: n
                 {event.title}
               </motion.h3>
 
-              {/* Description (conditional) */}
-              {event.id === 1 ? (
-                // ATAL Faculty Development Programme details
-                <div className="text-gray-300 text-base leading-relaxed whitespace-pre-line">
-                  {event.description}
-                </div>
-              ) : (
-                <div className="text-gray-300 text-base leading-relaxed whitespace-pre-line">
-                  {event.description}
-                </div>
-              )}
+              {/* Description */}
+              <div className="text-gray-300 text-base leading-relaxed whitespace-pre-line">
+                {event.description}
+              </div>
+              
               {/* View Detail button for Ideathon */}
               {event.title?.toLowerCase().includes('ideathon') && (
                 <button
@@ -384,13 +378,12 @@ const EventCard = ({ event, index, showRegister }: { event: EventProps; index: n
 
               {showRegister && (
                 <div className="pt-2">
-                  {event.id === 1 ? (
+                  {event.title === 'Induction 2026' ? (
                     <button
-                      onClick={() => navigate('/events/fdp')}
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-full font-semibold shadow-lg"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-gray-500 cursor-not-allowed text-white rounded-full font-semibold shadow-lg"
+                      disabled
                     >
-                      View Details
-                      <ArrowRight className="w-4 h-4" />
+                      Coming Soon
                     </button>
                   ) : (
                     <button

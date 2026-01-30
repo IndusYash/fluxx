@@ -9,6 +9,7 @@ import ideathoncomp from "/src/assets/images/ideathoncomp.jpg";
 import orientation from '/src/assets/images/orientation_2.jpg';
 import hackathon from '/src/assets/images/hackathon.jpg';
 import expert from '/src/assets/images/expert.jpg';
+import atalFdp from '/src/assets/images/atalFdp.jpeg';
 
 // import WhatWeDoSection from '../../components/sections/events/WhatWeDo';
 
@@ -23,14 +24,13 @@ const EventsPage: React.FC = () => {
 
   const timelineEvents: TimelineEvent[] = [
     {
-      id: 1,
-      name: "Orientation",
-      imageUrl: orientation,
-      date: "January XX, 20XX",
+      id: 1,      name: "ATAL Faculty Development Programme",
+      imageUrl: atalFdp,
+      date: "January 19-24, 2026",
       icon: "WEEK THREE",
-      phase: "Upcoming: ORIENTATION",
+      phase: "Workshop",
       description:
-        "The Grand Level Orientation of Flux is set to welcome a new wave of innovators and tech enthusiasts. The event will introduce students to Flux’s domains and projects, inspiring collaboration, creativity, and a passion for technology.",
+        "Advanced Deep Dive into the Hidden Mathematical Science of Mechanistic Interpretability - A comprehensive faculty development programme organized by MMMUT Gorakhpur in collaboration with leading experts in AI and machine learning.",
       attendees: 300,
     },
     {
