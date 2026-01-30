@@ -117,34 +117,13 @@ const Navbar: React.FC = () => {
     >
       <Link
         to={link.path}
-        className={`relative z-10 transition-colors duration-300 flex items-center gap-2 ${
+        className={`relative z-10 transition-colors duration-300 ${
           location.pathname === link.path
             ? "text-[#00FFC6]"
             : "text-gray-300/90 hover:text-[#00FFC6]"
         }`}
       >
-        {link.name === "Events" ? (
-          <motion.span
-            className="relative flex items-center justify-center px-3 py-1 rounded-md font-semibold"
-            style={{
-              border: "1px solid rgba(0,255,198,0.3)",
-              background: "rgba(0,255,198,0.08)",
-            }}
-            animate={{
-              opacity: [1, 0.6, 1],
-              scale: [1, 1.05, 1],
-            }}
-            transition={{
-              duration: 1.8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            {link.name}
-          </motion.span>
-        ) : (
-          link.name
-        )}
+        {link.name}
       </Link>
 
       {/* Active underline */}
