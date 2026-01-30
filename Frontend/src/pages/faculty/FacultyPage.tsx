@@ -5,6 +5,7 @@ import { underGuidance, facultyCoordinators } from "./facultyData";
 const FacultyPage: React.FC = () => {
   const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const [observerReady, setObserverReady] = useState(false);
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
@@ -21,6 +22,8 @@ const FacultyPage: React.FC = () => {
       },
       { threshold: 0.15, rootMargin: '0px 0px -50px 0px' }
     );
+
+    setObserverReady(true);
 
     return () => {
       observerRef.current?.disconnect();
@@ -55,7 +58,13 @@ const FacultyPage: React.FC = () => {
           }
 
           .card-animate {
+            opacity: 1;
+            transform: translateY(0);
+          }
+
+          .card-animate.observer-ready {
             opacity: 0;
+            transform: translateY(30px);
             transition: opacity 0.5s ease-out, transform 0.5s ease-out;
           }
 
@@ -109,8 +118,8 @@ const FacultyPage: React.FC = () => {
                       key={faculty.id}
                       ref={(el) => cardRef(el, cardId)}
                       className={`max-w-4xl mx-auto card-animate ${
-                        visibleCards.has(cardId) ? 'card-visible' : ''
-                      }`}
+                        observerReady ? 'observer-ready' : ''
+                      } ${visibleCards.has(cardId) ? 'card-visible' : ''}`}
                       style={{ animationDelay: visibleCards.has(cardId) ? `${index * 0.1}s` : '0s' }}
                     >
                       <FacultyCard faculty={faculty} />
@@ -145,8 +154,8 @@ const FacultyPage: React.FC = () => {
                       key={faculty.id}
                       ref={(el) => cardRef(el, cardId)}
                       className={`card-animate ${
-                        visibleCards.has(cardId) ? 'card-visible' : ''
-                      }`}
+                        observerReady ? 'observer-ready' : ''
+                      } ${visibleCards.has(cardId) ? 'card-visible' : ''}`}
                       style={{ animationDelay: visibleCards.has(cardId) ? `${index * 0.08}s` : '0s' }}
                     >
                       <FacultyCard faculty={faculty} />
