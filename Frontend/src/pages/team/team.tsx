@@ -341,7 +341,7 @@ const Team: React.FC = () => {
  
   const president: TeamMember = {
     name: "Shivam Rai",
-    role: "President",
+    role: "CSE, Final Year",
     description: "Sets strategic vision and builds partnerships; leads cross-team initiatives and fosters innovation across the society.",
     email: "president@flux.edu",
     linkedin: "https://www.linkedin.com/in/shivam-rai-a64b84298/", 
@@ -354,38 +354,33 @@ const Team: React.FC = () => {
       
       <section className="pt-12 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          {/* Terminal Header */}
-          <div className="mb-16">
-            <div className="flex items-center gap-2 mb-4 font-mono text-sm text-gray-500">
-              <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-red-500" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                <div className="w-3 h-3 rounded-full bg-green-500" />
+          {/* Main Header */}
+          <div className="mb-16 text-center">
+            <div className="inline-block mb-4">
+              <div className="px-4 py-2 rounded-full border border-[#4ade80]/30 bg-[#4ade80]/5">
+                <span className="text-[#4ade80] text-sm font-semibold tracking-wider">OUR TEAM</span>
               </div>
-              <span className="ml-2">team@flux:~$</span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white font-mono">
-              <span className="text-[#4ade80]">$</span> ls -la ./team_members/
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
+              Meet The <span className="bg-gradient-to-r from-[#4ade80] via-[#6CFFF7] to-[#4ade80] bg-clip-text text-transparent">Minds</span> Behind FLUX
             </h1>
-            <p className="text-lg md:text-xl text-gray-400 max-w-3xl">
-              <span className="text-gray-600">#</span> Connect with our passionate leaders driving innovation and building the future of technology
+            <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">
+              Connect with our passionate leaders driving innovation and building the future of technology
             </p>
           </div>
 
 
           {/* President Card */}
           <div className="mb-16">
-            <div className="mb-6 font-mono text-sm text-gray-500">
-              <span className="text-[#4ade80]">flux@mmmut</span>:<span className="text-[#6CFFF7]">~/team</span>$ cat president.txt
+            <div className="flex items-center justify-center gap-4 mb-8">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#4ade80]/50 to-transparent"></div>
+              <h2 className="text-2xl md:text-3xl font-bold text-white">President</h2>
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#4ade80]/50 to-transparent"></div>
             </div>
             <div className="flex justify-center">
               <div className="w-full max-w-lg group">
                 <div className="relative">
                   <div className="absolute -inset-1 bg-gradient-to-r from-primary/60 via-purple-600/60 to-pink-500/60 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-700 animate-spin-slow"></div>
-                  <div className="absolute -top-6 -left-6 w-3 h-3 bg-primary/50 rounded-full opacity-0 group-hover:opacity-100 animate-float transition-opacity duration-300"></div>
-                  <div className="absolute -top-4 -right-8 w-2 h-2 bg-purple-500/50 rounded-full opacity-0 group-hover:opacity-100 animate-float delay-500 transition-opacity duration-300"></div>
-                  <div className="absolute -bottom-6 -right-4 w-4 h-4 bg-pink-500/50 rounded-full opacity-0 group-hover:opacity-100 animate-float delay-1000 transition-opacity duration-300"></div>
-                  <div className="absolute -bottom-4 -left-8 w-2 h-2 bg-primary/50 rounded-full opacity-0 group-hover:opacity-100 animate-float delay-700 transition-opacity duration-300"></div>
                   <div className="relative bg-black rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:-translate-y-2">
                     <TeamCard member={president} index={0} />
                   </div>
@@ -397,8 +392,10 @@ const Team: React.FC = () => {
 
           {/* Team Members Grid */}
           <div className="mb-10">
-            <div className="font-mono text-sm text-gray-500 mb-6">
-              <span className="text-[#4ade80]">flux@mmmut</span>:<span className="text-[#6CFFF7]">~/team</span>$ ls pre_final_year/
+            <div className="flex items-center justify-center gap-4 mb-8">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#6CFFF7]/50 to-transparent"></div>
+              <h2 className="text-2xl md:text-3xl font-bold text-white">Pre-Final Year</h2>
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#6CFFF7]/50 to-transparent"></div>
             </div>
           </div>
           {/* Use flex-wrap so rows with <4 items center; card widths tuned for 4-per-row at lg */}
@@ -410,8 +407,6 @@ const Team: React.FC = () => {
               >
                 <div className="relative">
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/40 via-purple-600/40 to-pink-500/40 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-700 animate-spin-slow"></div>
-                  <div className="absolute -top-2 -right-2 w-2 h-2 bg-primary/60 rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
-                  <div className="absolute -bottom-2 -left-2 w-1.5 h-1.5 bg-purple-500/60 rounded-full opacity-0 group-hover:opacity-100 animate-pulse delay-300"></div>
                   <div className="relative bg-black rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:rotate-1">
                     <TeamCard member={{ ...member, role: cleanRole(member.role) }} index={index + 1} />
                   </div>
@@ -422,8 +417,10 @@ const Team: React.FC = () => {
            
            {/* Team Sophomore Year */}
            <div className="mt-14 mb-6">
-             <div className="font-mono text-lg text-gray-500 mb-6">
-               <span className="text-[#4ade80]">flux@mmmut</span>:<span className="text-[#6CFFF7]">~/team</span>$ ls sophomore_year/
+             <div className="flex items-center justify-center gap-4 mb-8">
+               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
+               <h2 className="text-2xl md:text-3xl font-bold text-white">Sophomore Year</h2>
+               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
              </div>
            </div>
           <div className="flex flex-wrap justify-center gap-6 lg:gap-8">
@@ -436,8 +433,6 @@ const Team: React.FC = () => {
                 >
                   <div className="relative">
                     <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/40 via-purple-600/40 to-pink-500/40 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-700 animate-spin-slow"></div>
-                    <div className="absolute -top-2 -right-2 w-2 h-2 bg-primary/60 rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
-                    <div className="absolute -bottom-2 -left-2 w-1.5 h-1.5 bg-purple-500/60 rounded-full opacity-0 group-hover:opacity-100 animate-pulse delay-300"></div>
                     <div className="relative bg-black rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:rotate-1">
                       <TeamCard member={{ ...member, role: branch }} index={preFinalMembers.length + index + 1} />
                     </div>
