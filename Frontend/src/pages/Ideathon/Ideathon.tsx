@@ -4,6 +4,7 @@ import ShinyText from "./ShinyText";
 // import Demo from "./Demo.tsx";
 import "./Ideathon.css";
 // import IdeathonInfo from "./IdeathonInfo.tsx";
+import ResultHeader from "./ResultHeader";
 
 const MemoizedHeroSection = memo(HeroSection);
 
@@ -539,8 +540,10 @@ const Ideathon = () => {
       position: "relative",
       zIndex: 1,
     }}>
+      {/* Result */}
+       <ResultHeader />
       {/* Terminal Header */}
-      <div style={{ marginBottom: "2rem" }}>
+      {/* <div style={{ marginBottom: "2rem" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
           <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#ff5f56" }}></div>
           <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#ffbd2e" }}></div>
@@ -555,17 +558,17 @@ const Ideathon = () => {
         <div style={{ color: "rgba(255, 255, 255, 0.5)", fontSize: "0.9rem" }}>
           <span style={{ color: "rgba(100, 100, 100, 0.8)" }}>#</span> IDEATHON 2025 - Final Results
         </div>
-      </div>
+      </div> */}
 
       {/* Winners Grid */}
-      <div style={{
+      {/* <div style={{
         display: "grid",
         gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
         gap: "1.5rem",
         marginBottom: "3rem",
-      }}>
+      }}> */}
         {/* 1st Place */}
-        <div className="terminal-card gold">
+        {/* <div className="terminal-card gold">
           <div className="command-prompt">$ echo $FIRST_PLACE</div>
           <div className="output-line" style={{ color: "#FFD700", fontWeight: 700, fontSize: "1.2rem" }}>
             🥇 ZenTechs
@@ -578,10 +581,10 @@ const Ideathon = () => {
           <div className="member-line">Asmit Srivastav</div>
           <div className="member-line">Ashutosh Kumar Nigam</div>
           <div className="member-line">Ishika Saroj</div>
-        </div>
+        </div> */}
 
         {/* 2nd Place */}
-        <div className="terminal-card silver">
+        {/* <div className="terminal-card silver">
           <div className="command-prompt">$ echo $SECOND_PLACE</div>
           <div className="output-line" style={{ color: "#C0C0C0", fontWeight: 700, fontSize: "1.2rem" }}>
             🥈 Team TRINETRA
@@ -592,10 +595,10 @@ const Ideathon = () => {
           <div className="member-line">Aniket Sahu</div>
           <div className="member-line">Amit Kumar Patel</div>
           <div className="member-line">Manish Verma</div>
-        </div>
+        </div> */}
 
         {/* 3rd Place */}
-        <div className="terminal-card bronze">
+        {/* <div className="terminal-card bronze">
           <div className="command-prompt">$ echo $THIRD_PLACE</div>
           <div className="output-line" style={{ color: "#CD7F32", fontWeight: 700, fontSize: "1.2rem" }}>
             🥉 SpiralForge
@@ -608,10 +611,10 @@ const Ideathon = () => {
           <div className="member-line">Nyasi</div>
           <div className="member-line">Pranav Sharma</div>
         </div>
-      </div>
+      </div> */}
 
       {/* Special Appreciation */}
-      <div style={{
+      {/* <div style={{
         marginTop: "3rem",
         paddingTop: "2rem",
         borderTop: "1px solid rgba(100, 100, 100, 0.2)",
@@ -637,7 +640,7 @@ const Ideathon = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Footer prompt */}
       <div style={{
