@@ -57,8 +57,8 @@ const Ideathon = () => {
     style={{
       position: "relative",
       width: "100%",
-      minHeight: "100vh",
-      overflow: "hidden",
+      minHeight: isMobile ? "auto" : "100vh",
+      overflow: isMobile ? "visible" : "hidden",
       zIndex: 1,
     }}
   >
@@ -188,14 +188,15 @@ const Ideathon = () => {
    <div
   ref={containerRef}
   style={{
-    position: "absolute",
+    position: isMobile ? "relative" : "absolute",
     top: 0,
     left: 0,
     width: "100%",
-    height: "100%",
+    height: isMobile ? "auto" : "100%",
+    minHeight: isMobile ? "auto" : "100%",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    justifyContent: isMobile ? "flex-start" : "center",
     alignItems: "center",
     gap: "1.5rem",
     textAlign: "center",
@@ -203,151 +204,13 @@ const Ideathon = () => {
     pointerEvents: "auto",
     paddingInline: "1rem",
     paddingTop: isMobile ? "3rem" : "5rem",
-    paddingBottom: "2rem",
+    paddingBottom: isMobile ? "3rem" : "2rem",
   }}
 >
 
       {/* Title - Moved up by reducing top padding */}
-      <div style={{ width: "100%", maxWidth: "800px", marginTop: isMobile ? "-2rem" : "-4rem" }}>
-        {isMobile ? (
-          <div style={{
-            fontFamily: '"Fira Code", "JetBrains Mono", monospace',
-            background: "rgba(10, 10, 10, 0.8)",
-            border: "1px solid rgba(74, 222, 128, 0.3)",
-            borderRadius: "8px",
-            overflow: "hidden",
-            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(74, 222, 128, 0.1)",
-          }}>
-            {/* Terminal header bar */}
-            <div style={{
-              background: "rgba(20, 20, 20, 0.9)",
-              padding: "0.75rem 1rem",
-              borderBottom: "1px solid rgba(74, 222, 128, 0.2)",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}>
-              <div style={{ display: "flex", gap: "0.4rem" }}>
-                <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#ff5f56" }}></div>
-                <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#ffbd2e" }}></div>
-                <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#27c93f" }}></div>
-              </div>
-              <div style={{ fontSize: "0.7rem", color: "rgba(150, 150, 150, 0.6)" }}>
-                ideathon-results.sh
-              </div>
-            </div>
-            
-            {/* Terminal content */}
-            <div style={{ padding: "1.5rem", color: "rgba(255, 255, 255, 0.9)" }}>
-              {/* Command prompt */}
-              <div style={{ fontSize: "0.85rem", marginBottom: "1rem" }}>
-                <span style={{ color: "#4ade80" }}>flux@mmmut</span>
-                <span style={{ color: "rgba(150, 150, 150, 0.6)" }}>:</span>
-                <span style={{ color: "#6CFFF7" }}>~/events</span>
-                <span style={{ color: "rgba(150, 150, 150, 0.6)" }}>$</span>
-                <span style={{ color: "rgba(255, 255, 255, 0.9)" }}> cat ideathon_2025.txt</span>
-              </div>
-              
-              {/* Divider */}
-              <div style={{ 
-                height: "1px", 
-                background: "linear-gradient(90deg, transparent, rgba(74, 222, 128, 0.3), transparent)",
-                marginBottom: "1rem"
-              }} />
-              
-              {/* Event info grid */}
-              <div style={{ marginBottom: "1.5rem" }}>
-                <div style={{ 
-                  display: "grid", 
-                  gridTemplateColumns: "auto 1fr",
-                  gap: "0.5rem 1rem",
-                  fontSize: "0.8rem",
-                  marginBottom: "1rem"
-                }}>
-                  <span style={{ color: "rgba(150, 150, 150, 0.6)" }}>┌ EVENT:</span>
-                  <span style={{ color: "rgba(255, 255, 255, 0.8)" }}>Innovation Challenge</span>
-                  
-                  <span style={{ color: "rgba(150, 150, 150, 0.6)" }}>├ YEAR:</span>
-                  <span style={{ color: "rgba(255, 255, 255, 0.8)" }}>2025</span>
-                  
-                  <span style={{ color: "rgba(150, 150, 150, 0.6)" }}>├ STATUS:</span>
-                  <span style={{ color: "#27c93f" }}>● COMPLETED</span>
-                  
-                  <span style={{ color: "rgba(150, 150, 150, 0.6)" }}>└ TEAMS:</span>
-                  <span style={{ color: "rgba(255, 255, 255, 0.8)" }}>10 Participating</span>
-                </div>
-              </div>
-              
-              {/* Main title section */}
-              <div style={{
-                background: "rgba(74, 222, 128, 0.05)",
-                border: "1px solid rgba(74, 222, 128, 0.3)",
-                borderLeft: "3px solid #4ade80",
-                padding: "1.25rem 1rem",
-                marginBottom: "1rem",
-              }}>
-                <div style={{ 
-                  fontSize: "0.7rem", 
-                  color: "rgba(74, 222, 128, 0.7)", 
-                  marginBottom: "0.5rem",
-                  letterSpacing: "0.05em"
-                }}>
-                  # EVENT_TITLE
-                </div>
-                <h1 style={{
-                  fontFamily: '"Audiowide", sans-serif',
-                  fontSize: "clamp(1.6rem, 6.5vw, 2.2rem)",
-                  fontWeight: 700,
-                  color: "#4ade80",
-                  margin: 0,
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  lineHeight: 1.2,
-                }}>
-                  IDEATHON 2025
-                </h1>
-              </div>
-              
-              {/* Stats bar */}
-              <div style={{
-                display: "flex",
-                justifyContent: "space-between",
-                fontSize: "0.75rem",
-                padding: "0.75rem",
-                background: "rgba(0, 0, 0, 0.3)",
-                borderRadius: "4px",
-                marginBottom: "1rem",
-              }}>
-                <div style={{ textAlign: "center", flex: 1 }}>
-                  <div style={{ color: "rgba(150, 150, 150, 0.6)", marginBottom: "0.2rem" }}>Winners</div>
-                  <div style={{ color: "#FFD700", fontWeight: 700 }}>3</div>
-                </div>
-                <div style={{ width: "1px", background: "rgba(74, 222, 128, 0.2)" }} />
-                <div style={{ textAlign: "center", flex: 1 }}>
-                  <div style={{ color: "rgba(150, 150, 150, 0.6)", marginBottom: "0.2rem" }}>Special</div>
-                  <div style={{ color: "#6CFFF7", fontWeight: 700 }}>7</div>
-                </div>
-                <div style={{ width: "1px", background: "rgba(74, 222, 128, 0.2)" }} />
-                <div style={{ textAlign: "center", flex: 1 }}>
-                  <div style={{ color: "rgba(150, 150, 150, 0.6)", marginBottom: "0.2rem" }}>Total</div>
-                  <div style={{ color: "#4ade80", fontWeight: 700 }}>10</div>
-                </div>
-              </div>
-              
-              {/* Footer prompt */}
-              <div style={{ 
-                fontSize: "0.8rem",
-                color: "rgba(74, 222, 128, 0.7)",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem"
-              }}>
-                <span>→</span>
-                <span>Scroll down to view results</span>
-              </div>
-            </div>
-          </div>
-        ) : (
+      {!isMobile && (
+        <div style={{ width: "100%", maxWidth: "800px", marginTop: "-4rem" }}>
           <ShinyText
             text="IDEATHON 2025"
             speed={4}
@@ -364,8 +227,164 @@ const Ideathon = () => {
               margin: 0,
             }}
           />
-        )}
-      </div>
+        </div>
+      )}
+
+      {/* Mobile: Winners and Appreciation Content */}
+      {isMobile && (
+        <div style={{ width: "100%", maxWidth: "600px", paddingTop: "1rem" }}>
+          {/* Title */}
+          <h1 style={{
+            fontFamily: '"Audiowide", sans-serif',
+            fontSize: "clamp(1.8rem, 7vw, 2.5rem)",
+            fontWeight: 700,
+            color: "#4ade80",
+            margin: "0 0 2rem 0",
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            textAlign: "center",
+          }}>
+            IDEATHON 2025
+          </h1>
+
+          {/* Winners Section */}
+          <div style={{ marginBottom: "2rem" }}>
+            <h2 style={{
+              fontFamily: 'monospace',
+              fontSize: "2rem",
+              fontWeight: 700,
+              color: "#fff",
+              textAlign: "center",
+              marginBottom: "1.5rem"
+            }}>
+              Our <span style={{ color: "#4ade80" }}>Winners</span>
+            </h2>
+
+            {/* 1st Place - ZenTechs */}
+            <div style={{
+              background: "linear-gradient(135deg, rgba(234, 179, 8, 0.08), rgba(0, 0, 0, 0.4))",
+              border: "2px solid rgba(234, 179, 8, 0.6)",
+              borderTop: "4px solid #eab308",
+              borderRadius: "8px",
+              padding: "1.25rem",
+              marginBottom: "1rem",
+              boxShadow: "0 0 25px rgba(234, 179, 8, 0.25)"
+            }}>
+              <div style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}>
+                <div style={{ fontSize: "2rem", lineHeight: "1", flexShrink: 0 }}>🥇</div>
+                <div style={{ flex: 1 }}>
+                  <h3 style={{ fontSize: "1.4rem", fontWeight: 700, color: "#fff", margin: 0, marginBottom: "0.75rem", lineHeight: "1.2", textAlign: "center" }}>ZenTechs</h3>
+                  <div style={{ 
+                paddingLeft: "0.75rem", 
+                borderLeft: "3px solid rgba(234, 179, 8, 0.4)", 
+                display: "flex", 
+                flexDirection: "column", 
+                gap: "0.25rem"
+              }}>
+                <div style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.8rem" }}>Devansh Ranjan</div>
+                <div style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.8rem" }}>Bhavesh Agrawal</div>
+                <div style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.8rem" }}>Asmit Srivastav</div>
+                <div style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.8rem" }}>Ashutosh Kumar Nigam</div>
+                <div style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.8rem" }}>Ishika Saroj</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 2nd Place - Team TRINETRA */}
+            <div style={{
+              background: "rgba(74, 222, 128, 0.05)",
+              border: "2px solid rgba(74, 222, 128, 0.4)",
+              borderRadius: "8px",
+              padding: "1.25rem",
+              marginBottom: "1rem"
+            }}>
+              <div style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}>
+                <div style={{ fontSize: "1.85rem", lineHeight: "1", flexShrink: 0 }}>🥈</div>
+                <div style={{ flex: 1 }}>
+                  <h3 style={{ fontSize: "1.5rem", fontWeight: 700, color: "#fff", margin: 0, marginBottom: "0.75rem", lineHeight: "1.2", textAlign: "center" }}>Team TRINETRA</h3>
+                  <div style={{ 
+                paddingLeft: "0.75rem", 
+                borderLeft: "3px solid rgba(74, 222, 128, 0.3)", 
+                display: "flex", 
+                flexDirection: "column", 
+                gap: "0.25rem"
+              }}>
+                <div style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.8rem" }}>Aniket Sahu</div>
+                <div style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.8rem" }}>Amit Kumar Patel</div>
+                <div style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.8rem" }}>Manish Verma</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 3rd Place - SpiralForge */}
+            <div style={{
+              background: "rgba(74, 222, 128, 0.03)",
+              border: "1.5px solid rgba(74, 222, 128, 0.3)",
+              borderRadius: "8px",
+              padding: "1.25rem",
+              marginBottom: "1rem"
+            }}>
+              <div style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}>
+                <div style={{ fontSize: "1.85rem", lineHeight: "1", flexShrink: 0 }}>🥉</div>
+                <div style={{ flex: 1 }}>
+                  <h3 style={{ fontSize: "1.5rem", fontWeight: 700, color: "#fff", margin: 0, marginBottom: "0.75rem", lineHeight: "1.2", textAlign: "center" }}>SpiralForge</h3>
+                  <div style={{ 
+                paddingLeft: "0.75rem", 
+                borderLeft: "3px solid rgba(74, 222, 128, 0.3)", 
+                display: "flex", 
+                flexDirection: "column", 
+                gap: "0.25rem"
+              }}>
+                <div style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.8rem" }}>Kavya Saxena</div>
+                <div style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.8rem" }}>Siddhant Singh</div>
+                <div style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.8rem" }}>Nyasi</div>
+                <div style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.8rem" }}>Pranav Sharma</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Special Appreciation */}
+          <div style={{ marginBottom: "1rem" }}>
+            <h3 style={{
+              fontFamily: 'monospace',
+              fontSize: "1.25rem",
+              fontWeight: 700,
+              color: "#fff",
+              textAlign: "center",
+              marginBottom: "1rem"
+            }}>
+              Special <span style={{ color: "#4ade80" }}>Appreciation</span>
+            </h3>
+
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: "0.75rem"
+            }}>
+              {["TEAM NAVTECH", "Team BLITZ", "Kavach Nexus", "W.I.S.E", "VISIONARY VANGAURDS", "NexSight", "QuadCore"].map((team, idx) => (
+                <div 
+                  key={idx}
+                  style={{
+                    background: "rgba(74, 222, 128, 0.02)",
+                    border: "1px solid rgba(128, 128, 128, 0.3)",
+                    borderRadius: "6px",
+                    padding: "0.75rem 0.5rem",
+                    textAlign: "center"
+                  }}
+                >
+                  <div style={{ color: "rgba(255,255,255,0.8)", fontWeight: 600, fontSize: "0.85rem" }}>
+                    {team}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Countdown - COMMENTED OUT */}
       {/* <div style={{ width: "100%", maxWidth: "300px" }}>
@@ -443,6 +462,7 @@ const Ideathon = () => {
   </div>
 
   {/* Results Content Section - Modern Design */}
+  {!isMobile && (
   <div className="min-h-screen bg-black relative">
     {/* Subtle grid background */}
     <div style={{
@@ -555,6 +575,7 @@ const Ideathon = () => {
       </section>
     </div>
   </div>
+  )}
 
   {/* <IdeathonInfo /> */}
   </div>
