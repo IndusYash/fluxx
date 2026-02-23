@@ -442,15 +442,9 @@ const Ideathon = () => {
     
   </div>
 
-  {/* Winners Section - Terminal Style */}
-  <div style={{
-    minHeight: "100vh",
-    background: "#000000",
-    padding: "3rem 1rem",
-    position: "relative",
-    fontFamily: '"Fira Code", "JetBrains Mono", monospace',
-  }}>
-    {/* Subtle grid background like contact page */}
+  {/* Results Content Section - Modern Design */}
+  <div className="min-h-screen bg-black relative">
+    {/* Subtle grid background */}
     <div style={{
       position: "absolute",
       inset: 0,
@@ -461,195 +455,104 @@ const Ideathon = () => {
       pointerEvents: "none",
     }} />
 
-    <style>{`
-      .terminal-card {
-        background: #000000;
-        border: 1px solid rgba(100, 100, 100, 0.3);
-        border-radius: 8px;
-        padding: 1.5rem;
-        transition: all 0.3s ease;
-        position: relative;
-      }
-
-      .terminal-card:hover {
-        border-color: rgba(74, 222, 128, 0.5);
-        box-shadow: 0 4px 16px rgba(74, 222, 128, 0.1);
-      }
-
-      .terminal-card.gold {
-        border-color: rgba(255, 215, 0, 0.4);
-      }
-
-      .terminal-card.gold:hover {
-        border-color: rgba(255, 215, 0, 0.6);
-        box-shadow: 0 4px 16px rgba(255, 215, 0, 0.15);
-      }
-
-      .terminal-card.silver {
-        border-color: rgba(192, 192, 192, 0.4);
-      }
-
-      .terminal-card.silver:hover {
-        border-color: rgba(192, 192, 192, 0.6);
-        box-shadow: 0 4px 16px rgba(192, 192, 192, 0.15);
-      }
-
-      .terminal-card.bronze {
-        border-color: rgba(205, 127, 50, 0.4);
-      }
-
-      .terminal-card.bronze:hover {
-        border-color: rgba(205, 127, 50, 0.6);
-        box-shadow: 0 4px 16px rgba(205, 127, 50, 0.15);
-      }
-
-      .command-prompt {
-        color: #4ade80;
-        font-size: 0.9rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .output-line {
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 0.9rem;
-        margin-bottom: 0.3rem;
-        padding-left: 1rem;
-      }
-
-      .member-line {
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 0.85rem;
-        padding-left: 2rem;
-        margin-bottom: 0.2rem;
-      }
-
-      .member-line::before {
-        content: '├─';
-        margin-right: 0.5rem;
-        color: rgba(100, 100, 100, 0.6);
-      }
-
-      .member-line:last-of-type::before {
-        content: '└─';
-      }
-    `}</style>
-
-    <div style={{
-      maxWidth: "1200px",
-      margin: "0 auto",
-      position: "relative",
-      zIndex: 1,
-    }}>
-      {/* Result */}
-       <ResultHeader />
-      {/* Terminal Header */}
-      {/* <div style={{ marginBottom: "2rem" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
-          <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#ff5f56" }}></div>
-          <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#ffbd2e" }}></div>
-          <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#27c93f" }}></div>
-          <span style={{ marginLeft: "1rem", color: "rgba(100, 100, 100, 0.8)", fontSize: "0.9rem" }}>
-            results@ideathon2025:~$
-          </span>
+    <div className="max-w-6xl mx-auto px-6 py-12 relative z-10">
+      {/* Winners Section */}
+      <section className="mb-12">
+        {/* Terminal-style header */}
+        <div className="mb-16 text-center">
+          
+          <h2 className="text-4xl md:text-5xl font-bold font-mono text-white">
+            Our <span className="text-[#4ade80]">Winners</span>
+          </h2>
         </div>
-        <div style={{ color: "#4ade80", fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.5rem" }}>
-          $ cat ./winners.txt
-        </div>
-        <div style={{ color: "rgba(255, 255, 255, 0.5)", fontSize: "0.9rem" }}>
-          <span style={{ color: "rgba(100, 100, 100, 0.8)" }}>#</span> IDEATHON 2025 - Final Results
-        </div>
-      </div> */}
 
-      {/* Winners Grid */}
-      {/* <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-        gap: "1.5rem",
-        marginBottom: "3rem",
-      }}> */}
-        {/* 1st Place */}
-        {/* <div className="terminal-card gold">
-          <div className="command-prompt">$ echo $FIRST_PLACE</div>
-          <div className="output-line" style={{ color: "#FFD700", fontWeight: 700, fontSize: "1.2rem" }}>
-            🥇 ZenTechs
-          </div>
-          <div style={{ marginTop: "1rem", marginBottom: "0.5rem", color: "rgba(255, 255, 255, 0.6)", fontSize: "0.85rem" }}>
-            TEAM_MEMBERS=5
-          </div>
-          <div className="member-line">Devansh Ranjan</div>
-          <div className="member-line">Bhavesh Agrawal</div>
-          <div className="member-line">Asmit Srivastav</div>
-          <div className="member-line">Ashutosh Kumar Nigam</div>
-          <div className="member-line">Ishika Saroj</div>
-        </div> */}
-
-        {/* 2nd Place */}
-        {/* <div className="terminal-card silver">
-          <div className="command-prompt">$ echo $SECOND_PLACE</div>
-          <div className="output-line" style={{ color: "#C0C0C0", fontWeight: 700, fontSize: "1.2rem" }}>
-            🥈 Team TRINETRA
-          </div>
-          <div style={{ marginTop: "1rem", marginBottom: "0.5rem", color: "rgba(255, 255, 255, 0.6)", fontSize: "0.85rem" }}>
-            TEAM_MEMBERS=3
-          </div>
-          <div className="member-line">Aniket Sahu</div>
-          <div className="member-line">Amit Kumar Patel</div>
-          <div className="member-line">Manish Verma</div>
-        </div> */}
-
-        {/* 3rd Place */}
-        {/* <div className="terminal-card bronze">
-          <div className="command-prompt">$ echo $THIRD_PLACE</div>
-          <div className="output-line" style={{ color: "#CD7F32", fontWeight: 700, fontSize: "1.2rem" }}>
-            🥉 SpiralForge
-          </div>
-          <div style={{ marginTop: "1rem", marginBottom: "0.5rem", color: "rgba(255, 255, 255, 0.6)", fontSize: "0.85rem" }}>
-            TEAM_MEMBERS=4
-          </div>
-          <div className="member-line">Kavya Saxena</div>
-          <div className="member-line">Siddhant Singh</div>
-          <div className="member-line">Nyasi</div>
-          <div className="member-line">Pranav Sharma</div>
-        </div>
-      </div> */}
-
-      {/* Special Appreciation */}
-      {/* <div style={{
-        marginTop: "3rem",
-        paddingTop: "2rem",
-        borderTop: "1px solid rgba(100, 100, 100, 0.2)",
-      }}>
-        <div style={{ marginBottom: "1.5rem" }}>
-          <div className="command-prompt">$ ls ./special_appreciation/</div>
-        </div>
+        {/* Winners Grid - Top 3 with size based on rank */}
         
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "1rem",
-        }}>
+        <div className="flex flex-col md:flex-row items-end justify-center gap-6 mb-8">
+          {/* 2nd Place - Left - Medium Size */}
+          <div className="w-full md:w-[360px] bg-gradient-to-br from-gray-900/50 to-black border-2 border-[#4ade80]/30 rounded-lg p-6 hover:border-[#4ade80]/60 hover:shadow-2xl hover:shadow-[#4ade80]/20 hover:scale-105 hover:-translate-y-2 transition-all duration-300 group cursor-pointer md:mt-8">
+            <div className="flex items-start gap-4 mb-4">
+              <div className="text-5xl group-hover:scale-110 transition-transform">🥈</div>
+              <div className="flex-1">
+                <div className="text-[#4ade80] text-sm font-mono mb-1">SECOND PLACE</div>
+                <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-[#4ade80] transition-colors">Team TRINETRA</h3>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="text-gray-400 text-sm font-mono">TEAM_MEMBERS = 3</div>
+              <div className="pl-4 border-l-[3px] border-[#4ade80]/30 group-hover:border-[#4ade80]/60 transition-colors space-y-1">
+                <div className="text-gray-300 text-sm">Aniket Sahu</div>
+                <div className="text-gray-300 text-sm">Amit Kumar Patel</div>
+                <div className="text-gray-300 text-sm">Manish Verma</div>
+              </div>
+            </div>
+          </div>
+
+          {/* 1st Place - Center - Largest */}
+          <div className="w-full md:w-[380px] bg-gradient-to-br from-gray-900/50 to-black border-t-[6px] border-t-yellow-500 border-x-2 border-b-2 border-gray-800/50 rounded-lg p-8 hover:border-t-yellow-400 hover:shadow-2xl hover:shadow-yellow-500/30 hover:scale-105 hover:-translate-y-3 transition-all duration-300 group cursor-pointer md:relative md:z-10">
+            <div className="flex items-start gap-4 mb-4">
+              <div className="text-5xl group-hover:scale-125 transition-transform">🥇</div>
+              <div className="flex-1">
+                <div className="text-yellow-500 text-sm font-mono mb-1 group-hover:text-yellow-400 transition-colors">FIRST PLACE</div>
+                <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-yellow-100 transition-colors">ZenTechs</h3>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="text-gray-400 text-sm font-mono">TEAM_MEMBERS = 5</div>
+              <div className="pl-4 border-l-[3px] border-yellow-500/30 group-hover:border-yellow-500/70 transition-colors space-y-1">
+                <div className="text-gray-300 text-sm">Devansh Ranjan</div>
+                <div className="text-gray-300 text-sm">Bhavesh Agrawal</div>
+                <div className="text-gray-300 text-sm">Asmit Srivastav</div>
+                <div className="text-gray-300 text-sm">Ashutosh Kumar Nigam</div>
+                <div className="text-gray-300 text-sm">Ishika Saroj</div>
+              </div>
+            </div>
+          </div>
+
+          {/* 3rd Place - Right - Smallest */}
+          <div className="w-full md:w-[340px] bg-gradient-to-br from-gray-900/50 to-black border-2 border-[#4ade80]/30 rounded-lg p-6 hover:border-[#4ade80]/60 hover:shadow-2xl hover:shadow-[#4ade80]/20 hover:scale-105 hover:-translate-y-2 transition-all duration-300 group cursor-pointer md:mt-8">
+            <div className="flex items-start gap-4 mb-4">
+              <div className="text-5xl group-hover:scale-110 transition-transform">🥉</div>
+              <div className="flex-1">
+                <div className="text-[#4ade80] text-sm font-mono mb-1 group-hover:text-[#6CFFF7] transition-colors">THIRD PLACE</div>
+                <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-[#4ade80] transition-colors">SpiralForge</h3>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="text-gray-400 text-sm font-mono">TEAM_MEMBERS = 4</div>
+              <div className="pl-4 border-l-[3px] border-[#4ade80]/30 group-hover:border-[#4ade80]/60 transition-colors space-y-1">
+                <div className="text-gray-300 text-sm">Kavya Saxena</div>
+                <div className="text-gray-300 text-sm">Siddhant Singh</div>
+                <div className="text-gray-300 text-sm">Nyasi</div>
+                <div className="text-gray-300 text-sm">Pranav Sharma</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Special Appreciation Section */}
+      <section>
+        <div className="mb-12 text-center">
+          
+          <h3 className="text-3xl md:text-4xl font-bold font-mono text-white">
+            Special <span className="text-[#4ade80]">Appreciation</span>
+          </h3>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {["TEAM NAVTECH", "Team BLITZ", "Kavach Nexus", "W.I.S.E", "VISIONARY VANGAURDS", "NexSight", "QuadCore"].map((team, idx) => (
-            <div key={idx} className="terminal-card">
-              <div style={{
-                color: "rgba(255, 255, 255, 0.8)",
-                fontSize: "0.9rem",
-                fontWeight: 600,
-              }}>
+            <div 
+              key={idx}
+              className="bg-gradient-to-br from-gray-900/30 to-black border border-gray-800 rounded-lg p-4 hover:border-[#4ade80]/70 hover:shadow-xl hover:shadow-[#4ade80]/15 hover:scale-105 hover:-translate-y-1 transition-all duration-300 group text-center cursor-pointer"
+            >
+              <div className="text-gray-300 font-semibold text-sm group-hover:text-[#4ade80] group-hover:scale-110 transition-all duration-300">
                 {team}
               </div>
             </div>
           ))}
         </div>
-      </div> */}
-
-      {/* Footer prompt */}
-      <div style={{
-        marginTop: "3rem",
-        color: "rgba(100, 100, 100, 0.6)",
-        fontSize: "0.85rem",
-      }}>
-        <span style={{ color: "#4ade80" }}>results@ideathon2025:~$</span> _
-      </div>
+      </section>
     </div>
   </div>
 
