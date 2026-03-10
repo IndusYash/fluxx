@@ -51,7 +51,7 @@ const start = async () => {
 
       // Self ping every 10 min (Render free tier sleep fix)
       setInterval(() => {
-        fetch("https://onefocus-b-5u0x.onrender.com/ping")
+        fetch("https://flux-backend-1hmq.onrender.com/ping")
           .then(() => console.log("🔁 Pinged self!"))
           .catch(() => console.log("❌ Self ping failed."));
       }, 1000 * 60 * 10);
