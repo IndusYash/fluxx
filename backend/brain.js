@@ -34,28 +34,31 @@ app.use("/api/applications", applications);
 app.get('/healthz', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
-
+app.get('/ping', (req, res) => {
+  res.send('pong')
+});
 const start = async () => {
-  try{
+  try {
     await mongoose.connect(process.env.MONGO_URI);
-  console.log("CONNECTED TO DB");
-  
-  const port = process.env.PORT || 4000;
+    console.log("✅ CONNECTED TO DB");
 
-  app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-  });
-  }
-  catch(err){
-    if (err.name === 'MongooseServerSelectionError') {
-      console.error("\n❌ MONGODB CONNECTION ERROR: Could not connect to Atlas cluster.");
-      console.error("👉 Please ensure your current IP address is whitelisted in MongoDB Atlas.");
-      console.error("👉 See: https://www.mongodb.com/docs/atlas/security-whitelist/\n");
-    } else {
-      console.error("❌ Database connection error:", err.message);
-    }
-    process.exit(1);
+    const port = process.env.PORT || 4000;
+
+    app.listen(port, () => {
+      console.log(`🚀 Server running on port ${port}`);
+
+      // Self ping every 10 min (Render free tier sleep fix)
+      setInterval(() => {
+        fetch("https://flux-backend-1hmq.onrender.com/ping")
+          .then(() => console.log("🔁 Pinged self!"))
+          .catch(() => console.log("❌ Self ping failed."));
+      }, 1000 * 60 * 10);
+    });
+
+  } catch (error) {
+    console.error("❌ DB Connection Failed:", error);
   }
 };
+
 
 start();
