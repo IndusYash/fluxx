@@ -1,4 +1,4 @@
-﻿import React from "react";
+ import React from "react";
 import Threads from "./Threads";
 import { Zap, Users, Rocket, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -16,8 +16,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
 
   return (
     <section className="relative w-full h-full overflow-hidden">
-      {/* Background Threads */}
-      <div className="absolute inset-0 w-full h-full">
+      {/* Background Threads (hidden on mobile) */}
+      <div className="absolute inset-0 w-full h-full hidden sm:block">
         <Threads amplitude={amplitude} distance={distance} />
       </div>
 
