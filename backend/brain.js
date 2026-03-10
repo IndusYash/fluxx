@@ -36,7 +36,9 @@ app.use("/api/applications", applications);
 app.get('/healthz', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
-
+app.get('/ping', (req, res) => {
+  res.send('pong')
+});
 const start = async () => {
   try{
     await mongoose.connect(process.env.MONGO_URI);
@@ -45,13 +47,12 @@ const start = async () => {
   const port = process.env.PORT || 4000;
 
   app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-  });
-  }
-  catch(err){
-    console.log(err);
-    process.exit(1);
-  }
-};
+  setInterval(() => {
+    fetch('https://onefocus-b-5u0x.onrender.com/ping')
+      .then(() => console.log('Pinged self!'))
+      .catch(() => console.log('Self ping failed.'));
+  }, 1000 * 60 * 10);
+});
+
 
 start();
