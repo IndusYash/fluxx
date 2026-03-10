@@ -1,6 +1,7 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
 import cors from "cors";
 import auth from "./routes/auth.js";
 import detailed from "./routes/getDetail.js";
@@ -10,9 +11,6 @@ import ideathonTeam from "./routes/ideathonTeam.js";
 import uploadRoutes from './routes/uploadRoutes.js';
 import applications from './routes/applications.js';
 
-
-dotenv.config();
-
 const app = express();
 
 
@@ -20,7 +18,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(',') : '*',
+  origin: true,
   credentials: true,
 }));
 
@@ -49,7 +47,13 @@ const start = async () => {
   });
   }
   catch(err){
-    console.log(err);
+    if (err.name === 'MongooseServerSelectionError') {
+      console.error("\n❌ MONGODB CONNECTION ERROR: Could not connect to Atlas cluster.");
+      console.error("👉 Please ensure your current IP address is whitelisted in MongoDB Atlas.");
+      console.error("👉 See: https://www.mongodb.com/docs/atlas/security-whitelist/\n");
+    } else {
+      console.error("❌ Database connection error:", err.message);
+    }
     process.exit(1);
   }
 };

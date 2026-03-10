@@ -33,7 +33,7 @@ const applicationSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
   phone: z.string().min(10, "Phone number must be at least 10 digits"),
-  rollNo: z.string().min(1, "Roll number is required"),
+  rollNo: z.string().length(10, "Roll number must be exactly 10 characters"),
   year: z.string().min(1, "Year is required"),
   branch: z.string().min(1, "Branch is required"),
   softSkills: z.string().min(1, "Please mention at least one soft skill"),
@@ -90,14 +90,16 @@ export const FluxApplicationForm = () => {
 
     const payload = {
       name: data.fullName,
+      rollNo: data.rollNo,
       branch: data.branch,
       year: data.year,
       phone: data.phone,
       email: data.email,
       whyJoin: data.whyJoin,
-      softSkills: parseSkills(data.softSkills),
-      hardSkills: parseSkills(data.hardSkills),
-    } as const;
+      softSkills: data.softSkills,
+      hardSkills: data.hardSkills,
+      society: data.society,
+    };
 
     try {
       const res = await fetch(`${API_BASE}/api/applications`, {
