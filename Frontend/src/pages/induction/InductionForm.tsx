@@ -193,7 +193,7 @@ const InductionForm: React.FC = () => {
       if (!formData.year)                                               e.year    = 'Select a year';
       if (!formData.section.trim())                                     e.section = 'Enter your section (e.g. A, B)';
       if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = 'Valid email required';
-      if (!formData.phone || !/^[0-9+\-() ]{6,20}$/.test(formData.phone))         e.phone = 'Valid phone number required';
+      if (!formData.phone || !/^(\d{10}|\+91\s\d{10})$/.test(formData.phone))         e.phone = 'Valid phone number required (e.g. 98XXXXXXXX or +91 98XXXXXXXX)';
       if (!formData.residence.trim())                                   e.residence = 'Residence required';
       if (formData.imageFile) {
         if (!['image/jpeg','image/jpg','image/png'].includes(formData.imageFile.type)) e.imageFile = 'Only JPG/PNG allowed';
