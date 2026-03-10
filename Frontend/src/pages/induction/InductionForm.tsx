@@ -187,7 +187,7 @@ const InductionForm: React.FC = () => {
   const validateStep = (s: number): Record<string, string> => {
     const e: Record<string, string> = {};
     if (s === 1) {
-      if (!/^[a-zA-Z\s]+$/.test(formData.name.trim()))                                        e.name    = 'Full name required';
+      if (!/^[a-zA-Z\s]+$/.test(formData.name.trim()))                                        e.name    = 'Enter valid name';
       if (!formData.rollNo || !/^\d{10}$/.test(formData.rollNo))           e.rollNo  = 'Must be exactly 10 digits';
       if (!formData.branch)                                             e.branch  = 'Select a branch';
       if (!formData.year)                                               e.year    = 'Select a year';
