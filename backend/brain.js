@@ -40,19 +40,27 @@ app.get('/ping', (req, res) => {
   res.send('pong')
 });
 const start = async () => {
-  try{
+  try {
     await mongoose.connect(process.env.MONGO_URI);
-  console.log("CONNECTED TO DB");
-  
-  const port = process.env.PORT || 4000;
+    console.log("✅ CONNECTED TO DB");
 
-  app.listen(port, () => {
-  setInterval(() => {
-    fetch('https://onefocus-b-5u0x.onrender.com/ping')
-      .then(() => console.log('Pinged self!'))
-      .catch(() => console.log('Self ping failed.'));
-  }, 1000 * 60 * 10);
-});
+    const port = process.env.PORT || 4000;
+
+    app.listen(port, () => {
+      console.log(`🚀 Server running on port ${port}`);
+
+      // Self ping every 10 min (Render free tier sleep fix)
+      setInterval(() => {
+        fetch("https://onefocus-b-5u0x.onrender.com/ping")
+          .then(() => console.log("🔁 Pinged self!"))
+          .catch(() => console.log("❌ Self ping failed."));
+      }, 1000 * 60 * 10);
+    });
+
+  } catch (error) {
+    console.error("❌ DB Connection Failed:", error);
+  }
+};
 
 
 start();
