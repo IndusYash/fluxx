@@ -191,7 +191,7 @@ const InductionForm: React.FC = () => {
       if (!formData.rollNo || !/^\d{10}$/.test(formData.rollNo))           e.rollNo  = 'Must be exactly 10 digits';
       if (!formData.branch)                                             e.branch  = 'Select a branch';
       if (!formData.year)                                               e.year    = 'Select a year';
-      if (!formData.section.trim())                                     e.section = 'Enter your section (e.g. A, B)';
+      if (!formData.section || !/^[ABCDabcd]$/.test(formData.section.trim()))                                     e.section = 'Enter your section (e.g. A, B)';
       if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = 'Valid email required';
       if (!formData.phone || !/^(\d{10}|\+91\s\d{10})$/.test(formData.phone))         e.phone = 'Valid phone number required (e.g. 98XXXXXXXX or +91 98XXXXXXXX)';
       if (!formData.residence.trim())                                   e.residence = 'Residence required';
