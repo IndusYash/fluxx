@@ -188,7 +188,7 @@ const InductionForm: React.FC = () => {
     const e: Record<string, string> = {};
     if (s === 1) {
       if (!formData.name.trim())                                        e.name    = 'Full name required';
-      if (!formData.rollNo || formData.rollNo.length !== 10)           e.rollNo  = 'Must be exactly 10 characters';
+      if (!formData.rollNo || !/^\d{10}$/.test(formData.rollNo))           e.rollNo  = 'Must be exactly 10 digits';
       if (!formData.branch)                                             e.branch  = 'Select a branch';
       if (!formData.year)                                               e.year    = 'Select a year';
       if (!formData.section.trim())                                     e.section = 'Enter your section (e.g. A, B)';
