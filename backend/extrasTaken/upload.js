@@ -26,23 +26,27 @@ const upload = multer(); // memory storage
 export const uploadToSupabase = async (fileBuffer, bucket, originalName, mimeType) => {
   if (!supabase) throw new Error('Supabase client not configured');
 
-
-  const now = Date.now();
-  let filename = `file_${now}`;
-  if (originalName) {
- 
-    const parts = originalName.split('.');
-    if (parts.length > 1) {
-      const ext = parts.pop();
-      const name = parts.join('.').replace(/[^a-zA-Z0-9-_]/g, '_').substring(0, 150);
-      filename = `${name}_${now}.${ext}`;
-    } else {
-      filename = `${originalName.replace(/[^a-zA-Z0-9-_]/g, '_')}_${now}`;
+  let path;
+  
+  // If originalName already contains a path (like 'folder/file.ext'), use it as-is
+  if (originalName && originalName.includes('/')) {
+    path = originalName;
+  } else {
+    // Otherwise, generate a unique filename
+    const now = Date.now();
+    let filename = `file_${now}`;
+    if (originalName) {
+      const parts = originalName.split('.');
+      if (parts.length > 1) {
+        const ext = parts.pop();
+        const name = parts.join('.').replace(/[^a-zA-Z0-9-_]/g, '_').substring(0, 150);
+        filename = `${name}_${now}.${ext}`;
+      } else {
+        filename = `${originalName.replace(/[^a-zA-Z0-9-_]/g, '_')}_${now}`;
+      }
     }
+    path = filename;
   }
-
-  const path = filename;
-
 
   const { data, error } = await supabase.storage.from(bucket).upload(path, fileBuffer, {
     contentType: mimeType || undefined,
@@ -51,7 +55,6 @@ export const uploadToSupabase = async (fileBuffer, bucket, originalName, mimeTyp
 
   if (error) throw error;
 
- 
   // Return permanent public URL for public buckets (no signed-url fallback)
   const pub = await supabase.storage.from(bucket).getPublicUrl(path);
   const publicURL = pub?.publicURL || pub?.data?.publicUrl || pub?.data?.publicURL;

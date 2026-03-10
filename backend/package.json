@@ -5,7 +5,8 @@
   "type": "module",
   "main": "brain.js",
   "scripts": {
-    "start": "node brain.js"
+    "start": "node brain.js",
+    "dev": "node --watch brain.js"
   },
   "engines": {
     "node": "18.x"

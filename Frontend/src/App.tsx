@@ -12,6 +12,8 @@ import ContactPage from "@/pages/contact/contact";
 import TeamPage from "@/pages/team/team";
 import FDPDetailsPage from "@/components/sections/events/UpcomingEvents/fdp";
 import IdeathonPage from "@/pages/Ideathon/Ideathon";
+import InductionLanding from "@/pages/induction/LandingPage";
+import InductionForm from "@/pages/induction/InductionForm";
 
 import { Toaster } from "@/components/ui/toaster";
 
@@ -40,7 +42,8 @@ export default function App() {
               <Route path="/team" element={<TeamPage isMobile={isMobile} />} />
               <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
               <Route path="/ideathon" element={<IdeathonPage />} />
-          
+              <Route path="/induction" element={<InductionLanding />} />
+              <Route path="/induction/apply" element={<InductionForm />} />
             </Route>
           ) : (
             // Desktop Routes
@@ -53,7 +56,8 @@ export default function App() {
               <Route path="/team" element={<TeamPage isMobile={isMobile} />} />
               <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
               <Route path="/ideathon" element={<IdeathonPage />} />
-              
+              <Route path="/induction" element={<InductionLanding />} />
+              <Route path="/induction/apply" element={<InductionForm />} />
             </Route>
           )}
         </Routes>

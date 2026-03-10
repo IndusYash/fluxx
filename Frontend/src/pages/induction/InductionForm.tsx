@@ -1,824 +1,1080 @@
-import React, { useState, useEffect } from 'react';
-import { Upload, X, Plus, Check } from 'lucide-react';
-import SkillSelector from '@/components/sections/induction/SkillSelector';
-import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, User } from 'firebase/auth';
+import React, { useState, useRef } from 'react';
+import {
+  Upload, X, Check, ArrowRight, ArrowLeft,
+  User, Phone, MapPin, Github, Zap, BookOpen,
+  Cpu, Building2, ShieldCheck, Sparkles,
+  Star, AlertCircle, Trophy, FileText, Camera,
+  Linkedin, Clock, Layers, Heart, Users, ChevronDown,
+  Code2, Link2, BarChart2, Paperclip,
+} from 'lucide-react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import LightRays from '@/components/sections/induction/LightRays';
 
 interface FormData {
-  name: string;
-  rollNo: string;
-  branch: string;
-  year: string;
-  phone: string;
-  email: string;
-  society: string;
-  whyJoin: string;
-  softSkills: string;
-  hardSkills: string;
-  // strengths: string;
-  // weaknesses: string;
-  githubProfile: string;
-  residence: string;
+  name: string; rollNo: string; branch: string; year: string; section: string;
+  phone: string; email: string; linkedinProfile: string; githubProfile: string; residence: string;
+  domain: string[]; domainReason: string;
+  prevSociety: string; prevRole: string; availability: string;
+  softSkills: string; hardSkills: string;
+  dsaLevel: string; leetcodeHandle: string; codeforcesHandle: string; codechefHandle: string;
+  projectsDesc: string;
+  introduction: string; strengths: string; weaknesses: string; achievements: string;
+  whyJoin: string; expectation: string;
   imageFile: File | null;
+  resumeFile: File | null;
 }
 
+
+const DOMAINS = [
+  { id: 'Technical',  icon: Cpu,      grad: 'from-blue-500/20 to-blue-600/5',    border: 'border-blue-500/25',    text: 'text-blue-400',    ring: 'ring-blue-500/40'    },
+  { id: 'Design',     icon: Layers,   grad: 'from-purple-500/20 to-purple-600/5', border: 'border-purple-500/25',  text: 'text-purple-400',  ring: 'ring-purple-500/40'  },
+  { id: 'Management', icon: Users,    grad: 'from-amber-500/20 to-amber-600/5',   border: 'border-amber-500/25',   text: 'text-amber-400',   ring: 'ring-amber-500/40'   },
+  { id: 'Content',    icon: FileText, grad: 'from-rose-500/20 to-rose-600/5',     border: 'border-rose-500/25',    text: 'text-rose-400',    ring: 'ring-rose-500/40'    },
+  { id: 'Marketing',  icon: Heart,    grad: 'from-[#00FFC6]/20 to-[#00FFC6]/5',  border: 'border-[#00FFC6]/25',   text: 'text-[#00FFC6]',   ring: 'ring-[#00FFC6]/40'   },
+];
+
+const DOMAIN_BLURBS: Record<string,string> = {
+  Technical:  'Build products, write code, explore technology, and solve real engineering problems.',
+  Design:     'Craft visual experiences, create UI/UX designs, branding, and motion graphics.',
+  Management: 'Lead projects, coordinate events, manage teams, and drive operations end-to-end.',
+  Content:    'Write blogs, scripts, social posts, and tell the Flux story through compelling words.',
+  Marketing:  'Grow the brand, manage outreach, partnerships, sponsorships, and PR activities.',
+};
+
+const STEPS = [
+  { id: 1, title: 'Personal',   icon: User,        desc: 'Basic info & photo'     },
+  { id: 2, title: 'Contact',    icon: Phone,       desc: 'Contact & social links' },
+  { id: 3, title: 'Domain',     icon: Layers,      desc: 'Your area of interest'  },
+  { id: 4, title: 'Society',    icon: Building2,   desc: 'Club background'        },
+  { id: 5, title: 'Skills',     icon: Cpu,         desc: 'Skills & Portfolio'    },
+  { id: 6, title: 'About You',  icon: Star,        desc: 'Personality & goals'    },
+  { id: 7, title: 'Why Flux?',  icon: BookOpen,    desc: 'Motivation'             },
+  { id: 8, title: 'Review',     icon: ShieldCheck, desc: 'Final check'            },
+];
+
+const cw = (t: string) => (t.trim() === '' ? 0 : t.trim().split(/\s+/).length);
+
+// Background
+const Bg: React.FC = () => (
+  <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden">
+    <div className="absolute inset-0 bg-[#030507]" />
+    <div className="absolute inset-0 opacity-[0.02]"
+      style={{ backgroundImage: 'radial-gradient(#00FFC6 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+    <div className="absolute -top-60 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-[#00FFC6]/5 blur-[180px]" />
+    <div className="absolute top-1/3 -right-32 w-[450px] h-[450px] rounded-full bg-indigo-600/4 blur-[140px]" />
+    <div className="absolute bottom-0 left-1/4 w-96 h-96 rounded-full bg-violet-700/4 blur-[120px]" />
+  </div>
+);
+
+// Step bar
+const TopStepper: React.FC<{ current: number }> = ({ current }) => {
+  const pct = ((current - 1) / (STEPS.length - 1)) * 100;
+  return (
+    <div className="w-full">
+      <div className="relative flex items-center justify-between">
+        <div className="absolute top-4 inset-x-0 h-px bg-white/6 z-0" />
+        <div className="absolute top-4 left-0 h-px bg-gradient-to-r from-[#00FFC6] to-[#00FFC6]/40 z-0 transition-all duration-700" style={{ width: pct + '%' }} />
+        {STEPS.map((s) => {
+          const Icon = s.icon;
+          const done = current > s.id;
+          const active = current === s.id;
+          return (
+            <div key={s.id} className="relative z-10 flex flex-col items-center gap-1.5">
+              <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border-2 transition-all duration-300
+                ${done ? 'bg-[#00FFC6] border-[#00FFC6] shadow-lg shadow-[#00FFC6]/25'
+                  : active ? 'bg-[#030507] border-[#00FFC6] shadow-[0_0_12px_rgba(0,255,198,0.25)]'
+                  : 'bg-[#030507] border-white/10'}`}>
+                {done ? <Check size={10} strokeWidth={3} className="text-black" /> : <Icon size={10} className={active ? 'text-[#00FFC6]' : 'text-gray-700'} />}
+              </div>
+              <span className={`hidden xl:block text-[9px] font-semibold whitespace-nowrap transition-colors
+                ${active ? 'text-[#00FFC6]' : done ? 'text-gray-500' : 'text-gray-700'}`}>{s.title}</span>
+            </div>
+          );
+        })}
+      </div>
+      <div className="mt-3 flex justify-between items-center">
+        <span className="xl:hidden text-xs font-bold text-[#00FFC6]">{current}. {STEPS[current-1].title}</span>
+        <div className="ml-auto flex items-center gap-2">
+          <div className="w-28 h-1 rounded-full bg-white/8 overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-[#00FFC6] to-[#00e5b3] rounded-full transition-all duration-700" style={{ width: pct + '%' }} />
+          </div>
+          <span className="text-[10px] text-gray-600 w-8 text-right">{Math.round(pct)}%</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Field
+const Field: React.FC<{ label: string; error?: string; required?: boolean; hint?: string; sub?: string; children: React.ReactNode }> =
+  ({ label, error, required, hint, sub, children }) => (
+  <div className="space-y-1.5">
+    <div className="flex justify-between items-baseline">
+      <div className="flex items-baseline gap-2">
+        <label className="text-sm font-semibold text-gray-200">
+          {label}{required && <span className="text-[#00FFC6] ml-0.5">*</span>}
+        </label>
+        {sub && <span className="text-[10px] text-gray-600">{sub}</span>}
+      </div>
+      {hint && <span className="text-[10px] text-gray-600 tabular-nums">{hint}</span>}
+    </div>
+    {children}
+    {error && (
+      <p className="text-[11px] text-red-400 flex items-center gap-1.5 animate-fi">
+        <AlertCircle size={10} className="shrink-0" /> {error}
+      </p>
+    )}
+  </div>
+);
+
+const inp  = 'w-full bg-white/[0.035] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder-gray-700 focus:border-[#00FFC6]/50 focus:bg-[#00FFC6]/[0.03] focus:outline-none transition-all duration-200 hover:border-white/14';
+const sel  = inp + ' [&>option]:bg-[#07090e] [&>option]:text-white cursor-pointer';
+const iInp = inp + ' pl-10';
+
+const SectionHeader: React.FC<{ icon: React.FC<any>; title: string; sub: string }> = ({ icon: Icon, title, sub }) => (
+  <div className="flex items-center gap-3 pb-4 border-b border-white/[0.05] mb-2">
+    <div className="w-11 h-11 rounded-2xl bg-[#00FFC6]/10 border border-[#00FFC6]/20 flex items-center justify-center shrink-0">
+      <Icon size={18} className="text-[#00FFC6]" />
+    </div>
+    <div>
+      <h2 className="text-[15px] font-black text-white tracking-tight">{title}</h2>
+      <p className="text-[11px] text-gray-500 mt-0.5">{sub}</p>
+    </div>
+  </div>
+);
+
+
+const PhotoUpload: React.FC<{ preview: string; file: File | null; onFile: (f: File | null) => void; error?: string }> =
+  ({ preview, file, onFile, error }) => (
+  <div className="flex flex-col items-center gap-3">
+    <div className="relative group cursor-pointer" onClick={() => !preview && document.getElementById('imgup')?.click()}>
+      <div className={`w-28 h-28 rounded-full border-2 overflow-hidden flex items-center justify-center transition-all duration-300
+        ${preview ? 'border-[#00FFC6]/60 shadow-lg shadow-[#00FFC6]/10' : 'border-dashed border-white/15 bg-white/[0.02] group-hover:border-[#00FFC6]/30'}`}>
+        {preview ? <img src={preview} alt="Profile" className="w-full h-full object-cover" />
+          : <div className="flex flex-col items-center gap-1.5">
+              <Camera size={22} className="text-gray-700 group-hover:text-[#00FFC6] transition-colors" />
+              <span className="text-[9px] text-gray-700 group-hover:text-gray-500">Upload</span>
+            </div>}
+      </div>
+      {preview && (
+        <button type="button"
+          onClick={(e) => { e.stopPropagation(); onFile(null); (document.getElementById('imgup') as HTMLInputElement).value = ''; }}
+          className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-red-500/90 hover:bg-red-400 flex items-center justify-center shadow-md transition-colors">
+          <X size={11} className="text-white" />
+        </button>
+      )}
+    </div>
+    <input type="file" accept=".jpg,.jpeg,.png" className="hidden" id="imgup" onChange={e => onFile(e.target.files?.[0] || null)} />
+    <label htmlFor="imgup" className="flex items-center gap-1.5 cursor-pointer text-xs text-gray-500 hover:text-[#00FFC6] transition-colors py-1.5 px-3 rounded-lg hover:bg-[#00FFC6]/5 border border-transparent hover:border-[#00FFC6]/15">
+      <Upload size={11} /> {preview ? 'Change photo' : 'Choose photo'}
+    </label>
+    {file && <p className="text-[10px] text-gray-700">{file.name} · {(file.size/1024).toFixed(0)} KB</p>}
+    <p className="text-[10px] text-gray-700">JPG/PNG · max 5 MB · optional</p>
+    {error && <p className="text-[11px] text-red-400">{error}</p>}
+  </div>
+);
+
+// Domain picker (multi-select)
+const DomainPicker: React.FC<{ value: string[]; onChange: (v: string[]) => void; error?: string }> =
+  ({ value, onChange, error }) => {
+  const toggle = (id: string) =>
+    onChange(value.includes(id) ? value.filter(x => x !== id) : [...value, id]);
+  return (
+  <div className="space-y-2">
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      {DOMAINS.map(({ id, icon: Icon, grad, border, text, ring }) => {
+        const active = value.includes(id);
+        return (
+          <button key={id} type="button" onClick={() => toggle(id)}
+            className={`relative flex flex-col items-center gap-2.5 p-4 rounded-2xl border bg-gradient-to-br transition-all duration-200
+              ${active ? `${grad} ${border} ring-2 ${ring} scale-[1.02] shadow-lg`
+                : 'from-white/[0.02] to-transparent border-white/8 hover:border-white/15 hover:scale-[1.01]'}`}>
+            <Icon size={20} className={active ? text : 'text-gray-600'} />
+            <span className={`text-xs font-bold ${active ? text : 'text-gray-500'}`}>{id}</span>
+            {active && (
+              <div className="absolute top-2 right-2 w-4 h-4 rounded-full bg-[#00FFC6]/15 border border-[#00FFC6]/40 flex items-center justify-center">
+                <Check size={9} className="text-[#00FFC6]" strokeWidth={3} />
+              </div>
+            )}
+          </button>
+        );
+      })}
+    </div>
+    {value.length > 0 && (
+      <p className="text-[11px] text-[#00FFC6]/70 flex items-center gap-1.5">
+        <Check size={10} strokeWidth={3} />
+        {value.length === 1 ? `1 domain selected` : `${value.length} domains selected`}
+      </p>
+    )}
+    {error && <p className="text-[11px] text-red-400 flex items-center gap-1.5"><AlertCircle size={10} />{error}</p>}
+  </div>
+  );
+};
+
+// Main
 const InductionForm: React.FC = () => {
+  const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
-    name: '',
-    rollNo: '',
-    branch: '',
-    year: '',
-    phone: '',
-    email: '',
-    society: '',
-    whyJoin: '',
-    softSkills: '',
-    hardSkills: '',
-    // strengths: '',
-    // weaknesses: '',
-    githubProfile: '',
-    residence: '',
-    imageFile: null
+    name: '', rollNo: '', branch: '', year: '', section: '',
+    phone: '', email: '', linkedinProfile: '', githubProfile: '', residence: '',
+    domain: [], domainReason: '', prevSociety: '', prevRole: '', availability: '',
+    softSkills: '', hardSkills: '',
+    dsaLevel: '', leetcodeHandle: '', codeforcesHandle: '', codechefHandle: '',
+    projectsDesc: '',
+    introduction: '', strengths: '', weaknesses: '', achievements: '',
+    whyJoin: '', expectation: '',
+    imageFile: null,
+    resumeFile: null,
   });
+  const [errors, setErrors]               = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting]   = useState(false);
+  const [isSubmitted, setIsSubmitted]     = useState(false);
+  const [imagePreview, setImagePreview]   = useState('');
+  const topRef = useRef<HTMLDivElement>(null);
 
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [user, setUser] = useState<User | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [imagePreview, setImagePreview] = useState<string>('');
-
-  const countWords = (text: string): number => {
-    return text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+  const set = (k: keyof FormData, v: any) => {
+    setFormData(p => ({ ...p, [k]: v }));
+    setErrors(p => { const n = { ...p }; delete n[k as string]; return n; });
   };
-   const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    // Check initially
-    checkMobile();
-    
-    // Add resize listener
-    window.addEventListener('resize', checkMobile);
-    
-    // Cleanup
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  const handleFile = (file: File | null) => {
+    set('imageFile', file);
+    if (file) { const r = new FileReader(); r.onload = e => setImagePreview(e.target?.result as string); r.readAsDataURL(file); }
+    else setImagePreview('');
+  };
 
-  // Initialize Firebase client app (safe to call on client only)
-  useEffect(() => {
-    try {
-      const firebaseConfig = {
-        apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-        authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-        projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-        appId: import.meta.env.VITE_FIREBASE_APP_ID,
-      };
+  const handleResume = (file: File | null) => {
+    set('resumeFile', file);
+  };
 
-      // Basic guard - only initialize if apiKey exists
-      if (firebaseConfig.apiKey) {
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const unsubscribe = onAuthStateChanged(auth, (u) => {
-          setUser(u);
-          if (u?.email) {
-            setFormData(prev => ({ ...prev, email: u.email || '' }));
-            setErrors(prev => ({ ...prev, email: '' }));
-          }
-        });
-        return unsubscribe;
+  const validateStep = (s: number): Record<string, string> => {
+    const e: Record<string, string> = {};
+    if (s === 1) {
+      if (!formData.name.trim())                                        e.name    = 'Full name required';
+      if (!formData.rollNo || formData.rollNo.length !== 10)           e.rollNo  = 'Must be exactly 10 characters';
+      if (!formData.branch)                                             e.branch  = 'Select a branch';
+      if (!formData.year)                                               e.year    = 'Select a year';
+      if (!formData.section.trim())                                     e.section = 'Enter your section (e.g. A, B)';
+      if (formData.imageFile) {
+        if (!['image/jpeg','image/jpg','image/png'].includes(formData.imageFile.type)) e.imageFile = 'Only JPG/PNG allowed';
+        else if (formData.imageFile.size > 5*1024*1024)                               e.imageFile = 'Max size is 5 MB';
       }
-    } catch (err) {
-      // ignore if firebase not configured in env
-      console.warn('Firebase not configured or failed to initialize', err);
     }
-  }, []);
-
-  const signInWithGoogle = async () => {
-    try {
-      const firebaseConfigExists = import.meta.env.VITE_FIREBASE_API_KEY;
-      if (!firebaseConfigExists) throw new Error('Firebase config missing. Set VITE_FIREBASE_API_KEY etc. in .env');
-
-      const app = initializeApp({
-        apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-        authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-        projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-        appId: import.meta.env.VITE_FIREBASE_APP_ID,
-      });
-
-      const auth = getAuth(app);
-      const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
-      setUser(result.user);
-      // set email into formData and clear email errors
-      handleInputChange('email', result.user.email || '');
-      setErrors(prev => ({ ...prev, email: '' }));
-    } catch (err: any) {
-      console.error('Sign-in error', err);
-      toast.error(`Sign-in failed: ${err?.message || err}`);
+    if (s === 2) {
+      if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = 'Valid email required';
+      if (!formData.phone || !/^[0-9+\-() ]{6,20}$/.test(formData.phone))           e.phone = 'Valid phone number required';
+      if (!formData.residence.trim())                                    e.residence = 'Residence required';
     }
+    if (s === 3) {
+      if (formData.domain.length === 0)                                 e.domain       = 'Please select at least one domain';
+      if (!formData.domainReason.trim())                                 e.domainReason = 'Tell us why you chose these domains';
+      else if (cw(formData.domainReason) > 150)                         e.domainReason = 'Max 150 words';
+    }
+    if (s === 4) {
+      if (!formData.availability)                                        e.availability = 'Please select your availability';
+    }
+    if (s === 5) {
+      if (!formData.softSkills.trim())                                   e.softSkills = 'Required';
+      else if (cw(formData.softSkills) > 100)                           e.softSkills = 'Max 100 words';
+      if (!formData.hardSkills.trim())                                   e.hardSkills = 'Required';
+      else if (cw(formData.hardSkills) > 100)                           e.hardSkills = 'Max 100 words';
+      if (!formData.projectsDesc.trim())                                 e.projectsDesc = 'Describe at least one project';
+      else if (cw(formData.projectsDesc) > 200)                         e.projectsDesc = 'Max 200 words';
+      if (formData.resumeFile) {
+        if (formData.resumeFile.type !== 'application/pdf')              e.resumeFile = 'Only PDF allowed';
+        else if (formData.resumeFile.size > 5*1024*1024)                e.resumeFile = 'Max size is 5 MB';
+      }
+    }
+    if (s === 6) {
+      if (!formData.introduction.trim())                                 e.introduction = 'Required';
+      else if (cw(formData.introduction) > 100)                         e.introduction = 'Max 100 words';
+      if (!formData.strengths.trim())                                    e.strengths = 'Required';
+      else if (cw(formData.strengths) > 100)                            e.strengths = 'Max 100 words';
+      if (!formData.weaknesses.trim())                                   e.weaknesses = 'Required';
+      else if (cw(formData.weaknesses) > 100)                           e.weaknesses = 'Max 100 words';
+    }
+    if (s === 7) {
+      const whyJoinWordCount = cw(formData.whyJoin);
+      if (!formData.whyJoin.trim())                                      e.whyJoin = 'This field is required';
+      else if (whyJoinWordCount < 10)                                   e.whyJoin = `Write at least 10 words (currently ${whyJoinWordCount} word${whyJoinWordCount !== 1 ? 's' : ''})`;
+      else if (whyJoinWordCount > 200)                                  e.whyJoin = 'Max 200 words';
+      if (!formData.expectation.trim())                                  e.expectation = 'This field is required';
+      else if (cw(formData.expectation) > 150)                          e.expectation = 'Max 150 words';
+    }
+    return e;
   };
 
-  const validateField = (name: keyof FormData, value: any): string => {
-    switch (name) {
-      case 'name':
-        if (!value || value.length < 1 || value.length > 200) {
-          return 'Name must be between 1 and 200 characters';
-        }
-        break;
-      case 'rollNo':
-        if (!value || value.length !== 10) {
-          return 'Roll number must be exactly 10 characters';
-        }
-        break;
-      case 'branch':
-        if (!value || value.length < 1 || value.length > 200) {
-          return 'Branch must be between 1 and 200 characters';
-        }
-        break;
-      case 'year':
-        if (!value || value.length < 1 || value.length > 20) {
-          return 'Year must be between 1 and 20 characters';
-        }
-        break;
-      case 'phone':
-        const phoneRegex = /^[0-9+\-() ]{6,20}$/;
-        if (!value || !phoneRegex.test(value)) {
-          return 'Phone number must be 6-20 characters with numbers, +, -, (), or spaces';
-        }
-        break;
-      case 'email':
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!value || !emailRegex.test(value)) {
-          return 'Please enter a valid email address';
-        }
-        break;
-      case 'whyJoin':
-        const whyJoinWords = countWords(value);
-        if (!value || value.trim().length === 0) {
-          return 'This field is required';
-        }
-        if (whyJoinWords > 200) {
-          return 'Response must not exceed 200 words';
-        }
-        break;
-      case 'softSkills':
-      case 'hardSkills':
-      // case 'strengths':
-      // case 'weaknesses':
-        const words = countWords(value);
-        if (!value || value.trim().length === 0) {
-          return 'This field is required';
-        }
-        if (words > 100) {
-          return 'Response must not exceed 100 words';
-        }
-        break;
-      case 'residence':
-        if (!value || value.length < 1 || value.length > 200) {
-          return 'Residence must be between 1 and 200 characters';
-        }
-        break;
-      case 'imageFile':
-        if (value) {
-          if (!(value instanceof File)) {
-            return 'Please select a valid image file';
-          }
-          
-          const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-          if (!allowedTypes.includes(value.type)) {
-            return 'Please select a .jpg, .jpeg, or .png file';
-          }
-          
-          const maxSize = 1024 * 1024;
-          if (value.size > maxSize) {
-            return 'Image size must be less than 1MB';
-          }
-        }
-        break;
-    }
-    return '';
-  };
+  const scrollTop = () => setTimeout(() => topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 40);
 
-  const handleInputChange = (name: keyof FormData, value: any) => {
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
-    // Clear error when user starts typing
-    if (errors[name as string]) {
-      setErrors(prev => ({ ...prev, [name as string]: '' }));
-    }
+  const goNext = () => {
+    const errs = validateStep(step);
+    if (Object.keys(errs).length) { setErrors(errs); scrollTop(); return; }
+    setStep(s => Math.min(s + 1, STEPS.length));
+    scrollTop();
   };
+  const goBack = () => { setStep(s => Math.max(s - 1, 1)); scrollTop(); };
 
-  const handleFileChange = (file: File | null) => {
-    setFormData(prev => ({ ...prev, imageFile: file }));
-    
-    // Clear error when user selects a file
-    if (errors['imageFile']) {
-      setErrors(prev => ({ ...prev, imageFile: '' }));
-    }
-    
-    // Create preview
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImagePreview(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setImagePreview('');
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // First validate just the current step (step 7)
+    const currentStepErrors = validateStep(7);
+    if (Object.keys(currentStepErrors).length) {
+      setErrors(currentStepErrors);
+      scrollTop();
+      return;
+    }
     
-    // Validate all fields
-    const newErrors: Record<string, string> = {};
-    (Object.keys(formData) as Array<keyof FormData>).forEach(key => {
-      const error = validateField(key, formData[key]);
-      if (error) newErrors[key as string] = error;
-    });
+    // Then validate all previous steps before moving to review
+    let allE: Record<string, string> = {};
+    let stepsWithErrors: number[] = [];
+    for (let s = 1; s <= 6; s++) {
+      const stepErrors = validateStep(s);
+      if (Object.keys(stepErrors).length > 0) {
+        stepsWithErrors.push(s);
+        allE = { ...allE, ...stepErrors };
+      }
+    }
+    if (Object.keys(allE).length) { 
+      setErrors(allE);
+      const errorCount = Object.keys(allE).length;
+      const stepNames = stepsWithErrors.map(s => STEPS[s-1].title).join(', ');
+      toast.error(`${errorCount} error${errorCount > 1 ? 's' : ''} found in previous steps: ${stepNames}`, {
+        autoClose: 5000,
+      }); 
+      // Navigate to first step with errors
+      setStep(stepsWithErrors[0]);
+      scrollTop();
+      return; 
+    }
+    // Move to review page (step 8)
+    setStep(8);
+    scrollTop();
+  };
 
-    setErrors(newErrors);
+  const handleFinalSubmit = async () => {
+    setIsSubmitting(true);
+    
+    try {
+      const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:4000';
+      
+      // Upload image to backend (which uploads to Supabase)
+      let imageUrl = '';
+      if (formData.imageFile) {
+        try {
+          const uploadFormData = new FormData();
+          uploadFormData.append('file', formData.imageFile);
+          uploadFormData.append('rollNo', formData.rollNo);
 
-    if (Object.keys(newErrors).length === 0) {
-      setIsSubmitting(true);
-      // First: upload image to Cloudinary (if provided) and get secure URL
-      let uploadedImageUrl = '';
-
-      try {
-        if (formData.imageFile) {
-          const cloudinaryUrl = import.meta.env.VITE_CLOUDINARY_UPLOAD_URL || '';
-          if (!cloudinaryUrl) throw new Error('Cloudinary upload URL not configured. Set VITE_CLOUDINARY_UPLOAD_URL in your .env');
-
-          const imgForm = new FormData();
-          imgForm.append('file', formData.imageFile);
-          // If using unsigned uploads, client may need an "upload_preset".
-          // You can provide it via env as VITE_CLOUDINARY_UPLOAD_PRESET if required.
-          const preset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
-          if (preset) imgForm.append('upload_preset', preset);
-
-          const uploadRes = await fetch(cloudinaryUrl, {
+          const uploadResponse = await fetch(`${API_BASE}/api/upload/induction-photo`, {
             method: 'POST',
-            body: imgForm
+            body: uploadFormData,
           });
 
-          if (!uploadRes.ok) {
-            const text = await uploadRes.text();
-            throw new Error(`Image upload failed: ${uploadRes.status} ${text}`);
+          if (!uploadResponse.ok) {
+            const errorData = await uploadResponse.json();
+            throw new Error(errorData.message || 'Image upload failed');
           }
 
-          const uploadJson = await uploadRes.json();
-          uploadedImageUrl = uploadJson.secure_url || uploadJson.url || '';
-          if (!uploadedImageUrl) throw new Error('No secure_url returned from Cloudinary');
+          const uploadResult = await uploadResponse.json();
+          imageUrl = uploadResult.url;
+          toast.success('Image uploaded successfully!');
+        } catch (err: any) {
+          console.error('Image upload error:', err);
+          toast.error(`Image upload failed: ${err.message}. Continuing without photo.`);
         }
-
-        const payload: Record<string, any> = {
-          name: formData.name,
-          rollNo: formData.rollNo,
-          branch: formData.branch,
-          year: formData.year,
-          phone: formData.phone,
-          email: formData.email,
-          society: formData.society,
-          whyJoin: formData.whyJoin,
-          softSkills: formData.softSkills,
-          hardSkills: formData.hardSkills,
-          // strengths: formData.strengths,
-          // weaknesses: formData.weaknesses,
-          githubProfile: formData.githubProfile,
-          residence: formData.residence,
-          imageUrl: uploadedImageUrl || undefined
-        };
-
-        const apiBase = import.meta.env.VITE_API_BASE || 'http://localhost:4000';
-        const res = await fetch(`${apiBase.replace(/\/$/, '')}/api/applications`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        });
-
-        if (!res.ok) {
-          const text = await res.text();
-          throw new Error(`Server responded with ${res.status}: ${text}`);
-        }
-
-        
-        setIsSubmitted(true);
-      } catch (err: any) {
-        console.error('Submission error:', err);
-        toast.error(`Submission failed: ${err?.message || err}`);
-      } finally {
-        setIsSubmitting(false);
       }
+      
+      // Prepare payload matching backend schema
+      const payload = {
+        name: formData.name,
+        rollNo: formData.rollNo,
+        branch: formData.branch,
+        year: formData.year,
+        section: formData.section,
+        phone: formData.phone,
+        email: formData.email,
+        linkedinProfile: formData.linkedinProfile,
+        githubProfile: formData.githubProfile,
+        residence: formData.residence,
+        domain: formData.domain,
+        domainReason: formData.domainReason,
+        prevSociety: formData.prevSociety,
+        prevRole: formData.prevRole,
+        availability: formData.availability,
+        softSkills: formData.softSkills,
+        hardSkills: formData.hardSkills,
+        dsaLevel: formData.dsaLevel,
+        leetcodeHandle: formData.leetcodeHandle,
+        codeforcesHandle: formData.codeforcesHandle,
+        codechefHandle: formData.codechefHandle,
+        projectsDesc: formData.projectsDesc,
+        achievements: formData.achievements,
+        introduction: formData.introduction,
+        strengths: formData.strengths,
+        weaknesses: formData.weaknesses,
+        whyJoin: formData.whyJoin,
+        expectation: formData.expectation,
+        imageUrl: imageUrl,
+        resumeUrl: '',
+      };
+
+      const response = await fetch(`${API_BASE}/api/applications`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        if (response.status === 409) {
+          toast.error('You have already applied. Duplicate entry detected.');
+        } else {
+          throw new Error(data.error || 'Failed to submit application');
+        }
+      } else {
+        setIsSubmitted(true);
+        toast.success('Application submitted successfully!');
+      }
+    } catch (err: any) {
+      console.error('Submission error:', err);
+      toast.error(`Submission failed: ${err?.message || 'Unknown error'}`);
+    } finally { 
+      setIsSubmitting(false); 
     }
   };
 
-  if (isSubmitted) {
-    return (
-      <div className="min-h-screen flex items-center justify-center px-6 bg-black relative overflow-hidden">
-        {/* LightRays Background for Success Page */}
-        <div className="absolute inset-0 z-0">
-          <div style={{ width: '100%', height: '600px', position: 'relative' }}>
-            <LightRays
-              raysOrigin="top-center"
-              raysColor="#00ffff"
-              raysSpeed={1.5}
-              lightSpread={2.2}
-              rayLength={3.5}
-              followMouse={true}
-              mouseInfluence={0.4}
-              noiseAmount={1.5}
-              distortion={0.15}
-              className="custom-rays"
-            />
-          </div>
-        </div>
+  const resetForm = () => {
+    setIsSubmitted(false); setStep(1);
+    setFormData({ name:'',rollNo:'',branch:'',year:'',section:'',phone:'',email:'',linkedinProfile:'',githubProfile:'',
+      residence:'',domain:[],domainReason:'',prevSociety:'',prevRole:'',availability:'',
+      softSkills:'',hardSkills:'',dsaLevel:'',leetcodeHandle:'',codeforcesHandle:'',codechefHandle:'',
+      projectsDesc:'',introduction:'',strengths:'',weaknesses:'',achievements:'',
+      whyJoin:'',expectation:'',imageFile:null,resumeFile:null });
+    setImagePreview('');
+  };
 
-        <div className="max-w-md mx-auto text-center relative z-10">
-          <div className="w-16 h-16 bg-[#1DB954] rounded-full flex items-center justify-center mx-auto mb-6">
-            <Check size={32} className="text-black" />
+  // Success screen
+  if (isSubmitted) return (
+    <div className="min-h-screen flex items-center justify-center px-4 relative">
+      <Bg />
+      <div className="relative z-10 max-w-sm w-full text-center">
+        <div className="relative inline-flex mb-8">
+          <div className="w-32 h-32 rounded-full bg-[#00FFC6]/8 border border-[#00FFC6]/20 flex items-center justify-center">
+            <div className="w-20 h-20 rounded-full bg-[#00FFC6]/15 flex items-center justify-center">
+              <Check size={36} className="text-[#00FFC6]" strokeWidth={2.5} />
+            </div>
           </div>
-          <h2 className="text-3xl font-bold mb-4">Application Submitted!</h2>
-          <p className="text-gray-300 mb-8">
-            Thank you for your interest in joining Flux. We'll review your application and get back to you soon.
-          </p>
-          <button
-            onClick={() => window.location.reload()}
-            className="bg-[#1DB954] hover:bg-[#1ed760] text-black font-semibold py-3 px-6 rounded-full transition-colors duration-300"
-          >
-            Submit Another Application
-          </button>
+          <div className="absolute inset-0 rounded-full animate-ping bg-[#00FFC6]/4" />
         </div>
+        <div className="inline-flex items-center gap-2 bg-[#00FFC6]/10 border border-[#00FFC6]/20 rounded-full px-3 py-1 text-[#00FFC6] text-[11px] font-bold tracking-widest uppercase mb-5">
+          <Sparkles size={10} /> Application Submitted
+        </div>
+        <h2 className="text-3xl font-black text-white mb-3">You're all set!</h2>
+        <p className="text-gray-400 text-sm mb-1.5">Application received by <span className="text-white font-semibold">Flux</span>.</p>
+        <p className="text-gray-600 text-sm mb-8">We'll reach out to <span className="text-[#00FFC6]">{formData.email}</span>.</p>
+        <button onClick={resetForm}
+          className="inline-flex items-center gap-2 bg-[#00FFC6] hover:bg-[#00e5b3] text-black font-bold py-3 px-8 rounded-2xl transition-all duration-200 hover:scale-[1.03] shadow-lg shadow-[#00FFC6]/20 text-sm">
+          Submit Another <ArrowRight size={15} />
+        </button>
       </div>
-    );
-  }
+    </div>
+  );
 
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden">
-      <ToastContainer />
-      
-      {/* LightRays Background */}
-      <div className="absolute inset-0 z-0">
-        <div style={{ width: '100%', height: '600px', position: 'relative' }}>
-          <LightRays
-            raysOrigin="top-center"
-            raysColor="#ffffff"
-            raysSpeed={0.5}
-            lightSpread={2.8}
-            rayLength={2.2}
-            followMouse={true}
-            mouseInfluence={0.1}
-            noiseAmount={0.1}
-            distortion={0.05}
-            className="custom-rays"
-          />
-        </div>
-      </div>
+    <div className="min-h-screen text-white relative">
+      <Bg />
+      <ToastContainer theme="dark" position="top-center" aria-label="Notifications" />
 
-      {/* Main Content - Moved Down */}
-      <div className="relative z-10 py-12 px-6 pt-32 md:pt-40">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">
-              <span className="text-[#1DB954]">Flux</span> Induction Form
-            </h1>
-            <p className="text-gray-300 text-lg md:text-xl">Join our community of innovators and researchers</p>
+      <div ref={topRef} className="relative z-10 max-w-3xl mx-auto px-0 sm:px-4 pb-8 pt-6 sm:pt-8">
+
+        {/* Header */}
+        <div className="text-center mb-12 px-4 sm:px-0">
+          <div className="inline-flex items-center gap-2 bg-[#00FFC6]/8 border border-[#00FFC6]/20 rounded-full px-4 py-1.5 text-[#00FFC6] text-[11px] font-bold tracking-[0.15em] uppercase mb-5">
+            <Zap size={10} /> Applications Open
           </div>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black mb-3 tracking-tight leading-none">
+            Flux<span className="text-[#00FFC6]">.</span>
+          </h1>
+          <p className="text-gray-500 text-sm mb-6 max-w-sm mx-auto leading-relaxed">
+            Induction 2026 — Join the community where future tech leaders are built.
+          </p>
+        </div>
 
-          <form onSubmit={handleSubmit} className="space-y-8">
-            {/* Sign-in / auth area */}
-            {/* Simple Sign-in area without container box */}
-{!user ? (
-  <div className="text-center py-8">
-    {/* Title */}
-    <h3 className="text-2xl font-semibold text-white mb-2">Authentication Required</h3>
-    <p className="text-gray-300 mb-8">Please sign in with Google to continue with your application.</p>
+        {/* Stepper card */}
+        <div className="bg-white/[0.015] border-0 sm:border border-white/[0.06] rounded-none sm:rounded-2xl px-3 sm:px-6 py-4 sm:py-5 mb-3 sm:mb-5 backdrop-blur-sm overflow-x-auto">
+          <TopStepper current={step} />
+        </div>
 
-    {/* Enhanced Google Sign-in Button */}
-    <div className="relative inline-block">
-      {/* Button glow effect */}
-      <div className="absolute -inset-1 bg-gradient-to-r from-white/20 via-white/30 to-white/20 rounded-full blur opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-      
-      <button
-        type="button"
-        onClick={signInWithGoogle}
-        className="relative inline-flex items-center bg-white hover:bg-gray-50 text-gray-900 font-semibold py-4 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 transition-all duration-300 group"
-      >
-        {/* Button background animation */}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-full"></div>
-        
-        {/* Google Icon */}
-        <svg className="w-6 h-6 mr-4" viewBox="0 0 533.5 544.3" xmlns="http://www.w3.org/2000/svg">
-          <path fill="#4285F4" d="M533.5 278.4c0-18.5-1.6-36.2-4.7-53.3H272v100.8h147.4c-6.4 34.7-25.7 64.1-54.7 83.6v69.4h88.3c51.6-47.6 81.5-117.7 81.5-200.5z"/>
-          <path fill="#34A853" d="M272 544.3c73.7 0 135.6-24.4 180.8-66.2l-88.3-69.4c-24.6 16.5-56.2 26.2-92.5 26.2-71 0-131.3-47.9-152.9-112.2H27.3v70.5C72.4 487.9 165 544.3 272 544.3z"/>
-          <path fill="#FBBC05" d="M119.1 323.2c-10.8-32.1-10.8-66.6 0-98.7V154h-91.8C7.8 199.5 0 234.7 0 272s7.8 72.5 27.3 118.1l91.8-66.9z"/>
-          <path fill="#EA4335" d="M272 107.6c39.8 0 75.5 13.7 103.7 40.6l77.8-77.8C402.8 24.5 340.9 0 272 0 165 0 72.4 56.4 27.3 154l91.8 70.6C140.7 155.5 201 107.6 272 107.6z"/>
-        </svg>
-        
-        {/* Button text */}
-        <span className="relative font-bold text-lg">Sign in with Google</span>
-      </button>
-    </div>
+        {/* Form card */}
+        <div className="relative bg-white/[0.02] border-0 sm:border border-white/[0.07] rounded-none sm:rounded-3xl overflow-hidden shadow-2xl backdrop-blur-xl">
+          <div className="h-[1.5px] bg-gradient-to-r from-transparent via-[#00FFC6]/70 to-transparent" />
+          <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-[#00FFC6]/4 blur-[60px] pointer-events-none" />
 
-    {/* Security note */}
-    <div className="mt-6 flex items-center justify-center text-sm text-gray-400">
-      <svg className="w-4 h-4 mr-2 text-[#1DB954]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-      </svg>
-      <span>Secure authentication via Google OAuth</span>
-    </div>
-  </div>
-) : (
-  <div className="text-center py-8">
-    {/* Success message */}
-    <div className="flex items-center justify-center mb-6">
-      <div className="w-12 h-12 bg-[#1DB954] rounded-full flex items-center justify-center mr-4">
-        <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-        </svg>
-      </div>
-      <div className="text-left">
-        <p className="text-[#1DB954] font-semibold text-lg">Successfully signed in!</p>
-        <p className="text-gray-300">Welcome, {user.displayName || 'User'}</p>
-      </div>
-    </div>
-    
-    {/* User email info */}
-    <p className="text-sm text-gray-400">
-      Using email: <span className="text-white font-medium">{user.email}</span>
-    </p>
-  </div>
-)}
+          <form onSubmit={handleSubmit} className="relative px-4 py-5 sm:p-6 md:p-10">
 
-            {/* Only show the rest of the form after user signs in */}
-            {user ? (
-              <>
-              {/* Personal Information */}
-              <div className="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 shadow-2xl">
-                <h2 className="text-2xl font-semibold mb-6 text-[#1DB954]">Personal Information</h2>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.name}
-                      onChange={(e) => handleInputChange('name', e.target.value)}
-                      disabled={!user}
-                      className="w-full bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-[#1DB954] focus:outline-none transition-colors duration-300"
-                      placeholder="Enter your full name"
-                    />
-                    {errors.name && <p className="text-red-400 text-sm mt-1">{errors.name}</p>}
+            {/* STEP 1 — Personal */}
+            {step === 1 && (
+              <div className="space-y-7 animate-fi">
+                <SectionHeader icon={User} title="Personal Information" sub="Your basic academic identity" />
+                <div className="flex flex-col md:flex-row gap-8 items-start">
+                  <div className="mx-auto md:mx-0 flex flex-col items-center gap-1">
+                    <p className="text-[10px] text-gray-600 uppercase tracking-widest font-bold mb-2">Photo</p>
+                    <PhotoUpload preview={imagePreview} file={formData.imageFile} onFile={handleFile} error={errors.imageFile} />
                   </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Roll Number *
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.rollNo}
-                      onChange={(e) => handleInputChange('rollNo', e.target.value)}
-                      disabled={!user}
-                      className="w-full bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-[#1DB954] focus:outline-none transition-colors duration-300"
-                      placeholder="10-digit roll number"
-                      maxLength={10}
-                    />
-                    {errors.rollNo && <p className="text-red-400 text-sm mt-1">{errors.rollNo}</p>}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Branch *
-                    </label>
-                    <select
-                      value={formData.branch}
-                      onChange={(e) => handleInputChange('branch', e.target.value)}
-                      disabled={!user}
-                      className="w-full bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-[#1DB954] focus:outline-none transition-colors duration-300"
-                    >
-                      <option value="">Select branch</option>
-                      <option value="CSE">CSE</option>
-                      <option value="IT">IT</option>
-                      <option value="ECE">ECE</option>
-                      <option value="IOT">IOT</option>
-                      <option value="EE">EE</option>
-                      <option value="ME">ME</option>
-                      <option value="CE">CE</option>
-                      <option value="CHE">CHE</option>
-                      <option value="BBA">BBA</option>
-                      <option value="BPharma">BPharma</option>
-                    </select>
-                    {errors.branch && <p className="text-red-400 text-sm mt-1">{errors.branch}</p>}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Year *
-                    </label>
-                    <select
-                      value={formData.year}
-                      onChange={(e) => handleInputChange('year', e.target.value)}
-                      disabled={!user}
-                      className="w-full bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-[#1DB954] focus:outline-none transition-colors duration-300"
-                    >
-                      <option value="">Select year</option>
-                      {/* <option value="1st Year">1st Year</option> */}
-                      <option value="2nd Year">2nd Year</option>
-                      {/* <option value="3rd Year">3rd Year</option>
-                      <option value="4th Year">4th Year</option> */}
-                    </select>
-                    {errors.year && <p className="text-red-400 text-sm mt-1">{errors.year}</p>}
-                  </div>
-                </div>
-              </div>
-
-              {/* Contact Information */}
-              <div className="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 shadow-2xl">
-                <h2 className="text-2xl font-semibold mb-6 text-[#1DB954]">Contact Information</h2>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Phone Number *
-                    </label>
-                    <input
-                      type="tel"
-                      value={formData.phone}
-                      onChange={(e) => handleInputChange('phone', e.target.value)}
-                      disabled={!user}
-                      className="w-full bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-[#1DB954] focus:outline-none transition-colors duration-300"
-                      placeholder="+91 9876543210"
-                    />
-                    {errors.phone && <p className="text-red-400 text-sm mt-1">{errors.phone}</p>}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => handleInputChange('email', e.target.value)}
-                      disabled={!user}
-                      readOnly={!!user}
-                      className="w-full bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-[#1DB954] focus:outline-none transition-colors duration-300"
-                      placeholder="your.email@example.com"
-                    />
-                    {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Residence *
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.residence}
-                      onChange={(e) => handleInputChange('residence', e.target.value)}
-                      disabled={!user}
-                      className="w-full bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-[#1DB954] focus:outline-none transition-colors duration-300"
-                      placeholder="City, State"
-                    />
-                    {errors.residence && <p className="text-red-400 text-sm mt-1">{errors.residence}</p>}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Showcase your work (GitHub, Portfolio, etc.)
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.githubProfile}
-                      onChange={(e) => handleInputChange('githubProfile', e.target.value)}
-                      disabled={!user}
-                      className="w-full bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-[#1DB954] focus:outline-none transition-colors duration-300"
-                      placeholder="link to your work"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Society Information */}
-              <div className="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 shadow-2xl">
-                <h2 className="text-2xl font-semibold mb-6 text-[#1DB954]">Society Information</h2>
-                
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Society *
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.society}
-                    onChange={(e) => handleInputChange('society', e.target.value)}
-                    disabled={!user}
-                    className="w-full bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-[#1DB954] focus:outline-none transition-colors duration-300"
-                    placeholder="Which society are you a part of?"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Why do you want to join Flux? *
-                  </label>
-                  <textarea
-                    value={formData.whyJoin}
-                    onChange={(e) => handleInputChange('whyJoin', e.target.value)}
-                    disabled={!user}
-                    rows={5}
-                    className="w-full bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-[#1DB954] focus:outline-none transition-colors duration-300 resize-vertical"
-                    placeholder="Share your motivation, interests, and what you hope to contribute to Flux..."
-                  />
-                  <div className="flex justify-between text-sm text-gray-400 mt-1">
-                    <span>{errors.whyJoin && <span className="text-red-400">{errors.whyJoin}</span>}</span>
-                    <span className={countWords(formData.whyJoin) > 200 ? 'text-red-400' : ''}>
-                      {countWords(formData.whyJoin)}/200 words
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Skills & Attributes */}
-              <div className="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 shadow-2xl">
-                <h2 className="text-2xl font-semibold mb-6 text-[#1DB954]">Skills & Attributes</h2>
-                
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Soft Skills *
-                    </label>
-                    <textarea
-                      value={formData.softSkills}
-                      onChange={(e) => handleInputChange('softSkills', e.target.value)}
-                      disabled={!user}
-                      rows={4}
-                      className="w-full bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-[#1DB954] focus:outline-none transition-colors duration-300 resize-vertical"
-                      placeholder="Describe your soft skills such as leadership, communication, teamwork, problem solving, creativity, adaptability, time management, critical thinking, etc."
-                    />
-                    <div className="flex justify-between text-sm text-gray-400 mt-1">
-                      <span>{errors.softSkills && <span className="text-red-400">{errors.softSkills}</span>}</span>
-                      <span className={countWords(formData.softSkills) > 100 ? 'text-red-400' : ''}>
-                        {countWords(formData.softSkills)}/100 words
-                      </span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Hard Skills *
-                    </label>
-                    <textarea
-                      value={formData.hardSkills}
-                      onChange={(e) => handleInputChange('hardSkills', e.target.value)}
-                      disabled={!user}
-                      rows={4}
-                      className="w-full bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-[#1DB954] focus:outline-none transition-colors duration-300 resize-vertical"
-                      placeholder="Describe your technical skills such as programming languages, frameworks, tools, technologies, etc."
-                    />
-                    <div className="flex justify-between text-sm text-gray-400 mt-1">
-                      <span>{errors.hardSkills && <span className="text-red-400">{errors.hardSkills}</span>}</span>
-                      <span className={countWords(formData.hardSkills) > 100 ? 'text-red-400' : ''}>
-                        {countWords(formData.hardSkills)}/100 words
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Strengths *
-                    </label>
-                    <textarea
-                      value={formData.strengths}
-                      onChange={(e) => handleInputChange('strengths', e.target.value)}
-                      disabled={!user}
-                      rows={4}
-                      className="w-full bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-[#1DB954] focus:outline-none transition-colors duration-300 resize-vertical"
-                      placeholder="Describe your key strengths and what makes you stand out."
-                    />
-                    <div className="flex justify-between text-sm text-gray-400 mt-1">
-                      <span>{errors.strengths && <span className="text-red-400">{errors.strengths}</span>}</span>
-                      <span className={countWords(formData.strengths) > 100 ? 'text-red-400' : ''}>
-                        {countWords(formData.strengths)}/100 words
-                      </span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Areas for Improvement *
-                    </label>
-                    <textarea
-                      value={formData.weaknesses}
-                      onChange={(e) => handleInputChange('weaknesses', e.target.value)}
-                      disabled={!user}
-                      rows={4}
-                      className="w-full bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-[#1DB954] focus:outline-none transition-colors duration-300 resize-vertical"
-                      placeholder="Describe areas where you'd like to improve and grow."
-                    />
-                    <div className="flex justify-between text-sm text-gray-400 mt-1">
-                      <span>{errors.weaknesses && <span className="text-red-400">{errors.weaknesses}</span>}</span>
-                      <span className={countWords(formData.weaknesses) > 100 ? 'text-red-400' : ''}>
-                        {countWords(formData.weaknesses)}/100 words
-                      </span>
-                    </div>
-                  </div> */}
-                </div>
-              </div>
-
-              {/* Profile Picture */}
-              <div className="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 shadow-2xl">
-                <h2 className="text-2xl font-semibold mb-6 text-[#1DB954]">Profile Picture</h2>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Upload Image
-                  </label>
-                  
-                  <div className="relative">
-                    <input
-                      type="file"
-                      accept=".jpg,.jpeg,.png"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0] || null;
-                        handleFileChange(file);
-                      }}
-                      className="hidden"
-                      id="image-upload"
-                      disabled={!user}
-                    />
-                    <label
-                      htmlFor={user ? 'image-upload' : undefined}
-                      className={`w-full bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg px-4 py-3 text-white ${!user ? 'cursor-not-allowed opacity-60' : 'hover:border-[#1DB954] focus-within:border-[#1DB954]'} transition-colors duration-300 flex items-center justify-center min-h-[48px] group`}
-                    >
-                      <Upload size={20} className="mr-2 text-gray-400 group-hover:text-[#1DB954] transition-colors duration-300" />
-                      <span className="text-gray-400 group-hover:text-white transition-colors duration-300">
-                        {formData.imageFile ? formData.imageFile.name : 'Choose image file (.jpg, .jpeg, .png, max 1MB)'}
-                      </span>
-                    </label>
-                  </div>
-                  
-                  {errors.imageFile && <p className="text-red-400 text-sm mt-1">{errors.imageFile}</p>}
-                  
-                  {imagePreview && (
-                    <div className="mt-4">
-                      <p className="text-sm text-gray-400 mb-2">Preview:</p>
-                      <div className="relative inline-block">
-                        <img
-                          src={imagePreview}
-                          alt="Profile preview"
-                          className="w-24 h-24 rounded-full object-cover border-2 border-gray-600"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => {
-                            handleFileChange(null);
-                            const input = document.getElementById('image-upload') as HTMLInputElement;
-                            if (input) input.value = '';
-                          }}
-                          className="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 transition-colors duration-300"
-                        >
-                          <X size={16} />
-                        </button>
+                  <div className="flex-1 grid md:grid-cols-2 gap-5">
+                    <Field label="Full Name" required error={errors.name}>
+                      <div className="relative">
+                        <User size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                        <input className={iInp} value={formData.name} onChange={e => set('name', e.target.value)} placeholder="Your full name" />
                       </div>
-                    </div>
-                  )}
+                    </Field>
+                    <Field label="Roll Number" required error={errors.rollNo} hint="10 chars">
+                      <input className={inp} value={formData.rollNo} onChange={e => set('rollNo', e.target.value.toUpperCase())} maxLength={10} placeholder="23XXXXXXXX" />
+                    </Field>
+                    <Field label="Branch" required error={errors.branch}>
+                      <div className="relative">
+                        <select className={sel} value={formData.branch} onChange={e => set('branch', e.target.value)}>
+                          <option value="">Select branch</option>
+                          {['CSE','IT','ECE','IOT','EE','ME','CE','CHE','BBA'].map(b => <option key={b} value={b}>{b}</option>)}
+                        </select>
+                        <ChevronDown size={13} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                      </div>
+                    </Field>
+                    <Field label="Year" required error={errors.year}>
+                      <div className="relative">
+                        <select className={sel} value={formData.year} onChange={e => set('year', e.target.value)}>
+                          <option value="">Select year</option>
+                          <option value="1st Year">1st Year</option>
+                        </select>
+                        <ChevronDown size={13} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                      </div>
+                    </Field>
+                    <Field label="Section" required error={errors.section} sub="(A, B, C…)">
+                      <input className={inp} value={formData.section} onChange={e => set('section', e.target.value.toUpperCase())} maxLength={4} placeholder="A" />
+                    </Field>
+                  </div>
                 </div>
               </div>
+            )}
 
-              {/* Submit Button */}
-              <div className="text-center pt-8">
-                <button
-                  type="submit"
-                  disabled={!user || isSubmitting}
-                  className="bg-[#1DB954] hover:bg-[#1ed760] disabled:bg-gray-600 text-black font-bold py-4 px-12 rounded-full text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-[#1DB954]/25 disabled:transform-none disabled:shadow-none"
-                >
-                  {isSubmitting ? (
-                    <span className="flex items-center">
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Submitting Application...
-                    </span>
+            {/* STEP 2 — Contact */}
+            {step === 2 && (
+              <div className="space-y-6 animate-fi">
+                <SectionHeader icon={Phone} title="Contact & Social" sub="How we reach you and find your work" />
+                <div className="grid md:grid-cols-2 gap-5">
+                  <Field label="Email Address" required error={errors.email}>
+                    <input className={inp} type="email" value={formData.email} onChange={e => set('email', e.target.value)} placeholder="you@example.com" />
+                  </Field>
+                  <Field label="Phone Number" required error={errors.phone}>
+                    <div className="relative">
+                      <Phone size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                      <input className={iInp} type="tel" value={formData.phone} onChange={e => set('phone', e.target.value)} placeholder="+91 98765 43210" />
+                    </div>
+                  </Field>
+                  <Field label="Current Residence" required error={errors.residence}>
+                    <div className="relative">
+                      <MapPin size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                      <input className={iInp} value={formData.residence} onChange={e => set('residence', e.target.value)} placeholder="City, State" />
+                    </div>
+                  </Field>
+                  <Field label="LinkedIn Profile" hint="optional">
+                    <div className="relative">
+                      <Linkedin size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                      <input className={iInp} value={formData.linkedinProfile} onChange={e => set('linkedinProfile', e.target.value)} placeholder="linkedin.com/in/username" />
+                    </div>
+                  </Field>
+                  <Field label="GitHub / Portfolio" hint="optional">
+                    <div className="relative">
+                      <Github size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                      <input className={iInp} value={formData.githubProfile} onChange={e => set('githubProfile', e.target.value)} placeholder="github.com/username" />
+                    </div>
+                  </Field>
+                </div>
+              </div>
+            )}
+
+            {/* STEP 3 — Domain */}
+            {step === 3 && (
+              <div className="space-y-6 animate-fi">
+                <SectionHeader icon={Layers} title="Domain Preference" sub="Which team inside Flux do you want to join?" />
+                <Field label="Choose Your Domain" required>
+                  <DomainPicker value={formData.domain} onChange={v => set('domain', v)} error={errors.domain} />
+                </Field>
+                {formData.domain.length > 0 && (
+                  <div className="space-y-2">
+                    {formData.domain.map(id => (
+                      <div key={id} className="text-xs text-gray-500 bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-2.5 leading-relaxed">
+                        <span className="font-semibold text-gray-300 mr-2">{id}:</span>{DOMAIN_BLURBS[id]}
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <Field label="Why these domains?" required error={errors.domainReason} hint={`${cw(formData.domainReason)}/150 words`}>
+                  <textarea className={`${inp} resize-none leading-relaxed`} rows={5}
+                    value={formData.domainReason} onChange={e => set('domainReason', e.target.value)}
+                    placeholder="What draws you to these areas? What have you already done or built in this space?" />
+                </Field>
+              </div>
+            )}
+
+            {/* STEP 4 — Society Background */}
+            {step === 4 && (
+              <div className="space-y-6 animate-fi">
+                <SectionHeader icon={Building2} title="Society Background" sub="Your college club & society experience" />
+                <div className="bg-amber-500/5 border border-amber-500/15 rounded-2xl p-4 text-xs text-amber-400/80 leading-relaxed">
+                  <span className="font-bold text-amber-400 uppercase tracking-widest text-[10px]">Why this matters — </span>
+                  Society experience shows commitment, collaboration, and campus involvement. Be honest — even "None" is fine!
+                </div>
+                <div className="grid md:grid-cols-2 gap-5">
+                  <Field label="Current / Past Society or Club" hint="optional">
+                    <div className="relative">
+                      <Building2 size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                      <input className={iInp} value={formData.prevSociety} onChange={e => set('prevSociety', e.target.value)} placeholder="e.g. Robotics Club, NSS, GDSC" />
+                    </div>
+                  </Field>
+                  <Field label="Your Role / Position" hint="optional">
+                    <input className={inp} value={formData.prevRole} onChange={e => set('prevRole', e.target.value)} placeholder="e.g. Member, Secretary, VP" />
+                  </Field>
+                </div>
+                <Field label="Weekly Availability" required error={errors.availability} sub="Hours you can dedicate to Flux per week">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-1">
+                    {['1–3 hrs', '3–6 hrs', '6–10 hrs', '10+ hrs'].map(opt => (
+                      <button key={opt} type="button" onClick={() => set('availability', opt)}
+                        className={`flex items-center justify-center gap-1.5 py-3 rounded-xl border text-xs font-bold transition-all duration-200
+                          ${formData.availability === opt
+                            ? 'bg-[#00FFC6]/12 border-[#00FFC6]/50 text-[#00FFC6] shadow-md shadow-[#00FFC6]/10'
+                            : 'bg-white/[0.03] border-white/8 text-gray-500 hover:border-white/18 hover:text-gray-300'}`}>
+                        <Clock size={11} className="opacity-70" />{opt}
+                      </button>
+                    ))}
+                  </div>
+                  {errors.availability && (
+                    <p className="text-[11px] text-red-400 flex items-center gap-1 mt-1.5">
+                      <AlertCircle size={10}/>{errors.availability}
+                    </p>
+                  )}
+                </Field>
+              </div>
+            )}
+
+            {/* STEP 5 — Skills & Portfolio */}
+            {step === 5 && (
+              <div className="space-y-6 animate-fi">
+                <SectionHeader icon={Cpu} title="Skills & Portfolio" sub="Your expertise, DSA level, projects and resume" />
+
+                {/* Skills row */}
+                <div className="grid md:grid-cols-2 gap-5">
+                  <Field label="Soft Skills" required error={errors.softSkills} hint={`${cw(formData.softSkills)}/100`}>
+                    <textarea className={`${inp} resize-none leading-relaxed`} rows={4}
+                      value={formData.softSkills} onChange={e => set('softSkills', e.target.value)}
+                      placeholder="Leadership, communication, teamwork, event management, public speaking..." />
+                  </Field>
+                  <Field label="Technical Skills & Languages" required error={errors.hardSkills} hint={`${cw(formData.hardSkills)}/100`}>
+                    <textarea className={`${inp} resize-none leading-relaxed`} rows={4}
+                      value={formData.hardSkills} onChange={e => set('hardSkills', e.target.value)}
+                      placeholder="C++, Python, React, Figma, video editing, SQL, machine learning..." />
+                  </Field>
+                </div>
+
+                {/* DSA Level */}
+                <Field label="DSA Level" sub="Data Structures & Algorithms proficiency">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    {['Beginner', 'Intermediate', 'Advanced', 'Expert'].map(lvl => (
+                      <button key={lvl} type="button" onClick={() => set('dsaLevel', lvl)}
+                        className={`flex items-center justify-center gap-1.5 py-3 rounded-xl border text-xs font-bold transition-all duration-200
+                          ${formData.dsaLevel === lvl
+                            ? 'bg-[#00FFC6]/12 border-[#00FFC6]/50 text-[#00FFC6] shadow-md shadow-[#00FFC6]/10'
+                            : 'bg-white/[0.03] border-white/8 text-gray-500 hover:border-white/18 hover:text-gray-300'}`}>
+                        <BarChart2 size={11} className="opacity-70" />{lvl}
+                      </button>
+                    ))}
+                  </div>
+                </Field>
+
+                {/* Competitive Programming */}
+                <div className="space-y-3">
+                  <p className="text-sm font-semibold text-gray-200 flex items-center gap-2">
+                    <Code2 size={14} className="text-[#00FFC6]" /> Competitive Programming
+                    <span className="text-[10px] text-gray-600 font-normal ml-1">optional — share your handles</span>
+                  </p>
+                  <div className="grid md:grid-cols-3 gap-4">
+                    <Field label="LeetCode" hint="optional">
+                      <div className="relative">
+                        <Link2 size={12} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                        <input className={iInp} value={formData.leetcodeHandle} onChange={e => set('leetcodeHandle', e.target.value)} placeholder="username" />
+                      </div>
+                    </Field>
+                    <Field label="Codeforces" hint="optional">
+                      <div className="relative">
+                        <Link2 size={12} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                        <input className={iInp} value={formData.codeforcesHandle} onChange={e => set('codeforcesHandle', e.target.value)} placeholder="handle" />
+                      </div>
+                    </Field>
+                    <Field label="CodeChef" hint="optional">
+                      <div className="relative">
+                        <Link2 size={12} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                        <input className={iInp} value={formData.codechefHandle} onChange={e => set('codechefHandle', e.target.value)} placeholder="username" />
+                      </div>
+                    </Field>
+                  </div>
+                </div>
+
+                {/* Projects */}
+                <Field label="Projects" required error={errors.projectsDesc} hint={`${cw(formData.projectsDesc)}/200 words`}
+                  sub="Describe your top 1–3 projects">
+                  <textarea className={`${inp} resize-none leading-relaxed`} rows={5}
+                    value={formData.projectsDesc} onChange={e => set('projectsDesc', e.target.value)}
+                    placeholder="Project name, tech stack used, what it does, your role, any live link or GitHub URL..." />
+                </Field>
+
+                {/* Resume Upload */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm font-semibold text-gray-200 flex items-center gap-2">
+                      <Paperclip size={14} className="text-[#00FFC6]" /> Resume
+                      <span className="text-[10px] text-gray-600 font-normal">optional · PDF only · max 5 MB</span>
+                    </p>
+                    {formData.resumeFile && (
+                      <button type="button"
+                        onClick={() => { set('resumeFile', null); (document.getElementById('resumeup') as HTMLInputElement).value = ''; }}
+                        className="flex items-center gap-1 text-[11px] text-red-400 hover:text-red-300 transition-colors">
+                        <X size={11} /> Remove
+                      </button>
+                    )}
+                  </div>
+                  <input type="file" accept=".pdf" className="hidden" id="resumeup"
+                    onChange={e => handleResume(e.target.files?.[0] || null)} />
+                  {formData.resumeFile ? (
+                    <div className="flex items-center gap-3 p-3.5 bg-[#00FFC6]/5 border border-[#00FFC6]/20 rounded-xl">
+                      <div className="w-9 h-9 rounded-lg bg-[#00FFC6]/10 border border-[#00FFC6]/20 flex items-center justify-center shrink-0">
+                        <FileText size={16} className="text-[#00FFC6]" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm text-gray-300 font-semibold truncate">{formData.resumeFile.name}</p>
+                        <p className="text-[10px] text-gray-600">{(formData.resumeFile.size / 1024).toFixed(0)} KB</p>
+                      </div>
+                      <Check size={14} className="text-[#00FFC6] shrink-0" />
+                    </div>
                   ) : (
-                    'Submit Application'
+                    <label htmlFor="resumeup"
+                      className="flex items-center justify-center gap-2.5 w-full py-4 border border-dashed border-white/12 rounded-xl text-sm text-gray-600 hover:text-gray-400 hover:border-white/25 hover:bg-white/[0.02] transition-all duration-200 cursor-pointer">
+                      <Upload size={15} /> Click to upload your resume (PDF)
+                    </label>
+                  )}
+                  {errors.resumeFile && <p className="text-[11px] text-red-400 flex items-center gap-1.5"><AlertCircle size={10} />{errors.resumeFile}</p>}
+                </div>
+
+              </div>
+            )}
+
+            {/* STEP 6 — About You */}
+            {step === 6 && (
+              <div className="space-y-6 animate-fi">
+                <SectionHeader icon={Star} title="About You" sub="Let us understand who you really are" />
+                <Field label="Brief Introduction" required error={errors.introduction} hint={`${cw(formData.introduction)}/100 words`}>
+                  <textarea className={`${inp} resize-none leading-relaxed`} rows={3}
+                    value={formData.introduction} onChange={e => set('introduction', e.target.value)}
+                    placeholder="Your background, interests, passions, and what makes you unique..." />
+                </Field>
+                <div className="grid md:grid-cols-2 gap-5">
+                  <Field label="Your Strengths" required error={errors.strengths} hint={`${cw(formData.strengths)}/100`}>
+                    <textarea className={`${inp} resize-none leading-relaxed`} rows={4}
+                      value={formData.strengths} onChange={e => set('strengths', e.target.value)}
+                      placeholder="What are you great at? What do others rely on you for?" />
+                  </Field>
+                  <Field label="Your Weaknesses" required error={errors.weaknesses} hint={`${cw(formData.weaknesses)}/100`}>
+                    <textarea className={`${inp} resize-none leading-relaxed`} rows={4}
+                      value={formData.weaknesses} onChange={e => set('weaknesses', e.target.value)}
+                      placeholder="What are you actively improving? Be genuine and self-aware." />
+                  </Field>
+                </div>
+                <Field label="Achievements" hint={`optional · ${cw(formData.achievements)}/100 words`}>
+                  <div className="relative">
+                    <Trophy size={13} className="absolute left-3.5 top-3.5 text-gray-600 pointer-events-none" />
+                    <textarea className={`${inp} resize-none leading-relaxed pl-10`} rows={3}
+                      value={formData.achievements} onChange={e => set('achievements', e.target.value)}
+                      placeholder="Hackathons, competitions, certifications, notable projects, awards, publications..." />
+                  </div>
+                </Field>
+              </div>
+            )}
+
+            {/* STEP 7 — Why Flux? */}
+            {step === 7 && (
+              <div className="space-y-6 animate-fi">
+                <SectionHeader icon={BookOpen} title="Why Flux?" sub="Your motivation and what you expect" />
+                <div className="bg-gradient-to-br from-[#00FFC6]/6 to-transparent border border-[#00FFC6]/12 rounded-2xl p-5 text-sm text-gray-500 leading-relaxed">
+                  <p className="text-[#00FFC6] font-bold text-[11px] uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+                    <Sparkles size={10} /> Your moment to shine
+                  </p>
+                  Be specific. What projects do you want to build? What problems do you want to solve? Why is Flux the right community for you?
+                </div>
+                <Field label="Why do you want to join Flux?" required error={errors.whyJoin} hint={`${cw(formData.whyJoin)}/200 words`}>
+                  <textarea className={`${inp} resize-none leading-relaxed`} rows={7}
+                    value={formData.whyJoin} onChange={e => set('whyJoin', e.target.value)}
+                    placeholder="Your motivations, goals, ideas you want to build, impact you want to create..." />
+                </Field>
+                <Field label="What do you expect from Flux?" required error={errors.expectation} hint={`${cw(formData.expectation)}/150 words`}>
+                  <textarea className={`${inp} resize-none leading-relaxed`} rows={4}
+                    value={formData.expectation} onChange={e => set('expectation', e.target.value)}
+                    placeholder="Mentorship, network, projects, events, skill-building — what matters to you?" />
+                </Field>
+              </div>
+            )}
+
+            {/* STEP 8 — Review */}
+            {step === 8 && (
+              <div className="space-y-5 animate-fi">
+                <SectionHeader icon={ShieldCheck} title="Review & Submit" sub="Take a final look before sending" />
+
+                {/* Info box */}
+                <div className="bg-gradient-to-br from-[#00FFC6]/6 to-transparent border border-[#00FFC6]/12 rounded-2xl p-5 text-sm text-gray-400 leading-relaxed">
+                  <p className="text-[#00FFC6] font-bold text-[11px] uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+                    <Sparkles size={10} /> Review Your Application
+                  </p>
+                  <p className="text-xs">
+                    Review all the information below carefully. You can edit any section by clicking the "Edit" button next to it. Once you're satisfied, click the "Submit Application" button at the bottom.
+                  </p>
+                </div>
+
+                {imagePreview && (
+                  <div className="flex items-center gap-4 p-4 bg-white/[0.02] border border-white/[0.06] rounded-2xl">
+                    <img src={imagePreview} alt="" className="w-14 h-14 rounded-full object-cover border-2 border-[#00FFC6]/30" />
+                    <div>
+                      <p className="text-[10px] text-gray-600 uppercase tracking-wider mb-0.5">Profile Photo</p>
+                      <p className="text-sm text-gray-300 font-semibold">{formData.imageFile?.name}</p>
+                    </div>
+                  </div>
+                )}
+
+                {formData.domain.length > 0 && (
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between px-1">
+                      <p className="text-[10px] font-bold text-[#00FFC6] uppercase tracking-[0.12em]">Domains</p>
+                      <button type="button" onClick={() => { setStep(3); scrollTop(); }}
+                        className="text-[10px] text-gray-500 hover:text-[#00FFC6] font-semibold uppercase tracking-wider flex items-center gap-1 transition-colors">
+                        Edit
+                      </button>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {formData.domain.map(id => {
+                        const d = DOMAINS.find(x => x.id === id)!;
+                        const Icon = d.icon;
+                        return (
+                          <div key={id} className={`flex items-center gap-2 px-3 py-2 rounded-xl border bg-gradient-to-br ${d.grad} ${d.border}`}>
+                            <Icon size={13} className={d.text} />
+                            <span className={`text-xs font-bold ${d.text}`}>{id}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 w-fit">
+                      <Clock size={10} className="text-gray-500" />
+                      <span className="text-[11px] text-gray-400">{formData.availability}</span>
+                    </div>
+                  </div>
+                )}
+
+                {[
+                  { title: 'Personal', stepNum: 1, items: [
+                    { l: 'Name', v: formData.name }, { l: 'Roll No', v: formData.rollNo },
+                    { l: 'Branch', v: formData.branch }, { l: 'Year', v: formData.year }, { l: 'Section', v: formData.section },
+                  ]},
+                  { title: 'Contact', stepNum: 2, items: [
+                    { l: 'Email', v: formData.email }, { l: 'Phone', v: formData.phone },
+                    { l: 'Residence', v: formData.residence },
+                    { l: 'LinkedIn', v: formData.linkedinProfile || '—' },
+                    { l: 'GitHub', v: formData.githubProfile || '—' },
+                  ]},
+                  { title: 'Society Background', stepNum: 4, items: [
+                    { l: 'Previous Society', v: formData.prevSociety || 'None' },
+                    { l: 'Role There', v: formData.prevRole || '—' },
+                    { l: 'Availability', v: formData.availability },
+                  ]},
+                  { title: 'Portfolio', stepNum: 5, items: [
+                    { l: 'DSA Level', v: formData.dsaLevel || '—' },
+                    { l: 'LeetCode', v: formData.leetcodeHandle || '—' },
+                    { l: 'Codeforces', v: formData.codeforcesHandle || '—' },
+                    { l: 'CodeChef', v: formData.codechefHandle || '—' },
+                  ]},
+                ].map(({ title, stepNum, items }) => (
+                  <div key={title} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <p className="text-[10px] font-bold text-[#00FFC6] uppercase tracking-[0.12em]">{title}</p>
+                      <button type="button" onClick={() => { setStep(stepNum); scrollTop(); }}
+                        className="text-[10px] text-gray-500 hover:text-[#00FFC6] font-semibold uppercase tracking-wider flex items-center gap-1 transition-colors">
+                        Edit
+                      </button>
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-x-6 gap-y-2.5">
+                      {items.map(({ l, v }) => (
+                        <div key={l}>
+                          <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block">{l}</span>
+                          <span className="text-sm text-gray-300 font-medium">{v || '—'}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+
+                {/* Skills Section */}
+                {(formData.softSkills || formData.hardSkills) && (
+                  <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <p className="text-[10px] font-bold text-[#00FFC6] uppercase tracking-[0.12em]">Skills</p>
+                      <button type="button" onClick={() => { setStep(5); scrollTop(); }}
+                        className="text-[10px] text-gray-500 hover:text-[#00FFC6] font-semibold uppercase tracking-wider flex items-center gap-1 transition-colors">
+                        Edit
+                      </button>
+                    </div>
+                    <div className="space-y-3">
+                      {formData.softSkills && (
+                        <div>
+                          <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-1">Soft Skills</span>
+                          <p className="text-sm text-gray-400 leading-relaxed">{formData.softSkills}</p>
+                        </div>
+                      )}
+                      {formData.hardSkills && (
+                        <div>
+                          <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-1">Hard Skills</span>
+                          <p className="text-sm text-gray-400 leading-relaxed">{formData.hardSkills}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {formData.projectsDesc && (
+                  <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-[10px] font-bold text-[#00FFC6] uppercase tracking-[0.12em]">Projects</p>
+                      <button type="button" onClick={() => { setStep(5); scrollTop(); }}
+                        className="text-[10px] text-gray-500 hover:text-[#00FFC6] font-semibold uppercase tracking-wider flex items-center gap-1 transition-colors">
+                        Edit
+                      </button>
+                    </div>
+                    <p className="text-sm text-gray-400 leading-relaxed line-clamp-3">{formData.projectsDesc}</p>
+                  </div>
+                )}
+
+                {/* About You Section */}
+                {(formData.introduction || formData.strengths || formData.weaknesses || formData.achievements) && (
+                  <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <p className="text-[10px] font-bold text-[#00FFC6] uppercase tracking-[0.12em]">About You</p>
+                      <button type="button" onClick={() => { setStep(6); scrollTop(); }}
+                        className="text-[10px] text-gray-500 hover:text-[#00FFC6] font-semibold uppercase tracking-wider flex items-center gap-1 transition-colors">
+                        Edit
+                      </button>
+                    </div>
+                    <div className="space-y-3">
+                      {formData.introduction && (
+                        <div>
+                          <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-1">Brief Introduction</span>
+                          <p className="text-sm text-gray-400 leading-relaxed">{formData.introduction}</p>
+                        </div>
+                      )}
+                      {formData.strengths && (
+                        <div>
+                          <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-1">Key Strengths</span>
+                          <p className="text-sm text-gray-400 leading-relaxed">{formData.strengths}</p>
+                        </div>
+                      )}
+                      {formData.weaknesses && (
+                        <div>
+                          <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-1">Areas to Improve</span>
+                          <p className="text-sm text-gray-400 leading-relaxed">{formData.weaknesses}</p>
+                        </div>
+                      )}
+                      {formData.achievements && (
+                        <div>
+                          <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-1">Achievements</span>
+                          <p className="text-sm text-gray-400 leading-relaxed">{formData.achievements}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {formData.resumeFile && (
+                  <div className="flex items-center gap-3 p-3.5 bg-[#00FFC6]/5 border border-[#00FFC6]/15 rounded-2xl">
+                    <Paperclip size={16} className="text-[#00FFC6] shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[10px] text-gray-500 uppercase tracking-wider">Resume</p>
+                      <p className="text-sm text-gray-300 font-semibold truncate">{formData.resumeFile.name}</p>
+                    </div>
+                    <Check size={13} className="text-[#00FFC6] shrink-0" />
+                  </div>
+                )}
+
+                <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-[10px] font-bold text-[#00FFC6] uppercase tracking-[0.12em]">Why Flux?</p>
+                    <button type="button" onClick={() => { setStep(7); scrollTop(); }}
+                      className="text-[10px] text-gray-500 hover:text-[#00FFC6] font-semibold uppercase tracking-wider flex items-center gap-1 transition-colors">
+                      Edit
+                    </button>
+                  </div>
+                  <p className="text-sm text-gray-400 leading-relaxed line-clamp-4">{formData.whyJoin}</p>
+                </div>
+
+                <div className="flex items-start gap-3 bg-[#00FFC6]/5 border border-[#00FFC6]/15 rounded-2xl p-4">
+                  <Check size={14} className="text-[#00FFC6] shrink-0 mt-0.5" />
+                  <p className="text-xs text-gray-500 leading-relaxed">
+                    By submitting, you confirm all information is accurate and agree to be contacted by the Flux team regarding your application.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Navigation */}
+            <div className={`flex mt-8 sm:mt-10 gap-3 ${step > 1 ? 'justify-between' : 'justify-end'}`}>
+              {step > 1 && (
+                <button type="button" onClick={goBack}
+                  className="flex items-center gap-2 px-4 sm:px-6 py-3 rounded-xl border border-white/8 text-gray-500 hover:text-white hover:border-white/20 bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-200 text-sm font-semibold">
+                  <ArrowLeft size={14} /> Back
+                </button>
+              )}
+              {step < 7 ? (
+                <button type="button" onClick={goNext}
+                  className="flex items-center justify-center gap-2 flex-1 sm:flex-none sm:px-8 py-3 rounded-xl bg-[#00FFC6] hover:bg-[#00e5b3] text-black font-bold transition-all duration-200 text-sm hover:scale-[1.02] active:scale-[0.99] shadow-lg shadow-[#00FFC6]/15">
+                  Continue <ArrowRight size={14} />
+                </button>
+              ) : step === 7 ? (
+                <button type="submit"
+                  className="flex items-center justify-center gap-2 flex-1 sm:flex-none sm:px-8 py-3 rounded-xl bg-[#00FFC6] hover:bg-[#00e5b3] text-black font-bold transition-all duration-200 text-sm hover:scale-[1.02] active:scale-[0.99] shadow-lg shadow-[#00FFC6]/15">
+                  Review Application <ShieldCheck size={14} />
+                </button>
+              ) : (
+                <button type="button" onClick={handleFinalSubmit} disabled={isSubmitting}
+                  className="flex items-center justify-center gap-2 flex-1 sm:flex-none sm:px-10 py-3 rounded-xl bg-[#00FFC6] hover:bg-[#00e5b3] disabled:bg-gray-800 disabled:text-gray-600 text-black font-bold transition-all duration-200 text-sm hover:scale-[1.02] disabled:scale-100 active:scale-[0.99] shadow-lg shadow-[#00FFC6]/15">
+                  {isSubmitting ? (
+                    <><svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg> Submitting...</>
+                  ) : (
+                    <><Check size={14} /> Submit Application</>
                   )}
                 </button>
-              </div>
-              </>
-            ) : null}
+              )}
+            </div>
+
           </form>
         </div>
+
+        <p className="text-center text-[11px] text-gray-700 mt-4">
+          Step {step} of {STEPS.length} — {STEPS[step-1].desc}
+        </p>
       </div>
+
+      <style>{`
+        @keyframes fi { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+        .animate-fi { animation: fi 0.22s ease both; }
+        .line-clamp-4 { display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden; }
+      `}</style>
     </div>
   );
 };
