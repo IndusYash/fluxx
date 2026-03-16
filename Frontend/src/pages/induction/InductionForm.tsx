@@ -1,11 +1,10 @@
 import React, { useState, useRef } from 'react';
 import {
   Upload, X, Check, ArrowRight, ArrowLeft,
-  User, Phone, MapPin, Github, Zap, BookOpen,
-  Cpu, Building2, ShieldCheck, Sparkles,
+  User, Phone, MapPin, Github, Zap,
+  Building2, ShieldCheck, Sparkles,
   Star, AlertCircle, Trophy, FileText, Camera,
-  Linkedin, Clock, Layers, Heart, Users, ChevronDown,
-  Code2, Link2, BarChart2, Paperclip,
+  Linkedin, Paperclip,
 } from 'lucide-react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,43 +12,19 @@ import 'react-toastify/dist/ReactToastify.css';
 interface FormData {
   name: string; rollNo: string; branch: string; year: string; section: string;
   phone: string; email: string; linkedinProfile: string; githubProfile: string; residence: string;
-  domain: string[]; domainReason: string;
-  prevSociety: string; prevRole: string; availability: string;
+  prevSociety: string;
   softSkills: string; hardSkills: string;
-  dsaLevel: string; leetcodeHandle: string; codeforcesHandle: string; codechefHandle: string;
   projectsDesc: string;
   introduction: string; strengths: string; weaknesses: string; achievements: string;
-  whyJoin: string; expectation: string;
+  whyJoin: string;
   imageFile: File | null;
   resumeFile: File | null;
 }
 
-
-const DOMAINS = [
-  { id: 'Technical',  icon: Cpu,      grad: 'from-blue-500/20 to-blue-600/5',    border: 'border-blue-500/25',    text: 'text-blue-400',    ring: 'ring-blue-500/40'    },
-  { id: 'Design',     icon: Layers,   grad: 'from-purple-500/20 to-purple-600/5', border: 'border-purple-500/25',  text: 'text-purple-400',  ring: 'ring-purple-500/40'  },
-  { id: 'Management', icon: Users,    grad: 'from-amber-500/20 to-amber-600/5',   border: 'border-amber-500/25',   text: 'text-amber-400',   ring: 'ring-amber-500/40'   },
-  { id: 'Content',    icon: FileText, grad: 'from-rose-500/20 to-rose-600/5',     border: 'border-rose-500/25',    text: 'text-rose-400',    ring: 'ring-rose-500/40'    },
-  { id: 'Marketing',  icon: Heart,    grad: 'from-[#00FFC6]/20 to-[#00FFC6]/5',  border: 'border-[#00FFC6]/25',   text: 'text-[#00FFC6]',   ring: 'ring-[#00FFC6]/40'   },
-];
-
-const DOMAIN_BLURBS: Record<string,string> = {
-  Technical:  'Build products, write code, explore technology, and solve real engineering problems.',
-  Design:     'Craft visual experiences, create UI/UX designs, branding, and motion graphics.',
-  Management: 'Lead projects, coordinate events, manage teams, and drive operations end-to-end.',
-  Content:    'Write blogs, scripts, social posts, and tell the Flux story through compelling words.',
-  Marketing:  'Grow the brand, manage outreach, partnerships, sponsorships, and PR activities.',
-};
-
 const STEPS = [
-  { id: 1, title: 'Personal',   icon: User,        desc: 'Basic info & photo'     },
-  { id: 2, title: 'Contact',    icon: Phone,       desc: 'Contact & social links' },
-  { id: 3, title: 'Domain',     icon: Layers,      desc: 'Your area of interest'  },
-  { id: 4, title: 'Society',    icon: Building2,   desc: 'Club background'        },
-  { id: 5, title: 'Skills',     icon: Cpu,         desc: 'Skills & Portfolio'    },
-  { id: 6, title: 'About You',  icon: Star,        desc: 'Personality & goals'    },
-  { id: 7, title: 'Why Flux?',  icon: BookOpen,    desc: 'Motivation'             },
-  { id: 8, title: 'Review',     icon: ShieldCheck, desc: 'Final check'            },
+  { id: 1, title: 'Personal & Contact', icon: User,        desc: 'Your info & how to reach you'    },
+  { id: 2, title: 'About You',          icon: Star,        desc: 'Skills, background & motivation'  },
+  { id: 3, title: 'Review',             icon: ShieldCheck, desc: 'Final check'                      },
 ];
 
 const cw = (t: string) => (t.trim() === '' ? 0 : t.trim().split(/\s+/).length);
@@ -174,55 +149,17 @@ const PhotoUpload: React.FC<{ preview: string; file: File | null; onFile: (f: Fi
   </div>
 );
 
-// Domain picker (multi-select)
-const DomainPicker: React.FC<{ value: string[]; onChange: (v: string[]) => void; error?: string }> =
-  ({ value, onChange, error }) => {
-  const toggle = (id: string) =>
-    onChange(value.includes(id) ? value.filter(x => x !== id) : [...value, id]);
-  return (
-  <div className="space-y-2">
-    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-      {DOMAINS.map(({ id, icon: Icon, grad, border, text, ring }) => {
-        const active = value.includes(id);
-        return (
-          <button key={id} type="button" onClick={() => toggle(id)}
-            className={`relative flex flex-col items-center gap-2.5 p-4 rounded-2xl border bg-gradient-to-br transition-all duration-200
-              ${active ? `${grad} ${border} ring-2 ${ring} scale-[1.02] shadow-lg`
-                : 'from-white/[0.02] to-transparent border-white/8 hover:border-white/15 hover:scale-[1.01]'}`}>
-            <Icon size={20} className={active ? text : 'text-gray-600'} />
-            <span className={`text-xs font-bold ${active ? text : 'text-gray-500'}`}>{id}</span>
-            {active && (
-              <div className="absolute top-2 right-2 w-4 h-4 rounded-full bg-[#00FFC6]/15 border border-[#00FFC6]/40 flex items-center justify-center">
-                <Check size={9} className="text-[#00FFC6]" strokeWidth={3} />
-              </div>
-            )}
-          </button>
-        );
-      })}
-    </div>
-    {value.length > 0 && (
-      <p className="text-[11px] text-[#00FFC6]/70 flex items-center gap-1.5">
-        <Check size={10} strokeWidth={3} />
-        {value.length === 1 ? `1 domain selected` : `${value.length} domains selected`}
-      </p>
-    )}
-    {error && <p className="text-[11px] text-red-400 flex items-center gap-1.5"><AlertCircle size={10} />{error}</p>}
-  </div>
-  );
-};
-
 // Main
 const InductionForm: React.FC = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
     name: '', rollNo: '', branch: '', year: '', section: '',
     phone: '', email: '', linkedinProfile: '', githubProfile: '', residence: '',
-    domain: [], domainReason: '', prevSociety: '', prevRole: '', availability: '',
+    prevSociety: '',
     softSkills: '', hardSkills: '',
-    dsaLevel: '', leetcodeHandle: '', codeforcesHandle: '', codechefHandle: '',
     projectsDesc: '',
     introduction: '', strengths: '', weaknesses: '', achievements: '',
-    whyJoin: '', expectation: '',
+    whyJoin: '',
     imageFile: null,
     resumeFile: null,
   });
@@ -250,56 +187,39 @@ const InductionForm: React.FC = () => {
   const validateStep = (s: number): Record<string, string> => {
     const e: Record<string, string> = {};
     if (s === 1) {
-      if (!formData.name.trim())                                        e.name    = 'Full name required';
-      if (!formData.rollNo || formData.rollNo.length !== 10)           e.rollNo  = 'Must be exactly 10 characters';
+      if (!/^[a-zA-Z\s]+$/.test(formData.name.trim()))                                        e.name    = 'Enter valid name';
+      if (!formData.rollNo || !/^\d{10}$/.test(formData.rollNo))           e.rollNo  = 'Must be exactly 10 digits';
       if (!formData.branch)                                             e.branch  = 'Select a branch';
       if (!formData.year)                                               e.year    = 'Select a year';
-      if (!formData.section.trim())                                     e.section = 'Enter your section (e.g. A, B)';
+      if (!formData.section || !/^[ABCDabcd]$/.test(formData.section.trim()))                                     e.section = 'Enter your section (e.g. A, B)';
+      if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = 'Valid email required';
+      if (!formData.phone || !/^(\d{10}|\+91\s\d{10})$/.test(formData.phone))         e.phone = 'Valid phone number required (e.g. 98XXXXXXXX or +91 98XXXXXXXX)';
+      if (!formData.residence.trim())                                   e.residence = 'Residence required';
       if (formData.imageFile) {
         if (!['image/jpeg','image/jpg','image/png'].includes(formData.imageFile.type)) e.imageFile = 'Only JPG/PNG allowed';
         else if (formData.imageFile.size > 5*1024*1024)                               e.imageFile = 'Max size is 5 MB';
       }
     }
     if (s === 2) {
-      if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = 'Valid email required';
-      if (!formData.phone || !/^[0-9+\-() ]{6,20}$/.test(formData.phone))           e.phone = 'Valid phone number required';
-      if (!formData.residence.trim())                                    e.residence = 'Residence required';
-    }
-    if (s === 3) {
-      if (formData.domain.length === 0)                                 e.domain       = 'Please select at least one domain';
-      if (!formData.domainReason.trim())                                 e.domainReason = 'Tell us why you chose these domains';
-      else if (cw(formData.domainReason) > 150)                         e.domainReason = 'Max 150 words';
-    }
-    if (s === 4) {
-      if (!formData.availability)                                        e.availability = 'Please select your availability';
-    }
-    if (s === 5) {
-      if (!formData.softSkills.trim())                                   e.softSkills = 'Required';
-      else if (cw(formData.softSkills) > 100)                           e.softSkills = 'Max 100 words';
-      if (!formData.hardSkills.trim())                                   e.hardSkills = 'Required';
-      else if (cw(formData.hardSkills) > 100)                           e.hardSkills = 'Max 100 words';
-      if (!formData.projectsDesc.trim())                                 e.projectsDesc = 'Describe at least one project';
-      else if (cw(formData.projectsDesc) > 200)                         e.projectsDesc = 'Max 200 words';
+      if (!formData.softSkills.trim())                                  e.softSkills = 'Required';
+      else if (cw(formData.softSkills) > 100)                          e.softSkills = 'Max 100 words';
+      if (!formData.hardSkills.trim())                                  e.hardSkills = 'Required';
+      else if (cw(formData.hardSkills) > 100)                          e.hardSkills = 'Max 100 words';
+      if (formData.projectsDesc.trim() && cw(formData.projectsDesc) > 200) e.projectsDesc = 'Max 200 words';
+      if (!formData.introduction.trim())                                e.introduction = 'Required';
+      else if (cw(formData.introduction) > 100)                        e.introduction = 'Max 100 words';
+      if (!formData.strengths.trim())                                   e.strengths = 'Required';
+      else if (cw(formData.strengths) > 100)                           e.strengths = 'Max 100 words';
+      if (!formData.weaknesses.trim())                                  e.weaknesses = 'Required';
+      else if (cw(formData.weaknesses) > 100)                          e.weaknesses = 'Max 100 words';
+      const wjc = cw(formData.whyJoin);
+      if (!formData.whyJoin.trim())                                     e.whyJoin = 'This field is required';
+      else if (wjc < 10)                                               e.whyJoin = `Write at least 10 words (currently ${wjc} word${wjc !== 1 ? 's' : ''})`;
+      else if (wjc > 200)                                              e.whyJoin = 'Max 200 words';
       if (formData.resumeFile) {
-        if (formData.resumeFile.type !== 'application/pdf')              e.resumeFile = 'Only PDF allowed';
-        else if (formData.resumeFile.size > 5*1024*1024)                e.resumeFile = 'Max size is 5 MB';
+        if (formData.resumeFile.type !== 'application/pdf')             e.resumeFile = 'Only PDF allowed';
+        else if (formData.resumeFile.size > 5*1024*1024)               e.resumeFile = 'Max size is 5 MB';
       }
-    }
-    if (s === 6) {
-      if (!formData.introduction.trim())                                 e.introduction = 'Required';
-      else if (cw(formData.introduction) > 100)                         e.introduction = 'Max 100 words';
-      if (!formData.strengths.trim())                                    e.strengths = 'Required';
-      else if (cw(formData.strengths) > 100)                            e.strengths = 'Max 100 words';
-      if (!formData.weaknesses.trim())                                   e.weaknesses = 'Required';
-      else if (cw(formData.weaknesses) > 100)                           e.weaknesses = 'Max 100 words';
-    }
-    if (s === 7) {
-      const whyJoinWordCount = cw(formData.whyJoin);
-      if (!formData.whyJoin.trim())                                      e.whyJoin = 'This field is required';
-      else if (whyJoinWordCount < 10)                                   e.whyJoin = `Write at least 10 words (currently ${whyJoinWordCount} word${whyJoinWordCount !== 1 ? 's' : ''})`;
-      else if (whyJoinWordCount > 200)                                  e.whyJoin = 'Max 200 words';
-      if (!formData.expectation.trim())                                  e.expectation = 'This field is required';
-      else if (cw(formData.expectation) > 150)                          e.expectation = 'Max 150 words';
     }
     return e;
   };
@@ -314,67 +234,38 @@ const InductionForm: React.FC = () => {
   };
   const goBack = () => { setStep(s => Math.max(s - 1, 1)); scrollTop(); };
 
+  // Called when form submits on step 2 (Review Application button)
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // First validate just the current step (step 7)
-    const currentStepErrors = validateStep(7);
-    if (Object.keys(currentStepErrors).length) {
-      setErrors(currentStepErrors);
-      scrollTop();
-      return;
+    const step2Errors = validateStep(2);
+    if (Object.keys(step2Errors).length) { setErrors(step2Errors); scrollTop(); return; }
+    const step1Errors = validateStep(1);
+    if (Object.keys(step1Errors).length) {
+      setErrors(step1Errors);
+      toast.error('Please fix errors in Step 1 first.');
+      setStep(1); scrollTop(); return;
     }
-    
-    // Then validate all previous steps before moving to review
-    let allE: Record<string, string> = {};
-    let stepsWithErrors: number[] = [];
-    for (let s = 1; s <= 6; s++) {
-      const stepErrors = validateStep(s);
-      if (Object.keys(stepErrors).length > 0) {
-        stepsWithErrors.push(s);
-        allE = { ...allE, ...stepErrors };
-      }
-    }
-    if (Object.keys(allE).length) { 
-      setErrors(allE);
-      const errorCount = Object.keys(allE).length;
-      const stepNames = stepsWithErrors.map(s => STEPS[s-1].title).join(', ');
-      toast.error(`${errorCount} error${errorCount > 1 ? 's' : ''} found in previous steps: ${stepNames}`, {
-        autoClose: 5000,
-      }); 
-      // Navigate to first step with errors
-      setStep(stepsWithErrors[0]);
-      scrollTop();
-      return; 
-    }
-    // Move to review page (step 8)
-    setStep(8);
-    scrollTop();
+    setStep(3); scrollTop();
   };
 
   const handleFinalSubmit = async () => {
     setIsSubmitting(true);
-    
     try {
       const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:4000';
-      
-      // Upload image to backend (which uploads to Supabase)
+
       let imageUrl = '';
       if (formData.imageFile) {
         try {
           const uploadFormData = new FormData();
           uploadFormData.append('file', formData.imageFile);
           uploadFormData.append('rollNo', formData.rollNo);
-
           const uploadResponse = await fetch(`${API_BASE}/api/upload/induction-photo`, {
-            method: 'POST',
-            body: uploadFormData,
+            method: 'POST', body: uploadFormData,
           });
-
           if (!uploadResponse.ok) {
             const errorData = await uploadResponse.json();
             throw new Error(errorData.message || 'Image upload failed');
           }
-
           const uploadResult = await uploadResponse.json();
           imageUrl = uploadResult.url;
           toast.success('Image uploaded successfully!');
@@ -383,8 +274,7 @@ const InductionForm: React.FC = () => {
           toast.error(`Image upload failed: ${err.message}. Continuing without photo.`);
         }
       }
-      
-      // Prepare payload matching backend schema
+
       const payload = {
         name: formData.name,
         rollNo: formData.rollNo,
@@ -396,36 +286,24 @@ const InductionForm: React.FC = () => {
         linkedinProfile: formData.linkedinProfile,
         githubProfile: formData.githubProfile,
         residence: formData.residence,
-        domain: formData.domain,
-        domainReason: formData.domainReason,
         prevSociety: formData.prevSociety,
-        prevRole: formData.prevRole,
-        availability: formData.availability,
         softSkills: formData.softSkills,
         hardSkills: formData.hardSkills,
-        dsaLevel: formData.dsaLevel,
-        leetcodeHandle: formData.leetcodeHandle,
-        codeforcesHandle: formData.codeforcesHandle,
-        codechefHandle: formData.codechefHandle,
         projectsDesc: formData.projectsDesc,
         achievements: formData.achievements,
         introduction: formData.introduction,
         strengths: formData.strengths,
         weaknesses: formData.weaknesses,
         whyJoin: formData.whyJoin,
-        expectation: formData.expectation,
         imageUrl: imageUrl,
         resumeUrl: '',
       };
 
       const response = await fetch(`${API_BASE}/api/applications`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-
       const data = await response.json();
 
       if (!response.ok) {
@@ -441,18 +319,16 @@ const InductionForm: React.FC = () => {
     } catch (err: any) {
       console.error('Submission error:', err);
       toast.error(`Submission failed: ${err?.message || 'Unknown error'}`);
-    } finally { 
-      setIsSubmitting(false); 
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const resetForm = () => {
     setIsSubmitted(false); setStep(1);
     setFormData({ name:'',rollNo:'',branch:'',year:'',section:'',phone:'',email:'',linkedinProfile:'',githubProfile:'',
-      residence:'',domain:[],domainReason:'',prevSociety:'',prevRole:'',availability:'',
-      softSkills:'',hardSkills:'',dsaLevel:'',leetcodeHandle:'',codeforcesHandle:'',codechefHandle:'',
-      projectsDesc:'',introduction:'',strengths:'',weaknesses:'',achievements:'',
-      whyJoin:'',expectation:'',imageFile:null,resumeFile:null });
+      residence:'',prevSociety:'',softSkills:'',hardSkills:'',projectsDesc:'',
+      introduction:'',strengths:'',weaknesses:'',achievements:'',whyJoin:'',imageFile:null,resumeFile:null });
     setImagePreview('');
   };
 
@@ -515,16 +391,21 @@ const InductionForm: React.FC = () => {
 
           <form onSubmit={handleSubmit} className="relative px-4 py-5 sm:p-6 md:p-10">
 
-            {/* STEP 1 — Personal */}
+            {/* ── STEP 1 — Personal & Contact ── */}
             {step === 1 && (
               <div className="space-y-7 animate-fi">
-                <SectionHeader icon={User} title="Personal Information" sub="Your basic academic identity" />
-                <div className="flex flex-col md:flex-row gap-8 items-start">
-                  <div className="mx-auto md:mx-0 flex flex-col items-center gap-1">
-                    <p className="text-[10px] text-gray-600 uppercase tracking-widest font-bold mb-2">Photo</p>
-                    <PhotoUpload preview={imagePreview} file={formData.imageFile} onFile={handleFile} error={errors.imageFile} />
-                  </div>
-                  <div className="flex-1 grid md:grid-cols-2 gap-5">
+                <SectionHeader icon={User} title="Personal & Contact" sub="Your academic identity and how we reach you" />
+
+                {/* Photo — centered full-width row */}
+                <div className="flex flex-col items-center gap-1">
+                  <p className="text-[10px] text-gray-600 uppercase tracking-widest font-bold mb-2">Photo</p>
+                  <PhotoUpload preview={imagePreview} file={formData.imageFile} onFile={handleFile} error={errors.imageFile} />
+                </div>
+
+                {/* Personal fields — full width grid */}
+                <div className="pt-2 border-t border-white/[0.05]">
+                  <p className="text-[11px] font-bold text-[#00FFC6] uppercase tracking-widest mb-4">Personal Information</p>
+                  <div className="grid md:grid-cols-2 gap-5">
                     <Field label="Full Name" required error={errors.name}>
                       <div className="relative">
                         <User size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
@@ -535,137 +416,73 @@ const InductionForm: React.FC = () => {
                       <input className={inp} value={formData.rollNo} onChange={e => set('rollNo', e.target.value.toUpperCase())} maxLength={10} placeholder="23XXXXXXXX" />
                     </Field>
                     <Field label="Branch" required error={errors.branch}>
-                      <div className="relative">
-                        <select className={sel} value={formData.branch} onChange={e => set('branch', e.target.value)}>
-                          <option value="">Select branch</option>
-                          {['CSE','IT','ECE','IOT','EE','ME','CE','CHE','BBA'].map(b => <option key={b} value={b}>{b}</option>)}
-                        </select>
-                        <ChevronDown size={13} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
-                      </div>
+                      <select className={sel} value={formData.branch} onChange={e => set('branch', e.target.value)}>
+                        <option value="">Select branch</option>
+                        {['CSE','IT','ECE','IOT','EE','ME','CE','CHE','BBA'].map(b => <option key={b} value={b}>{b}</option>)}
+                      </select>
                     </Field>
                     <Field label="Year" required error={errors.year}>
-                      <div className="relative">
-                        <select className={sel} value={formData.year} onChange={e => set('year', e.target.value)}>
-                          <option value="">Select year</option>
-                          <option value="1st Year">1st Year</option>
-                        </select>
-                        <ChevronDown size={13} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
-                      </div>
+                      <select className={sel} value={formData.year} onChange={e => set('year', e.target.value)}>
+                        <option value="">Select year</option>
+                        <option value="1st Year">1st Year</option>
+                      </select>
                     </Field>
                     <Field label="Section" required error={errors.section} sub="(A, B, C…)">
                       <input className={inp} value={formData.section} onChange={e => set('section', e.target.value.toUpperCase())} maxLength={4} placeholder="A" />
                     </Field>
                   </div>
                 </div>
+
+                {/* Contact fields merged into Step 1 */}
+                <div className="pt-2 border-t border-white/[0.05]">
+                  <p className="text-[11px] font-bold text-[#00FFC6] uppercase tracking-widest mb-4">Contact & Social</p>
+                  <div className="grid md:grid-cols-2 gap-5">
+                    <Field label="Email Address" required error={errors.email}>
+                      <input className={inp} type="email" value={formData.email} onChange={e => set('email', e.target.value)} placeholder="you@example.com" />
+                    </Field>
+                    <Field label="Phone Number" required error={errors.phone}>
+                      <div className="relative">
+                        <Phone size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                        <input className={iInp} type="tel" value={formData.phone} onChange={e => set('phone', e.target.value)} placeholder="+91 98765 43210" />
+                      </div>
+                    </Field>
+                    <Field label="Current Residence" required error={errors.residence}>
+                      <div className="relative">
+                        <MapPin size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                        <input className={iInp} value={formData.residence} onChange={e => set('residence', e.target.value)} placeholder="City, State" />
+                      </div>
+                    </Field>
+                    <Field label="LinkedIn Profile" hint="optional">
+                      <div className="relative">
+                        <Linkedin size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                        <input className={iInp} value={formData.linkedinProfile} onChange={e => set('linkedinProfile', e.target.value)} placeholder="linkedin.com/in/username" />
+                      </div>
+                    </Field>
+                    <Field label="GitHub / Portfolio" hint="optional">
+                      <div className="relative">
+                        <Github size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                        <input className={iInp} value={formData.githubProfile} onChange={e => set('githubProfile', e.target.value)} placeholder="github.com/username" />
+                      </div>
+                    </Field>
+                  </div>
+                </div>
               </div>
             )}
 
-            {/* STEP 2 — Contact */}
+            {/* ── STEP 2 — About You ── */}
             {step === 2 && (
               <div className="space-y-6 animate-fi">
-                <SectionHeader icon={Phone} title="Contact & Social" sub="How we reach you and find your work" />
-                <div className="grid md:grid-cols-2 gap-5">
-                  <Field label="Email Address" required error={errors.email}>
-                    <input className={inp} type="email" value={formData.email} onChange={e => set('email', e.target.value)} placeholder="you@example.com" />
-                  </Field>
-                  <Field label="Phone Number" required error={errors.phone}>
-                    <div className="relative">
-                      <Phone size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
-                      <input className={iInp} type="tel" value={formData.phone} onChange={e => set('phone', e.target.value)} placeholder="+91 98765 43210" />
-                    </div>
-                  </Field>
-                  <Field label="Current Residence" required error={errors.residence}>
-                    <div className="relative">
-                      <MapPin size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
-                      <input className={iInp} value={formData.residence} onChange={e => set('residence', e.target.value)} placeholder="City, State" />
-                    </div>
-                  </Field>
-                  <Field label="LinkedIn Profile" hint="optional">
-                    <div className="relative">
-                      <Linkedin size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
-                      <input className={iInp} value={formData.linkedinProfile} onChange={e => set('linkedinProfile', e.target.value)} placeholder="linkedin.com/in/username" />
-                    </div>
-                  </Field>
-                  <Field label="GitHub / Portfolio" hint="optional">
-                    <div className="relative">
-                      <Github size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
-                      <input className={iInp} value={formData.githubProfile} onChange={e => set('githubProfile', e.target.value)} placeholder="github.com/username" />
-                    </div>
-                  </Field>
-                </div>
-              </div>
-            )}
+                <SectionHeader icon={Star} title="About You" sub="Skills, background & why you want to join Flux" />
 
-            {/* STEP 3 — Domain */}
-            {step === 3 && (
-              <div className="space-y-6 animate-fi">
-                <SectionHeader icon={Layers} title="Domain Preference" sub="Which team inside Flux do you want to join?" />
-                <Field label="Choose Your Domain" required>
-                  <DomainPicker value={formData.domain} onChange={v => set('domain', v)} error={errors.domain} />
-                </Field>
-                {formData.domain.length > 0 && (
-                  <div className="space-y-2">
-                    {formData.domain.map(id => (
-                      <div key={id} className="text-xs text-gray-500 bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-2.5 leading-relaxed">
-                        <span className="font-semibold text-gray-300 mr-2">{id}:</span>{DOMAIN_BLURBS[id]}
-                      </div>
-                    ))}
+                {/* Society */}
+                <Field label="Society / Club you're part of" hint="optional">
+                  <div className="relative">
+                    <Building2 size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                    <input className={iInp} value={formData.prevSociety} onChange={e => set('prevSociety', e.target.value)} placeholder="e.g. Robotics Club, NSS, GDSC — or leave blank" />
                   </div>
-                )}
-                <Field label="Why these domains?" required error={errors.domainReason} hint={`${cw(formData.domainReason)}/150 words`}>
-                  <textarea className={`${inp} resize-none leading-relaxed`} rows={5}
-                    value={formData.domainReason} onChange={e => set('domainReason', e.target.value)}
-                    placeholder="What draws you to these areas? What have you already done or built in this space?" />
                 </Field>
-              </div>
-            )}
 
-            {/* STEP 4 — Society Background */}
-            {step === 4 && (
-              <div className="space-y-6 animate-fi">
-                <SectionHeader icon={Building2} title="Society Background" sub="Your college club & society experience" />
-                <div className="bg-amber-500/5 border border-amber-500/15 rounded-2xl p-4 text-xs text-amber-400/80 leading-relaxed">
-                  <span className="font-bold text-amber-400 uppercase tracking-widest text-[10px]">Why this matters — </span>
-                  Society experience shows commitment, collaboration, and campus involvement. Be honest — even "None" is fine!
-                </div>
-                <div className="grid md:grid-cols-2 gap-5">
-                  <Field label="Current / Past Society or Club" hint="optional">
-                    <div className="relative">
-                      <Building2 size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
-                      <input className={iInp} value={formData.prevSociety} onChange={e => set('prevSociety', e.target.value)} placeholder="e.g. Robotics Club, NSS, GDSC" />
-                    </div>
-                  </Field>
-                  <Field label="Your Role / Position" hint="optional">
-                    <input className={inp} value={formData.prevRole} onChange={e => set('prevRole', e.target.value)} placeholder="e.g. Member, Secretary, VP" />
-                  </Field>
-                </div>
-                <Field label="Weekly Availability" required error={errors.availability} sub="Hours you can dedicate to Flux per week">
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-1">
-                    {['1–3 hrs', '3–6 hrs', '6–10 hrs', '10+ hrs'].map(opt => (
-                      <button key={opt} type="button" onClick={() => set('availability', opt)}
-                        className={`flex items-center justify-center gap-1.5 py-3 rounded-xl border text-xs font-bold transition-all duration-200
-                          ${formData.availability === opt
-                            ? 'bg-[#00FFC6]/12 border-[#00FFC6]/50 text-[#00FFC6] shadow-md shadow-[#00FFC6]/10'
-                            : 'bg-white/[0.03] border-white/8 text-gray-500 hover:border-white/18 hover:text-gray-300'}`}>
-                        <Clock size={11} className="opacity-70" />{opt}
-                      </button>
-                    ))}
-                  </div>
-                  {errors.availability && (
-                    <p className="text-[11px] text-red-400 flex items-center gap-1 mt-1.5">
-                      <AlertCircle size={10}/>{errors.availability}
-                    </p>
-                  )}
-                </Field>
-              </div>
-            )}
-
-            {/* STEP 5 — Skills & Portfolio */}
-            {step === 5 && (
-              <div className="space-y-6 animate-fi">
-                <SectionHeader icon={Cpu} title="Skills & Portfolio" sub="Your expertise, DSA level, projects and resume" />
-
-                {/* Skills row */}
+                {/* Skills */}
                 <div className="grid md:grid-cols-2 gap-5">
                   <Field label="Soft Skills" required error={errors.softSkills} hint={`${cw(formData.softSkills)}/100`}>
                     <textarea className={`${inp} resize-none leading-relaxed`} rows={4}
@@ -679,101 +496,14 @@ const InductionForm: React.FC = () => {
                   </Field>
                 </div>
 
-                {/* DSA Level */}
-                <Field label="DSA Level" sub="Data Structures & Algorithms proficiency">
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    {['Beginner', 'Intermediate', 'Advanced', 'Expert'].map(lvl => (
-                      <button key={lvl} type="button" onClick={() => set('dsaLevel', lvl)}
-                        className={`flex items-center justify-center gap-1.5 py-3 rounded-xl border text-xs font-bold transition-all duration-200
-                          ${formData.dsaLevel === lvl
-                            ? 'bg-[#00FFC6]/12 border-[#00FFC6]/50 text-[#00FFC6] shadow-md shadow-[#00FFC6]/10'
-                            : 'bg-white/[0.03] border-white/8 text-gray-500 hover:border-white/18 hover:text-gray-300'}`}>
-                        <BarChart2 size={11} className="opacity-70" />{lvl}
-                      </button>
-                    ))}
-                  </div>
-                </Field>
-
-                {/* Competitive Programming */}
-                <div className="space-y-3">
-                  <p className="text-sm font-semibold text-gray-200 flex items-center gap-2">
-                    <Code2 size={14} className="text-[#00FFC6]" /> Competitive Programming
-                    <span className="text-[10px] text-gray-600 font-normal ml-1">optional — share your handles</span>
-                  </p>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <Field label="LeetCode" hint="optional">
-                      <div className="relative">
-                        <Link2 size={12} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
-                        <input className={iInp} value={formData.leetcodeHandle} onChange={e => set('leetcodeHandle', e.target.value)} placeholder="username" />
-                      </div>
-                    </Field>
-                    <Field label="Codeforces" hint="optional">
-                      <div className="relative">
-                        <Link2 size={12} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
-                        <input className={iInp} value={formData.codeforcesHandle} onChange={e => set('codeforcesHandle', e.target.value)} placeholder="handle" />
-                      </div>
-                    </Field>
-                    <Field label="CodeChef" hint="optional">
-                      <div className="relative">
-                        <Link2 size={12} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
-                        <input className={iInp} value={formData.codechefHandle} onChange={e => set('codechefHandle', e.target.value)} placeholder="username" />
-                      </div>
-                    </Field>
-                  </div>
-                </div>
-
-                {/* Projects */}
-                <Field label="Projects" required error={errors.projectsDesc} hint={`${cw(formData.projectsDesc)}/200 words`}
-                  sub="Describe your top 1–3 projects">
-                  <textarea className={`${inp} resize-none leading-relaxed`} rows={5}
+                {/* Projects — optional */}
+                <Field label="Projects" hint={`optional · ${cw(formData.projectsDesc)}/200 words`} sub="Describe your top 1–3 projects" error={errors.projectsDesc}>
+                  <textarea className={`${inp} resize-none leading-relaxed`} rows={4}
                     value={formData.projectsDesc} onChange={e => set('projectsDesc', e.target.value)}
-                    placeholder="Project name, tech stack used, what it does, your role, any live link or GitHub URL..." />
+                    placeholder="Project name, tech stack, what it does, your role, live link or GitHub URL..." />
                 </Field>
 
-                {/* Resume Upload */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm font-semibold text-gray-200 flex items-center gap-2">
-                      <Paperclip size={14} className="text-[#00FFC6]" /> Resume
-                      <span className="text-[10px] text-gray-600 font-normal">optional · PDF only · max 5 MB</span>
-                    </p>
-                    {formData.resumeFile && (
-                      <button type="button"
-                        onClick={() => { set('resumeFile', null); (document.getElementById('resumeup') as HTMLInputElement).value = ''; }}
-                        className="flex items-center gap-1 text-[11px] text-red-400 hover:text-red-300 transition-colors">
-                        <X size={11} /> Remove
-                      </button>
-                    )}
-                  </div>
-                  <input type="file" accept=".pdf" className="hidden" id="resumeup"
-                    onChange={e => handleResume(e.target.files?.[0] || null)} />
-                  {formData.resumeFile ? (
-                    <div className="flex items-center gap-3 p-3.5 bg-[#00FFC6]/5 border border-[#00FFC6]/20 rounded-xl">
-                      <div className="w-9 h-9 rounded-lg bg-[#00FFC6]/10 border border-[#00FFC6]/20 flex items-center justify-center shrink-0">
-                        <FileText size={16} className="text-[#00FFC6]" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm text-gray-300 font-semibold truncate">{formData.resumeFile.name}</p>
-                        <p className="text-[10px] text-gray-600">{(formData.resumeFile.size / 1024).toFixed(0)} KB</p>
-                      </div>
-                      <Check size={14} className="text-[#00FFC6] shrink-0" />
-                    </div>
-                  ) : (
-                    <label htmlFor="resumeup"
-                      className="flex items-center justify-center gap-2.5 w-full py-4 border border-dashed border-white/12 rounded-xl text-sm text-gray-600 hover:text-gray-400 hover:border-white/25 hover:bg-white/[0.02] transition-all duration-200 cursor-pointer">
-                      <Upload size={15} /> Click to upload your resume (PDF)
-                    </label>
-                  )}
-                  {errors.resumeFile && <p className="text-[11px] text-red-400 flex items-center gap-1.5"><AlertCircle size={10} />{errors.resumeFile}</p>}
-                </div>
-
-              </div>
-            )}
-
-            {/* STEP 6 — About You */}
-            {step === 6 && (
-              <div className="space-y-6 animate-fi">
-                <SectionHeader icon={Star} title="About You" sub="Let us understand who you really are" />
+                {/* About — introduction, strengths, weaknesses */}
                 <Field label="Brief Introduction" required error={errors.introduction} hint={`${cw(formData.introduction)}/100 words`}>
                   <textarea className={`${inp} resize-none leading-relaxed`} rows={3}
                     value={formData.introduction} onChange={e => set('introduction', e.target.value)}
@@ -796,16 +526,11 @@ const InductionForm: React.FC = () => {
                     <Trophy size={13} className="absolute left-3.5 top-3.5 text-gray-600 pointer-events-none" />
                     <textarea className={`${inp} resize-none leading-relaxed pl-10`} rows={3}
                       value={formData.achievements} onChange={e => set('achievements', e.target.value)}
-                      placeholder="Hackathons, competitions, certifications, notable projects, awards, publications..." />
+                      placeholder="Hackathons, competitions, certifications, awards, publications..." />
                   </div>
                 </Field>
-              </div>
-            )}
 
-            {/* STEP 7 — Why Flux? */}
-            {step === 7 && (
-              <div className="space-y-6 animate-fi">
-                <SectionHeader icon={BookOpen} title="Why Flux?" sub="Your motivation and what you expect" />
+                {/* Why Flux */}
                 <div className="bg-gradient-to-br from-[#00FFC6]/6 to-transparent border border-[#00FFC6]/12 rounded-2xl p-5 text-sm text-gray-500 leading-relaxed">
                   <p className="text-[#00FFC6] font-bold text-[11px] uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
                     <Sparkles size={10} /> Your moment to shine
@@ -813,31 +538,59 @@ const InductionForm: React.FC = () => {
                   Be specific. What projects do you want to build? What problems do you want to solve? Why is Flux the right community for you?
                 </div>
                 <Field label="Why do you want to join Flux?" required error={errors.whyJoin} hint={`${cw(formData.whyJoin)}/200 words`}>
-                  <textarea className={`${inp} resize-none leading-relaxed`} rows={7}
+                  <textarea className={`${inp} resize-none leading-relaxed`} rows={6}
                     value={formData.whyJoin} onChange={e => set('whyJoin', e.target.value)}
                     placeholder="Your motivations, goals, ideas you want to build, impact you want to create..." />
                 </Field>
-                <Field label="What do you expect from Flux?" required error={errors.expectation} hint={`${cw(formData.expectation)}/150 words`}>
-                  <textarea className={`${inp} resize-none leading-relaxed`} rows={4}
-                    value={formData.expectation} onChange={e => set('expectation', e.target.value)}
-                    placeholder="Mentorship, network, projects, events, skill-building — what matters to you?" />
-                </Field>
+
+                {/* Resume Upload */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm font-semibold text-gray-200 flex items-center gap-2">
+                      <Paperclip size={14} className="text-[#00FFC6]" /> Resume
+                      <span className="text-[10px] text-gray-600 font-normal">optional · PDF only · max 5 MB</span>
+                    </p>
+                    {formData.resumeFile && (
+                      <button type="button"
+                        onClick={() => { set('resumeFile', null); (document.getElementById('resumeup') as HTMLInputElement).value = ''; }}
+                        className="flex items-center gap-1 text-[11px] text-red-400 hover:text-red-300 transition-colors">
+                        <X size={11} /> Remove
+                      </button>
+                    )}
+                  </div>
+                  <input type="file" accept=".pdf" className="hidden" id="resumeup" onChange={e => handleResume(e.target.files?.[0] || null)} />
+                  {formData.resumeFile ? (
+                    <div className="flex items-center gap-3 p-3.5 bg-[#00FFC6]/5 border border-[#00FFC6]/20 rounded-xl">
+                      <div className="w-9 h-9 rounded-lg bg-[#00FFC6]/10 border border-[#00FFC6]/20 flex items-center justify-center shrink-0">
+                        <FileText size={16} className="text-[#00FFC6]" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm text-gray-300 font-semibold truncate">{formData.resumeFile.name}</p>
+                        <p className="text-[10px] text-gray-600">{(formData.resumeFile.size / 1024).toFixed(0)} KB</p>
+                      </div>
+                      <Check size={14} className="text-[#00FFC6] shrink-0" />
+                    </div>
+                  ) : (
+                    <label htmlFor="resumeup"
+                      className="flex items-center justify-center gap-2.5 w-full py-4 border border-dashed border-white/12 rounded-xl text-sm text-gray-600 hover:text-gray-400 hover:border-white/25 hover:bg-white/[0.02] transition-all duration-200 cursor-pointer">
+                      <Upload size={15} /> Click to upload your resume (PDF)
+                    </label>
+                  )}
+                  {errors.resumeFile && <p className="text-[11px] text-red-400 flex items-center gap-1.5"><AlertCircle size={10} />{errors.resumeFile}</p>}
+                </div>
               </div>
             )}
 
-            {/* STEP 8 — Review */}
-            {step === 8 && (
+            {/* ── STEP 3 — Review ── */}
+            {step === 3 && (
               <div className="space-y-5 animate-fi">
                 <SectionHeader icon={ShieldCheck} title="Review & Submit" sub="Take a final look before sending" />
 
-                {/* Info box */}
                 <div className="bg-gradient-to-br from-[#00FFC6]/6 to-transparent border border-[#00FFC6]/12 rounded-2xl p-5 text-sm text-gray-400 leading-relaxed">
                   <p className="text-[#00FFC6] font-bold text-[11px] uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
                     <Sparkles size={10} /> Review Your Application
                   </p>
-                  <p className="text-xs">
-                    Review all the information below carefully. You can edit any section by clicking the "Edit" button next to it. Once you're satisfied, click the "Submit Application" button at the bottom.
-                  </p>
+                  <p className="text-xs">Review all information carefully. Click "Edit" on any section to go back and fix it.</p>
                 </div>
 
                 {imagePreview && (
@@ -850,154 +603,90 @@ const InductionForm: React.FC = () => {
                   </div>
                 )}
 
-                {formData.domain.length > 0 && (
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between px-1">
-                      <p className="text-[10px] font-bold text-[#00FFC6] uppercase tracking-[0.12em]">Domains</p>
-                      <button type="button" onClick={() => { setStep(3); scrollTop(); }}
-                        className="text-[10px] text-gray-500 hover:text-[#00FFC6] font-semibold uppercase tracking-wider flex items-center gap-1 transition-colors">
-                        Edit
-                      </button>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {formData.domain.map(id => {
-                        const d = DOMAINS.find(x => x.id === id)!;
-                        const Icon = d.icon;
-                        return (
-                          <div key={id} className={`flex items-center gap-2 px-3 py-2 rounded-xl border bg-gradient-to-br ${d.grad} ${d.border}`}>
-                            <Icon size={13} className={d.text} />
-                            <span className={`text-xs font-bold ${d.text}`}>{id}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                    <div className="flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 w-fit">
-                      <Clock size={10} className="text-gray-500" />
-                      <span className="text-[11px] text-gray-400">{formData.availability}</span>
-                    </div>
+                {/* Personal & Contact block */}
+                <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <p className="text-[10px] font-bold text-[#00FFC6] uppercase tracking-[0.12em]">Personal & Contact</p>
+                    <button type="button" onClick={() => { setStep(1); scrollTop(); }}
+                      className="text-[10px] text-gray-500 hover:text-[#00FFC6] font-semibold uppercase tracking-wider transition-colors">Edit</button>
                   </div>
-                )}
+                  <div className="grid md:grid-cols-2 gap-x-6 gap-y-2.5">
+                    {[
+                      { l: 'Name',      v: formData.name },
+                      { l: 'Roll No',   v: formData.rollNo },
+                      { l: 'Branch',    v: formData.branch },
+                      { l: 'Year',      v: formData.year },
+                      { l: 'Section',   v: formData.section },
+                      { l: 'Email',     v: formData.email },
+                      { l: 'Phone',     v: formData.phone },
+                      { l: 'Residence', v: formData.residence },
+                      { l: 'LinkedIn',  v: formData.linkedinProfile || '—' },
+                      { l: 'GitHub',    v: formData.githubProfile    || '—' },
+                    ].map(({ l, v }) => (
+                      <div key={l}>
+                        <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block">{l}</span>
+                        <span className="text-sm text-gray-300 font-medium">{v || '—'}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
 
-                {[
-                  { title: 'Personal', stepNum: 1, items: [
-                    { l: 'Name', v: formData.name }, { l: 'Roll No', v: formData.rollNo },
-                    { l: 'Branch', v: formData.branch }, { l: 'Year', v: formData.year }, { l: 'Section', v: formData.section },
-                  ]},
-                  { title: 'Contact', stepNum: 2, items: [
-                    { l: 'Email', v: formData.email }, { l: 'Phone', v: formData.phone },
-                    { l: 'Residence', v: formData.residence },
-                    { l: 'LinkedIn', v: formData.linkedinProfile || '—' },
-                    { l: 'GitHub', v: formData.githubProfile || '—' },
-                  ]},
-                  { title: 'Society Background', stepNum: 4, items: [
-                    { l: 'Previous Society', v: formData.prevSociety || 'None' },
-                    { l: 'Role There', v: formData.prevRole || '—' },
-                    { l: 'Availability', v: formData.availability },
-                  ]},
-                  { title: 'Portfolio', stepNum: 5, items: [
-                    { l: 'DSA Level', v: formData.dsaLevel || '—' },
-                    { l: 'LeetCode', v: formData.leetcodeHandle || '—' },
-                    { l: 'Codeforces', v: formData.codeforcesHandle || '—' },
-                    { l: 'CodeChef', v: formData.codechefHandle || '—' },
-                  ]},
-                ].map(({ title, stepNum, items }) => (
-                  <div key={title} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <p className="text-[10px] font-bold text-[#00FFC6] uppercase tracking-[0.12em]">{title}</p>
-                      <button type="button" onClick={() => { setStep(stepNum); scrollTop(); }}
-                        className="text-[10px] text-gray-500 hover:text-[#00FFC6] font-semibold uppercase tracking-wider flex items-center gap-1 transition-colors">
-                        Edit
-                      </button>
+                {/* About You block */}
+                <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <p className="text-[10px] font-bold text-[#00FFC6] uppercase tracking-[0.12em]">About You</p>
+                    <button type="button" onClick={() => { setStep(2); scrollTop(); }}
+                      className="text-[10px] text-gray-500 hover:text-[#00FFC6] font-semibold uppercase tracking-wider transition-colors">Edit</button>
+                  </div>
+                  <div className="space-y-3">
+                    {formData.prevSociety && (
+                      <div>
+                        <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-0.5">Society / Club</span>
+                        <p className="text-sm text-gray-300 font-medium">{formData.prevSociety}</p>
+                      </div>
+                    )}
+                    <div className="grid md:grid-cols-2 gap-x-6 gap-y-3">
+                      <div>
+                        <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-0.5">Soft Skills</span>
+                        <p className="text-sm text-gray-400 leading-relaxed">{formData.softSkills}</p>
+                      </div>
+                      <div>
+                        <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-0.5">Hard Skills</span>
+                        <p className="text-sm text-gray-400 leading-relaxed">{formData.hardSkills}</p>
+                      </div>
                     </div>
-                    <div className="grid md:grid-cols-2 gap-x-6 gap-y-2.5">
-                      {items.map(({ l, v }) => (
-                        <div key={l}>
-                          <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block">{l}</span>
-                          <span className="text-sm text-gray-300 font-medium">{v || '—'}</span>
-                        </div>
-                      ))}
+                    {formData.projectsDesc && (
+                      <div>
+                        <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-0.5">Projects</span>
+                        <p className="text-sm text-gray-400 leading-relaxed line-clamp-3">{formData.projectsDesc}</p>
+                      </div>
+                    )}
+                    <div>
+                      <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-0.5">Introduction</span>
+                      <p className="text-sm text-gray-400 leading-relaxed">{formData.introduction}</p>
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-x-6 gap-y-3">
+                      <div>
+                        <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-0.5">Strengths</span>
+                        <p className="text-sm text-gray-400 leading-relaxed">{formData.strengths}</p>
+                      </div>
+                      <div>
+                        <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-0.5">Weaknesses</span>
+                        <p className="text-sm text-gray-400 leading-relaxed">{formData.weaknesses}</p>
+                      </div>
+                    </div>
+                    {formData.achievements && (
+                      <div>
+                        <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-0.5">Achievements</span>
+                        <p className="text-sm text-gray-400 leading-relaxed">{formData.achievements}</p>
+                      </div>
+                    )}
+                    <div>
+                      <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-0.5">Why Flux?</span>
+                      <p className="text-sm text-gray-400 leading-relaxed line-clamp-4">{formData.whyJoin}</p>
                     </div>
                   </div>
-                ))}
-
-                {/* Skills Section */}
-                {(formData.softSkills || formData.hardSkills) && (
-                  <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <p className="text-[10px] font-bold text-[#00FFC6] uppercase tracking-[0.12em]">Skills</p>
-                      <button type="button" onClick={() => { setStep(5); scrollTop(); }}
-                        className="text-[10px] text-gray-500 hover:text-[#00FFC6] font-semibold uppercase tracking-wider flex items-center gap-1 transition-colors">
-                        Edit
-                      </button>
-                    </div>
-                    <div className="space-y-3">
-                      {formData.softSkills && (
-                        <div>
-                          <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-1">Soft Skills</span>
-                          <p className="text-sm text-gray-400 leading-relaxed">{formData.softSkills}</p>
-                        </div>
-                      )}
-                      {formData.hardSkills && (
-                        <div>
-                          <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-1">Hard Skills</span>
-                          <p className="text-sm text-gray-400 leading-relaxed">{formData.hardSkills}</p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {formData.projectsDesc && (
-                  <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <p className="text-[10px] font-bold text-[#00FFC6] uppercase tracking-[0.12em]">Projects</p>
-                      <button type="button" onClick={() => { setStep(5); scrollTop(); }}
-                        className="text-[10px] text-gray-500 hover:text-[#00FFC6] font-semibold uppercase tracking-wider flex items-center gap-1 transition-colors">
-                        Edit
-                      </button>
-                    </div>
-                    <p className="text-sm text-gray-400 leading-relaxed line-clamp-3">{formData.projectsDesc}</p>
-                  </div>
-                )}
-
-                {/* About You Section */}
-                {(formData.introduction || formData.strengths || formData.weaknesses || formData.achievements) && (
-                  <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <p className="text-[10px] font-bold text-[#00FFC6] uppercase tracking-[0.12em]">About You</p>
-                      <button type="button" onClick={() => { setStep(6); scrollTop(); }}
-                        className="text-[10px] text-gray-500 hover:text-[#00FFC6] font-semibold uppercase tracking-wider flex items-center gap-1 transition-colors">
-                        Edit
-                      </button>
-                    </div>
-                    <div className="space-y-3">
-                      {formData.introduction && (
-                        <div>
-                          <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-1">Brief Introduction</span>
-                          <p className="text-sm text-gray-400 leading-relaxed">{formData.introduction}</p>
-                        </div>
-                      )}
-                      {formData.strengths && (
-                        <div>
-                          <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-1">Key Strengths</span>
-                          <p className="text-sm text-gray-400 leading-relaxed">{formData.strengths}</p>
-                        </div>
-                      )}
-                      {formData.weaknesses && (
-                        <div>
-                          <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-1">Areas to Improve</span>
-                          <p className="text-sm text-gray-400 leading-relaxed">{formData.weaknesses}</p>
-                        </div>
-                      )}
-                      {formData.achievements && (
-                        <div>
-                          <span className="text-[9px] text-gray-700 uppercase tracking-wider font-semibold block mb-1">Achievements</span>
-                          <p className="text-sm text-gray-400 leading-relaxed">{formData.achievements}</p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
+                </div>
 
                 {formData.resumeFile && (
                   <div className="flex items-center gap-3 p-3.5 bg-[#00FFC6]/5 border border-[#00FFC6]/15 rounded-2xl">
@@ -1009,17 +698,6 @@ const InductionForm: React.FC = () => {
                     <Check size={13} className="text-[#00FFC6] shrink-0" />
                   </div>
                 )}
-
-                <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-[10px] font-bold text-[#00FFC6] uppercase tracking-[0.12em]">Why Flux?</p>
-                    <button type="button" onClick={() => { setStep(7); scrollTop(); }}
-                      className="text-[10px] text-gray-500 hover:text-[#00FFC6] font-semibold uppercase tracking-wider flex items-center gap-1 transition-colors">
-                      Edit
-                    </button>
-                  </div>
-                  <p className="text-sm text-gray-400 leading-relaxed line-clamp-4">{formData.whyJoin}</p>
-                </div>
 
                 <div className="flex items-start gap-3 bg-[#00FFC6]/5 border border-[#00FFC6]/15 rounded-2xl p-4">
                   <Check size={14} className="text-[#00FFC6] shrink-0 mt-0.5" />
@@ -1038,17 +716,19 @@ const InductionForm: React.FC = () => {
                   <ArrowLeft size={14} /> Back
                 </button>
               )}
-              {step < 7 ? (
+              {step === 1 && (
                 <button type="button" onClick={goNext}
                   className="flex items-center justify-center gap-2 flex-1 sm:flex-none sm:px-8 py-3 rounded-xl bg-[#00FFC6] hover:bg-[#00e5b3] text-black font-bold transition-all duration-200 text-sm hover:scale-[1.02] active:scale-[0.99] shadow-lg shadow-[#00FFC6]/15">
                   Continue <ArrowRight size={14} />
                 </button>
-              ) : step === 7 ? (
+              )}
+              {step === 2 && (
                 <button type="submit"
                   className="flex items-center justify-center gap-2 flex-1 sm:flex-none sm:px-8 py-3 rounded-xl bg-[#00FFC6] hover:bg-[#00e5b3] text-black font-bold transition-all duration-200 text-sm hover:scale-[1.02] active:scale-[0.99] shadow-lg shadow-[#00FFC6]/15">
                   Review Application <ShieldCheck size={14} />
                 </button>
-              ) : (
+              )}
+              {step === 3 && (
                 <button type="button" onClick={handleFinalSubmit} disabled={isSubmitting}
                   className="flex items-center justify-center gap-2 flex-1 sm:flex-none sm:px-10 py-3 rounded-xl bg-[#00FFC6] hover:bg-[#00e5b3] disabled:bg-gray-800 disabled:text-gray-600 text-black font-bold transition-all duration-200 text-sm hover:scale-[1.02] disabled:scale-100 active:scale-[0.99] shadow-lg shadow-[#00FFC6]/15">
                   {isSubmitting ? (
@@ -1073,6 +753,7 @@ const InductionForm: React.FC = () => {
       <style>{`
         @keyframes fi { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
         .animate-fi { animation: fi 0.22s ease both; }
+        .line-clamp-3 { display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
         .line-clamp-4 { display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden; }
       `}</style>
     </div>

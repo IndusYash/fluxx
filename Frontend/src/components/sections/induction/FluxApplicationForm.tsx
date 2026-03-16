@@ -27,6 +27,7 @@ import {
   Star,
   Wrench,
   Users,
+  CheckCircle2,
 } from "lucide-react";
 
 const applicationSchema = z.object({
@@ -38,11 +39,8 @@ const applicationSchema = z.object({
   branch: z.string().min(1, "Branch is required"),
   softSkills: z.string().min(1, "Please mention at least one soft skill"),
   hardSkills: z.string().min(1, "Please mention at least one hard skill"),
-  society: z.string().min(1, "Please mention your current society or write 'None'"),
-  whyJoin: z.string().min(
-    50,
-    "Please provide at least 50 characters explaining why you want to join"
-  ),
+  society: z.string().optional(),
+  whyJoin: z.string().min(50, "Please provide at least 50 characters explaining why you want to join"),
 });
 
 type ApplicationForm = z.infer<typeof applicationSchema>;
@@ -62,7 +60,17 @@ const branches = [
   "BPharma",
 ];
 
+const STEP_LABELS = ["Personal & Contact", "About You", "Review"];
+
+const ReviewItem = ({ label, value }: { label: string; value?: string }) => (
+  <div className="flex flex-col gap-0.5">
+    <span className="text-xs text-muted-foreground uppercase tracking-wide">{label}</span>
+    <span className="text-sm text-foreground font-medium">{value || "—"}</span>
+  </div>
+);
+
 export const FluxApplicationForm = () => {
+  const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
@@ -70,22 +78,26 @@ export const FluxApplicationForm = () => {
     register,
     handleSubmit,
     setValue,
+    getValues,
+    trigger,
     formState: { errors },
     reset,
   } = useForm<ApplicationForm>({
     resolver: zodResolver(applicationSchema),
+    defaultValues: { society: "" },
   });
 
-  const parseSkills = (value: string) => {
-    if (!value) return [];
-    return value.includes(",")
-      ? value.split(",").map((s) => s.trim()).filter(Boolean)
-      : [value.trim()];
+  const goNext = async () => {
+    const step1Fields = ["fullName", "email", "phone", "rollNo", "year", "branch"] as const;
+    const step2Fields = ["softSkills", "hardSkills", "whyJoin"] as const;
+    const valid = await trigger(step === 1 ? step1Fields : step2Fields);
+    if (valid) setStep((s) => s + 1);
   };
+
+  const goBack = () => setStep((s) => s - 1);
 
   const onSubmit = async (data: ApplicationForm) => {
     setIsSubmitting(true);
-
     const API_BASE = import.meta.env.VITE_API_BASE || "";
 
     const payload = {
@@ -98,7 +110,7 @@ export const FluxApplicationForm = () => {
       whyJoin: data.whyJoin,
       softSkills: data.softSkills,
       hardSkills: data.hardSkills,
-      society: data.society,
+      society: data.society || "None",
     };
 
     try {
@@ -113,10 +125,10 @@ export const FluxApplicationForm = () => {
       if (res.ok) {
         toast({
           title: "Application Submitted!",
-          description:
-            "Thank you for applying to FLUX. We'll review your application and get back to you soon.",
+          description: "Thank you for applying to FLUX. We'll review your application and get back to you soon.",
         });
         reset();
+        setStep(1);
       } else if (res.status === 409) {
         toast({ title: "Duplicate Entry", description: body.error || "Phone or email already exists" });
       } else {
@@ -133,216 +145,221 @@ export const FluxApplicationForm = () => {
   return (
     <Card className="bg-card/50 backdrop-blur-md border-flux-border">
       <CardContent className="p-8">
+        {/* Header */}
         <div className="mb-8">
           <h2 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
             Join FLUX
           </h2>
-          <p className="text-muted-foreground">
-            Fill out your details to apply for membership
-          </p>
+          <p className="text-muted-foreground">Fill out your details to apply for membership</p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Full Name */}
-            <div className="space-y-2">
-              <Label htmlFor="fullName" className="flex items-center gap-2">
-                <User className="w-4 h-4" />
-                Full Name
-              </Label>
-              <Input
-                id="fullName"
-                placeholder="Enter your full name"
-                {...register("fullName")}
-                className="bg-input border-flux-border focus:border-primary"
-              />
-              {errors.fullName && (
-                <p className="text-sm text-destructive">{errors.fullName.message}</p>
-              )}
+        {/* Step Indicator */}
+        <div className="flex items-center mb-10">
+          {STEP_LABELS.map((label, i) => {
+            const n = i + 1;
+            const done = n < step;
+            const active = n === step;
+            return (
+              <div key={n} className="flex items-center flex-1 last:flex-none">
+                <div className="flex flex-col items-center gap-1">
+                  <div
+                    className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold border-2 transition-colors duration-300
+                      ${done ? "bg-primary border-primary text-primary-foreground" : active ? "border-primary text-primary bg-transparent" : "border-muted-foreground/40 text-muted-foreground/40"}`}
+                  >
+                    {done ? <CheckCircle2 className="w-5 h-5" /> : n}
+                  </div>
+                  <span className={`text-xs hidden sm:block ${active ? "text-primary font-medium" : done ? "text-primary" : "text-muted-foreground/50"}`}>
+                    {label}
+                  </span>
+                </div>
+                {i < STEP_LABELS.length - 1 && (
+                  <div className={`flex-1 h-px mx-3 mb-4 transition-colors duration-300 ${done ? "bg-primary" : "bg-muted-foreground/20"}`} />
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {/* ── Step 1: Personal & Contact ── */}
+          {step === 1 && (
+            <div className="space-y-6">
+              <h3 className="text-lg font-semibold text-foreground">Personal & Contact Information</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="fullName" className="flex items-center gap-2">
+                    <User className="w-4 h-4" /> Full Name
+                  </Label>
+                  <Input id="fullName" placeholder="Enter your full name" {...register("fullName")} className="bg-input border-flux-border focus:border-primary" />
+                  {errors.fullName && <p className="text-sm text-destructive">{errors.fullName.message}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="flex items-center gap-2">
+                    <Mail className="w-4 h-4" /> Email Address
+                  </Label>
+                  <Input id="email" type="email" placeholder="Enter your email" {...register("email")} className="bg-input border-flux-border focus:border-primary" />
+                  {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="phone" className="flex items-center gap-2">
+                    <Phone className="w-4 h-4" /> Phone Number
+                  </Label>
+                  <Input id="phone" placeholder="Enter your phone number" {...register("phone")} className="bg-input border-flux-border focus:border-primary" />
+                  {errors.phone && <p className="text-sm text-destructive">{errors.phone.message}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="rollNo" className="flex items-center gap-2">
+                    <Hash className="w-4 h-4" /> Roll Number
+                  </Label>
+                  <Input id="rollNo" placeholder="Enter your roll number" {...register("rollNo")} className="bg-input border-flux-border focus:border-primary" />
+                  {errors.rollNo && <p className="text-sm text-destructive">{errors.rollNo.message}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="flex items-center gap-2">
+                    <Calendar className="w-4 h-4" /> Year
+                  </Label>
+                  <Select onValueChange={(value) => setValue("year", value)}>
+                    <SelectTrigger className="bg-input border-flux-border focus:border-primary">
+                      <SelectValue placeholder="Select your year" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover backdrop-blur-none">
+                      {years.map((year) => (
+                        <SelectItem key={year} value={year}>{year}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {errors.year && <p className="text-sm text-destructive">{errors.year.message}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="flex items-center gap-2">
+                    <GitBranch className="w-4 h-4" /> Branch
+                  </Label>
+                  <Select onValueChange={(value) => setValue("branch", value)}>
+                    <SelectTrigger className="bg-input border-flux-border focus:border-primary">
+                      <SelectValue placeholder="Select your branch" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover backdrop-blur-none">
+                      {branches.map((branch) => (
+                        <SelectItem key={branch} value={branch}>{branch}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {errors.branch && <p className="text-sm text-destructive">{errors.branch.message}</p>}
+                </div>
+              </div>
+
+              <div className="flex justify-end pt-2">
+                <Button type="button" onClick={goNext} className="bg-gradient-primary hover:shadow-glow transition-all duration-300">
+                  Next →
+                </Button>
+              </div>
             </div>
+          )}
 
-            {/* Email */}
-            <div className="space-y-2">
-              <Label htmlFor="email" className="flex items-center gap-2">
-                <Mail className="w-4 h-4" />
-                Email Address
-              </Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="Enter your email"
-                {...register("email")}
-                className="bg-input border-flux-border focus:border-primary"
-              />
-              {errors.email && (
-                <p className="text-sm text-destructive">{errors.email.message}</p>
-              )}
+          {/* ── Step 2: About You ── */}
+          {step === 2 && (
+            <div className="space-y-6">
+              <h3 className="text-lg font-semibold text-foreground">About You</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="softSkills" className="flex items-center gap-2">
+                    <Star className="w-4 h-4" /> Soft Skills
+                  </Label>
+                  <Input id="softSkills" placeholder="E.g. Communication, Teamwork, Leadership" {...register("softSkills")} className="bg-input border-flux-border focus:border-primary" />
+                  {errors.softSkills && <p className="text-sm text-destructive">{errors.softSkills.message}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="hardSkills" className="flex items-center gap-2">
+                    <Wrench className="w-4 h-4" /> Hard Skills
+                  </Label>
+                  <Input id="hardSkills" placeholder="E.g. Programming, Graphic Design, Data Analysis" {...register("hardSkills")} className="bg-input border-flux-border focus:border-primary" />
+                  {errors.hardSkills && <p className="text-sm text-destructive">{errors.hardSkills.message}</p>}
+                </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <Label htmlFor="society" className="flex items-center gap-2">
+                    <Users className="w-4 h-4" /> Society <span className="text-muted-foreground text-xs ml-1">(optional)</span>
+                  </Label>
+                  <Input id="society" placeholder="Name of any society you're currently part of" {...register("society")} className="bg-input border-flux-border focus:border-primary" />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="whyJoin" className="flex items-center gap-2">
+                  <MessageSquare className="w-4 h-4" /> Why do you want to join FLUX?
+                </Label>
+                <Textarea
+                  id="whyJoin"
+                  placeholder="Tell us about your interests, what you hope to gain from FLUX, and how you can contribute to our community..."
+                  rows={5}
+                  {...register("whyJoin")}
+                  className="bg-input border-flux-border focus:border-primary resize-none"
+                />
+                {errors.whyJoin && <p className="text-sm text-destructive">{errors.whyJoin.message}</p>}
+              </div>
+
+              <div className="flex justify-between pt-2">
+                <Button type="button" onClick={goBack} variant="outline" className="border-flux-border">
+                  ← Back
+                </Button>
+                <Button type="button" onClick={goNext} className="bg-gradient-primary hover:shadow-glow transition-all duration-300">
+                  Review →
+                </Button>
+              </div>
             </div>
+          )}
 
-            {/* Phone */}
-            <div className="space-y-2">
-              <Label htmlFor="phone" className="flex items-center gap-2">
-                <Phone className="w-4 h-4" />
-                Phone Number
-              </Label>
-              <Input
-                id="phone"
-                placeholder="Enter your phone number"
-                {...register("phone")}
-                className="bg-input border-flux-border focus:border-primary"
-              />
-              {errors.phone && (
-                <p className="text-sm text-destructive">{errors.phone.message}</p>
-              )}
-            </div>
+          {/* ── Step 3: Review ── */}
+          {step === 3 && (() => {
+            const v = getValues();
+            return (
+              <div className="space-y-6">
+                <h3 className="text-lg font-semibold text-foreground">Review Your Application</h3>
 
-            {/* Roll No */}
-            <div className="space-y-2">
-              <Label htmlFor="rollNo" className="flex items-center gap-2">
-                <Hash className="w-4 h-4" />
-                Roll Number
-              </Label>
-              <Input
-                id="rollNo"
-                placeholder="Enter your roll number"
-                {...register("rollNo")}
-                className="bg-input border-flux-border focus:border-primary"
-              />
-              {errors.rollNo && (
-                <p className="text-sm text-destructive">{errors.rollNo.message}</p>
-              )}
-            </div>
+                <div className="rounded-lg border border-flux-border p-5 space-y-4">
+                  <p className="text-xs font-semibold text-primary uppercase tracking-wider">Personal & Contact</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <ReviewItem label="Full Name" value={v.fullName} />
+                    <ReviewItem label="Email" value={v.email} />
+                    <ReviewItem label="Phone" value={v.phone} />
+                    <ReviewItem label="Roll Number" value={v.rollNo} />
+                    <ReviewItem label="Year" value={v.year} />
+                    <ReviewItem label="Branch" value={v.branch} />
+                  </div>
+                </div>
 
-            {/* Year */}
-            <div className="space-y-2">
-              <Label className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                Year
-              </Label>
-              <Select onValueChange={(value) => setValue("year", value)}>
-                <SelectTrigger className="bg-input border-flux-border focus:border-primary">
-                  <SelectValue placeholder="Select your year" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover backdrop-blur-none">
-                  {years.map((year) => (
-                    <SelectItem key={year} value={year}>
-                      {year}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {errors.year && (
-                <p className="text-sm text-destructive">{errors.year.message}</p>
-              )}
-            </div>
+                <div className="rounded-lg border border-flux-border p-5 space-y-4">
+                  <p className="text-xs font-semibold text-primary uppercase tracking-wider">About You</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <ReviewItem label="Soft Skills" value={v.softSkills} />
+                    <ReviewItem label="Hard Skills" value={v.hardSkills} />
+                    {v.society && <ReviewItem label="Society" value={v.society} />}
+                  </div>
+                  <ReviewItem label="Why Join FLUX" value={v.whyJoin} />
+                </div>
 
-            {/* Branch */}
-            <div className="space-y-2">
-              <Label className="flex items-center gap-2">
-                <GitBranch className="w-4 h-4" />
-                Branch
-              </Label>
-              <Select onValueChange={(value) => setValue("branch", value)}>
-                <SelectTrigger className="bg-input border-flux-border focus:border-primary">
-                  <SelectValue placeholder="Select your branch" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover backdrop-blur-none">
-                  {branches.map((branch) => (
-                    <SelectItem key={branch} value={branch}>
-                      {branch}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {errors.branch && (
-                <p className="text-sm text-destructive">{errors.branch.message}</p>
-              )}
-            </div>
-
-            {/* Soft Skills */}
-            <div className="space-y-2">
-              <Label htmlFor="softSkills" className="flex items-center gap-2">
-                <Star className="w-4 h-4" />
-                Soft Skills
-              </Label>
-              <Input
-                id="softSkills"
-                placeholder="E.g. Communication, Teamwork, Leadership"
-                {...register("softSkills")}
-                className="bg-input border-flux-border focus:border-primary"
-              />
-              {errors.softSkills && (
-                <p className="text-sm text-destructive">{errors.softSkills.message}</p>
-              )}
-            </div>
-
-            {/* Hard Skills */}
-            <div className="space-y-2">
-              <Label htmlFor="hardSkills" className="flex items-center gap-2">
-                <Wrench className="w-4 h-4" />
-                Hard Skills
-              </Label>
-              <Input
-                id="hardSkills"
-                placeholder="E.g. Programming, Graphic Design, Data Analysis"
-                {...register("hardSkills")}
-                className="bg-input border-flux-border focus:border-primary"
-              />
-              {errors.hardSkills && (
-                <p className="text-sm text-destructive">{errors.hardSkills.message}</p>
-              )}
-            </div>
-
-            {/* Society */}
-            <div className="space-y-2">
-              <Label htmlFor="society" className="flex items-center gap-2">
-                <Users className="w-4 h-4" />
-                Current Society (if any)
-              </Label>
-              <Input
-                id="society"
-                placeholder="Mention your current society or write 'None'"
-                {...register("society")}
-                className="bg-input border-flux-border focus:border-primary"
-              />
-              {errors.society && (
-                <p className="text-sm text-destructive">{errors.society.message}</p>
-              )}
-            </div>
-          </div>
-
-          {/* Why Join */}
-          <div className="space-y-2">
-            <Label htmlFor="whyJoin" className="flex items-center gap-2">
-              <MessageSquare className="w-4 h-4" />
-              Why do you want to join FLUX?
-            </Label>
-            <Textarea
-              id="whyJoin"
-              placeholder="Tell us about your interests, what you hope to gain from FLUX, and how you can contribute to our community..."
-              rows={4}
-              {...register("whyJoin")}
-              className="bg-input border-flux-border focus:border-primary resize-none"
-            />
-            {errors.whyJoin && (
-              <p className="text-sm text-destructive">{errors.whyJoin.message}</p>
-            )}
-          </div>
-
-          <Button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full bg-gradient-primary hover:shadow-glow transition-all duration-300"
-          >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Submitting Application...
-              </>
-            ) : (
-              "Submit Application"
-            )}
-          </Button>
+                <div className="flex justify-between pt-2">
+                  <Button type="button" onClick={goBack} variant="outline" className="border-flux-border">
+                    ← Back
+                  </Button>
+                  <Button type="submit" disabled={isSubmitting} className="bg-gradient-primary hover:shadow-glow transition-all duration-300">
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Submitting...
+                      </>
+                    ) : "Submit Application"}
+                  </Button>
+                </div>
+              </div>
+            );
+          })()}
         </form>
       </CardContent>
     </Card>
