@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   LogIn, LogOut, Search, X, Check, Star, User, Paperclip, AlertCircle,
@@ -439,9 +439,12 @@ const CandidatesTab: React.FC<{ token: string }> = ({ token }) => {
   const [search,   setSearch]   = useState('');
   const [filter,   setFilter]   = useState<'all'|'scored'|'pending'|'selected'|'rejected'|'hold'>('all');
   const [selected, setSelected] = useState<Application | null>(null);
+  const initialLoad = useRef(true);
 
-  const load = useCallback(async () => {
-    setLoading(true); setErr('');
+  const load = useCallback(async (opts?: { showLoading?: boolean }) => {
+    const showLoading = opts?.showLoading ?? initialLoad.current;
+    if (showLoading) setLoading(true);
+    setErr('');
     try {
       const res = await fetch(`${API}/api/judge-auth/applications`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -449,11 +452,35 @@ const CandidatesTab: React.FC<{ token: string }> = ({ token }) => {
       const data = await res.json();
       if (!res.ok) { setErr(data.message || 'Failed'); return; }
       setApps(data);
+      setSelected(prev => (prev ? data.find(a => a._id === prev._id) ?? prev : prev));
     } catch { setErr('Network error'); }
-    finally { setLoading(false); }
+    finally {
+      if (showLoading) setLoading(false);
+      initialLoad.current = false;
+    }
   }, [token]);
 
   useEffect(() => { load(); }, [load]);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      if (document.visibilityState === 'visible') {
+        load({ showLoading: false });
+      }
+    }, 5000);
+
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        load({ showLoading: false });
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => {
+      window.clearInterval(interval);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
+  }, [load]);
 
   const handleScoreSaved = (appId: string, score: ScoreEntry) =>
     setApps(prev => prev.map(a => a._id === appId ? { ...a, myScore: score } : a));
@@ -554,9 +581,12 @@ const LeaderboardTab: React.FC<{ token: string }> = ({ token }) => {
   const [err,      setErr]      = useState('');
   const [search,   setSearch]   = useState('');
   const [statusF,  setStatusF]  = useState<'all'|Status>('all');
+  const initialLoad = useRef(true);
 
-  const load = useCallback(async () => {
-    setLoading(true); setErr('');
+  const load = useCallback(async (opts?: { showLoading?: boolean }) => {
+    const showLoading = opts?.showLoading ?? initialLoad.current;
+    if (showLoading) setLoading(true);
+    setErr('');
     try {
       const res = await fetch(`${API}/api/judge-auth/leaderboard`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -565,10 +595,33 @@ const LeaderboardTab: React.FC<{ token: string }> = ({ token }) => {
       if (!res.ok) { setErr(data.message || 'Failed'); return; }
       setEntries(data);
     } catch { setErr('Network error'); }
-    finally { setLoading(false); }
+    finally {
+      if (showLoading) setLoading(false);
+      initialLoad.current = false;
+    }
   }, [token]);
 
   useEffect(() => { load(); }, [load]);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      if (document.visibilityState === 'visible') {
+        load({ showLoading: false });
+      }
+    }, 5000);
+
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        load({ showLoading: false });
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => {
+      window.clearInterval(interval);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
+  }, [load]);
 
   const visible = entries.filter(e => {
     const q = search.toLowerCase();
