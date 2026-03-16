@@ -14,6 +14,7 @@ import FDPDetailsPage from "@/components/sections/events/UpcomingEvents/fdp";
 import IdeathonPage from "@/pages/Ideathon/Ideathon";
 import InductionLanding from "@/pages/induction/LandingPage";
 import InductionForm from "@/pages/induction/InductionForm";
+import JudgePanel from "@/pages/judge/JudgePanel";
 
 import { Toaster } from "@/components/ui/toaster";
 
@@ -26,40 +27,30 @@ export default function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const AppLayout = isMobile ? MobileLayout : Layout;
+
   return (
     <BrowserRouter>
       <ScrollToTop isMobile={isMobile} />
       <div className="min-h-dvh flex flex-col">
         <Routes>
-          {/* Mobile Routes */}
-          {isMobile ? (
-            <Route element={<MobileLayout />}>
-              <Route path="/" element={<HomePage isMobile={isMobile} />} />
-              <Route path="/about" element={<AboutPage isMobile={isMobile} />} />
-              <Route path="/faculty" element={<FacultyPage isMobile={isMobile} />} />
-              <Route path="/events" element={<EventsPage isMobile={isMobile} />} />
-              <Route path="/events/fdp" element={<FDPDetailsPage />} />
-              <Route path="/team" element={<TeamPage isMobile={isMobile} />} />
-              <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
-              <Route path="/ideathon" element={<IdeathonPage />} />
-              <Route path="/induction" element={<InductionLanding />} />
-              <Route path="/induction/apply" element={<InductionForm />} />
-            </Route>
-          ) : (
-            // Desktop Routes
-            <Route element={<Layout />}>
-              <Route path="/" element={<HomePage isMobile={isMobile} />} />
-              <Route path="/about" element={<AboutPage isMobile={isMobile} />} />
-              <Route path="/faculty" element={<FacultyPage isMobile={isMobile} />} />
-              <Route path="/events" element={<EventsPage isMobile={isMobile} />} />
-              <Route path="/events/fdp" element={<FDPDetailsPage />} />
-              <Route path="/team" element={<TeamPage isMobile={isMobile} />} />
-              <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
-              <Route path="/ideathon" element={<IdeathonPage />} />
-              <Route path="/induction" element={<InductionLanding />} />
-              <Route path="/induction/apply" element={<InductionForm />} />
-            </Route>
-          )}
+          {/* Standalone routes — no Layout wrapper */}
+          <Route path="/judge-panel"   element={<JudgePanel />} />
+          <Route path="/judge-panel/*" element={<JudgePanel />} />
+
+          {/* All other routes — shared Layout */}
+          <Route element={<AppLayout />}>
+            <Route path="/" element={<HomePage isMobile={isMobile} />} />
+            <Route path="/about" element={<AboutPage isMobile={isMobile} />} />
+            <Route path="/faculty" element={<FacultyPage isMobile={isMobile} />} />
+            <Route path="/events" element={<EventsPage isMobile={isMobile} />} />
+            <Route path="/events/fdp" element={<FDPDetailsPage />} />
+            <Route path="/team" element={<TeamPage isMobile={isMobile} />} />
+            <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
+            <Route path="/ideathon" element={<IdeathonPage />} />
+            <Route path="/induction" element={<InductionLanding />} />
+            <Route path="/induction/apply" element={<InductionForm />} />
+          </Route>
         </Routes>
       </div>
       <Toaster />

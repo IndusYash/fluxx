@@ -10,6 +10,7 @@ import lead from "./routes/leader.js";
 import ideathonTeam from "./routes/ideathonTeam.js";
 import uploadRoutes from './routes/uploadRoutes.js';
 import applications from './routes/applications.js';
+import judgeAuthRoutes from './routes/judgeAuth.js';
 
 const app = express();
 
@@ -17,8 +18,17 @@ const app = express();
 
 app.use(express.json());
 
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",")
+  : ["http://localhost:5173"];
+
 app.use(cors({
-  origin: true,
+  origin: (origin, callback) => {
+    // allow requests with no origin (mobile apps, curl, Postman)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(new Error("Not allowed by CORS"));
+  },
   credentials: true,
 }));
 
@@ -29,6 +39,7 @@ app.use("/api/leader",lead);
 app.use("/api/ideathonTeam",ideathonTeam);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/applications", applications);
+app.use("/api/judge-auth", judgeAuthRoutes);
 
 // simple health check endpoint used by many platforms (GET /healthz)
 app.get('/healthz', (req, res) => {
