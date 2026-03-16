@@ -1,5 +1,10 @@
 import dotenv from "dotenv";
-dotenv.config();
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.resolve(__dirname, ".env") });
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -18,19 +23,32 @@ const app = express();
 
 app.use(express.json());
 
-const allowedOrigins = process.env.ALLOWED_ORIGINS
-  ? process.env.ALLOWED_ORIGINS.split(",")
-  : ["http://localhost:5173"];
+const defaultAllowedOrigins = [
+  "https://flux.org.in",
+  "https://www.flux.org.in",
+];
 
-app.use(cors({
+const normalizeOrigin = (value = "") => value.trim().replace(/\/$/, "");
+
+const allowedOrigins = (process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",")
+  : defaultAllowedOrigins
+)
+  .map(normalizeOrigin)
+  .filter(Boolean);
+
+const corsOptions = {
   origin: (origin, callback) => {
     // allow requests with no origin (mobile apps, curl, Postman)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
+    if (allowedOrigins.includes(normalizeOrigin(origin))) return callback(null, true);
     return callback(new Error("Not allowed by CORS"));
   },
   credentials: true,
-}));
+};
+
+app.use(cors(corsOptions));
+app.options(/.*/, cors(corsOptions));
 
 app.use("/api/auth", auth);
 app.use("/api/details",detailed);
