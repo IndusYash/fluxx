@@ -120,15 +120,44 @@ router.get('/applications', judgeAuth, async (req, res) => {
       }
     ).sort({ createdAt: -1 });
 
-    // Attach this judge's own score (if any) to each application
-    const myScores = await ScoreModel.find({ judgeId: req.judge.id });
-    const scoreMap = {};
-    myScores.forEach(s => { scoreMap[s.applicationId.toString()] = s; });
+    const appIds = apps.map(a => a._id);
+    const allScores = await ScoreModel.find({ applicationId: { $in: appIds } });
 
-    const result = apps.map(a => ({
-      ...a.toObject(),
-      myScore: scoreMap[a._id.toString()] || null,
-    }));
+    const scoresByApp = {};
+    allScores.forEach(s => {
+      const id = s.applicationId.toString();
+      if (!scoresByApp[id]) scoresByApp[id] = [];
+      scoresByApp[id].push(s);
+    });
+
+    const result = apps.map(a => {
+      const appId = a._id.toString();
+      const scores = scoresByApp[appId] || [];
+
+      const myScore = scores.find(s => s.judgeId.toString() === req.judge.id) || null;
+
+      const statusCount = { selected: 0, rejected: 0, hold: 0 };
+      let lastScore = null;
+      scores.forEach(s => {
+        if (s.status) statusCount[s.status] = (statusCount[s.status] || 0) + 1;
+        if (!lastScore || new Date(s.updatedAt).getTime() > new Date(lastScore.updatedAt).getTime()) {
+          lastScore = s;
+        }
+      });
+
+      const maxCount = Math.max(...Object.values(statusCount));
+      const consensusStatus = maxCount === 0 ? null
+        : Object.keys(statusCount).find(k => statusCount[k] === maxCount);
+
+      return {
+        ...a.toObject(),
+        myScore,
+        consensusStatus,
+        lastStatus: lastScore?.status || null,
+        lastStatusAt: lastScore?.updatedAt || null,
+        lastStatusBy: lastScore?.judgeName || null,
+      };
+    });
 
     const withImages = await Promise.all(result.map(withSignedImageUrl));
 
