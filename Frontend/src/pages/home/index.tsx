@@ -1,10 +1,11 @@
-﻿import Hero from "@/components/sections/home/Hero";
-import { motion, AnimatePresence } from "framer-motion";
+import Hero from "@/components/sections/home/Hero";
+import { motion } from "framer-motion";
 import Showcase from "@/components/sections/home/Showcase";
 // import InductionCTA from "@/components/sections/home/InductionCTA"
 import FacultyPreview from "@/components/sections/home/FacultyPreview";
 import EventsPreview from "@/components/sections/home/EventsPreview";
 import ContactPreview from "@/components/sections/home/ContactPreview";
+{/*}
 import { useState, useEffect } from "react";
 import { Rocket, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -21,8 +22,9 @@ function useIsMobile(breakpoint = 768) {
 
   return isMobile;
 }
-
+*/}
 export default function HomePage() {
+  /*
   const isMobile = useIsMobile();
   const [showIdeathonModal, setShowIdeathonModal] = useState(false);
   const navigate = useNavigate();
@@ -51,6 +53,7 @@ export default function HomePage() {
     };
   }, [showIdeathonModal]);
 
+*/
   return (
     <>
       <Hero />
@@ -66,7 +69,8 @@ export default function HomePage() {
         <ContactPreview />
       </motion.div>
 
-      {/* ── Induction Popup ── */}
+      {/* Induction popup disabled for desktop and mobile. */}
+      {/*
       <AnimatePresence>
         {showIdeathonModal && (
           <motion.div
@@ -76,7 +80,6 @@ export default function HomePage() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
           >
-            {/* card */}
             <motion.div
               className="relative z-10 w-64 rounded-2xl overflow-hidden pointer-events-auto"
               style={{
@@ -90,10 +93,8 @@ export default function HomePage() {
               exit={{ opacity: 0, y: 20, scale: 0.94 }}
               transition={{ type: "spring", stiffness: 320, damping: 28 }}
             >
-              {/* top accent stripe */}
               <div className="h-0.5 bg-gradient-to-r from-transparent via-[#00FFC6] to-transparent" />
 
-              {/* close */}
               <button
                 onClick={() => setShowIdeathonModal(false)}
                 className="absolute top-2.5 right-2.5 w-5 h-5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-all"
@@ -103,13 +104,11 @@ export default function HomePage() {
               </button>
 
               <div className="px-4 pt-4 pb-4">
-                {/* badge */}
                 <div className="inline-flex items-center gap-1.5 bg-[#00FFC6]/10 border border-[#00FFC6]/25 rounded-full px-2 py-0.5 mb-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#00FFC6] animate-pulse" />
                   <span className="text-[#00FFC6] text-[9px] font-semibold tracking-widest uppercase">Now Open</span>
                 </div>
 
-                {/* heading */}
                 <h2
                   className="text-base font-black text-white mb-1 leading-tight"
                   style={{ fontFamily: "'Orbitron', 'Space Grotesk', sans-serif" }}
@@ -121,7 +120,6 @@ export default function HomePage() {
                   Applications are live! Join Flux — MMMUT's innovation &amp; tech society.
                 </p>
 
-                {/* stats row */}
                 <div className="grid grid-cols-2 gap-2 mb-3">
                   {[
                     { label: "Applications", value: "Open" },
@@ -134,7 +132,6 @@ export default function HomePage() {
                   ))}
                 </div>
 
-                {/* CTA */}
                 <button
                   onClick={() => { setShowIdeathonModal(false); navigate("/induction"); }}
                   className="w-full flex items-center justify-center gap-1.5 bg-[#00FFC6] hover:bg-[#00e5b3] text-black font-bold py-2 rounded-xl transition-all duration-200 hover:scale-[1.02] shadow-lg shadow-[#00FFC6]/25 text-xs"
@@ -151,6 +148,7 @@ export default function HomePage() {
           </motion.div>
         )}
       </AnimatePresence>
+      */}
     </>
   );
 }
