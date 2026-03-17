@@ -152,6 +152,15 @@ router.get('/applications', judgeAuth, async (req, res) => {
       return {
         ...a.toObject(),
         myScore,
+        scores: scores.map(s => ({
+          _id: s._id,
+          overall: s.overall,
+          categories: s.categories,
+          remarks: s.remarks,
+          status: s.status,
+          judgeName: s.judgeName,
+          updatedAt: s.updatedAt,
+        })),
         consensusStatus,
         lastStatus: lastScore?.status || null,
         lastStatusAt: lastScore?.updatedAt || null,
