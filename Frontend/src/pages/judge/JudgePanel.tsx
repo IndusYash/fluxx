@@ -390,12 +390,13 @@ const AppCard: React.FC<{ app: Application; onView: () => void }> = ({ app, onVi
         </div>
         {app.myScore?.categories && (
           <div className="mt-2 grid grid-cols-6 gap-1">
-            {CATS.map(({ key, label, color }) => (
+            {CATS.map(({ key, label, color, Icon }) => (
               <div key={key} title={`${label}: ${app.myScore!.categories[key]}`} className="flex flex-col items-center gap-0.5">
                 <div className="w-full bg-white/[0.05] rounded-full h-1 overflow-hidden">
                   <div className={`h-full rounded-full ${catBg(color)}`}
                     style={{ width: `${app.myScore!.categories[key] * 10}%` }} />
                 </div>
+                <Icon size={11} className={`${color} opacity-60`} />
                 <span className="text-[7px] text-gray-700">{app.myScore!.categories[key]}</span>
               </div>
             ))}
@@ -425,7 +426,7 @@ const AppCard: React.FC<{ app: Application; onView: () => void }> = ({ app, onVi
 );
 
 // ── Leaderboard Row ───────────────────────────────────────────────────────────
-const LBRow: React.FC<{ entry: LeaderboardEntry; rank: number }> = ({ entry, rank }) => (
+const LBRow: React.FC<{ entry: LeaderboardEntry; rank: number; onView: () => void }> = ({ entry, rank, onView }) => (
   <div className={`flex items-center gap-4 px-4 py-3 rounded-2xl border transition-all
     ${rank === 1 ? 'bg-[#00FFC6]/5 border-[#00FFC6]/20' : rank === 2 ? 'bg-white/[0.03] border-white/[0.08]' : rank === 3 ? 'bg-white/[0.02] border-white/[0.06]' : 'bg-transparent border-white/[0.04] hover:border-white/[0.08]'}`}>
     <div className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black shrink-0
@@ -444,12 +445,13 @@ const LBRow: React.FC<{ entry: LeaderboardEntry; rank: number }> = ({ entry, ran
     </div>
 
     <div className="hidden sm:flex gap-2 items-center">
-      {CATS.map(({ key, color, label }) => (
-        <div key={key} title={`${label}: ${entry.avgCategories[key] || 0}`} className="flex flex-col items-center gap-0.5 w-6">
+      {CATS.map(({ key, color, label, Icon }) => (
+        <div key={key} title={`${label}: ${entry.avgCategories[key] || 0}`} className="flex flex-col items-center gap-0.5 w-7">
           <div className="w-full bg-white/[0.06] rounded-full h-10 flex flex-col-reverse overflow-hidden">
             <div className={`w-full rounded-b-full ${catBg(color)} opacity-70`}
               style={{ height: `${(entry.avgCategories[key] || 0) * 10}%` }} />
           </div>
+          <Icon size={11} className={`${color} opacity-60`} />
           <span className="text-[7px] text-gray-700">{entry.avgCategories[key] || 0}</span>
         </div>
       ))}
@@ -468,6 +470,14 @@ const LBRow: React.FC<{ entry: LeaderboardEntry; rank: number }> = ({ entry, ran
         <span className="text-[9px] text-gray-600">{entry.judgeCount}j</span>
       </div>
     </div>
+
+    <button
+      type="button"
+      onClick={onView}
+      className="ml-2 flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold border border-white/[0.08] text-gray-500 hover:text-[#00FFC6] hover:border-[#00FFC6]/30 transition-colors"
+    >
+      <Eye size={11} /> View
+    </button>
   </div>
 );
 
@@ -526,10 +536,10 @@ const CandidatesTab: React.FC<{ token: string }> = ({ token }) => {
     setApps(prev => prev.map(a => a._id === appId ? { ...a, myScore: score } : a));
 
   const total    = apps.length;
-  const scored   = apps.filter(a => a.myScore).length;
+  const scored   = apps.filter(a => a.consensusStatus).length;
   const pending  = total - scored;
-  const selCount = apps.filter(a => a.myScore?.status === 'selected').length;
-  const rejCount = apps.filter(a => a.myScore?.status === 'rejected').length;
+  const selCount = apps.filter(a => a.consensusStatus === 'selected').length;
+  const rejCount = apps.filter(a => a.consensusStatus === 'rejected').length;
 
   const visible = apps.filter(a => {
     const q = search.toLowerCase();
@@ -539,9 +549,9 @@ const CandidatesTab: React.FC<{ token: string }> = ({ token }) => {
       || a.branch.toLowerCase().includes(q);
     const matchFilter =
       filter === 'all'     ? true  :
-      filter === 'scored'  ? !!a.myScore :
-      filter === 'pending' ? !a.myScore  :
-      a.myScore?.status === filter;
+      filter === 'scored'  ? !!a.consensusStatus :
+      filter === 'pending' ? !a.consensusStatus  :
+      a.consensusStatus === filter;
     return matchSearch && matchFilter;
   });
 
@@ -621,6 +631,8 @@ const LeaderboardTab: React.FC<{ token: string }> = ({ token }) => {
   const [err,      setErr]      = useState('');
   const [search,   setSearch]   = useState('');
   const [statusF,  setStatusF]  = useState<'all'|Status>('all');
+  const [appsById, setAppsById] = useState<Record<string, Application>>({});
+  const [selected, setSelected] = useState<Application | null>(null);
   const initialLoad = useRef(true);
 
   const load = useCallback(async (opts?: { showLoading?: boolean }) => {
@@ -641,18 +653,36 @@ const LeaderboardTab: React.FC<{ token: string }> = ({ token }) => {
     }
   }, [token]);
 
-  useEffect(() => { load(); }, [load]);
+  const loadApps = useCallback(async () => {
+    try {
+      const res = await fetch(`${API}/api/judge-auth/applications`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (!res.ok) return;
+      const nextMap: Record<string, Application> = {};
+      data.forEach((a: Application) => { nextMap[a._id] = a; });
+      setAppsById(nextMap);
+      setSelected(prev => (prev ? nextMap[prev._id] ?? prev : prev));
+      return nextMap;
+    } catch { /* ignore */ }
+    return null;
+  }, [token]);
+
+  useEffect(() => { load(); loadApps(); }, [load, loadApps]);
 
   useEffect(() => {
     const interval = window.setInterval(() => {
       if (document.visibilityState === 'visible') {
         load({ showLoading: false });
+        loadApps();
       }
     }, POLL_MS);
 
     const handleVisibility = () => {
       if (document.visibilityState === 'visible') {
         load({ showLoading: false });
+        loadApps();
       }
     };
 
@@ -662,6 +692,16 @@ const LeaderboardTab: React.FC<{ token: string }> = ({ token }) => {
       document.removeEventListener('visibilitychange', handleVisibility);
     };
   }, [load]);
+
+  const handleView = async (id: string) => {
+    const existing = appsById[id];
+    if (existing) {
+      setSelected(existing);
+      return;
+    }
+    const nextMap = await loadApps();
+    setSelected(nextMap ? nextMap[id] ?? null : null);
+  };
 
   const visible = entries.filter(e => {
     const q = search.toLowerCase();
@@ -712,8 +752,25 @@ const LeaderboardTab: React.FC<{ token: string }> = ({ token }) => {
         <div className="text-center py-16 text-gray-600">No scored candidates yet.</div>
       ) : (
         <div className="space-y-2">
-          {visible.map((e, i) => <LBRow key={e._id} entry={e} rank={i + 1} />)}
+          {visible.map((e, i) => (
+            <LBRow key={e._id} entry={e} rank={i + 1} onView={() => handleView(e._id)} />
+          ))}
         </div>
+      )}
+
+      {selected && (
+        <DetailModal
+          app={selected}
+          token={token}
+          onClose={() => setSelected(null)}
+          onScoreSaved={(id, score) => {
+            setAppsById(prev => ({
+              ...prev,
+              [id]: { ...(prev[id] ?? selected!), myScore: score },
+            }));
+            setSelected(prev => prev?._id === id ? { ...prev, myScore: score } : prev);
+          }}
+        />
       )}
     </div>
   );
