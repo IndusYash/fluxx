@@ -57,6 +57,8 @@ interface Application {
   imageUrl?: string; resumeUrl?: string;
   createdAt: string;
   myScore: ScoreEntry | null;
+  avgCategories?: CategoryScores;
+  avgOverall?: number;
   scores?: ScoreEntry[];
   consensusStatus?: Status | null;
   lastStatus?: Status | null;
@@ -107,16 +109,20 @@ const formatShortDate = (iso?: string) => {
 };
 
 // ── Score Chip ────────────────────────────────────────────────────────────────
-const ScoreChip: React.FC<{ score: ScoreEntry | null; small?: boolean }> = ({ score, small }) => {
-  if (!score) return <span className="text-[10px] text-gray-600 italic">Not scored</span>;
+const ScoreChip: React.FC<{ overall?: number; status?: Status | null; small?: boolean }> = ({ overall, status, small }) => {
+  if (overall === undefined || overall === null) {
+    return <span className="text-[10px] text-gray-600 italic">Not scored</span>;
+  }
   return (
     <div className="flex items-center gap-1.5 flex-wrap">
       <span className={`font-black text-white ${small ? 'text-xs' : 'text-sm'}`}>
-        {score.overall.toFixed(1)}/10
+        {overall.toFixed(1)}/10
       </span>
-      <span className={`${small ? 'text-[9px]' : 'text-[10px]'} font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full border ${statusBg(score.status)}`}>
-        {score.status}
-      </span>
+      {status && (
+        <span className={`${small ? 'text-[9px]' : 'text-[10px]'} font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full border ${statusBg(status)}`}>
+          {status}
+        </span>
+      )}
     </div>
   );
 };
@@ -307,11 +313,16 @@ const DetailModal: React.FC<{
                     Last: {app.lastStatus}{app.lastStatusBy ? ` by ${app.lastStatusBy}` : ''}
                   </span>
                 )}
+                {app.avgOverall !== undefined && app.avgOverall !== null && (
+                  <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full border bg-white/[0.03] border-white/[0.08] text-gray-300">
+                    Avg: {app.avgOverall.toFixed(1)}
+                  </span>
+                )}
               </div>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <ScoreChip score={localScore} />
+            <ScoreChip overall={app.avgOverall} status={app.consensusStatus} />
             <button onClick={onClose}
               className="w-8 h-8 rounded-xl bg-white/[0.05] hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-colors">
               <X size={14} />
@@ -395,7 +406,7 @@ const DetailModal: React.FC<{
                 {allScores.length === 0 ? (
                   <div className="text-xs text-gray-600">No scores yet.</div>
                 ) : (
-                  <div className="overflow-x-auto">
+                  <div className="overflow-x-hidden">
                     <table className="w-full text-xs border-separate border-spacing-y-2">
                       <thead className="text-[9px] uppercase tracking-wider text-gray-600">
                         <tr>
@@ -426,6 +437,25 @@ const DetailModal: React.FC<{
                             <td className="px-2 py-2 text-right text-gray-500">{formatShortDate(s.updatedAt)}</td>
                           </tr>
                         ))}
+                        <tr className="bg-white/[0.03] border border-white/[0.08]">
+                          <td className="px-2 py-2 text-gray-200 font-semibold">Average</td>
+                          {CATS.map(({ key }) => (
+                            <td key={key} className="px-2 py-2 text-center text-gray-200">
+                              {app.avgCategories?.[key] ?? 0}
+                            </td>
+                          ))}
+                          <td className="px-2 py-2 text-center text-[#00FFC6] font-bold">{(app.avgOverall ?? 0).toFixed(1)}</td>
+                          <td className="px-2 py-2 text-center">
+                            {app.consensusStatus ? (
+                              <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded-full border ${statusBg(app.consensusStatus)}`}>
+                                {app.consensusStatus}
+                              </span>
+                            ) : (
+                              <span className="text-[9px] text-gray-600">-</span>
+                            )}
+                          </td>
+                          <td className="px-2 py-2 text-right text-gray-600">-</td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>
@@ -454,18 +484,22 @@ const AppCard: React.FC<{ app: Application; onView: () => void }> = ({ app, onVi
             <p className="text-sm font-bold text-white truncate">{app.name}</p>
             <p className="text-[10px] text-gray-500 mt-0.5">{app.rollNo} - {app.branch} - {app.year}</p>
           </div>
-          <ScoreChip score={app.myScore} small />
+          <ScoreChip overall={app.avgOverall} status={app.consensusStatus} small />
         </div>
-        {app.myScore?.categories && (
+        {(app.avgCategories || app.myScore?.categories) && (
           <div className="mt-2 grid grid-cols-6 gap-1">
             {CATS.map(({ key, label, color, Icon }) => (
-              <div key={key} title={`${label}: ${app.myScore!.categories[key]}`} className="flex flex-col items-center gap-0.5">
+              <div
+                key={key}
+                title={`${label}: ${app.avgCategories?.[key] ?? app.myScore?.categories?.[key] ?? 0}`}
+                className="flex flex-col items-center gap-0.5"
+              >
                 <div className="w-full bg-white/[0.05] rounded-full h-1 overflow-hidden">
                   <div className={`h-full rounded-full ${catBg(color)}`}
-                    style={{ width: `${app.myScore!.categories[key] * 10}%` }} />
+                    style={{ width: `${(app.avgCategories?.[key] ?? app.myScore?.categories?.[key] ?? 0) * 10}%` }} />
                 </div>
                 <Icon size={11} className={`${color} opacity-60`} />
-                <span className="text-[7px] text-gray-700">{app.myScore!.categories[key]}</span>
+                <span className="text-[7px] text-gray-700">{app.avgCategories?.[key] ?? app.myScore?.categories?.[key] ?? 0}</span>
               </div>
             ))}
           </div>
