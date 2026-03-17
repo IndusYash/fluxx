@@ -122,6 +122,7 @@ router.get('/applications', judgeAuth, async (req, res) => {
 
     const appIds = apps.map(a => a._id);
     const allScores = await ScoreModel.find({ applicationId: { $in: appIds } });
+    const CAT_KEYS  = ['communication','webDev','dsa','projects','creative','management'];
 
     const scoresByApp = {};
     allScores.forEach(s => {
@@ -145,6 +146,19 @@ router.get('/applications', judgeAuth, async (req, res) => {
         }
       });
 
+      const avgCategories = {};
+      CAT_KEYS.forEach(cat => {
+        const vals = scores.map(s => s.categories?.[cat] || 0).filter(v => v > 0);
+        avgCategories[cat] = vals.length
+          ? Math.round((vals.reduce((a, b) => a + b, 0) / vals.length) * 10) / 10
+          : 0;
+      });
+
+      const overallVals = scores.map(s => s.overall || 0).filter(v => v > 0);
+      const avgOverall = overallVals.length
+        ? Math.round((overallVals.reduce((a, b) => a + b, 0) / overallVals.length) * 10) / 10
+        : 0;
+
       const maxCount = Math.max(...Object.values(statusCount));
       const consensusStatus = maxCount === 0 ? null
         : Object.keys(statusCount).find(k => statusCount[k] === maxCount);
@@ -152,6 +166,8 @@ router.get('/applications', judgeAuth, async (req, res) => {
       return {
         ...a.toObject(),
         myScore,
+        avgCategories,
+        avgOverall,
         scores: scores.map(s => ({
           _id: s._id,
           overall: s.overall,
