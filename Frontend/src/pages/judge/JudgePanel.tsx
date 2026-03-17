@@ -42,6 +42,7 @@ interface ScoreEntry {
   remarks: string;
   status: Status;
   judgeName?: string;
+  updatedAt?: string;
 }
 
 interface Application {
@@ -56,6 +57,7 @@ interface Application {
   imageUrl?: string; resumeUrl?: string;
   createdAt: string;
   myScore: ScoreEntry | null;
+  scores?: ScoreEntry[];
   consensusStatus?: Status | null;
   lastStatus?: Status | null;
   lastStatusAt?: string | null;
@@ -97,6 +99,12 @@ const Divider: React.FC<{ title: string }> = ({ title }) => (
     <div className="flex-1 h-px bg-white/[0.05]" />
   </div>
 );
+
+const formatShortDate = (iso?: string) => {
+  if (!iso) return '-';
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? '-' : d.toLocaleString();
+};
 
 // ── Score Chip ────────────────────────────────────────────────────────────────
 const ScoreChip: React.FC<{ score: ScoreEntry | null; small?: boolean }> = ({ score, small }) => {
@@ -151,7 +159,8 @@ const ScoreForm: React.FC<{
   applicationId: string;
   existing: ScoreEntry | null;
   onSaved: (s: ScoreEntry) => void;
-}> = ({ token, applicationId, existing, onSaved }) => {
+  scoreTable?: React.ReactNode;
+}> = ({ token, applicationId, existing, onSaved, scoreTable }) => {
   const [cats,    setCats]    = useState<CategoryScores>(existing?.categories ?? { ...DEFAULT_CATS });
   const [remarks, setRemarks] = useState(existing?.remarks ?? '');
   const [status,  setStatus]  = useState<Status>(existing?.status ?? 'hold');
@@ -235,6 +244,8 @@ const ScoreForm: React.FC<{
 
       {err && <p className="text-xs text-red-400 flex items-center gap-1.5"><AlertCircle size={11} />{err}</p>}
 
+      {scoreTable}
+
       <button onClick={save} disabled={saving}
         className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-[#00FFC6] hover:bg-[#00e5b3] disabled:bg-gray-800 disabled:text-gray-600 text-black font-bold text-sm transition-all">
         {saving ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />}
@@ -261,6 +272,15 @@ const DetailModal: React.FC<{
     setLocalScore(s);
     onScoreSaved(app._id, s);
   };
+
+  const allScores = useMemo(
+    () => (app.scores ?? []).slice().sort((a, b) => {
+      const at = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
+      const bt = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
+      return bt - at;
+    }),
+    [app.scores]
+  );
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-8 overflow-y-auto"
@@ -364,7 +384,55 @@ const DetailModal: React.FC<{
           )}
 
           <Divider title="Your Score" />
-          <ScoreForm token={token} applicationId={app._id} existing={localScore} onSaved={handleSaved} />
+          <ScoreForm
+            token={token}
+            applicationId={app._id}
+            existing={localScore}
+            onSaved={handleSaved}
+            scoreTable={(
+              <>
+                <Divider title="Judge Evaluation Table" />
+                {allScores.length === 0 ? (
+                  <div className="text-xs text-gray-600">No scores yet.</div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs border-separate border-spacing-y-2">
+                      <thead className="text-[9px] uppercase tracking-wider text-gray-600">
+                        <tr>
+                          <th className="text-left px-2">Judge</th>
+                          {CATS.map(({ key, label }) => (
+                            <th key={key} className="text-center px-2">{label}</th>
+                          ))}
+                          <th className="text-center px-2">Weighted</th>
+                          <th className="text-center px-2">Status</th>
+                          <th className="text-right px-2">Updated</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {allScores.map(s => (
+                          <tr key={s._id} className="bg-white/[0.02] border border-white/[0.06]">
+                            <td className="px-2 py-2 text-gray-300 font-semibold">{s.judgeName || 'Unknown'}</td>
+                            {CATS.map(({ key }) => (
+                              <td key={key} className="px-2 py-2 text-center text-gray-300">
+                                {s.categories?.[key] ?? 0}
+                              </td>
+                            ))}
+                            <td className="px-2 py-2 text-center text-[#00FFC6] font-bold">{s.overall?.toFixed(1)}</td>
+                            <td className="px-2 py-2 text-center">
+                              <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded-full border ${statusBg(s.status)}`}>
+                                {s.status}
+                              </span>
+                            </td>
+                            <td className="px-2 py-2 text-right text-gray-500">{formatShortDate(s.updatedAt)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </>
+            )}
+          />
         </div>
       </div>
     </div>
