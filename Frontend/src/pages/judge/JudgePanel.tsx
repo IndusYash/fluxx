@@ -617,6 +617,7 @@ const CandidatesTab: React.FC<{ token: string }> = ({ token }) => {
           onScoreSaved={(id, score) => {
             handleScoreSaved(id, score);
             setSelected(prev => prev?._id === id ? { ...prev, myScore: score } : prev);
+            load({ showLoading: false });
           }}
         />
       )}
@@ -634,8 +635,11 @@ const LeaderboardTab: React.FC<{ token: string }> = ({ token }) => {
   const [appsById, setAppsById] = useState<Record<string, Application>>({});
   const [selected, setSelected] = useState<Application | null>(null);
   const initialLoad = useRef(true);
+  const loadInFlight = useRef(false);
 
   const load = useCallback(async (opts?: { showLoading?: boolean }) => {
+    if (loadInFlight.current) return;
+    loadInFlight.current = true;
     const showLoading = opts?.showLoading ?? initialLoad.current;
     if (showLoading) setLoading(true);
     setErr('');
@@ -650,6 +654,7 @@ const LeaderboardTab: React.FC<{ token: string }> = ({ token }) => {
     finally {
       if (showLoading) setLoading(false);
       initialLoad.current = false;
+      loadInFlight.current = false;
     }
   }, [token]);
 
@@ -669,20 +674,18 @@ const LeaderboardTab: React.FC<{ token: string }> = ({ token }) => {
     return null;
   }, [token]);
 
-  useEffect(() => { load(); loadApps(); }, [load, loadApps]);
+  useEffect(() => { load(); }, [load]);
 
   useEffect(() => {
     const interval = window.setInterval(() => {
       if (document.visibilityState === 'visible') {
         load({ showLoading: false });
-        loadApps();
       }
     }, POLL_MS);
 
     const handleVisibility = () => {
       if (document.visibilityState === 'visible') {
         load({ showLoading: false });
-        loadApps();
       }
     };
 
@@ -769,6 +772,7 @@ const LeaderboardTab: React.FC<{ token: string }> = ({ token }) => {
               [id]: { ...(prev[id] ?? selected!), myScore: score },
             }));
             setSelected(prev => prev?._id === id ? { ...prev, myScore: score } : prev);
+            load({ showLoading: false });
           }}
         />
       )}
