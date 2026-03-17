@@ -8,6 +8,7 @@ import {
 
 const API = (import.meta as any).env?.VITE_REG_API_URL || '';
 const STORAGE_KEY = 'flux_judge_token';
+const POLL_MS = 5000;
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 type Status = 'selected' | 'rejected' | 'hold';
@@ -55,6 +56,10 @@ interface Application {
   imageUrl?: string; resumeUrl?: string;
   createdAt: string;
   myScore: ScoreEntry | null;
+  consensusStatus?: Status | null;
+  lastStatus?: Status | null;
+  lastStatusAt?: string | null;
+  lastStatusBy?: string | null;
 }
 
 interface LeaderboardEntry {
@@ -150,8 +155,16 @@ const ScoreForm: React.FC<{
   const [cats,    setCats]    = useState<CategoryScores>(existing?.categories ?? { ...DEFAULT_CATS });
   const [remarks, setRemarks] = useState(existing?.remarks ?? '');
   const [status,  setStatus]  = useState<Status>(existing?.status ?? 'hold');
+  const [dirty,   setDirty]   = useState(false);
   const [saving,  setSaving]  = useState(false);
   const [err,     setErr]     = useState('');
+
+  useEffect(() => {
+    if (dirty) return;
+    setCats(existing?.categories ?? { ...DEFAULT_CATS });
+    setRemarks(existing?.remarks ?? '');
+    setStatus(existing?.status ?? 'hold');
+  }, [existing, dirty]);
 
   const computedAvg = useMemo(() => {
     const vals = Object.values(cats) as number[];
@@ -172,6 +185,7 @@ const ScoreForm: React.FC<{
       const data = await res.json();
       if (!res.ok) { setErr(data.message || 'Failed to save'); return; }
       onSaved(data.score);
+      setDirty(false);
     } catch { setErr('Network error'); }
     finally { setSaving(false); }
   };
@@ -194,7 +208,7 @@ const ScoreForm: React.FC<{
       <div className="space-y-3 border border-white/[0.05] rounded-xl p-4 bg-white/[0.015]">
         {CATS.map(({ key, label, Icon, color }) => (
           <CatRow key={key} catKey={key} label={label} Icon={Icon} color={color}
-            value={cats[key]} onChange={v => setOneCat(key, v)} />
+            value={cats[key]} onChange={v => { setOneCat(key, v); setDirty(true); }} />
         ))}
       </div>
 
@@ -202,7 +216,7 @@ const ScoreForm: React.FC<{
         <p className="text-xs text-gray-500 mb-2">Decision</p>
         <div className="flex gap-2">
           {(['selected', 'hold', 'rejected'] as Status[]).map(s => (
-            <button key={s} type="button" onClick={() => setStatus(s)}
+            <button key={s} type="button" onClick={() => { setStatus(s); setDirty(true); }}
               className={`flex-1 py-2 rounded-xl border text-xs font-bold capitalize transition-all
                 ${status === s ? statusBg(s) + ' scale-[1.02]' : 'bg-white/[0.02] border-white/[0.08] text-gray-600 hover:border-white/15 hover:text-gray-300'}`}>
               {s === 'selected' && <CheckCircle2 size={11} className="inline mr-1 -mt-0.5" />}
@@ -217,7 +231,7 @@ const ScoreForm: React.FC<{
       <textarea rows={3}
         className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-700 focus:border-[#00FFC6]/40 focus:outline-none resize-none leading-relaxed"
         placeholder="Interview notes, observations..."
-        value={remarks} onChange={e => setRemarks(e.target.value)} />
+        value={remarks} onChange={e => { setRemarks(e.target.value); setDirty(true); }} />
 
       {err && <p className="text-xs text-red-400 flex items-center gap-1.5"><AlertCircle size={11} />{err}</p>}
 
@@ -239,6 +253,10 @@ const DetailModal: React.FC<{
 }> = ({ app, token, onClose, onScoreSaved }) => {
   const [localScore, setLocalScore] = useState<ScoreEntry | null>(app.myScore);
 
+  useEffect(() => {
+    setLocalScore(app.myScore);
+  }, [app]);
+
   const handleSaved = (s: ScoreEntry) => {
     setLocalScore(s);
     onScoreSaved(app._id, s);
@@ -258,6 +276,18 @@ const DetailModal: React.FC<{
             <div>
               <p className="text-sm font-black text-white">{app.name}</p>
               <p className="text-[10px] text-gray-500">{app.rollNo} - {app.branch} {app.year} - Sec {app.section}</p>
+              <div className="flex items-center gap-1.5 mt-1 flex-wrap">
+                {app.consensusStatus && (
+                  <span className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full border ${statusBg(app.consensusStatus)}`}>
+                    Consensus: {app.consensusStatus}
+                  </span>
+                )}
+                {app.lastStatus && (
+                  <span className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full border ${statusBg(app.lastStatus)}`}>
+                    Last: {app.lastStatus}{app.lastStatusBy ? ` by ${app.lastStatusBy}` : ''}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -377,6 +407,16 @@ const AppCard: React.FC<{ app: Application; onView: () => void }> = ({ app, onVi
             <span key={d} className="text-[9px] text-[#00FFC6]/60 bg-[#00FFC6]/5 rounded-lg px-2 py-1 border border-[#00FFC6]/10">{d}</span>
           ))}
           {app.resumeUrl && <span className="text-[9px] text-gray-600 bg-white/[0.03] rounded-lg px-2 py-1 border border-white/[0.05]">CV</span>}
+          {app.consensusStatus && (
+            <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded-lg border ${statusBg(app.consensusStatus)}`}>
+              Consensus: {app.consensusStatus}
+            </span>
+          )}
+          {app.lastStatus && (
+            <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded-lg border ${statusBg(app.lastStatus)}`}>
+              Last: {app.lastStatus}
+            </span>
+          )}
         </div>
       </div>
       <Eye size={14} className="text-gray-700 group-hover:text-[#00FFC6] transition-colors shrink-0 mt-1" />
@@ -467,7 +507,7 @@ const CandidatesTab: React.FC<{ token: string }> = ({ token }) => {
       if (document.visibilityState === 'visible') {
         load({ showLoading: false });
       }
-    }, 5000);
+    }, POLL_MS);
 
     const handleVisibility = () => {
       if (document.visibilityState === 'visible') {
@@ -608,7 +648,7 @@ const LeaderboardTab: React.FC<{ token: string }> = ({ token }) => {
       if (document.visibilityState === 'visible') {
         load({ showLoading: false });
       }
-    }, 5000);
+    }, POLL_MS);
 
     const handleVisibility = () => {
       if (document.visibilityState === 'visible') {
