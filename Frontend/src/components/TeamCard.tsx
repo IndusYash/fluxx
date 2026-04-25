@@ -43,6 +43,7 @@ const TeamCard = ({ member, index }: TeamCardProps) => {
       <div className="text-center">
         <h3 className="text-xl font-semibold mb-2 text-foreground">{member.name}</h3>
         <p className="text-primary font-medium mb-3">{member.role}</p>
+<<<<<<< HEAD
         {member.description && <p className="text-sm text-muted-foreground mb-4">{member.description}</p>}
 
         {/* Side-by-side Icons */}
@@ -56,6 +57,19 @@ const TeamCard = ({ member, index }: TeamCardProps) => {
               <Mail className="w-4 h-4 text-primary" />
             </a>
           )}
+=======
+        <p className="text-sm text-muted-foreground mb-4">{member.description}</p>
+
+        {/* Side-by-side Icons */}
+        <div className="flex justify-center items-center gap-3">
+          <a
+            href={`mailto:${member.email}`}
+            aria-label={`Email ${member.name}`}
+            className="flex items-center justify-center w-10 h-10 bg-primary/10 hover:bg-primary/20 rounded-full transition-colors duration-300"
+          >
+            <Mail className="w-4 h-4 text-primary" />
+          </a>
+>>>>>>> origin/main
 
           {member.linkedin && (
             <a
