@@ -383,7 +383,6 @@ const Team: React.FC = () => {
   {
     name: "Ritisha Raghuvanshi",
     role: "Freshman Year, CSE",
-    description: "Phone: 8299532804",
     email: "ritisharaghuvanshi95@gmail.com",
     linkedin: "https://www.linkedin.com/in/ritisha-raghuvanshi-3612a3379?utm_source=share_via&utm_content=profile&utm_medium=member_android",
     image: ritishaImage,
