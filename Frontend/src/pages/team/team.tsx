@@ -38,6 +38,7 @@ import prakharShuklaImage from "../../assets/images/PrakharShukla.jpg";
 import priyaSinghImage from "../../assets/images/PriyaSingh.jpg";
 import princeSahuImage from "../../assets/images/PrinceSahu.jpg";
 import rishiImage from "../../assets/images/Rishi.jpg";
+import rishirajImage from "../../assets/images/rishiraj.jpeg";
 import rohanJaiswalImage from "../../assets/images/RohanJaiswal .jpg";
 import sameerChauhanImage from "../../assets/images/SameerSingh.jpg";
 import stutiTripathiImage from "../../assets/images/StutiTripathi .jpg";
@@ -75,6 +76,7 @@ interface TeamMember {
   email: string;
   linkedin: string;
   image: string;
+  imagePosition?: string;
 }
 
 
@@ -503,7 +505,8 @@ const Team: React.FC = () => {
     role: "Freshman Year, BBA",
     email: "rishirajkasaudhan5705@gmail.com",
     linkedin: "https://www.linkedin.com/in/rishi-raj-kasaudhan-6615343a8",
-    image: rishiImage,
+    image: rishirajImage,
+    imagePosition: "object-top",
   },
   ].filter(member => member.name && member.role); // Filter out any incomplete entries
 

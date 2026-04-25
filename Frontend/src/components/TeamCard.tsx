@@ -4,11 +4,12 @@ import { useState } from "react";
 interface TeamMember {
   name: string;
   role: string;
-  description: string;
+  description?: string;
   email: string;
   linkedin?: string;
   github?: string;
   image: string;
+  imagePosition?: string;
 }
 
 interface TeamCardProps {
@@ -29,7 +30,7 @@ const TeamCard = ({ member, index }: TeamCardProps) => {
           <img
             src={imageSrc}
             alt={member.name}
-            className="w-28 h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full object-cover border-4 border-primary/20"
+            className={`w-28 h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full object-cover ${member.imagePosition || "object-center"} border-4 border-primary/20`}
             onError={() => setImgError(true)}
           />
         ) : (
