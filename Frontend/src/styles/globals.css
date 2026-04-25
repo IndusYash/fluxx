@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Adjust these to match your screenshot’s palette */
+    --bg: 222 22% 6%;          /* deep slate */
+    --fg: 210 20% 96%;         /* near-white text */
+    --muted: 215 14% 34%;
+    --card: 222 22% 8%;
+    --border: 220 12% 18%;
+    --grid-dot: 215 14% 20%;   /* subtle grid dots */
+    --radial: 160 80% 45%;     /* soft accent glow */
+
+    /* Accents (screenshot-like: neon green + cyan) */
+    --primary: 152 85% 52%;    /* neon green */
+    --accent: 194 86% 54%;     /* cyan/blue */
+
+    /* shadcn tokens */
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* keep same for dark-first site; override if needed */
+  }
+
+  .shadow-glow {
+  box-shadow: 0 0 20px hsl(var(--primary) / 0.6);
+}
+
+@layer utilities {
+  .shadow-glow {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.6);
+  }
+}
+
+
+  html, body, #root {
+    height: 100%;
+    overflow-x: hidden;
+    width: 100%;
+  overflow-y: scroll;       /* still scrollable */
+  scrollbar-width: none;
+    background-color: hsl(var(--bg));
+    color: hsl(var(--fg));
+  }
+}
+
+@layer utilities {
+  .container-max { @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8; }
+  .section { @apply py-16 sm:py-20; }
+  .headline { @apply font-display tracking-tight; }
+}

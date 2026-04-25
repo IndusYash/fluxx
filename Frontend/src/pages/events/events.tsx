@@ -1,0 +1,139 @@
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import HeroSection from '../../components/sections/events/HeroSection';
+import UpcomingEventsSection from '../../components/sections/events/UpcomingEvents';
+import Timeline from '../../components/sections/events/timeline'; // Changed to uppercase 'Timeline'
+import type { TimelineEvent, LatestEvent } from '../../components/sections/events/timeline';
+import xpert_talk from '/src/assets/images/xpert_talk.jpg';
+import ideathoncomp from "/src/assets/images/ideathoncomp.jpg";
+import orientation from '/src/assets/images/orientation_2.jpg';
+import hackathon from '/src/assets/images/hackathon.jpg';
+import expert from '/src/assets/images/expert.jpg';
+import atalFdp from '/src/assets/images/atalFdp.jpeg';
+
+// import WhatWeDoSection from '../../components/sections/events/WhatWeDo';
+
+const EventsPage: React.FC = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+
+  const timelineEvents: TimelineEvent[] = [
+    {
+      id: 1,      name: "ATAL Faculty Development Programme",
+      imageUrl: atalFdp,
+      date: "January 19-24, 2026",
+      icon: "WEEK THREE",
+      phase: "Workshop",
+      description:
+        "Advanced Deep Dive into the Hidden Mathematical Science of Mechanistic Interpretability - A comprehensive faculty development programme organized by MMMUT Gorakhpur in collaboration with leading experts in AI and machine learning.",
+      attendees: 300,
+    },
+    {
+      id: 2,
+      name: "Ideathon 2025",
+      imageUrl: ideathoncomp,
+      date: "December 17-19, 2025",
+      icon: "WEEK TWO",
+      phase: "HACKATHON",
+      description:
+        "The Ideathon 2025, organized from 17th to 19th December 2025, was a great success, witnessing enthusiastic participation, innovative ideas, and collaborative problem-solving throughout the event.",
+      attendees: 500,
+    },
+    {
+      id: 3,
+      name: "Artificial Intelligence Evolution and Future",
+      imageUrl: expert,
+      date: "November 16, 2025",
+      icon: "WEEK TWO",
+      phase: "Workshop",
+      description:
+        "The session with Er. Shivesh Sinha, Sr. Technical Program Manager at Intel USA, offered deep insights into the evolution of AI, emerging technological shifts and the rapidly transforming future shaped by intelligent systems.",
+      attendees: 300,
+    },
+        {
+      id: 4,
+      name: "Responsible AI & Sustainability Workshop",
+      imageUrl: xpert_talk,
+      date: "October 10, 2025",
+      icon: "WEEK ONE",
+      phase: "Workshop",
+      description:
+        "The expert session on Responsible AI by Prof. Dr. Dimitrios A. Karras was a great success, with 300+ participants gaining valuable insights and earning e-certificates for their participation.",
+      attendees: 300,
+    },
+    // {
+    //   id: 4,
+    //   name: "Ideathon 2025",
+    //   imageUrl: hackathon,
+    //   date: "December 10-19, 2025",
+    //   icon: "WEEK TWO",
+    //   phase: "Upcoming: HACKATHON",
+    //   description:
+    //     "Ideathon, our flagship hackathon, brought together passionate innovators and problem-solvers to design real-world tech solutions through creativity, teamwork, and cutting-edge ideas.",
+    //   attendees: 300,
+    // },
+ 
+  ];
+
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white font-sans overflow-hidden">
+      {/* Enhanced Animated Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute -top-40 -right-40 w-80 h-80 bg-green-500/5 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl"
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.4, 0.7, 0.4],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/3 rounded-full blur-3xl"
+          animate={{
+            rotate: [0, 360],
+            scale: [1, 1.3, 1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+      </div>
+
+      {isLoaded && (
+        <>
+          <HeroSection />
+          {<UpcomingEventsSection />}
+          {/* <WhatWeDoSection /> */}
+          <Timeline events={timelineEvents} /> {/* Changed to uppercase 'Timeline' */}
+        </>
+      )}
+    </div>
+  );
+};
+
+export default EventsPage;
