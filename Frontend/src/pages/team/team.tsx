@@ -452,9 +452,9 @@ const Team: React.FC = () => {
   },
   {
     name: "Aditya Gupta",
-    role: "Freshman Year, ME",
+    role: "Freshman Year, CSE",
     email: "guptaaditya002006@gmail.com",
-    linkedin: "",
+    linkedin: "https://www.linkedin.com/in/aditya-gupta-a734ba377/",
     image: adityaGuptaImage,
   },
   {
