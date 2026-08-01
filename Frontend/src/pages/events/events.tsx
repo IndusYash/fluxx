@@ -4,12 +4,12 @@ import HeroSection from '../../components/sections/events/HeroSection';
 import UpcomingEventsSection from '../../components/sections/events/UpcomingEvents';
 import Timeline from '../../components/sections/events/timeline'; // Changed to uppercase 'Timeline'
 import type { TimelineEvent, LatestEvent } from '../../components/sections/events/timeline';
-import xpert_talk from '/src/assets/images/xpert_talk.jpg';
-import ideathoncomp from "/src/assets/images/ideathoncomp.jpg";
-import orientation from '/src/assets/images/orientation_2.jpg';
-import hackathon from '/src/assets/images/hackathon.jpg';
-import expert from '/src/assets/images/expert.jpg';
-import atalFdp from '/src/assets/images/atalFdp.jpeg';
+import xpert_talk from '/src/assets/images/xpert_talk.webp';
+import ideathoncomp from "/src/assets/images/ideathoncomp.webp";
+import orientation from '/src/assets/images/orientation_2.webp';
+import hackathon from '/src/assets/images/hackathon.webp';
+import expert from '/src/assets/images/expert.webp';
+import atalFdp from '/src/assets/images/atalFdp.webp';
 
 // import WhatWeDoSection from '../../components/sections/events/WhatWeDo';
 

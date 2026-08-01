@@ -8,8 +8,26 @@ html,
 body {
   margin: 0;
   padding: 0;
-  /* font-family: sans-serif; */
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hardware Acceleration Helpers */
+.gpu-accelerate {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
 .variable-proximity-title span {
   font-family: "Audiowide", sans-serif !important;
 }
@@ -17,8 +35,8 @@ body {
 @layer base {
   html {
     overflow-x: hidden;
+    scroll-behavior: smooth;
   }
-  
 }
 @keyframes neonPulse {
   0%, 100% {
@@ -92,6 +110,70 @@ body {
 
 .animate-pulse-glow {
   animation: pulse-glow 1.6s ease-in-out infinite;
+}
+
+@keyframes gallery-marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.gallery-marquee-track {
+  animation: gallery-marquee 45s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+.gallery-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Gallery horizontal scroll strip — 144Hz optimized */
+.gallery-scroll-x {
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  /* Intentionally no scroll-behavior:smooth — browsers implement it
+     inconsistently at high refresh rates causing perceptible judder */
+  overscroll-behavior-x: contain;
+}
+
+.gallery-scroll-x::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery-scroll-x > * {
+  scroll-snap-align: start;
+}
+
+/* GPU-composited gallery card images */
+.gallery-card-img {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+  transition: transform 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.gallery-card-img:hover,
+.group:hover .gallery-card-img {
+  transform: translate3d(0, 0, 0) scale(1.04);
+}
+
+/* Featured hero image */
+.gallery-hero-img {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+  transition: transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.gallery-hero-img:hover,
+.group:hover .gallery-hero-img {
+  transform: translate3d(0, 0, 0) scale(1.02);
 }
 
     /* Animations */

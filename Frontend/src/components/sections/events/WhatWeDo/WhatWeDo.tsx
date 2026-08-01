@@ -3,11 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Code, Presentation, FileText, Trophy, Lightbulb, Sparkles, Zap, ArrowRight } from 'lucide-react';
 import MagicBentoEvents from '@/components/sections/events/WhatWeDo/MagicBentoEvents';
 
-import hackathonImg from '@/assets/images/flux-x-gfg.png';
-import conferenceImg from '@/assets/images/conferenceImg.jpeg';
-import labsImg from '@/assets/images/labsImg.jpg';
-import workshopImg from '@/assets/images/workshopImg.jpg';
-import seminarImg from '@/assets/images/seminarImg.jpg';
+import hackathonImg from '@/assets/images/flux-x-gfg.webp';
+import conferenceImg from '@/assets/images/conferenceImg.webp';
+import labsImg from '@/assets/images/labsImg.webp';
+import workshopImg from '@/assets/images/workshopImg.webp';
+import seminarImg from '@/assets/images/seminarImg.webp';
 import competitionImg from '@/assets/images/competitionImg.webp';
 
 interface Activity {

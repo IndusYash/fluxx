@@ -1,6 +1,6 @@
 import { FluxApplicationForm } from "@/components/FluxApplicationForm";
 import { FluxInfo } from "@/components/FluxInfo";
-import fluxPatternBg from "@/assets/images/flux-pattern-bg.jpg";
+import fluxPatternBg from "@/assets/images/flux-pattern-bg.webp";
 
 const Application = () => {
   return (

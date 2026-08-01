@@ -1,11 +1,11 @@
-import SatvikSir from '../../assets/images/SatvikSir.jpg';
-import shwetSir from '../../assets/images/shwetSir.jpeg';
-import SatyaSir from '../../assets/images/SatyaSir.jpeg';
+import SatvikSir from '../../assets/images/SatvikSir.webp';
+import shwetSir from '../../assets/images/shwetSir.webp';
+import SatyaSir from '../../assets/images/SatyaSir.webp';
 
-import hod from '../../assets/images/RakeshSir.jpg';
-import jpSaini from '../../assets/images/jpSaini.jpg';
-import bkSharma from '../../assets/images/bkSharma.jpg';
-import shantanu from '../../assets/images/shantanu.jpg';
+import hod from '../../assets/images/RakeshKumar.jpeg';
+import anupamakaushik from '../../assets/images/Prof. Anupama Kaushik Sharma vc maam.jpeg';
+import bkSharma from '../../assets/images/bkSharma.webp';
+import shantanu from '../../assets/images/shantanu.webp';
 
 export interface FacultyMember {
   id: number;
@@ -34,7 +34,7 @@ export interface FacultyMember {
   articles?: string;
   areasOfExpertise?: string;
   review?: string;
-  
+
   isHOD?: boolean;
   qualification?: string;
   teachingExperienceUG?: number;
@@ -49,16 +49,16 @@ export interface FacultyMember {
 
 export const facultyData: FacultyMember[] = [
 
-  // ⭐ UNDER GUIDANCE — Prof. J.P. Saini
+  // ⭐ UNDER GUIDANCE — Prof. Anuoama Kaushik Sharma
   {
     id: 0,
-    name: "Prof. J.P. Saini",
+    name: "Prof. Anupama Kaushik Sharma",
     title: "Hon'ble Vice Chancellor",
     department: "",
     specialization: [],
     email: "",
     phone: "+91-XXXXXXXXXX",
-    profileImage: jpSaini,
+    profileImage: anupamakaushik,
     description:
       "Madan Mohan Malaviya University of Technology, Gorakhpur",
     isHOD: false,
@@ -98,58 +98,58 @@ export const facultyData: FacultyMember[] = [
     additionalInfo: "Recipient of Best Teacher Award."
   },
 
-  // ⭐ Dr. Satya Prakash Yadav
-  {
-    id: 2,
-    name: "Dr. Satya Prakash Yadav",
-    title: "Associate Professor",
-    department: "Computer Science and Engineering",
-    specialization: [
-      "Computer Vision",
-      "Natural Language Processing",
-      "Robotics",
-      "Neural Networks"
-    ],
-    email: "spycs@mmmut.ac.in",
-    phone: "+91-9876543210",
-    profileImage: SatyaSir,
-    description:
-      "Renowned researcher in computer vision and robotics with extensive industry collaborations.",
-    linkedinUrl: "https://www.linkedin.com/in/satya-prakash-yadav",
-    googleScholarUrl: "https://scholar.google.com/citations?user=aKRVzKMAAAAJ",
-    articles: "120+",
-    citations: "2700+",
-    experience: 17,
-    booksPublished: "4+",
-    organisations: "10+"
-  },
+  // // ⭐ Dr. Satya Prakash Yadav
+  // {
+  //   id: 2,
+  //   name: "Dr. Satya Prakash Yadav",
+  //   title: "Associate Professor",
+  //   department: "Computer Science and Engineering",
+  //   specialization: [
+  //     "Computer Vision",
+  //     "Natural Language Processing",
+  //     "Robotics",
+  //     "Neural Networks"
+  //   ],
+  //   email: "spycs@mmmut.ac.in",
+  //   phone: "+91-9876543210",
+  //   profileImage: SatyaSir,
+  //   description:
+  //     "Renowned researcher in computer vision and robotics with extensive industry collaborations.",
+  //   linkedinUrl: "https://www.linkedin.com/in/satya-prakash-yadav",
+  //   googleScholarUrl: "https://scholar.google.com/citations?user=aKRVzKMAAAAJ",
+  //   articles: "120+",
+  //   citations: "2700+",
+  //   experience: 17,
+  //   booksPublished: "4+",
+  //   organisations: "10+"
+  // },
 
-  // ⭐ Dr. B.K Sharma
-  {
-    id: 3,
-    name: "Dr. B.K Sharma",
-    title: "Associate Professor",
-    department: "Computer Science & Engineering",
-    specialization: [
-      "Internet of Things (IoT)",
-      "Internet of Healthcare Things (IoHT)",
-      "Wireless Networks",
-      "Smart Systems"
-    ],
-    email: "bkscs@mmmut.ac.in",
-    phone: "+91-XXXXXXXXXX",
-    profileImage: bkSharma,
-    description:
-      "Specializing in Algorithms, Image Processing, IPR & ML/DL",
-    linkedinUrl: "https://www.linkedin.com/in/dr-birendra-kumar-sharma-286633380",
-    citations: "1500+",
-    patents: "9+",
-    internationalConferences: "4+",
-    internationalPublications: "17+",
-    organisations: "5+",
-    review: "12",
-    booksPublished: "8+",
-  },
+  // // ⭐ Dr. B.K Sharma
+  // {
+  //   id: 3,
+  //   name: "Dr. B.K Sharma",
+  //   title: "Associate Professor",
+  //   department: "Computer Science & Engineering",
+  //   specialization: [
+  //     "Internet of Things (IoT)",
+  //     "Internet of Healthcare Things (IoHT)",
+  //     "Wireless Networks",
+  //     "Smart Systems"
+  //   ],
+  //   email: "bkscs@mmmut.ac.in",
+  //   phone: "+91-XXXXXXXXXX",
+  //   profileImage: bkSharma,
+  //   description:
+  //     "Specializing in Algorithms, Image Processing, IPR & ML/DL",
+  //   linkedinUrl: "https://www.linkedin.com/in/dr-birendra-kumar-sharma-286633380",
+  //   citations: "1500+",
+  //   patents: "9+",
+  //   internationalConferences: "4+",
+  //   internationalPublications: "17+",
+  //   organisations: "5+",
+  //   review: "12",
+  //   booksPublished: "8+",
+  // },
 
   // ⭐ Dr. Shwet Ketu
   {
@@ -199,31 +199,31 @@ export const facultyData: FacultyMember[] = [
     internationalPublications: "18+"
   },
 
-  // ⭐ Dr. Shantanu Shahi
-  {
-    id: 6,
-    name: "Dr. Shantanu Shahi",
-    title: "Assistant Professor",
-    department: "Computer Science & Engineering",
-    specialization: [
-      "Machine Learning(ML)",
-      "Deep Learning",
-      "Industrial Internet of Things(IIoT)",
-      "Amazon Web Services(AWS)"
-    ],
-    email: "dsscse@mmmut.ac.in",
-    phone: "+91-XXXXXXXXXX",
-    profileImage: shantanu,
-    description:
-      "Specializing in face recognition algorithms, deep learning, and IoT applications.",
-    linkedinUrl: "https://www.linkedin.com/in/dr-shantanu-shahi-5a1b8325b",
-    citations: "1000+",
-    patents: "6+",
-    internationalConferences: "4+",
-    internationalPublications: "13+",
-    organisations: "5+",
-    review: "10"
-  }
+  // // ⭐ Dr. Shantanu Shahi
+  // {
+  //   id: 6,
+  //   name: "Dr. Shantanu Shahi",
+  //   title: "Assistant Professor",
+  //   department: "Computer Science & Engineering",
+  //   specialization: [
+  //     "Machine Learning(ML)",
+  //     "Deep Learning",
+  //     "Industrial Internet of Things(IIoT)",
+  //     "Amazon Web Services(AWS)"
+  //   ],
+  //   email: "dsscse@mmmut.ac.in",
+  //   phone: "+91-XXXXXXXXXX",
+  //   profileImage: shantanu,
+  //   description:
+  //     "Specializing in face recognition algorithms, deep learning, and IoT applications.",
+  //   linkedinUrl: "https://www.linkedin.com/in/dr-shantanu-shahi-5a1b8325b",
+  //   citations: "1000+",
+  //   patents: "6+",
+  //   internationalConferences: "4+",
+  //   internationalPublications: "13+",
+  //   organisations: "5+",
+  //   review: "10"
+  // }
 ];
 
 // ---------------------------------------------

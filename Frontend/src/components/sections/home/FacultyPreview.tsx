@@ -77,7 +77,7 @@ export default function FacultyPreview() {
   return (
     <SectionWrapper>
       {/* Centered header section */}
-      <div className="text-center mb-16">
+      <div className="text-center mb-10 sm:mb-16">
         <h2 className="text-3xl md:text-4xl font-bold mb-4">
           Meet Our Faculty
         </h2>
@@ -104,8 +104,8 @@ export default function FacultyPreview() {
       </div>
 
       {/* Main stats grid */}
-      <div className="relative z-10 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-0">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
           {stats.map((stat, index) => (
             <div
               key={stat.label}
@@ -114,7 +114,7 @@ export default function FacultyPreview() {
               onMouseLeave={() => setHoveredStat(null)}
             >
               <div
-                className={`relative p-6 rounded-xl border transition-all duration-300 cursor-pointer h-full ${
+                className={`relative p-4 sm:p-6 rounded-xl border transition-all duration-300 cursor-pointer h-full ${
                   hoveredStat === index
                     ? "border-primary/60 bg-background/95 shadow-lg -translate-y-1"
                     : "border-border/40 bg-background/80 hover:border-primary/40"
@@ -129,27 +129,27 @@ export default function FacultyPreview() {
 
                 <div className="relative z-10">
                   {/* Icon */}
-                  <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-start justify-between mb-3 sm:mb-4">
                     <div
-                      className={`w-12 h-12 rounded-lg bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-md transition-transform duration-300 ${
+                      className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-md transition-transform duration-300 ${
                         hoveredStat === index ? "scale-110" : ""
                       }`}
                     >
-                      <stat.icon className="w-6 h-6 text-white" />
+                      <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
                   </div>
 
                   {/* Value */}
-                  <div className="text-3xl font-bold text-foreground mb-2">
+                  <div className="text-2xl sm:text-3xl font-bold text-foreground mb-1.5 sm:mb-2">
                     {stat.value}
                   </div>
 
                   {/* Label and description */}
-                  <div className="space-y-1">
-                    <div className="text-base font-semibold text-foreground">
+                  <div className="space-y-0.5 sm:space-y-1">
+                    <div className="text-xs sm:text-base font-semibold text-foreground leading-tight">
                       {stat.label}
                     </div>
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-[10px] sm:text-sm text-muted-foreground leading-tight">
                       {stat.description}
                     </div>
                   </div>

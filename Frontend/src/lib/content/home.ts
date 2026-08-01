@@ -32,7 +32,7 @@ export const showcase: ShowcaseTab[] = [
   {
     key: "web",
     label: "Web",
-    image: "/assets/images/showcase-web.png",
+    image: "/assets/images/showcase-web.webp",
     caption: "Beautiful UIs with React, Tailwind, and shadcn.",
   },
   {
@@ -52,14 +52,14 @@ export const testimonials: Testimonial[] = [
     role: "Core Member",
     quote:
       "Flux pushed me to ship. The feedback loops are fast, honest, and kind.",
-    avatar: "/assets/images/avatars/aarav.png",
+    avatar: "/assets/images/avatars/aarav.webp",
   },
   {
     name: "Prof. Sharma",
     role: "Faculty Advisor",
     quote:
       "A student-led space where rigor meets creativity — exemplary initiative.",
-    avatar: "/assets/images/avatars/sharma.png",
+    avatar: "/assets/images/avatars/sharma.webp",
   },
 ]
 
