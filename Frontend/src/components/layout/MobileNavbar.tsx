@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import logo from "@/assets/images/flux_logo.png";
+import logo from "@/assets/images/flux_logo.webp";
 import "./Navbar.css"; // 👈 make sure this is imported
 
 const sections = [
@@ -9,6 +9,7 @@ const sections = [
   { id: "about", label: "About", path: "/about" },
   { id: "faculty", label: "Faculty", path: "/faculty" },
   { id: "events", label: "Events", path: "/events" },
+  { id: "gallery", label: "Gallery", path: "/gallery" },
   { id: "ideathon", label: "Ideathon", path: "/ideathon" },
 //  { id: "induction", label: "Induction", path: "/induction" },
   { id: "team", label: "Team", path: "/team" },

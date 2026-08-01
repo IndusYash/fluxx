@@ -17,6 +17,7 @@ export default function ScrollToTop({ isMobile = false }: ScrollToTopProps) {
         "/faculty": "faculty",
         "/events": "events",
         "/team": "team",
+        "/gallery": "gallery",
         "/join": "join",
         "/contact": "contact"
       };
@@ -24,7 +25,7 @@ export default function ScrollToTop({ isMobile = false }: ScrollToTopProps) {
       const sectionId = routeToSectionMap[pathname];
       
       if (sectionId) {
-        setTimeout(() => {
+        requestAnimationFrame(() => {
           const element = document.getElementById(sectionId);
           if (element) {
             element.scrollIntoView({ 
@@ -32,52 +33,19 @@ export default function ScrollToTop({ isMobile = false }: ScrollToTopProps) {
               block: "start"
             });
           }
-        }, 100);
+        });
       }
     } else {
-      // For desktop layout (separate pages) - Handle body overflow-x: hidden
-      
-      // Method 1: Immediate scroll on multiple targets
-      window.scrollTo(0, 0);
+      // High performance instant reset for desktop page changes
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
       
-      // Method 2: RAF (RequestAnimationFrame) for better timing
       requestAnimationFrame(() => {
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
         document.documentElement.scrollTop = 0;
         document.body.scrollTop = 0;
       });
-      
-      // Method 3: Find the actual scrolling container
-      // When body has overflow-x: hidden, sometimes a different element becomes the scroller
-      setTimeout(() => {
-        // Try window first
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: "instant",
-        });
-        
-        // Try document elements
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-        
-        // Find any element that might be scrolling
-        const scrollableElements = document.querySelectorAll('*');
-        scrollableElements.forEach(element => {
-          if (element.scrollTop > 0) {
-            element.scrollTop = 0;
-          }
-        });
-      }, 10);
-
-      // Method 4: Additional timeout as final fallback
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-      }, 100);
     }
   }, [pathname, isMobile]);
 

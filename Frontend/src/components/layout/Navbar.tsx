@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SiGmail } from "react-icons/si";
 import { FaWhatsapp, FaInstagram, FaBars, FaTimes, FaLinkedin } from "react-icons/fa";
 import { motion } from "framer-motion";
-import logo from "@/assets/images/flux_logo.png";
+import logo from "@/assets/images/flux_logo.webp";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [showNavbar, setShowNavbar] = useState<boolean>(true);
-  const [lastScrollY, setLastScrollY] = useState<number>(0);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const lastScrollY = useRef<number>(0);
   const location = useLocation();
 
   const navLinks = [
@@ -18,30 +17,31 @@ const Navbar: React.FC = () => {
     { name: "Faculty", path: "/faculty" },
     { name: "Our Team", path: "/team" },
     { name: "Events", path: "/events" },
+    { name: "Gallery", path: "/gallery" },
     { name: "Ideathon", path: "/ideathon" },
     // { name: "Induction", path: "/induction" },
     { name: "Contact", path: "/contact" },
   ];
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      if (window.scrollY > lastScrollY && window.scrollY > 80) {
-        setShowNavbar(false);
-      } else {
-        setShowNavbar(true);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
+            setShowNavbar(false);
+          } else {
+            setShowNavbar(true);
+          }
+          lastScrollY.current = currentScrollY;
+          ticking = false;
+        });
+        ticking = true;
       }
-      setLastScrollY(window.scrollY);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -159,18 +159,11 @@ const Navbar: React.FC = () => {
                 }
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative group cursor-pointer"
+                className="relative group cursor-pointer text-gray-400/70 pointer-events-auto transition-colors duration-300"
                 whileHover={{ scale: 1.2, rotate: 5 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <Icon
-                  size={20}
-                  style={{
-                    color: "rgba(156, 163, 175, 0.7)",
-                    pointerEvents: "auto",
-                    transition: "color 0.3s",
-                  }}
-                />
+                <Icon size={20} />
               </motion.a>
             ))}
           </div>
@@ -187,11 +180,11 @@ const Navbar: React.FC = () => {
               whileTap={{ scale: 0.9 }}
               aria-label={isOpen ? "Close menu" : "Open menu"}
             >
-              <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.3 }}>
+              <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.3 }} className="text-primary/80">
                 {isOpen ? (
-                  <FaTimes size={20} className="text-primary/80" />
+                  <FaTimes size={20} />
                 ) : (
-                  <FaBars size={20} className="text-primary/80" />
+                  <FaBars size={20} />
                 )}
               </motion.div>
             </motion.button>

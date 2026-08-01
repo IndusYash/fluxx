@@ -59,19 +59,19 @@ export default function FluxObjectives() {
   return (
     <section className="relative overflow-hidden min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#111827] to-[#0a0a0a] text-white">
       {/* --- Animated Gradient Blobs --- */}
-      <div className="absolute inset-0 -z-20">
+      <div className="absolute inset-0 -z-20 pointer-events-none">
         <motion.div
-          className="absolute bottom-0 left-[-20%] w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-purple-700/25 via-pink-600/30 to-pink-500/20 blur-3xl"
+          className="absolute bottom-0 left-[-20%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-purple-700/20 via-pink-600/20 to-pink-500/15 blur-2xl gpu-accelerate"
           animate={{ x: [0, 40, 0], y: [0, 20, 0] }}
           transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute top-[-10%] right-[-15%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-blue-600/30 via-cyan-400/30 to-cyan-300/20 blur-3xl"
+          className="absolute top-[-10%] right-[-15%] w-[450px] h-[450px] rounded-full bg-gradient-to-tr from-blue-600/20 via-cyan-400/20 to-cyan-300/15 blur-2xl gpu-accelerate"
           animate={{ x: [0, -30, 0], y: [0, -25, 0] }}
           transition={{ duration: 35, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute top-1/3 left-1/2 w-[350px] h-[350px] rounded-full bg-gradient-to-tr from-green-500/20 via-emerald-400/25 to-emerald-300/15 blur-3xl"
+          className="absolute top-1/3 left-1/2 w-[300px] h-[300px] rounded-full bg-gradient-to-tr from-green-500/15 via-emerald-400/20 to-emerald-300/10 blur-2xl gpu-accelerate"
           animate={{ x: [0, 20, -20, 0], y: [0, -15, 15, 0] }}
           transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
           style={{ translateX: "-50%" }}
@@ -90,7 +90,7 @@ export default function FluxObjectives() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.3 }}
           variants={itemVariants}
           className="text-center mb-16 max-w-3xl mx-auto"
         >
@@ -124,14 +124,14 @@ export default function FluxObjectives() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.2 }}
           className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr"
         >
           {objectives.map((item) => (
             <motion.div
               key={item.title}
               variants={itemVariants}
-              className="group relative min-h-[320px] flex flex-col rounded-2xl border border-border/50 bg-card/80 backdrop-blur-md p-8 shadow-md transition-shadow duration-400"
+              className="group relative min-h-[320px] flex flex-col rounded-2xl border border-border/50 bg-card/80 backdrop-blur-md p-8 shadow-md transition-shadow duration-400 gpu-accelerate"
               whileHover={{
                 y: -6,
                 scale: 1.02,
@@ -162,7 +162,7 @@ export default function FluxObjectives() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.3 }}
           variants={itemVariants}
           className="text-center mt-20 pt-10 border-t border-border/70"
         >

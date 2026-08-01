@@ -8,13 +8,13 @@ export const aboutPageData = {
     description: 'FLUX acts as a catalyst for ideation, innovation, and interdisciplinary interaction in computing and emerging technologies. We foster innovation, collaboration, and a research-oriented mindset among students and faculty of the Department of Computer Science and Engineering.',
     features: [
       'Innovation Catalyst',
-      'Interdisciplinary Platform', 
+      'Interdisciplinary Platform',
       'Research Excellence'
     ],
     patron: {
-      name: 'Prof. J. P. Saini',
+      name: 'Prof. Anupama Kaushik Sharma',
       title: 'Hon\'ble Vice Chancellor, MMMUT Gorakhpur',
-      imageUrl: '/images/vice-chancellor.jpg',
+      imageUrl: '/images/Prof. Anupama Kaushik Sharma vc maam.jpeg',
       visionQuote: 'FLUX represents our commitment to fostering innovation and research excellence, creating leaders who will drive technological advancement and meaningful societal impact.'
     }
   },

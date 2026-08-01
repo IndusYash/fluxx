@@ -113,33 +113,42 @@ const TypewriterMotto = () => {
 export default function Hero() {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const [intensity, setIntensity] = useState(1);
   const sectionRef = useRef<HTMLElement>(null);
+  const lastIntensityRef = useRef(1);
 
   useEffect(() => {
+    let ticking = false;
     const handleMouseMove = (e: MouseEvent) => {
-      if (sectionRef.current) {
-        const rect = sectionRef.current.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
+      if (!ticking && sectionRef.current) {
+        window.requestAnimationFrame(() => {
+          if (sectionRef.current) {
+            const rect = sectionRef.current.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
 
-        setMousePosition({ x, y });
-
-        const centerX = 50;
-        const centerY = 50;
-        const distance = Math.sqrt(
-          Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2)
-        );
-        const maxDistance = Math.sqrt(2500 + 2500);
-        const newIntensity = 1 + (distance / maxDistance) * 2;
-        setIntensity(newIntensity);
+            const centerX = 50;
+            const centerY = 50;
+            const distance = Math.sqrt(
+              Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2)
+            );
+            const maxDistance = Math.sqrt(5000);
+            const newIntensity = Number((1 + (distance / maxDistance) * 2).toFixed(2));
+            
+            if (Math.abs(newIntensity - lastIntensityRef.current) > 0.15) {
+              lastIntensityRef.current = newIntensity;
+              setIntensity(newIntensity);
+            }
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
     const section = sectionRef.current;
     if (section) {
-      section.addEventListener("mousemove", handleMouseMove);
+      section.addEventListener("mousemove", handleMouseMove, { passive: true });
       return () => section.removeEventListener("mousemove", handleMouseMove);
     }
   }, []);

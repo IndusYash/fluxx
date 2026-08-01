@@ -4,6 +4,7 @@ import Showcase from "@/components/sections/home/Showcase";
 // import InductionCTA from "@/components/sections/home/InductionCTA"
 import FacultyPreview from "@/components/sections/home/FacultyPreview";
 import EventsPreview from "@/components/sections/home/EventsPreview";
+import GalleryPreview from "@/components/sections/home/GalleryPreview";
 import ContactPreview from "@/components/sections/home/ContactPreview";
 {/*}
 import { useState, useEffect } from "react";
@@ -64,6 +65,7 @@ export default function HomePage() {
       >
         <Showcase />
         <EventsPreview />
+        <GalleryPreview />
         <FacultyPreview />
         {/* <InductionCTA /> */}
         <ContactPreview />

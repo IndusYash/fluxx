@@ -5,7 +5,7 @@ import PatronCard from './PatronCard';
 import FeatureCards from './FeatureCards';
 import ParticlesContainer from '../common/Particles';
 import { motion } from 'framer-motion';
-import JpSainiImg from "@/assets/images/jpsaini.jpeg"
+import anupamakaushik from "@/assets/images/Prof. Anupama Kaushik Sharma vc maam.jpeg"
 
 const WhatIsFlux: React.FC<WhatIsFluxProps> = ({ description, patron }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -47,10 +47,10 @@ const WhatIsFlux: React.FC<WhatIsFluxProps> = ({ description, patron }) => {
   return (
     <section ref={containerRef} className="relative py-20 lg:py-32 bg-black text-white overflow-hidden">
       <ParticlesContainer />
-      
+
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-20">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
@@ -58,7 +58,7 @@ const WhatIsFlux: React.FC<WhatIsFluxProps> = ({ description, patron }) => {
           >
             What is <span className="text-green-400">FLUX?</span>
             <div className="relative mt-4 mx-auto w-48 h-1 bg-green-800 rounded-full">
-              <motion.div 
+              <motion.div
                 initial={{ scaleX: 0 }}
                 animate={isVisible ? { scaleX: 1 } : { scaleX: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
@@ -67,7 +67,7 @@ const WhatIsFlux: React.FC<WhatIsFluxProps> = ({ description, patron }) => {
             </div>
           </motion.h2>
 
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
@@ -77,7 +77,7 @@ const WhatIsFlux: React.FC<WhatIsFluxProps> = ({ description, patron }) => {
           </motion.p>
         </div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
@@ -86,7 +86,7 @@ const WhatIsFlux: React.FC<WhatIsFluxProps> = ({ description, patron }) => {
         </motion.div>
 
         {patron && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
@@ -101,9 +101,9 @@ const WhatIsFlux: React.FC<WhatIsFluxProps> = ({ description, patron }) => {
               </p>
             </div>
             <PatronCard
-              name="Prof. J. P. Saini"
+              name="Prof. Anupama Kaushik Sharma"
               title="Hon'ble Vice Chancellor, MMMUT Gorakhpur"
-              imageUrl={JpSainiImg}
+              imageUrl={anupamakaushik}
               visionQuote="FLUX represents our unwavering commitment to fostering innovation and research excellence, creating leaders who will drive technological advancement and make meaningful contributions to society."
             />
           </motion.div>

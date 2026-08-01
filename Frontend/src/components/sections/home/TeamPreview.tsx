@@ -3,9 +3,9 @@ import SectionWrapper from "@/components/SectionWrapper";
 import SectionCTA from "@/components/sectionCTA";
 import { Users, Star, Zap, Heart, Code, Rocket } from "lucide-react";
 import { useState, useEffect } from "react";
-import vish from "@/assets/images/myself_new.jpg";
-import shiv from "@/assets/images/shiv.jpg";
-import ysv from "@/assets/images/ysv.jpg";
+import vish from "@/assets/images/myself_new.webp";
+import shiv from "@/assets/images/shiv.webp";
+import ysv from "@/assets/images/ysv.webp";
 
 interface TeamMember {
   id: number;

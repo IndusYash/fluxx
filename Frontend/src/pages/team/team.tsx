@@ -3,70 +3,70 @@ import TeamCard from "@/components/TeamCard";
 // removed contact-related imports
 
 import aryanImage from "../../assets/images/Aryan.webp";
-import ashishImage from "../../assets/images/ashish.jpg";
-import shivammishraImage from "../../assets/images/shivamPic.jpg";
-import shivamsinghImage from "../../assets/images/shivamsingh.jpg";
-import vmishraImage from "../../assets/images/Vish.jpeg";
-import ysvImage from "../../assets/images/ysv.jpg";
-import threeMImage from "../../assets/images/3m.jpg";
-import presidentImage from "../../assets/images/president.jpg";
-import PriyaImage from "../../assets/images/Priya Singh.jpg";
-import RiyaImage from "../../assets/images/Riya Verma.jpg";
-import Tamanna from "../../assets/images/Tamanna.jpg";
-import Shubham from "../../assets/images/Shubham.jpg";
-import Ananya from "../../assets/images/Ananya.jpg";
-import Anant from "../../assets/images/Anant Mishra.jpg";
-import Aman from "../../assets/images/Aman Rawat.png";
+import ashishImage from "../../assets/images/ashish.webp";
+import shivammishraImage from "../../assets/images/shivamPic.webp";
+import shivamsinghImage from "../../assets/images/shivamsingh.webp";
+import vmishraImage from "../../assets/images/Vish.webp";
+import ysvImage from "../../assets/images/ysv.webp";
+import threeMImage from "../../assets/images/3m.webp";
+import presidentImage from "../../assets/images/president.webp";
+import PriyaImage from "../../assets/images/Priya Singh.webp";
+import RiyaImage from "../../assets/images/Riya Verma.webp";
+import Tamanna from "../../assets/images/Tamanna.webp";
+import Shubham from "../../assets/images/Shubham.webp";
+import Ananya from "../../assets/images/Ananya.webp";
+import Anant from "../../assets/images/Anant Mishra.webp";
+import Aman from "../../assets/images/Aman Rawat.webp";
 import Prad from "../../assets/images/Pradyuman.webp";
-import Aviral from "../../assets/images/Aviral.jpg";
-import Anushka from "../../assets/images/Anuphoto - Anushka Singh.jpg";
+import Aviral from "../../assets/images/Aviral.webp";
+import Anushka from "../../assets/images/Anuphoto - Anushka Singh.webp";
 
 
 // Sophomore member images
-import abhigyanVardhanImage from "../../assets/images/AbhigyanVardhan.jpg";
-import anshikaTripathiImage from "../../assets/images/AnshikaTripathi  .jpg";
-import anushkaChaudharyImage from "../../assets/images/AnushkaChaudhary .jpg";
-import atulKumarImage from "../../assets/images/AtulThakur.png";
-import auchityaKumarImage from "../../assets/images/AuchityaKumar.jpg";
-import ayushSharmaImage from "../../assets/images/AyushSharma.png";
-import devanshKumarImage from "../../assets/images/DevanshKumar.jpg";
-import divejSinghImage from "../../assets/images/DivejSingh.jpg";
-import harshVermaImage from "../../assets/images/HarshVerma.jpg";
-import jaiKumarImage from "../../assets/images/JaiKumar.jpg";
-import nikhilJaiswalImage from "../../assets/images/NikhilJaiswal .jpg";
-import prakharShuklaImage from "../../assets/images/PrakharShukla.jpg";
-import priyaSinghImage from "../../assets/images/PriyaSingh.jpg";
-import princeSahuImage from "../../assets/images/PrinceSahu.jpg";
-import rishiImage from "../../assets/images/Rishi.jpg";
-import rishirajImage from "../../assets/images/rishiraj.jpeg";
-import rohanJaiswalImage from "../../assets/images/RohanJaiswal .jpg";
-import sameerChauhanImage from "../../assets/images/SameerSingh.jpg";
-import stutiTripathiImage from "../../assets/images/StutiTripathi .jpg";
-import sudeekshaImage from "../../assets/images/Sudeeksha.jpg";
-import surajKumarImage from "../../assets/images/SurajKumar .jpg";
+import abhigyanVardhanImage from "../../assets/images/AbhigyanVardhan.webp";
+import anshikaTripathiImage from "../../assets/images/AnshikaTripathi  .webp";
+import anushkaChaudharyImage from "../../assets/images/AnushkaChaudhary .webp";
+import atulKumarImage from "../../assets/images/AtulThakur.webp";
+import auchityaKumarImage from "../../assets/images/AuchityaKumar.webp";
+import ayushSharmaImage from "../../assets/images/AyushSharma.webp";
+import devanshKumarImage from "../../assets/images/DevanshKumar.webp";
+import divejSinghImage from "../../assets/images/DivejSingh.webp";
+import harshVermaImage from "../../assets/images/HarshVerma.webp";
+import jaiKumarImage from "../../assets/images/JaiKumar.webp";
+import nikhilJaiswalImage from "../../assets/images/NikhilJaiswal .webp";
+import prakharShuklaImage from "../../assets/images/PrakharShukla.webp";
+import priyaSinghImage from "../../assets/images/PriyaSingh.webp";
+import princeSahuImage from "../../assets/images/PrinceSahu.webp";
+import rishiImage from "../../assets/images/Rishi.webp";
+import rishirajImage from "../../assets/images/rishiraj.webp";
+import rohanJaiswalImage from "../../assets/images/RohanJaiswal .webp";
+import sameerChauhanImage from "../../assets/images/SameerSingh.webp";
+import stutiTripathiImage from "../../assets/images/StutiTripathi .webp";
+import sudeekshaImage from "../../assets/images/Sudeeksha.webp";
+import surajKumarImage from "../../assets/images/SurajKumar .webp";
 
 // Newly added sheet member images
-import sundaramDubeyImage from "../../assets/images/Sundaram Dubey.jpg";
-import deepakShivhareImage from "../../assets/images/Deepak Shivhare.png";
-import aashishKumarImage from "../../assets/images/Aashish kumar.jpeg";
-import aditiDwivediImage from "../../assets/images/Aditi.jpg";
-import ankitKumarImage from "../../assets/images/Ankit Kumar.jpg";
-import saumyjeetKumarImage from "../../assets/images/Saumyjeet kumar.jpeg";
-import anuradhaSrivastavaImage from "../../assets/images/Anuradha Srivastava.jpg";
-import khushiPatelImage from "../../assets/images/Khushi Patel.jpg";
-import anshYadavImage from "../../assets/images/Ansh Yadav.jpg";
-import himanshuGovindRaoImage from "../../assets/images/Himanshu Govind Rao.jpg";
-import arpitaMishraImage from "../../assets/images/Arpita Mishra.jpg";
-import pradumnaManuImage from "../../assets/images/Pradumna Manu.jpg";
-import adityaGuptaImage from "../../assets/images/Aditya Gupta.jpeg";
-import piyushKumarImage from "../../assets/images/piyush kumar.jpg";
-import himanshuMauryaImage from "../../assets/images/HIMANSHU MAURYA.jpeg";
-import sunidhiChaurasiaImage from "../../assets/images/Sunidhi Chaurasia.jpg";
-import sakshiRanaImage from "../../assets/images/Sakshi rana.jpg";
-import varshaRaniImage from "../../assets/images/Varsha Rani.jpg";
-import adityaYadavImage from "../../assets/images/Aditya yadav.jpg";
-import vinitKumarImage from "../../assets/images/VINIT RAJENDRA KUMAR.jpg";
-import ritishaImage from "../../assets/images/ritisha.jpeg";
+import sundaramDubeyImage from "../../assets/images/Sundaram Dubey.webp";
+import deepakShivhareImage from "../../assets/images/Deepak Shivhare.webp";
+import aashishKumarImage from "../../assets/images/Aashish kumar.webp";
+import aditiDwivediImage from "../../assets/images/Aditi.webp";
+import ankitKumarImage from "../../assets/images/Ankit Kumar.webp";
+import saumyjeetKumarImage from "../../assets/images/Saumyjeet kumar.webp";
+import anuradhaSrivastavaImage from "../../assets/images/Anuradha Srivastava.webp";
+import khushiPatelImage from "../../assets/images/Khushi Patel.webp";
+import anshYadavImage from "../../assets/images/Ansh Yadav.webp";
+import himanshuGovindRaoImage from "../../assets/images/Himanshu Govind Rao.webp";
+import arpitaMishraImage from "../../assets/images/Arpita Mishra.webp";
+import pradumnaManuImage from "../../assets/images/Pradumna Manu.webp";
+import adityaGuptaImage from "../../assets/images/Aditya Gupta.webp";
+import piyushKumarImage from "../../assets/images/piyush kumar.webp";
+import himanshuMauryaImage from "../../assets/images/HIMANSHU MAURYA.webp";
+import sunidhiChaurasiaImage from "../../assets/images/Sunidhi Chaurasia.webp";
+import sakshiRanaImage from "../../assets/images/Sakshi rana.webp";
+import varshaRaniImage from "../../assets/images/Varsha Rani.webp";
+import adityaYadavImage from "../../assets/images/Aditya yadav.webp";
+import vinitKumarImage from "../../assets/images/VINIT RAJENDRA KUMAR.webp";
+import ritishaImage from "../../assets/images/ritisha.webp";
 
 
 interface TeamMember {
@@ -82,11 +82,11 @@ interface TeamMember {
 
 const Team: React.FC = () => {
   // Default placeholder for missing images
-  const defaultImage = "../../assets/images/3m.jpg"; // Add your placeholder image path
+  const defaultImage = "../../assets/images/3m.webp"; // Add your placeholder image path
 
 
   const teamMembers: TeamMember[] = [
-    // --- seniors, final year, pre-final year members ---
+    // --- seniors, final year ---
     {
       name: "Aman Kumar Rawat",
       role: "ME-Pre Final Year",
@@ -95,7 +95,7 @@ const Team: React.FC = () => {
       image: Aman || defaultImage
     },
     {
-      name: "Anant Mishra", 
+      name: "Anant Mishra",
       role: "BBA Final Year",
       email: "anant.m121@gmail.com",
       linkedin: "https://www.linkedin.com/in/anant-mishraa?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
@@ -103,7 +103,7 @@ const Team: React.FC = () => {
     },
     {
       name: "Ananya",
-      role: "CE-Pre Final Year", 
+      role: "CE-Pre Final Year",
       email: "ananyar0912@gmail.com",
       linkedin: "https://www.linkedin.com/in/ananya-mmmut",
       image: Ananya || defaultImage
@@ -111,8 +111,8 @@ const Team: React.FC = () => {
     {
       name: "Anushka Singh",
       role: "CSE-Pre Final Year",
-      email: "anuskajiya@gmail.com", 
-      linkedin: "https://www.linkedin.com/in/anushkasingh-a18a25318/",  
+      email: "anuskajiya@gmail.com",
+      linkedin: "https://www.linkedin.com/in/anushkasingh-a18a25318/",
       image: Anushka || defaultImage
     },
     {
@@ -123,7 +123,7 @@ const Team: React.FC = () => {
       image: ashishImage || defaultImage
     },
     {
-      name: "Aviral Omar", 
+      name: "Aviral Omar",
       role: "CHE-Pre Final Year",
       email: "aviralmaster@gmail.com",
       linkedin: "https://www.linkedin.com/in/aviral-omar-763878294?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
@@ -132,7 +132,7 @@ const Team: React.FC = () => {
     {
       name: "Aryan S Shandilya",
       role: "CSE-Pre Final Year",
-      email: "aryanacc28@gmail.com", 
+      email: "aryanacc28@gmail.com",
       linkedin: "https://www.linkedin.com/in/aryan-s-shandilya?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
       image: aryanImage || defaultImage
     },
@@ -140,19 +140,19 @@ const Team: React.FC = () => {
       name: "Pradyumn Agrahari",
       role: "CSE-Pre Final Year",
       email: "pradyumnagrahari111@gmail.com",
-      linkedin: "https://www.linkedin.com/in/pradyumn-a-09b209277?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app", 
+      linkedin: "https://www.linkedin.com/in/pradyumn-a-09b209277?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
       image: Prad || defaultImage
     },
     {
       name: "Priya Singh",
-      role: "BBA Final Year", 
+      role: "BBA Final Year",
       email: "Rina965304@gmail.com",
       linkedin: "https://www.linkedin.com/in/priya-s-1b2329259?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
       image: PriyaImage || defaultImage
     },
     {
       name: "Riya Verma",
-      role: "CSE-Pre Final Year", 
+      role: "CSE-Pre Final Year",
       email: "riya.verma7202@gmail.com",
       linkedin: "https://www.linkedin.com/in/riya-verma-28b461289/",
       image: RiyaImage || defaultImage
@@ -165,7 +165,7 @@ const Team: React.FC = () => {
       image: shivammishraImage || defaultImage
     },
     {
-      name: "Shivam Singh", 
+      name: "Shivam Singh",
       role: "CSE-Pre Final Yearr",
       email: "shivamsingh221045@gmail.com",
       linkedin: "https://www.linkedin.com/in/shivam451/",
@@ -174,7 +174,7 @@ const Team: React.FC = () => {
     {
       name: "Shubham Rai",
       role: "CSE-Pre Final Year",
-      email: "kuvar2003@gmail.com", 
+      email: "kuvar2003@gmail.com",
       linkedin: "https://www.linkedin.com/in/shubham-rai-866b2b294/",
       image: Shubham || defaultImage
     },
@@ -186,7 +186,7 @@ const Team: React.FC = () => {
       image: Tamanna || defaultImage
     },
     {
-      name: "Vishesh mishra", 
+      name: "Vishesh mishra",
       role: "CSE-Pre Final Year",
       email: "mishravishesh1403@gmail.com",
       linkedin: "https://www.linkedin.com/in/vishesh-mishra-372784218/",
@@ -195,318 +195,294 @@ const Team: React.FC = () => {
     {
       name: "Yashasvi Sharma",
       role: "CSE-Pre Final Year",
-      email: "yashasvisharma650@gmail.com", 
+      email: "yashasvisharma650@gmail.com",
       linkedin: "https://www.linkedin.com/in/yashasvi-sharma-688245294",
       image: ysvImage || defaultImage
     },
     {
       name: "Yashvardhan Ojha",
-      role: "CSE-Pre Final Year", 
+      role: "CSE-Pre Final Year",
       email: "2023021270@mmmut.ac.in",
       linkedin: "https://www.linkedin.com/in/yashvardhann/",
       image: threeMImage || defaultImage
     },
 
-    // --- sophomore year members (added from your image/table) ---
-{
-    name: "Abhigyan Vardhan Singh",
-    role: "Sophomore Year, IT",
-    email: "abhigyansingh590@gmail.com ",
-    linkedin: "https://www.linkedin.com/in/abhigyan-vardhan-singh-81aa292a5?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-    image: abhigyanVardhanImage || defaultImage,
-  },
- 
-  {
-    name: "Anshika Tripathi",
-    role: "Sophomore Year, BBA",
-    email: "anshikaatripathiii@gmail.com ",
-    linkedin: "https://www.linkedin.com/in/anshika-tripathi-421a26265",
-    image: anshikaTripathiImage
-  },
-  {
-    name: "Anushka Chaudhary",
-    role: "Sophomore Year, CSE",
-    email: "chaudharyanushka085@gmail.com ",
-    linkedin: "https://www.linkedin.com/in/anushka-chaudhary-2b371b316/",
-    image: anushkaChaudharyImage,
-  },
-  {
-    name: "Atul Kumar Thakur",
-    role: "Sophomore Year, IT",
-    email: "atulkumarthakur155@gmail.com",
-    linkedin: "https://www.linkedin.com/in/atul1574",
-    image: atulKumarImage,
-  },
-  {
-    name: "Auchitya Kumar Shukla",
-    role: "Sophomore Year, BBA",
-    email: "auchityashukla16@gmail.com",
-    linkedin: "https://www.linkedin.com/in/auchitya-shukla-b6ab252b4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-    image: auchityaKumarImage,
-  },
-  {
-    name: "Ayush Sharma",
-    role: "Sophomore Year, IT",
-    email: "ayushsharma172005@gmail.com ",
-    linkedin: "https://www.linkedin.com/in/ayush-sharma-20b516325?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app ",
-    image: ayushSharmaImage,
-  },
-  {
-    name: "Devansh Kumar Yadav",
-    role: "Sophomore Year, CSE",
-    email: " dkyadav020806@gmail.com ",
-    linkedin: "https://www.linkedin.com/in/devansh-kumar-yadav-4a8146329?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app ",
-    image: devanshKumarImage,
-  },
-  {
-    name: "Divej Singh",
-    role: "Sophomore Year, CSE",
-    email: "divejsingh3@gmail.com ",
-    linkedin: "https://www.linkedin.com/in/divej-singh-0b6261326?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-    image: divejSinghImage,
-  },
-  {
-    name: "Harsh Verma",
-    role: "Sophomore Year, CSE",
-    email: "verma.harsh7370@gmail.com ",
-    linkedin: "https://www.linkedin.com/in/harsh-verma-07974533b",
-    image: harshVermaImage,
-  },
-  {
-    name: "Jai Kumar Singh",
-    role: "Sophomore Year, CSE",
-    email: "jaikumarsingh1920@gmail.com ",
-    linkedin: "https://www.linkedin.com/in/jai-kumar-singh-9b3152319",
-    image: jaiKumarImage,
-  },
-  {
-    name: "Nikhil Jaiswal",
-    role: "Sophomore Year, IT",
-    email: "nikhiljais9984@gmail.com ",
-    linkedin: "https://www.linkedin.com/in/nikhil-jaiswal-980a1132b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-    image: nikhilJaiswalImage,
-  },
-  {
-    name: "Prakhar Shukla",
-    role: "Sophomore Year, CSE",
-    email: "prakharshukla89508@gmail.com ",
-    linkedin: "https://www.linkedin.com/in/prakhar-shukla-22aa10316",
-    image: prakharShuklaImage,
-  },
+    // --- pre-final year members (added from your image/table) ---
     {
-    name: "Prince Sahu",
-    role: "Sophomore Year, CSE",
-    email: "sahuprinceguru@gmail.com ",
-    linkedin: "https://linkedin.com/in/prince-sahu-552382326/ ",
-    image: princeSahuImage,
-  },
-  {
-    name: "Priya Singh",
-    role: "Sophomore Year, CSE",
-    email: "singhshruti4131@gmail.com ",
-    linkedin: "https://www.linkedin.com/in/priya-singh-393bb82b7",
-    image: priyaSinghImage,
-  },
+      name: "Abhigyan Vardhan Singh",
+      role: "Sophomore Year, IT",
+      email: "abhigyansingh590@gmail.com ",
+      linkedin: "https://www.linkedin.com/in/abhigyan-vardhan-singh-81aa292a5?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      image: abhigyanVardhanImage || defaultImage,
+    },
 
-  {
-    name: "Rishi",
-    role: "Sophomore Year, IT",
-    email: "rishidiwakar925@gmail.com",
-    linkedin: "https://www.linkedin.com/in/rishi-diwakar-a87b86263/",
-    image: rishiImage,
-  },
-  {
-    name: "Rohan Jaiswal",
-    role: "Sophomore Year, CSE",
-    email: "rohanjaiswal611@gmail.com ",
-    linkedin: " https://www.linkedin.com/in/rohan-jaiswal-807338328?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-    image: rohanJaiswalImage,
-  },
-  {
-    name: "Sameer Singh Chauhan",
-    role: "Sophomore Year, CSE",
-    email: " itx.sameersinghchauhan@gmail.com",
-    linkedin: "https://www.linkedin.com/in/sameer-singh-chauhan-606992356",
-    image: sameerChauhanImage,
-  },
-  {
-    name: "Stuti Tripathi",
-    role: "Sophomore Year, CSE",
-    email: "stuticse28@gmail.com ",
-    linkedin: "https://www.linkedin.com/in/stuti-tripathi-534440328",
-    image: stutiTripathiImage,
-  },
-  {
-    name: "Sudeeksha",
-    role: "Sophomore Year, IT",
-    email: "sudeeksha.prakash04@gmail.com ",
-    linkedin: "https://www.linkedin.com/in/sudeeksha-sudeeksha-45ba4228b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-    image: sudeekshaImage,
-  },
-  {
-    name: "Suraj Kumar",
-    role: "Sophomore Year, CSE",
-    email: "st12365489@gmail.com ",
-    linkedin: "https://www.linkedin.com/in/suraj-thakur7080933",
-    image: surajKumarImage,
-  },
+    {
+      name: "Anshika Tripathi",
+      role: "Sophomore Year, BBA",
+      email: "anshikaatripathiii@gmail.com ",
+      linkedin: "https://www.linkedin.com/in/anshika-tripathi-421a26265",
+      image: anshikaTripathiImage
+    },
+    {
+      name: "Anushka Chaudhary",
+      role: "Sophomore Year, CSE",
+      email: "chaudharyanushka085@gmail.com ",
+      linkedin: "https://www.linkedin.com/in/anushka-chaudhary-2b371b316/",
+      image: anushkaChaudharyImage,
+    },
+    {
+      name: "Atul Kumar Thakur",
+      role: "Sophomore Year, IT",
+      email: "atulkumarthakur155@gmail.com",
+      linkedin: "https://www.linkedin.com/in/atul1574",
+      image: atulKumarImage,
+    },
+    {
+      name: "Auchitya Kumar Shukla",
+      role: "Sophomore Year, BBA",
+      email: "auchityashukla16@gmail.com",
+      linkedin: "https://www.linkedin.com/in/auchitya-shukla-b6ab252b4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      image: auchityaKumarImage,
+    },
+    {
+      name: "Ayush Sharma",
+      role: "Sophomore Year, IT",
+      email: "ayushsharma172005@gmail.com ",
+      linkedin: "https://www.linkedin.com/in/ayush-sharma-20b516325?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app ",
+      image: ayushSharmaImage,
+    },
+    {
+      name: "Devansh Kumar Yadav",
+      role: "Sophomore Year, CSE",
+      email: " dkyadav020806@gmail.com ",
+      linkedin: "https://www.linkedin.com/in/devansh-kumar-yadav-4a8146329?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app ",
+      image: devanshKumarImage,
+    },
+    {
+      name: "Divej Singh",
+      role: "Sophomore Year, CSE",
+      email: "divejsingh3@gmail.com ",
+      linkedin: "https://www.linkedin.com/in/divej-singh-0b6261326?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      image: divejSinghImage,
+    },
+    {
+      name: "Harsh Verma",
+      role: "Sophomore Year, CSE",
+      email: "verma.harsh7370@gmail.com ",
+      linkedin: "https://www.linkedin.com/in/harsh-verma-07974533b",
+      image: harshVermaImage,
+    },
+    {
+      name: "Jai Kumar Singh",
+      role: "Sophomore Year, CSE",
+      email: "jaikumarsingh1920@gmail.com ",
+      linkedin: "https://www.linkedin.com/in/jai-kumar-singh-9b3152319",
+      image: jaiKumarImage,
+    },
+    {
+      name: "Nikhil Jaiswal",
+      role: "Sophomore Year, IT",
+      email: "nikhiljais9984@gmail.com ",
+      linkedin: "https://www.linkedin.com/in/nikhil-jaiswal-980a1132b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      image: nikhilJaiswalImage,
+    },
+    {
+      name: "Prakhar Shukla",
+      role: "Sophomore Year, CSE",
+      email: "prakharshukla89508@gmail.com ",
+      linkedin: "https://www.linkedin.com/in/prakhar-shukla-22aa10316",
+      image: prakharShuklaImage,
+    },
+    {
+      name: "Prince Sahu",
+      role: "Sophomore Year, CSE",
+      email: "sahuprinceguru@gmail.com ",
+      linkedin: "https://linkedin.com/in/prince-sahu-552382326/ ",
+      image: princeSahuImage,
+    },
+    {
+      name: "Priya Singh",
+      role: "Sophomore Year, CSE",
+      email: "singhshruti4131@gmail.com ",
+      linkedin: "https://www.linkedin.com/in/priya-singh-393bb82b7",
+      image: priyaSinghImage,
+    },
 
-  // --- newly added members from latest sheet ---
-  {
-    name: "Sundaram Dubey",
-    role: "Freshman Year, IT",
-    email: "2025071161@mmmut.ac.in",
-    linkedin: "https://www.linkedin.com/in/sundaram-dubey-a563a3378?utm_source=share_via&utm_content=profile&utm_medium=member_android",
-    image: sundaramDubeyImage,
-  },
-  {
-    name: "Deepak Shivhare",
-    role: "Freshman Year, IT",
-    email: "dk23107575@gmail.com",
-    linkedin: "https://www.linkedin.com/in/deepak-shivhare-443333381?utm_source=share_via&utm_content=profile&utm_medium=member_android",
-    image: deepakShivhareImage,
-  },
-  {
-    name: "Aashish Kumar",
-    role: "Freshman Year, CSE",
-    email: "2025021301@mmmut.ac.in",
-    linkedin: "https://www.linkedin.com/in/theaashishkumar/",
-    image: aashishKumarImage,
-  },
-  {
-    name: "Aditi",
-    role: "Freshman Year, CSE",
-    email: "a40163814@gmail.com",
-    linkedin: "https://www.linkedin.com/in/aditi-dwivedi-268968380?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-    image: aditiDwivediImage,
-  },
-  {
-    name: "Ritisha Raghuvanshi",
-    role: "Freshman Year, CSE",
-    email: "ritisharaghuvanshi95@gmail.com",
-    linkedin: "https://www.linkedin.com/in/ritisha-raghuvanshi-3612a3379?utm_source=share_via&utm_content=profile&utm_medium=member_android",
-    image: ritishaImage,
-  },
-  {
-    name: "Ankit Kumar",
-    role: "Freshman Year, CSE",
-    email: "ankitkumarvns222@gmail.com",
-    linkedin: "https://www.linkedin.com/in/ankit-kumar-228435380/",
-    image: ankitKumarImage,
-  },
-  {
-    name: "Saumyjeet Kumar",
-    role: "Freshman Year, CSE",
-    email: "2025021256@mmmut.ac.in",
-    linkedin: "https://www.linkedin.com/in/saumyjeet-kumar-pandey-602a51362/",
-    image: saumyjeetKumarImage,
-  },
-  {
-    name: "Anuradha Srivastava",
-    role: "Freshman Year, IT",
-    email: "srivastavaanu7922@gmail.com",
-    linkedin: "https://www.linkedin.com/in/anuradha-srivastava-514465378?utm_source=share_via&utm_content=profile&utm_medium=member_android",
-    image: anuradhaSrivastavaImage,
-  },
-  {
-    name: "Khushi Patel",
-    role: "Freshman Year, IT",
-    email: "khushiipatel657@gmail.com",
-    linkedin: "https://www.linkedin.com/in/khushi-patel-160462378?utm_source=share_via&utm_content=profile&utm_medium=member_android",
-    image: khushiPatelImage,
-  },
-  {
-    name: "Ansh Yadav",
-    role: "Freshman Year, CSE",
-    email: "anshyadav9709@gmail.com",
-    linkedin: "https://www.linkedin.com/in/ansh-yadav-615164388/",
-    image: anshYadavImage,
-  },
-  {
-    name: "Himanshu Govind Rao",
-    role: "Freshman Year, CSE",
-    email: "2025021228@mmmut.ac.in",
-    linkedin: "https://www.linkedin.com/in/himanshu-govind-rao-4a79aa368/",
-    image: himanshuGovindRaoImage,
-  },
-  {
-    name: "Arpita Mishra",
-    role: "Freshman Year, ME",
-    email: "vaibhavarpita987@gmail.com",
-    linkedin: "https://www.linkedin.com/in/arpita-mishra-3051a8378?utm_source=share_via&utm_content=profile&utm_medium=member_android",
-    image: arpitaMishraImage,
-  },
-  {
-    name: "Pradumna Manu",
-    role: "Freshman Year, BBA",
-    email: "pradumanmanu@gmail.com",
-    linkedin: "https://www.linkedin.com/in/pradumna-manu-8595643b6",
-    image: pradumnaManuImage,
-  },
-  {
-    name: "Vinit Kumar",
-    role: "Freshman Year, IT",
-    email: "2025071166@mmmut.ac.in",
-    linkedin: "https://www.linkedin.com/in/vinitkumar491/",
-    image: vinitKumarImage,
-  },
-  {
-    name: "Aditya Gupta",
-    role: "Freshman Year, CSE",
-    email: "guptaaditya002006@gmail.com",
-    linkedin: "https://www.linkedin.com/in/aditya-gupta-a734ba377/",
-    image: adityaGuptaImage,
-  },
-  {
-    name: "Piyush Kumar",
-    role: "Freshman Year, ECE",
-    email: "pk1747968@gmail.com",
-    linkedin: "https://www.linkedin.com/in/piyush-kumar-b46306391?utm_source=share_via&utm_content=profile&utm_medium=member_android",
-    image: piyushKumarImage,
-  },
-  {
-    name: "Himanshu Maurya",
-    role: "Freshman Year, IT",
-    email: "hm3997353@gmail.com",
-    linkedin: "https://linkedin.com/in/himanshumaurya29",
-    image: himanshuMauryaImage,
-  },
-  {
-    name: "Sunidhi Chaurasia",
-    role: "Freshman Year, ECE",
-    email: "sunidhich108446@gmail.com",
-    linkedin: "https://www.linkedin.com/in/sunidhi-chaurasia-0758bb378",
-    image: sunidhiChaurasiaImage,
-  },
-  {
-    name: "Sakshi Rana",
-    role: "Freshman Year, CSE",
-    email: "sakshi9696rana@gmail.com",
-    linkedin: "https://www.linkedin.com/in/sakshi-rana-94554a377?utm_source=share_via&utm_content=profile&utm_medium=member_android",
-    image: sakshiRanaImage,
-  },
-  {
-    name: "Varsha Rani",
-    role: "Freshman Year, CSE",
-    email: "vr1879124@gmail.com",
-    linkedin: "https://www.linkedin.com/in/varsha-rani-81007a36a?utm_source=share_via&utm_content=profile&utm_medium=member_android",
-    image: varshaRaniImage,
-  },
-  {
-    name: "Aditya Yadav",
-    role: "Freshman Year, IT",
-    email: "adityaanadi13@gmail.com",
-    linkedin: "https://www.linkedin.com/in/aditya-yadav-90874937b?utm_source=share_via&utm_content=profile&utm_medium=member_android",
-    image: adityaYadavImage,
-  },
-  {
-    name: "Rishiraj Kasaudhan",
-    role: "Freshman Year, BBA",
-    email: "rishirajkasaudhan5705@gmail.com",
-    linkedin: "https://www.linkedin.com/in/rishi-raj-kasaudhan-6615343a8",
-    image: rishirajImage,
-    imagePosition: "object-top",
-  },
+    {
+      name: "Rishi",
+      role: "Sophomore Year, IT",
+      email: "rishidiwakar925@gmail.com",
+      linkedin: "https://www.linkedin.com/in/rishi-diwakar-a87b86263/",
+      image: rishiImage,
+    },
+    {
+      name: "Rohan Jaiswal",
+      role: "Sophomore Year, CSE",
+      email: "rohanjaiswal611@gmail.com ",
+      linkedin: " https://www.linkedin.com/in/rohan-jaiswal-807338328?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      image: rohanJaiswalImage,
+    },
+    {
+      name: "Sameer Singh Chauhan",
+      role: "Sophomore Year, CSE",
+      email: " itx.sameersinghchauhan@gmail.com",
+      linkedin: "https://www.linkedin.com/in/sameer-singh-chauhan-606992356",
+      image: sameerChauhanImage,
+    },
+    {
+      name: "Stuti Tripathi",
+      role: "Sophomore Year, CSE",
+      email: "stuticse28@gmail.com ",
+      linkedin: "https://www.linkedin.com/in/stuti-tripathi-534440328",
+      image: stutiTripathiImage,
+    },
+    {
+      name: "Sudeeksha",
+      role: "Sophomore Year, IT",
+      email: "sudeeksha.prakash04@gmail.com ",
+      linkedin: "https://www.linkedin.com/in/sudeeksha-sudeeksha-45ba4228b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      image: sudeekshaImage,
+    },
+    {
+      name: "Suraj Kumar",
+      role: "Sophomore Year, CSE",
+      email: "st12365489@gmail.com ",
+      linkedin: "https://www.linkedin.com/in/suraj-thakur7080933",
+      image: surajKumarImage,
+    },
+
+    // --- sophomore members from latest sheet ---
+    {
+      name: "Sundaram Dubey",
+      role: "Freshman Year, IT",
+      email: "2025071161@mmmut.ac.in",
+      linkedin: "https://www.linkedin.com/in/sundaram-dubey-a563a3378?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+      image: sundaramDubeyImage,
+    },
+    {
+      name: "Deepak Shivhare",
+      role: "Freshman Year, IT",
+      email: "dk23107575@gmail.com",
+      linkedin: "https://www.linkedin.com/in/deepak-shivhare-443333381?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+      image: deepakShivhareImage,
+    },
+    {
+      name: "Aashish Kumar",
+      role: "Freshman Year, CSE",
+      email: "2025021301@mmmut.ac.in",
+      linkedin: "https://www.linkedin.com/in/theaashishkumar/",
+      image: aashishKumarImage,
+    },
+
+    {
+      name: "Ritisha Raghuvanshi",
+      role: "Freshman Year, CSE",
+      email: "ritisharaghuvanshi95@gmail.com",
+      linkedin: "https://www.linkedin.com/in/ritisha-raghuvanshi-3612a3379?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+      image: ritishaImage,
+    },
+    {
+      name: "Ankit Kumar",
+      role: "Freshman Year, CSE",
+      email: "ankitkumarvns222@gmail.com",
+      linkedin: "https://www.linkedin.com/in/ankit-kumar-228435380/",
+      image: ankitKumarImage,
+    },
+    {
+      name: "Saumyjeet Kumar",
+      role: "Freshman Year, CSE",
+      email: "2025021256@mmmut.ac.in",
+      linkedin: "https://www.linkedin.com/in/saumyjeet-kumar-pandey-602a51362/",
+      image: saumyjeetKumarImage,
+    },
+    {
+      name: "Anuradha Srivastava",
+      role: "Freshman Year, IT",
+      email: "srivastavaanu7922@gmail.com",
+      linkedin: "https://www.linkedin.com/in/anuradha-srivastava-514465378?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+      image: anuradhaSrivastavaImage,
+    },
+    {
+      name: "Khushi Patel",
+      role: "Freshman Year, IT",
+      email: "khushiipatel657@gmail.com",
+      linkedin: "https://www.linkedin.com/in/khushi-patel-160462378?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+      image: khushiPatelImage,
+    },
+    {
+      name: "Ansh Yadav",
+      role: "Freshman Year, CSE",
+      email: "anshyadav9709@gmail.com",
+      linkedin: "https://www.linkedin.com/in/ansh-yadav-615164388/",
+      image: anshYadavImage,
+    },
+
+    {
+      name: "Arpita Mishra",
+      role: "Freshman Year, ME",
+      email: "vaibhavarpita987@gmail.com",
+      linkedin: "https://www.linkedin.com/in/arpita-mishra-3051a8378?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+      image: arpitaMishraImage,
+    },
+    {
+      name: "Pradumna Manu",
+      role: "Freshman Year, BBA",
+      email: "pradumanmanu@gmail.com",
+      linkedin: "https://www.linkedin.com/in/pradumna-manu-8595643b6",
+      image: pradumnaManuImage,
+    },
+    {
+      name: "Vinit Kumar",
+      role: "Freshman Year, IT",
+      email: "2025071166@mmmut.ac.in",
+      linkedin: "https://www.linkedin.com/in/vinitkumar491/",
+      image: vinitKumarImage,
+    },
+    {
+      name: "Aditya Gupta",
+      role: "Freshman Year, CSE",
+      email: "guptaaditya002006@gmail.com",
+      linkedin: "https://www.linkedin.com/in/aditya-gupta-a734ba377/",
+      image: adityaGuptaImage,
+    },
+    {
+      name: "Piyush Kumar",
+      role: "Freshman Year, ECE",
+      email: "pk1747968@gmail.com",
+      linkedin: "https://www.linkedin.com/in/piyush-kumar-b46306391?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+      image: piyushKumarImage,
+    },
+    {
+      name: "Himanshu Maurya",
+      role: "Freshman Year, IT",
+      email: "hm3997353@gmail.com",
+      linkedin: "https://linkedin.com/in/himanshumaurya29",
+      image: himanshuMauryaImage,
+    },
+    
+    {
+      name: "Sakshi Rana",
+      role: "Freshman Year, CSE",
+      email: "sakshi9696rana@gmail.com",
+      linkedin: "https://www.linkedin.com/in/sakshi-rana-94554a377?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+      image: sakshiRanaImage,
+    },
+
+    {
+      name: "Aditya Yadav",
+      role: "Freshman Year, IT",
+      email: "adityaanadi13@gmail.com",
+      linkedin: "https://www.linkedin.com/in/aditya-yadav-90874937b?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+      image: adityaYadavImage,
+    },
+    {
+      name: "Rishiraj Kasaudhan",
+      role: "Freshman Year, BBA",
+      email: "rishirajkasaudhan5705@gmail.com",
+      linkedin: "https://www.linkedin.com/in/rishi-raj-kasaudhan-6615343a8",
+      image: rishirajImage,
+      imagePosition: "object-top",
+    },
   ].filter(member => member.name && member.role); // Filter out any incomplete entries
 
   // helper to remove year words from role for display
@@ -544,7 +520,7 @@ const Team: React.FC = () => {
     "Aditya Yadav",
     "Rishiraj Kasaudhan",
   ]);
-  
+
   // split into groups and keep each section in ascending order
   const firstYearMembers = teamMembers
     .filter(m => firstYearNames.has(m.name))
@@ -555,20 +531,20 @@ const Team: React.FC = () => {
   const preFinalMembers = teamMembers
     .filter(m => !/Sophomore/i.test(m.role) && !firstYearNames.has(m.name))
     .sort(sortByNameAsc);
- 
+
   const president: TeamMember = {
     name: "Shivam Rai",
     role: "CSE, Final Year",
     description: "Sets strategic vision and builds partnerships; leads cross-team initiatives and fosters innovation across the society.",
     email: "president@flux.edu",
-    linkedin: "https://www.linkedin.com/in/shivam-rai-a64b84298/", 
+    linkedin: "https://www.linkedin.com/in/shivam-rai-a64b84298/",
     image: presidentImage || defaultImage
   };
- 
+
   return (
     <div className="min-h-screen bg-black">
       <div className="h-16 md:h-20"></div>
-      
+
       <section className="pt-12 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Main Header */}
@@ -611,7 +587,7 @@ const Team: React.FC = () => {
           <div className="mb-10">
             <div className="flex items-center justify-center gap-4 mb-8">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#6CFFF7]/50 to-transparent"></div>
-              <h2 className="text-2xl md:text-3xl font-bold text-white">Pre-Final Year</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-white">Final Year</h2>
               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#6CFFF7]/50 to-transparent"></div>
             </div>
           </div>
@@ -631,15 +607,15 @@ const Team: React.FC = () => {
               </div>
             ))}
           </div>
-           
-           {/* Team Sophomore Year */}
-           <div className="mt-14 mb-6">
-             <div className="flex items-center justify-center gap-4 mb-8">
-               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
-               <h2 className="text-2xl md:text-3xl font-bold text-white">Sophomore Year</h2>
-               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
-             </div>
-           </div>
+
+          {/* Team Sophomore Year */}
+          <div className="mt-14 mb-6">
+            <div className="flex items-center justify-center gap-4 mb-8">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
+              <h2 className="text-2xl md:text-3xl font-bold text-white">Pre-Final Year</h2>
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
+            </div>
+          </div>
           <div className="flex flex-wrap justify-center gap-6 lg:gap-8">
             {sophomoreMembers.map((member: TeamMember, index: number) => {
               const branch = (member.role || "").split(",").pop()?.trim() || cleanRole(member.role);
@@ -663,7 +639,7 @@ const Team: React.FC = () => {
           <div className="mt-14 mb-6">
             <div className="flex items-center justify-center gap-4 mb-8">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
-              <h2 className="text-2xl md:text-3xl font-bold text-white">Freshman Year</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-white">Sophomore Year</h2>
               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
             </div>
           </div>
@@ -689,7 +665,7 @@ const Team: React.FC = () => {
       </section>
 
       <div className="h-16 md:h-20"></div>
-      
+
       <style dangerouslySetInnerHTML={{
         __html: `
           @keyframes float {

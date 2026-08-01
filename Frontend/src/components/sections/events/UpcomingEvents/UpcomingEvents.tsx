@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Calendar, MapPin, Users, ArrowRight, Lightbulb, Award } from 'lucide-react';
-import dimitrios from '@/assets/images/dimitrios.png';
-import ideathon from '@/assets/images/ideathon.jpg';
-import orientation from '@/assets/images/orientation_2.jpg';
+import dimitrios from '@/assets/images/dimitrios.webp';
+import ideathon from '@/assets/images/ideathon.webp';
+import orientation from '@/assets/images/orientation_2.webp';
 const RAW_API_BASE = (import.meta.env as any).VITE_API_BASE_URL ?? (import.meta.env as any).VITE_API_BASE ?? '/api';
 const API_BASE = (RAW_API_BASE || '/api').replace(/\/+$/, ''); // remove trailing slash
 
-export interface UpcomingEventsSectionProps {}
+export interface UpcomingEventsSectionProps { }
 
 export interface EventProps {
   id: number;
@@ -27,10 +27,10 @@ export interface EventProps {
 const events: EventProps[] = [
   {
     id: 1,
-    title: 'Induction 2026',
+    title: 'Robokriti 2026',
     date: 'Coming Soon',
     description:
-      "The Grand Level Induction of Flux is set to welcome a new wave of innovators and tech enthusiasts. Join us to explore Flux's domains, exciting projects, and opportunities to collaborate, innovate, and shape the future of technology.",
+      "Robokriti is a robotics competition event in which participants design, build, and program robots to perform specific tasks, navigate obstacles, or compete according to predefined rules. It tests creativity, engineering, programming, and problem-solving skills.",
     imageUrl: orientation,
     isUpcoming: true,
     location: 'MMMUT Gorakhpur',
@@ -56,11 +56,11 @@ const BigWhiteBulb = () => {
         animate={{
           boxShadow: isHovered
             ? [
-                '0 0 30px rgba(255, 255, 255, 0.3)',
-                '0 0 60px rgba(255, 255, 255, 0.5)',
-                '0 0 90px rgba(255, 255, 255, 0.4)',
-                '0 0 30px rgba(255, 255, 255, 0.3)'
-              ]
+              '0 0 30px rgba(255, 255, 255, 0.3)',
+              '0 0 60px rgba(255, 255, 255, 0.5)',
+              '0 0 90px rgba(255, 255, 255, 0.4)',
+              '0 0 30px rgba(255, 255, 255, 0.3)'
+            ]
             : ['0 0 15px rgba(255, 255, 255, 0.1)']
         }}
         transition={{
@@ -171,7 +171,7 @@ const BigWhiteBulb = () => {
   );
 };
 
-const EventCard = ({ event, index, showRegister }: { event: EventProps; index: number; showRegister?: boolean }) => {
+const EventCard: React.FC<{ event: EventProps; index: number; showRegister?: boolean }> = ({ event, index, showRegister }) => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
 
@@ -303,8 +303,8 @@ const EventCard = ({ event, index, showRegister }: { event: EventProps; index: n
         <motion.div
           className="absolute inset-0 rounded-3xl"
           animate={{
-            background: isHovered 
-              ? 'linear-gradient(45deg, rgba(74, 222, 128, 0.3), rgba(34, 197, 94, 0.2), rgba(74, 222, 128, 0.3))' 
+            background: isHovered
+              ? 'linear-gradient(45deg, rgba(74, 222, 128, 0.3), rgba(34, 197, 94, 0.2), rgba(74, 222, 128, 0.3))'
               : 'transparent'
           }}
           transition={{ duration: 0.5 }}
@@ -364,7 +364,7 @@ const EventCard = ({ event, index, showRegister }: { event: EventProps; index: n
               <div className="text-gray-300 text-base leading-relaxed whitespace-pre-line">
                 {event.description}
               </div>
-              
+
               {/* View Detail button for Ideathon */}
               {event.title?.toLowerCase().includes('ideathon') && (
                 <button
@@ -378,7 +378,7 @@ const EventCard = ({ event, index, showRegister }: { event: EventProps; index: n
 
               {showRegister && (
                 <div className="pt-2">
-                  {event.title === 'Induction 2026' ? (
+                  {event.title === 'Robokriti 2026' ? (
                     <button
                       className="inline-flex items-center gap-2 px-4 py-2 bg-gray-500 cursor-not-allowed text-white rounded-full font-semibold shadow-lg"
                       disabled
@@ -528,11 +528,11 @@ const UpcomingEvents: React.FC<UpcomingEventsSectionProps> = () => {
         >
           <div className="flex items-center justify-center gap-8 mb-6">
             <BigWhiteBulb />
-            <motion.div 
+            <motion.div
               className="relative cursor-pointer"
               initial={{ filter: "blur(8px)", opacity: 0.3 }}
               animate={{ filter: "blur(0px)", opacity: 1 }}
-              transition={{ 
+              transition={{
                 duration: 2,
                 delay: 0.8,
                 ease: "easeOut"

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "@/styles/globals.css";
-import favicon from "@/assets/images/favicon.png"; // ✅ Import favicon
+import favicon from "@/assets/images/favicon.webp"; // ✅ Import favicon
 
 // Inject favicon dynamically
 const link = document.createElement("link");
