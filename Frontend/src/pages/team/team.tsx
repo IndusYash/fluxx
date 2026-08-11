@@ -14,21 +14,21 @@ import satvikSirImage from "../../assets/images/SatvikSir.webp";
 import presidentImage from "../../assets/images/president.webp";
 
 // Administration
-import shivammishraImage from "../../assets/images/shivamPic.webp";
+import shivammishraImage from "../../assets/images/Shivam_Mishra.jpeg";
 import ysvImage         from "../../assets/images/ysv.webp";
 import Aviral           from "../../assets/images/Aviral.webp";
 import threeMImage      from "../../assets/images/3m.webp";
 import Shubham          from "../../assets/images/Shubham.webp";
 import jaiKumarImage    from "../../assets/images/JaiKumar.webp";
-import priyaSinghImage  from "../../assets/images/PriyaSingh.webp";
-import princeSahuImage  from "../../assets/images/PrinceSahu.webp";
-import sudeekshaImage   from "../../assets/images/Sudeeksha.webp";
+import priyaSinghImage  from "../../assets/images/Priya.jpeg";
+import princeSahuImage  from "../../assets/images/Prince.jpeg";
+import sudeekshaImage   from "../../assets/images/Sudeeksha.jpeg";
 
 // Development
 import aryanImage    from "../../assets/images/Aryan.webp";
 import Prad          from "../../assets/images/Pradyuman.webp";
-import atulKumarImage from "../../assets/images/AtulThakur.webp";
-import rishiImage    from "../../assets/images/Rishi.webp";
+import atulKumarImage from "../../assets/images/Atul.jpeg";
+import rishiImage    from "../../assets/images/Rishi.jpeg";
 
 // Design
 import Ananya             from "../../assets/images/Ananya.webp";
@@ -43,7 +43,7 @@ import surajKumarImage from "../../assets/images/SurajKumar .webp";
 // Algorithms
 import ashishImage       from "../../assets/images/ashish.webp";
 import shivamsinghImage  from "../../assets/images/shivamsingh.webp";
-import devanshKumarImage from "../../assets/images/DevanshKumar.webp";
+import devanshKumarImage from "../../assets/images/Devansh.jpeg";
 import prakharShuklaImage from "../../assets/images/PrakharShukla.webp";
 import rohanJaiswalImage  from "../../assets/images/RohanJaiswal .webp";
 import sameerChauhanImage from "../../assets/images/SameerSingh.webp";
@@ -182,7 +182,7 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
 
   const allMembers: Member[] = [
     // ── Alumni ──
-    { name: 'Shivam Rai', role: 'President Alumni', branch: 'CSE', batch: "'26", email: 'president@flux.edu', linkedin: 'https://www.linkedin.com/in/shivam-rai-a64b84298/', image: presidentImage, color: C.alumni },
+    { name: 'Shivam Rai', role: 'President 2025-26', branch: 'CSE', batch: "'26", email: 'president@flux.edu', linkedin: 'https://www.linkedin.com/in/shivam-rai-a64b84298/', image: presidentImage, color: C.alumni },
 
     // ── Batch 2027 (Final Year) ──
     { name: 'Shivam Mishra', role: 'President', branch: 'CSE', batch: "'27", email: 'shivammishra01329@gmail.com', linkedin: 'https://www.linkedin.com/in/shiv9918', image: shivammishraImage, color: C.admin },
