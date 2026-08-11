@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Mail, Linkedin, Users
 } from 'lucide-react';
@@ -120,127 +120,62 @@ const MemberCard: React.FC<{ m: Member; idx: number }> = ({ m, idx }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 22 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.42, delay: (idx % 4) * 0.065 }}
-      className="group relative"
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 15 }}
+      transition={{ duration: 0.3, delay: (idx % 10) * 0.05 }}
+      className="group relative flex justify-center w-full"
     >
-      {/* Decorative connection line (desktop only, just visual flair) */}
-      <div className="absolute -top-4 left-1/2 w-[1px] h-4 bg-gradient-to-t from-white/10 to-transparent hidden lg:block" />
-
       <div
-        className="relative rounded-[20px] p-5 h-full flex flex-col items-center text-center
-          transition-all duration-300 hover:-translate-y-2"
+        className="w-full max-w-[280px] bg-[#111312] rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1"
         style={{
-          background: 'linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)',
-          border: '1px solid rgba(255,255,255,0.08)',
-          boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
-          backdropFilter: 'blur(10px)'
-        }}
-        onMouseEnter={e => {
-          const el = e.currentTarget as HTMLDivElement;
-          el.style.border = `1px solid ${color}66`;
-          el.style.boxShadow = `0 12px 40px ${color}20`;
-          el.style.background = `linear-gradient(180deg, ${color}10 0%, rgba(255,255,255,0.01) 100%)`;
-        }}
-        onMouseLeave={e => {
-          const el = e.currentTarget as HTMLDivElement;
-          el.style.border = '1px solid rgba(255,255,255,0.08)';
-          el.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)';
-          el.style.background = 'linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)';
+          border: '1px solid rgba(255,255,255,0.06)',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
         }}
       >
-        {/* Photo */}
-        <div className="relative mb-5">
-          <div className="absolute inset-0 rounded-full blur-md opacity-20 group-hover:opacity-60 transition-opacity duration-300" style={{ backgroundColor: color }} />
-          <img
-            src={src}
-            alt={m.name}
-            className={`relative w-[96px] h-[96px] rounded-full object-cover ${m.imagePosition ?? 'object-center'}
-              transition-transform duration-500 group-hover:scale-110`}
-            style={{ border: `2px solid ${color}42`, padding: '2px', background: '#000' }}
-            onError={() => setErr(true)}
-          />
-        </div>
+        {/* Top Gradient Border */}
+        <div className="h-1.5 w-full" style={{ background: `linear-gradient(90deg, ${color}, transparent)` }} />
 
-        {/* Text */}
-        <h3 className="text-white font-bold text-[14px] leading-snug mb-1 line-clamp-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-          {m.name}
-        </h3>
-        <p className="text-[11px] font-bold mb-1.5 leading-tight line-clamp-2 tracking-wide uppercase" style={{ color }}>
-          {m.role}
-        </p>
-        <p className="text-gray-400/80 text-[10px] font-medium tracking-widest uppercase mb-4">
-          {m.branch} · {m.batch}
-        </p>
+        <div className="p-5 flex flex-col items-center text-center h-full">
+          {/* Photo (Portrait) */}
+          <div className="w-full aspect-[3/4] mb-5 overflow-hidden rounded-xl bg-black/50 relative border border-white/5">
+            <img
+              src={src}
+              alt={m.name}
+              className={`w-full h-full object-cover ${m.imagePosition ?? 'object-center'} transition-transform duration-700 group-hover:scale-110`}
+              onError={() => setErr(true)}
+            />
+          </div>
 
-        {/* Social Links */}
-        <div className="flex gap-2.5 mt-auto">
-          {m.email && (
-            <a
-              href={`mailto:${m.email}`}
-              aria-label={`Email ${m.name}`}
-              className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 bg-white/5 hover:bg-white/10"
-              style={{ color: '#fff' }}
-            >
-              <Mail className="w-4 h-4" />
-            </a>
-          )}
-          {m.linkedin && (
-            <a
-              href={m.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${m.name} on LinkedIn`}
-              className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 bg-white/5 hover:bg-white/10"
-              style={{ color: '#fff' }}
-            >
-              <Linkedin className="w-4 h-4" />
-            </a>
-          )}
+          {/* Text */}
+          <h3 className="text-white font-bold text-xl mb-1.5 tracking-wide line-clamp-1" style={{ fontFamily: "'Playfair Display', serif" }}>
+            {m.name}
+          </h3>
+          <p className="text-[11px] font-bold mb-1 leading-tight tracking-wider uppercase" style={{ color }}>
+            {m.role}
+          </p>
+          <p className="text-gray-500 text-[10px] font-semibold tracking-[0.2em] uppercase mb-5">
+            {m.branch}
+          </p>
+
+          {/* Social Links */}
+          <div className="flex gap-4 mt-auto">
+            {m.email && (
+              <a href={`mailto:${m.email}`} aria-label="Email" className="text-gray-500 hover:text-white transition-colors">
+                <Mail size={15} />
+              </a>
+            )}
+            {m.linkedin && (
+              <a href={m.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-gray-500 hover:text-white transition-colors">
+                <Linkedin size={15} />
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </motion.div>
   );
 };
-
-// ─── YearHeader ────────────────────────────────────────────────────────────────
-const YearHeader: React.FC<{ title: string; subtitle: string; color: string }> = ({ title, subtitle, color }) => (
-  <div className="mb-12 text-center mt-28 first:mt-0 relative">
-    {/* Decorative line behind header */}
-    <div className="absolute top-1/2 left-0 w-full h-[1px] -translate-y-1/2 z-0 hidden sm:block" 
-         style={{ background: `linear-gradient(90deg, transparent 0%, ${color}30 50%, transparent 100%)` }} />
-    
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="inline-flex flex-col items-center justify-center bg-[#070B09] px-6 sm:px-10 relative z-10"
-    >
-      <h2
-        className="text-3xl sm:text-4xl md:text-5xl font-black text-white uppercase tracking-widest whitespace-nowrap mb-2"
-        style={{ fontFamily: "'Orbitron', 'Space Grotesk', sans-serif" }}
-      >
-        <span className="text-transparent bg-clip-text" style={{ backgroundImage: `linear-gradient(to right, #fff, ${color})` }}>
-          {title}
-        </span>
-      </h2>
-      <p className="text-gray-400 text-xs sm:text-sm tracking-[0.3em] uppercase font-bold" style={{ color: `${color}cc` }}>
-        {subtitle}
-      </p>
-    </motion.div>
-  </div>
-);
-
-
-// ─── ResponsiveGrid ────────────────────────────────────────────────────────────
-const Grid: React.FC<{ children: React.ReactNode; cols?: string }> = ({
-  children,
-  cols = 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4',
-}) => (
-  <div className={`grid ${cols} gap-5 sm:gap-6 lg:gap-8`}>{children}</div>
-);
 
 // ─── Main Component ────────────────────────────────────────────────────────────
 const Team: React.FC<{ isMobile?: boolean }> = () => {
@@ -306,146 +241,142 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
     { name: 'Vinit Kumar', role: 'Executive Member', branch: 'IT', batch: "'29", email: '2025071166@mmmut.ac.in', linkedin: 'https://www.linkedin.com/in/vinitkumar491/', image: vinitKumarImage, color: C.exec },
   ];
 
-  const facultyMembers = [
-    { name: 'Dr. Shwet Ketu', role: 'Faculty Co-ordinator', image: shwetSirImage },
-    { name: 'Dr. Satvik Vats', role: 'Faculty Co-ordinator', image: satvikSirImage },
+  const facultyMembers: Member[] = [
+    { name: 'Dr. Shwet Ketu', role: 'Faculty Co-ordinator', branch: '', batch: '', email: '', linkedin: '', image: shwetSirImage, color: '#a78bfa' },
+    { name: 'Dr. Satvik Vats', role: 'Faculty Co-ordinator', branch: '', batch: '', email: '', linkedin: '', image: satvikSirImage, color: '#34d399' },
   ];
-  const facultyGradients = [
-    'linear-gradient(135deg, rgba(124,58,237,0.1), rgba(37,99,235,0.05))',
-    'linear-gradient(135deg, rgba(14,165,233,0.1), rgba(59,130,246,0.05))',
+
+  // Section header component
+  const SectionHeader: React.FC<{ title: string; color: string; id: string }> = ({ title, color, id }) => (
+    <motion.div
+      id={id}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="text-center mb-12 mt-24 first:mt-0 scroll-mt-28"
+    >
+      <div className="flex items-center justify-center gap-6 mb-4">
+        <div className="h-[1px] w-12 sm:w-24" style={{ background: `linear-gradient(90deg, transparent, ${color})` }} />
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white" style={{ fontFamily: "'Playfair Display', serif" }}>
+          {title}
+        </h2>
+        <div className="h-[1px] w-12 sm:w-24" style={{ background: `linear-gradient(90deg, ${color}, transparent)` }} />
+      </div>
+    </motion.div>
+  );
+
+  const navButtons = [
+    { id: 'alumni', label: 'Alumni', batch: "'26", color: '#f59e0b' },
+    { id: 'final', label: 'Final Year', batch: "'27", color: '#4ade80' },
+    { id: 'prefinal', label: 'Pre-Final Year', batch: "'28", color: '#00FFC6' },
+    { id: 'sophomore', label: 'Sophomore Year', batch: "'29", color: '#f472b6' },
   ];
-  const facultyBorders = [
-    'rgba(124,58,237,0.4)',
-    'rgba(14,165,233,0.4)',
+
+  // null = default (show all present team on scroll), string = show only that section
+  const [activeFilter, setActiveFilter] = useState<string | null>(null);
+
+  const handleNav = (id: string) => {
+    setActiveFilter(prev => prev === id ? null : id);
+  };
+
+  // Sections to render
+  const sections = [
+    { id: 'alumni', title: 'Alumni', batch: "'26", color: '#f59e0b' },
+    { id: 'final', title: 'Final Year', batch: "'27", color: '#4ade80' },
+    { id: 'prefinal', title: 'Pre-Final Year', batch: "'28", color: '#00FFC6' },
+    { id: 'sophomore', title: 'Sophomore Year', batch: "'29", color: '#f472b6' },
   ];
+
+  // Default (no filter): show final, prefinal, sophomore. With filter: show only that one.
+  const visibleSections = activeFilter
+    ? sections.filter(s => s.id === activeFilter)
+    : sections.filter(s => s.id !== 'alumni');
 
   return (
-    <div className="min-h-screen bg-[#070B09] relative overflow-hidden select-none pb-24">
-      {/* ── Background Glow ───────────────────────────────────────────────────── */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px]
-        bg-[#00FFC6]/5 blur-[120px] pointer-events-none rounded-full" />
-      <div className="absolute top-[40%] right-0 w-[500px] h-[500px]
-        bg-[#a78bfa]/5 blur-[140px] pointer-events-none rounded-full" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px]
-        bg-[#34d399]/5 blur-[150px] pointer-events-none rounded-full" />
+    <div className="min-h-screen bg-[#070B09] relative overflow-hidden select-none pb-24 font-sans">
+      {/* ── Background Elements ──────────────────────────────────────────────── */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#00FFC6]/5 blur-[120px] pointer-events-none rounded-full" />
+      
+      {/* ── Header Area (Editorial Board Style) ─────────────────────────────── */}
+      <section className="pt-32 pb-16 px-4 sm:px-6 relative z-10 text-center flex flex-col items-center">
+        
+        {/* Top Overline */}
+        <div className="flex items-center gap-4 mb-4 opacity-70">
+          <div className="h-[1px] w-8 sm:w-16 bg-white/20" />
+          <span className="text-white/60 text-xs sm:text-sm font-semibold tracking-[0.3em] uppercase">FLUX</span>
+          <div className="h-[1px] w-8 sm:w-16 bg-white/20" />
+        </div>
 
-      {/* ── Background Grid Pattern ───────────────────────────────────────────── */}
-      <div className="absolute inset-0 pointer-events-none opacity-20" 
-           style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
-
-      {/* ── Header ────────────────────────────────────────────────────────────── */}
-      <section className="pt-28 pb-10 px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: -15 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full
-            bg-[#00FFC6]/10 border border-[#00FFC6]/25 text-[#00FFC6]
-            text-xs font-semibold uppercase tracking-widest mb-4 shadow-[0_0_20px_rgba(0,255,198,0.2)]"
+        {/* Main Title */}
+        <h1 
+          className="text-6xl sm:text-7xl lg:text-8xl font-bold text-white mb-6 tracking-tight"
+          style={{ fontFamily: "'Playfair Display', serif" }}
         >
-          <Users size={13} />
-          <span>Core Team</span>
-        </motion.div>
+          Our Team<span className="text-[#00FFC6]">.</span>
+        </h1>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight text-white mb-6"
-          style={{ fontFamily: "'Orbitron', 'Space Grotesk', sans-serif" }}
-        >
-          FLUX <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00FFC6] via-[#6CFFF7] to-[#a78bfa]">
-            LEADERSHIP
-          </span>
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto font-medium"
-        >
-          Meet the visionary minds driving innovation, building cutting-edge solutions, and shaping the tech culture at MMMUT.
-        </motion.p>
+        {/* Subtitle Quote */}
+        <p className="text-gray-400 text-lg sm:text-xl italic max-w-2xl font-light" style={{ fontFamily: "'Playfair Display', serif" }}>
+          "Where innovation meets dedication — the minds shaping the future of tech at MMMUT."
+        </p>
       </section>
 
-      <section className="px-4 sm:px-6 lg:px-8 relative z-10 max-w-[1400px] mx-auto">
-        
-        {/* Central connecting line for desktop view mapping out the hierarchy */}
-        <div className="absolute top-[300px] bottom-[200px] left-1/2 w-[2px] -translate-x-1/2 bg-gradient-to-b from-transparent via-white/5 to-transparent hidden xl:block z-0" />
-
-        {/* ── Faculty Co-ordinators ───────────────────────────────────────── */}
-        <YearHeader title="Faculty Incharge" subtitle="Academic Mentors" color="#7c3aed" />
-        <div className="max-w-2xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10 mb-20 relative z-10">
-          {facultyMembers.map((fac, i) => (
-            <motion.div
-              key={fac.name}
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.48, delay: i * 0.1 }}
-              className="group relative rounded-3xl p-8 text-center transition-all duration-500 hover:-translate-y-2 backdrop-blur-xl"
+      {/* ── Filter Buttons ────────────────────────────────────────────────────── */}
+      <section className="px-4 relative z-10 mb-12 max-w-5xl mx-auto flex flex-wrap justify-center gap-3 sm:gap-4">
+        {navButtons.map(btn => {
+          const isActive = activeFilter === btn.id;
+          return (
+            <button
+              key={btn.id}
+              onClick={() => handleNav(btn.id)}
+              className="relative px-6 sm:px-7 py-2.5 rounded-full text-sm font-bold tracking-wider uppercase transition-all duration-300 hover:scale-105 overflow-hidden"
               style={{
-                background: facultyGradients[i],
-                border: `1px solid ${facultyBorders[i]}`,
-                boxShadow: `0 10px 40px rgba(0,0,0,0.5)`,
+                background: isActive ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.04)',
+                border: isActive ? `1.5px solid ${btn.color}88` : '1.5px solid rgba(255,255,255,0.12)',
+                color: isActive ? '#fff' : 'rgba(255,255,255,0.7)',
+                backdropFilter: 'blur(12px)',
+                boxShadow: isActive ? `0 0 25px ${btn.color}25` : 'none',
+              }}
+              onMouseEnter={e => {
+                const el = e.currentTarget as HTMLButtonElement;
+                el.style.background = 'rgba(255,255,255,0.1)';
+                el.style.borderColor = `${btn.color}66`;
+                el.style.color = '#fff';
+                el.style.boxShadow = `0 0 20px ${btn.color}18`;
+              }}
+              onMouseLeave={e => {
+                const el = e.currentTarget as HTMLButtonElement;
+                el.style.background = isActive ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.04)';
+                el.style.borderColor = isActive ? `${btn.color}88` : 'rgba(255,255,255,0.12)';
+                el.style.color = isActive ? '#fff' : 'rgba(255,255,255,0.7)';
+                el.style.boxShadow = isActive ? `0 0 25px ${btn.color}25` : 'none';
               }}
             >
-              <div className="relative mx-auto w-32 h-32 mb-6">
-                <div className="absolute inset-0 rounded-full blur-xl opacity-30 bg-white" />
-                <img
-                  src={fac.image}
-                  alt={fac.name}
-                  className="relative w-full h-full object-cover rounded-full transition-transform duration-500 group-hover:scale-105"
-                  style={{ border: `3px solid ${facultyBorders[i]}`, padding: '3px', background: '#000' }}
-                />
+              {btn.label}
+            </button>
+          );
+        })}
+      </section>
+
+      {/* ── Members ───────────────────────────────────────────────────────────── */}
+      <section className="px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl mx-auto">
+        {visibleSections.map(sec => {
+          const members = sec.id === 'alumni' ? allMembers.filter(m => m.batch === sec.batch) : allMembers.filter(m => m.batch === sec.batch);
+          return (
+            <div key={sec.id}>
+              <SectionHeader title={sec.title} color={sec.color} id={sec.id} />
+              <div className={`grid gap-8 xl:gap-10 place-items-center mb-16 ${
+                sec.id === 'alumni' 
+                  ? 'grid-cols-1 max-w-xs mx-auto' 
+                  : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+              }`}>
+                {members.map((m, i) => (
+                  <MemberCard key={m.name} m={m} idx={i} />
+                ))}
               </div>
-              <h3 className="text-white font-bold text-xl mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{fac.name}</h3>
-              <p className="text-gray-300 text-sm font-medium tracking-wide uppercase mb-5">{fac.role}</p>
-              <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-[0.2em] text-white bg-white/10 border border-white/20">
-                MMMUT
-              </span>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* ── Alumni ──────────────────────────────────────────────────────── */}
-        <YearHeader title="Alumni" subtitle="Batch of 2026" color={C.alumni} />
-        <div className="max-w-xs mx-auto mb-20 relative z-10">
-          {allMembers.filter(m => m.batch === "'26").map((m, i) => (
-            <MemberCard key={m.name} m={m} idx={i} />
-          ))}
-        </div>
-
-        {/* ── Final Year (2027) ───────────────────────────────────────── */}
-        <YearHeader title="Final Year" subtitle="Batch of 2027" color={C.admin} />
-        <div className="mb-24 relative z-10">
-          <Grid>
-            {allMembers.filter(m => m.batch === "'27").map((m, i) => (
-              <MemberCard key={m.name} m={m} idx={i} />
-            ))}
-          </Grid>
-        </div>
-
-        {/* ── Pre-Final Year (2028) ───────────────────────────────────────── */}
-        <YearHeader title="Pre-Final Year" subtitle="Batch of 2028" color={C.domain} />
-        <div className="mb-24 relative z-10">
-          <Grid>
-            {allMembers.filter(m => m.batch === "'28").map((m, i) => (
-              <MemberCard key={m.name} m={m} idx={i} />
-            ))}
-          </Grid>
-        </div>
-
-        {/* ── Sophomore Year (2029) ────────────────────────────────────────── */}
-        <YearHeader title="Sophomore Year" subtitle="Batch of 2029" color={C.exec} />
-        <div className="mb-24 relative z-10">
-          <Grid>
-            {allMembers.filter(m => m.batch === "'29").map((m, i) => (
-              <MemberCard key={m.name} m={m} idx={i} />
-            ))}
-          </Grid>
-        </div>
-
+            </div>
+          );
+        })}
       </section>
     </div>
   );
