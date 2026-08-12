@@ -12,6 +12,8 @@ import satvikSirImage from "../../assets/images/SatvikSir.webp";
 
 // Alumni
 import presidentImage from "../../assets/images/president.webp";
+import anantImage from "../../assets/images/Anant Mishra.webp";
+import priyaBbaImage from "../../assets/images/Priya Singh.jpg";
 
 // Administration
 import shivammishraImage from "../../assets/images/Shivam_Mishra.jpeg";
@@ -183,6 +185,8 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
   const allMembers: Member[] = [
     // ── Alumni ──
     { name: 'Shivam Rai', role: 'President 2025-26', branch: 'CSE', batch: "'26", email: 'president@flux.edu', linkedin: 'https://www.linkedin.com/in/shivam-rai-a64b84298/', image: presidentImage, color: C.alumni },
+    { name: 'Anant Mishra', role: "BBA'26", branch: '', batch: "'26", email: '', linkedin: '', image: anantImage, color: C.alumni },
+    { name: 'Priya', role: "BBA'26", branch: '', batch: "'26", email: '', linkedin: '', image: priyaBbaImage, color: C.alumni },
 
     // ── Batch 2027 (Final Year) ──
     { name: 'Shivam Mishra', role: 'President', branch: 'CSE', batch: "'27", email: 'shivammishra01329@gmail.com', linkedin: 'https://www.linkedin.com/in/shiv9918', image: shivammishraImage, color: C.admin },
@@ -367,7 +371,7 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
               <SectionHeader title={sec.title} color={sec.color} id={sec.id} />
               <div className={`grid gap-8 xl:gap-10 place-items-center mb-16 ${
                 sec.id === 'alumni' 
-                  ? 'grid-cols-1 max-w-xs mx-auto' 
+                  ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-5xl mx-auto' 
                   : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
               }`}>
                 {members.map((m, i) => (
