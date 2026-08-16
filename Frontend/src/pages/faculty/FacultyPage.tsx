@@ -1,174 +1,85 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import FacultyCard from "./FacultyCard";
 import { underGuidance, facultyCoordinators } from "./facultyData";
+import { motion } from "framer-motion";
 
 const FacultyPage: React.FC = () => {
-  const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
-  const observerRef = useRef<IntersectionObserver | null>(null);
-  const [observerReady, setObserverReady] = useState(false);
-
-  useEffect(() => {
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const id = entry.target.getAttribute('data-card-id');
-            if (id) {
-              setVisibleCards((prev) => new Set(prev).add(id));
-              observerRef.current?.unobserve(entry.target);
-            }
-          }
-        });
-      },
-      { threshold: 0.15, rootMargin: '0px 0px -50px 0px' }
-    );
-
-    setObserverReady(true);
-
-    return () => {
-      observerRef.current?.disconnect();
-    };
-  }, []);
-
-  const cardRef = (element: HTMLDivElement | null, id: string) => {
-    if (element && observerRef.current) {
-      element.setAttribute('data-card-id', id);
-      observerRef.current.observe(element);
-    }
-  };
-
   return (
-    <>
-      <style>
-        {`
-          @keyframes fadeSlideUp {
-            from { 
-              opacity: 0;
-              transform: translateY(30px);
-            }
-            to { 
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
+    <div className="min-h-screen relative overflow-hidden bg-[#070B09] text-white font-sans pb-24">
+      {/* ── Background Elements ──────────────────────────────────────────────── */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#00FFC6]/5 blur-[120px] pointer-events-none rounded-full" />
+      
+      {/* ── Header Area ─────────────────────────────── */}
+      <section className="pt-32 pb-16 px-4 sm:px-6 relative z-10 text-center flex flex-col items-center">
+        {/* Top Overline */}
+        <div className="flex items-center gap-4 mb-4 opacity-70">
+          <div className="h-[1px] w-8 sm:w-16 bg-white/20" />
+          <span className="text-white/60 text-xs sm:text-sm font-semibold tracking-[0.3em] uppercase">FLUX</span>
+          <div className="h-[1px] w-8 sm:w-16 bg-white/20" />
+        </div>
 
-          @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-          }
+        {/* Main Title */}
+        <h1 
+          className="text-6xl sm:text-7xl lg:text-8xl font-bold text-white mb-6 tracking-tight"
+          style={{ fontFamily: "'Playfair Display', serif" }}
+        >
+          Our Mentors<span className="text-[#00FFC6]">.</span>
+        </h1>
 
-          .card-animate {
-            opacity: 1;
-            transform: translateY(0);
-          }
+        {/* Subtitle Quote */}
+        <p className="text-gray-400 text-lg sm:text-xl italic max-w-2xl font-light" style={{ fontFamily: "'Playfair Display', serif" }}>
+          "Leading with excellence, inspiring with vision, and shaping the future of tech at MMMUT."
+        </p>
+      </section>
 
-          .card-animate.observer-ready {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-          }
+      {/* UNDER GUIDANCE SECTION */}
+      {underGuidance.length > 0 && (
+        <section className="relative z-10 py-16 px-4 md:px-8 max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mb-12 text-center"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+              Under Guidance
+            </h2>
+            <div className="w-24 h-1 bg-[#00FFC6]/30 mx-auto mt-4 rounded-full" />
+          </motion.div>
 
-          .card-visible {
-            animation: fadeSlideUp 0.7s ease-out forwards;
-          }
+          <div className="flex justify-center flex-col gap-10 max-w-4xl mx-auto">
+            {underGuidance.map((faculty, index) => (
+              <FacultyCard key={faculty.id} faculty={faculty} idx={index} />
+            ))}
+          </div>
+        </section>
+      )}
 
-          .gradient-text {
-            background-size: 200% auto;
-            animation: gradientShift 3s ease-in-out infinite;
-          }
+      {/* FACULTY COORDINATORS SECTION */}
+      {facultyCoordinators.length > 0 && (
+        <section className="relative z-10 py-16 px-4 md:px-8 max-w-7xl mx-auto mt-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mb-12 text-center"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+              Faculty Coordinators
+            </h2>
+            <div className="w-24 h-1 bg-[#a78bfa]/30 mx-auto mt-4 rounded-full" />
+          </motion.div>
 
-          .faculty-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-          }
-          
-          @media (max-width: 768px) {
-            .faculty-grid {
-              grid-template-columns: 1fr;
-            }
-          }
-        `}
-      </style>
-
-      <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-950 via-slate-900 to-black text-white">
-        
-        {/* UNDER GUIDANCE SECTION */}
-        {underGuidance.length > 0 && (
-          <section className="relative z-10 text-center py-16 px-4 md:px-8">
-            <div className="max-w-6xl mx-auto">
-
-              <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                <span className="inline-block gradient-text bg-gradient-to-r from-blue-400 via-purple-500 to-blue-400 bg-clip-text text-transparent">
-                  UNDER GUIDANCE
-                </span>
-              </h1>
-
-              <p className="text-gray-300 text-lg md:text-xl max-w-3xl mx-auto mb-12">
-                Leading with excellence and inspiring with vision
-              </p>
-
-              <div className="flex justify-center flex-col gap-10">
-                {underGuidance.map((faculty, index) => {
-                  const cardId = `under-guidance-${faculty.id}`;
-                  return (
-                    <div
-                      key={faculty.id}
-                      ref={(el) => cardRef(el, cardId)}
-                      className={`max-w-4xl mx-auto card-animate ${
-                        observerReady ? 'observer-ready' : ''
-                      } ${visibleCards.has(cardId) ? 'card-visible' : ''}`}
-                      style={{ animationDelay: visibleCards.has(cardId) ? `${index * 0.1}s` : '0s' }}
-                    >
-                      <FacultyCard faculty={faculty} />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* FACULTY COORDINATORS SECTION */}
-        {facultyCoordinators.length > 0 && (
-          <section className="relative z-10 text-center py-16 px-4 md:px-8">
-            <div className="max-w-6xl mx-auto">
-
-              <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                <span className="inline-block gradient-text bg-gradient-to-r from-green-400 via-emerald-500 to-green-400 bg-clip-text text-transparent">
-                  FACULTY COORDINATORS
-                </span>
-              </h1>
-
-              <p className="text-gray-300 text-lg md:text-xl max-w-3xl mx-auto mb-12">
-                Meet our distinguished faculty experts
-              </p>
-
-              <div className="faculty-grid">
-                {facultyCoordinators.map((faculty, index) => {
-                  const cardId = `coordinator-${faculty.id}`;
-                  return (
-                    <div
-                      key={faculty.id}
-                      ref={(el) => cardRef(el, cardId)}
-                      className={`card-animate ${
-                        observerReady ? 'observer-ready' : ''
-                      } ${visibleCards.has(cardId) ? 'card-visible' : ''}`}
-                      style={{ animationDelay: visibleCards.has(cardId) ? `${index * 0.08}s` : '0s' }}
-                    >
-                      <FacultyCard faculty={faculty} />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </section>
-        )}
-
-      </div>
-    </>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+            {facultyCoordinators.map((faculty, index) => (
+              <FacultyCard key={faculty.id} faculty={faculty} idx={index} />
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
   );
 };
 

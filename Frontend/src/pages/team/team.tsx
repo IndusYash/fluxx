@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Mail, Linkedin, Users
+  Mail, Linkedin, Users, Award, GraduationCap, Sparkles, ChevronDown
 } from 'lucide-react';
 
 // ─── Image Imports ─────────────────────────────────────────────────────────────
@@ -111,65 +111,345 @@ const C = {
   exec:    '#94a3b8',   // slate
 };
 
-// ─── MemberCard ────────────────────────────────────────────────────────────────
+// ─── Animated Counter Hook ─────────────────────────────────────────────────────
+const useCountUp = (end: number, duration = 1800) => {
+  const [count, setCount] = React.useState(0);
+  const [hasStarted, setHasStarted] = React.useState(false);
+  const ref = React.useRef<HTMLSpanElement>(null);
+
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting && !hasStarted) setHasStarted(true); },
+      { threshold: 0.5 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasStarted]);
+
+  React.useEffect(() => {
+    if (!hasStarted) return;
+    let start = 0;
+    const step = (ts: number) => {
+      if (!start) start = ts;
+      const progress = Math.min((ts - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      setCount(Math.floor(eased * end));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [hasStarted, end, duration]);
+
+  return { count, ref };
+};
+
+// ─── Floating Orb Background ──────────────────────────────────────────────────
+const FloatingOrbs: React.FC = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    {[
+      { top: '5%', left: '8%', size: 400, color: '#00FFC6', delay: 0 },
+      { top: '40%', left: '82%', size: 300, color: '#a78bfa', delay: 2 },
+      { top: '65%', left: '12%', size: 250, color: '#f59e0b', delay: 4 },
+      { top: '20%', left: '55%', size: 220, color: '#f472b6', delay: 1 },
+      { top: '80%', left: '65%', size: 350, color: '#6CFFF7', delay: 3 },
+      { top: '50%', left: '40%', size: 180, color: '#4ade80', delay: 5 },
+    ].map((orb, i) => (
+      <motion.div
+        key={i}
+        className="absolute rounded-full"
+        style={{
+          top: orb.top,
+          left: orb.left,
+          width: orb.size,
+          height: orb.size,
+          background: `radial-gradient(circle, ${orb.color}06 0%, transparent 70%)`,
+          filter: 'blur(80px)',
+        }}
+        animate={{
+          y: [0, -40, 0, 40, 0],
+          x: [0, 25, 0, -25, 0],
+          scale: [1, 1.15, 1, 0.9, 1],
+        }}
+        transition={{
+          duration: 25 + i * 4,
+          repeat: Infinity,
+          ease: 'easeInOut',
+          delay: orb.delay,
+        }}
+      />
+    ))}
+
+    {/* Grid mesh overlay */}
+    <div
+      className="absolute inset-0 opacity-[0.02]"
+      style={{
+        backgroundImage: `
+          linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+        `,
+        backgroundSize: '60px 60px',
+      }}
+    />
+  </div>
+);
+
+// ─── Faculty Card ──────────────────────────────────────────────────────────────
+const FacultyCard: React.FC<{ m: Member; idx: number }> = ({ m, idx }) => {
+  const [err, setErr] = useState(false);
+  const src = !m.image || err
+    ? `https://i.pravatar.cc/300?img=${(idx % 70) + 1}`
+    : m.image;
+  const color = m.color || '#a78bfa';
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40, scale: 0.9 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7, delay: idx * 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className="group relative flex flex-col items-center text-center"
+    >
+      {/* Photo with animated ring */}
+      <div className="relative mb-6">
+        {/* Rotating conic gradient ring */}
+        <motion.div
+          className="absolute -inset-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+          style={{
+            background: `conic-gradient(from 0deg, ${color}, transparent 40%, ${color}80, transparent 80%, ${color})`,
+            filter: 'blur(3px)',
+          }}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+        />
+
+        {/* Shimmer overlay */}
+        <div className="relative w-40 h-40 sm:w-48 sm:h-48 rounded-full overflow-hidden border-2 border-white/10 group-hover:border-white/25 transition-all duration-500">
+          <img
+            src={src}
+            alt={m.name}
+            className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
+            onError={() => setErr(true)}
+          />
+          {/* Shine sweep on hover */}
+          <div
+            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            style={{
+              background: 'linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.12) 45%, transparent 50%)',
+              backgroundSize: '200% 100%',
+              animation: 'shimmer 2s ease-in-out infinite',
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        </div>
+
+        {/* Glow behind photo */}
+        <div
+          className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-40 transition-opacity duration-700 -z-10 blur-xl"
+          style={{ background: color }}
+        />
+      </div>
+
+      {/* Name */}
+      <h3
+        className="text-white font-bold text-xl sm:text-2xl mb-2 tracking-wide group-hover:tracking-wider transition-all duration-500"
+        style={{ fontFamily: "'Playfair Display', serif" }}
+      >
+        {m.name}
+      </h3>
+
+      {/* Role badge */}
+      <span
+        className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider transition-all duration-300 group-hover:scale-105"
+        style={{
+          backgroundColor: `${color}12`,
+          color: color,
+          border: `1px solid ${color}25`,
+          boxShadow: `0 0 0 0 ${color}00`,
+        }}
+        onMouseEnter={(e) => {
+          (e.currentTarget as HTMLSpanElement).style.boxShadow = `0 0 20px ${color}20`;
+        }}
+        onMouseLeave={(e) => {
+          (e.currentTarget as HTMLSpanElement).style.boxShadow = `0 0 0 0 ${color}00`;
+        }}
+      >
+        <Award size={12} />
+        {m.role}
+      </span>
+    </motion.div>
+  );
+};
+
+// ─── MemberCard with 3D Tilt ───────────────────────────────────────────────────
 const MemberCard: React.FC<{ m: Member; idx: number }> = ({ m, idx }) => {
   const [err, setErr] = useState(false);
+  const cardRef = React.useRef<HTMLDivElement>(null);
+
   const src = !m.image || err
     ? `https://i.pravatar.cc/300?img=${(idx % 70) + 1}`
     : m.image;
 
   const color = m.color || C.dev;
 
+  // 3D tilt on mouse move
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * -6;
+    const rotateY = ((x - centerX) / centerX) * 6;
+    card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+  };
+
+  const handleMouseLeave = () => {
+    const card = cardRef.current;
+    if (!card) return;
+    card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+  };
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 15 }}
-      transition={{ duration: 0.3, delay: (idx % 10) * 0.05 }}
-      className="group relative flex justify-center w-full"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.55, delay: (idx % 12) * 0.04, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className="flex justify-center w-full"
     >
       <div
-        className="w-full max-w-[280px] bg-[#111312] rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1"
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className="group relative w-full aspect-[3/4] max-w-[280px] rounded-2xl overflow-hidden cursor-pointer will-change-transform"
         style={{
           border: '1px solid rgba(255,255,255,0.06)',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+          boxShadow: '0 8px 40px rgba(0,0,0,0.4)',
+          transition: 'transform 0.15s ease-out, box-shadow 0.3s ease',
+        }}
+        onMouseEnter={(e) => {
+          (e.currentTarget as HTMLDivElement).style.boxShadow = `0 20px 60px rgba(0,0,0,0.5), 0 0 30px ${color}10`;
+        }}
+        onMouseOut={(e) => {
+          (e.currentTarget as HTMLDivElement).style.boxShadow = '0 8px 40px rgba(0,0,0,0.4)';
         }}
       >
-        {/* Top Gradient Border */}
-        <div className="h-1.5 w-full" style={{ background: `linear-gradient(90deg, ${color}, transparent)` }} />
+        {/* Background Image */}
+        <img
+          src={src}
+          alt={m.name}
+          className={`absolute inset-0 w-full h-full object-cover ${m.imagePosition ?? 'object-center'} transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-110`}
+          onError={() => setErr(true)}
+        />
 
-        <div className="p-5 flex flex-col items-center text-center h-full">
-          {/* Photo (Portrait) */}
-          <div className="w-full aspect-[3/4] mb-5 overflow-hidden rounded-xl bg-black/50 relative border border-white/5">
-            <img
-              src={src}
-              alt={m.name}
-              className={`w-full h-full object-cover ${m.imagePosition ?? 'object-center'} transition-transform duration-700 group-hover:scale-110`}
-              onError={() => setErr(true)}
-            />
-          </div>
+        {/* Persistent bottom gradient for name */}
+        <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
-          {/* Text */}
-          <h3 className="text-white font-bold text-xl mb-1.5 tracking-wide line-clamp-1" style={{ fontFamily: "'Playfair Display', serif" }}>
+        {/* Full overlay on hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#070B09] via-[#070B09]/75 to-[#070B09]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+        {/* Accent top edge glow */}
+        <div
+          className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style={{ background: `linear-gradient(90deg, transparent, ${color}, transparent)` }}
+        />
+
+        {/* Accent bottom edge glow */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-60 transition-opacity duration-500"
+          style={{ background: `linear-gradient(90deg, transparent, ${color}60, transparent)` }}
+        />
+
+        {/* Always-visible name at bottom */}
+        <div className="absolute bottom-0 left-0 right-0 p-5 z-10 group-hover:opacity-0 transition-opacity duration-300">
+          <h3 className="text-white font-bold text-lg tracking-wide line-clamp-1 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]" style={{ fontFamily: "'Playfair Display', serif" }}>
             {m.name}
           </h3>
-          <p className="text-[11px] font-bold mb-1 leading-tight tracking-wider uppercase" style={{ color }}>
+          <p className="text-[11px] font-semibold tracking-wider uppercase mt-0.5 drop-shadow-lg" style={{ color: `${color}cc` }}>
             {m.role}
           </p>
-          <p className="text-gray-500 text-[10px] font-semibold tracking-[0.2em] uppercase mb-5">
-            {m.branch}
+        </div>
+
+        {/* Hover content - slides up */}
+        <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out z-10 text-left">
+
+          {/* Branch badge */}
+          {m.branch && (
+            <span
+              className="inline-block px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded-full mb-3 self-start"
+              style={{
+                backgroundColor: `${color}18`,
+                color: color,
+                border: `1px solid ${color}35`,
+                backdropFilter: 'blur(8px)',
+                boxShadow: `0 2px 12px ${color}12`,
+              }}
+            >
+              {m.branch}
+            </span>
+          )}
+
+          <h3 className="text-white font-bold text-2xl mb-1 tracking-wide leading-tight line-clamp-1" style={{ fontFamily: "'Playfair Display', serif" }}>
+            {m.name}
+          </h3>
+
+          <p className="text-xs font-semibold mb-4 tracking-wider uppercase line-clamp-1" style={{ color }}>
+            {m.role}
           </p>
 
           {/* Social Links */}
-          <div className="flex gap-4 mt-auto">
+          <div className="flex gap-3 opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-150">
             {m.email && (
-              <a href={`mailto:${m.email}`} aria-label="Email" className="text-gray-500 hover:text-white transition-colors">
-                <Mail size={15} />
+              <a
+                href={`mailto:${m.email}`}
+                aria-label="Email"
+                className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                style={{
+                  backgroundColor: 'rgba(255,255,255,0.08)',
+                  backdropFilter: 'blur(8px)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLAnchorElement).style.backgroundColor = `${color}25`;
+                  (e.currentTarget as HTMLAnchorElement).style.borderColor = `${color}50`;
+                  (e.currentTarget as HTMLAnchorElement).style.boxShadow = `0 0 15px ${color}20`;
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLAnchorElement).style.backgroundColor = 'rgba(255,255,255,0.08)';
+                  (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(255,255,255,0.12)';
+                  (e.currentTarget as HTMLAnchorElement).style.boxShadow = 'none';
+                }}
+              >
+                <Mail size={14} className="text-white" />
               </a>
             )}
             {m.linkedin && (
-              <a href={m.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-gray-500 hover:text-white transition-colors">
-                <Linkedin size={15} />
+              <a
+                href={m.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                style={{
+                  backgroundColor: 'rgba(255,255,255,0.08)',
+                  backdropFilter: 'blur(8px)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLAnchorElement).style.backgroundColor = `${color}25`;
+                  (e.currentTarget as HTMLAnchorElement).style.borderColor = `${color}50`;
+                  (e.currentTarget as HTMLAnchorElement).style.boxShadow = `0 0 15px ${color}20`;
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLAnchorElement).style.backgroundColor = 'rgba(255,255,255,0.08)';
+                  (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(255,255,255,0.12)';
+                  (e.currentTarget as HTMLAnchorElement).style.boxShadow = 'none';
+                }}
+              >
+                <Linkedin size={14} className="text-white" />
               </a>
             )}
           </div>
@@ -250,137 +530,225 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
     { name: 'Dr. Satvik Vats', role: 'Faculty Co-ordinator', branch: '', batch: '', email: '', linkedin: '', image: satvikSirImage, color: '#34d399' },
   ];
 
-  // Section header component
-  const SectionHeader: React.FC<{ title: string; color: string; id: string }> = ({ title, color, id }) => (
+  // Compute member counts
+  const memberCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    ["'26", "'27", "'28", "'29"].forEach(batch => {
+      counts[batch] = allMembers.filter(m => m.batch === batch).length;
+    });
+    return counts;
+  }, []);
+
+  // Section header
+  const SectionHeader: React.FC<{ title: string; color: string; id: string; icon?: React.ReactNode }> = ({ title, color, id, icon }) => (
     <motion.div
       id={id}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 25 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="text-center mb-12 mt-24 first:mt-0 scroll-mt-28"
+      transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className="text-center mb-14 mt-28 first:mt-0 scroll-mt-28"
     >
-      <div className="flex items-center justify-center gap-6 mb-4">
-        <div className="h-[1px] w-12 sm:w-24" style={{ background: `linear-gradient(90deg, transparent, ${color})` }} />
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white" style={{ fontFamily: "'Playfair Display', serif" }}>
-          {title}
-        </h2>
-        <div className="h-[1px] w-12 sm:w-24" style={{ background: `linear-gradient(90deg, ${color}, transparent)` }} />
+      {/* Glow behind title */}
+      <div className="relative inline-block">
+        <div
+          className="absolute -inset-x-16 -inset-y-6 rounded-full opacity-15 blur-3xl"
+          style={{ background: color }}
+        />
+        <div className="relative flex items-center justify-center gap-4 sm:gap-6 mb-3">
+          <motion.div
+            className="h-[1px] w-10 sm:w-24"
+            style={{ background: `linear-gradient(90deg, transparent, ${color})` }}
+            initial={{ scaleX: 0, originX: 1 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          />
+          {icon && <span style={{ color }} className="opacity-80">{icon}</span>}
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white" style={{ fontFamily: "'Playfair Display', serif" }}>
+            {title}
+          </h2>
+          {icon && <span style={{ color }} className="opacity-80">{icon}</span>}
+          <motion.div
+            className="h-[1px] w-10 sm:w-24"
+            style={{ background: `linear-gradient(90deg, ${color}, transparent)` }}
+            initial={{ scaleX: 0, originX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          />
+        </div>
       </div>
     </motion.div>
   );
 
   const navButtons = [
-    { id: 'alumni', label: 'Alumni', batch: "'26", color: '#f59e0b' },
-    { id: 'final', label: 'Final Year', batch: "'27", color: '#4ade80' },
-    { id: 'prefinal', label: 'Pre-Final Year', batch: "'28", color: '#00FFC6' },
-    { id: 'sophomore', label: 'Sophomore Year', batch: "'29", color: '#f472b6' },
+    { id: 'alumni', label: 'Alumni', batch: "'26", color: '#f59e0b', icon: <GraduationCap size={14} /> },
+    { id: 'final', label: 'Final Year', batch: "'27", color: '#4ade80', icon: <Sparkles size={14} /> },
+    { id: 'prefinal', label: 'Pre-Final Year', batch: "'28", color: '#00FFC6', icon: null },
+    { id: 'sophomore', label: 'Sophomore Year', batch: "'29", color: '#f472b6', icon: null },
   ];
 
-  // null = default (show all present team on scroll), string = show only that section
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
   const handleNav = (id: string) => {
     setActiveFilter(prev => prev === id ? null : id);
   };
 
-  // Sections to render
   const sections = [
-    { id: 'alumni', title: 'Alumni', batch: "'26", color: '#f59e0b' },
-    { id: 'final', title: 'Final Year', batch: "'27", color: '#4ade80' },
-    { id: 'prefinal', title: 'Pre-Final Year', batch: "'28", color: '#00FFC6' },
-    { id: 'sophomore', title: 'Sophomore Year', batch: "'29", color: '#f472b6' },
+    { id: 'alumni', title: 'Alumni', batch: "'26", color: '#f59e0b', icon: <GraduationCap size={24} /> },
+    { id: 'final', title: 'Final Year', batch: "'27", color: '#4ade80', icon: <Sparkles size={24} /> },
+    { id: 'prefinal', title: 'Pre-Final Year', batch: "'28", color: '#00FFC6', icon: null },
+    { id: 'sophomore', title: 'Sophomore Year', batch: "'29", color: '#f472b6', icon: null },
   ];
 
-  // Default (no filter): show final, prefinal, sophomore. With filter: show only that one.
   const visibleSections = activeFilter
     ? sections.filter(s => s.id === activeFilter)
     : sections.filter(s => s.id !== 'alumni');
 
   return (
     <div className="min-h-screen bg-[#070B09] relative overflow-hidden select-none pb-24 font-sans">
-      {/* ── Background Elements ──────────────────────────────────────────────── */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#00FFC6]/5 blur-[120px] pointer-events-none rounded-full" />
-      
-      {/* ── Header Area (Editorial Board Style) ─────────────────────────────── */}
-      <section className="pt-32 pb-16 px-4 sm:px-6 relative z-10 text-center flex flex-col items-center">
-        
+      {/* ── Shimmer keyframe (injected once) ─────────────────────────────────── */}
+      <style>{`
+        @keyframes shimmer {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+      `}</style>
+
+      {/* ── Background ───────────────────────────────────────────────────────── */}
+      <FloatingOrbs />
+
+      {/* ── Header Area ─────────────────────────────────────────────────────── */}
+      <section className="pt-32 pb-8 px-4 sm:px-6 relative z-10 text-center flex flex-col items-center">
+
         {/* Top Overline */}
-        <div className="flex items-center gap-4 mb-4 opacity-70">
-          <div className="h-[1px] w-8 sm:w-16 bg-white/20" />
-          <span className="text-white/60 text-xs sm:text-sm font-semibold tracking-[0.3em] uppercase">FLUX</span>
-          <div className="h-[1px] w-8 sm:w-16 bg-white/20" />
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: -15 }}
+          animate={{ opacity: 0.7, y: 0 }}
+          transition={{ duration: 1, ease: 'easeOut' }}
+          className="flex items-center gap-4 mb-6"
+        >
+          <div className="h-[1px] w-8 sm:w-20 bg-gradient-to-r from-transparent to-white/20" />
+          <span className="text-white/50 text-xs sm:text-sm font-semibold tracking-[0.4em] uppercase">FLUX</span>
+          <div className="h-[1px] w-8 sm:w-20 bg-gradient-to-l from-transparent to-white/20" />
+        </motion.div>
 
         {/* Main Title */}
-        <h1 
-          className="text-6xl sm:text-7xl lg:text-8xl font-bold text-white mb-6 tracking-tight"
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="text-6xl sm:text-7xl lg:text-9xl font-bold text-white mb-6 tracking-tight"
           style={{ fontFamily: "'Playfair Display', serif" }}
         >
           Our Team<span className="text-[#00FFC6]">.</span>
-        </h1>
+        </motion.h1>
 
-        {/* Subtitle Quote */}
-        <p className="text-gray-400 text-lg sm:text-xl italic max-w-2xl font-light" style={{ fontFamily: "'Playfair Display', serif" }}>
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.25 }}
+          className="text-gray-400/80 text-lg sm:text-xl italic max-w-2xl font-light mb-10"
+          style={{ fontFamily: "'Playfair Display', serif" }}
+        >
           "Where innovation meets dedication — the minds shaping the future of tech at MMMUT."
-        </p>
+        </motion.p>
+
+
       </section>
 
-      {/* ── Filter Buttons ────────────────────────────────────────────────────── */}
-      <section className="px-4 relative z-10 mb-12 max-w-5xl mx-auto flex flex-wrap justify-center gap-3 sm:gap-4">
-        {navButtons.map(btn => {
-          const isActive = activeFilter === btn.id;
-          return (
-            <button
-              key={btn.id}
-              onClick={() => handleNav(btn.id)}
-              className="relative px-6 sm:px-7 py-2.5 rounded-full text-sm font-bold tracking-wider uppercase transition-all duration-300 hover:scale-105 overflow-hidden"
-              style={{
-                background: isActive ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.04)',
-                border: isActive ? `1.5px solid ${btn.color}88` : '1.5px solid rgba(255,255,255,0.12)',
-                color: isActive ? '#fff' : 'rgba(255,255,255,0.7)',
-                backdropFilter: 'blur(12px)',
-                boxShadow: isActive ? `0 0 25px ${btn.color}25` : 'none',
-              }}
-              onMouseEnter={e => {
-                const el = e.currentTarget as HTMLButtonElement;
-                el.style.background = 'rgba(255,255,255,0.1)';
-                el.style.borderColor = `${btn.color}66`;
-                el.style.color = '#fff';
-                el.style.boxShadow = `0 0 20px ${btn.color}18`;
-              }}
-              onMouseLeave={e => {
-                const el = e.currentTarget as HTMLButtonElement;
-                el.style.background = isActive ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.04)';
-                el.style.borderColor = isActive ? `${btn.color}88` : 'rgba(255,255,255,0.12)';
-                el.style.color = isActive ? '#fff' : 'rgba(255,255,255,0.7)';
-                el.style.boxShadow = isActive ? `0 0 25px ${btn.color}25` : 'none';
-              }}
+
+      {/* ── Sticky Filter Bar ─────────────────────────────────────────────────── */}
+      <section className="sticky top-0 z-30 px-4 py-4 mb-10">
+        <div className="flex flex-wrap justify-center gap-3 sm:gap-4 max-w-4xl mx-auto">
+          {navButtons.map(btn => {
+            const isActive = activeFilter === btn.id;
+            return (
+              <button
+                key={btn.id}
+                onClick={() => handleNav(btn.id)}
+                className="relative px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold tracking-wider uppercase transition-all duration-300 hover:scale-105 flex items-center gap-2"
+                style={{
+                  background: isActive ? `${btn.color}25` : 'rgba(255,255,255,0.03)',
+                  border: isActive ? `1.5px solid ${btn.color}` : '1.5px solid rgba(255,255,255,0.08)',
+                  color: isActive ? '#fff' : 'rgba(255,255,255,0.6)',
+                  backdropFilter: 'blur(16px)',
+                  boxShadow: isActive ? `0 0 25px ${btn.color}25` : '0 8px 32px rgba(0,0,0,0.2)',
+                }}
+                onMouseEnter={e => {
+                  const el = e.currentTarget as HTMLButtonElement;
+                  if (!isActive) {
+                    el.style.background = 'rgba(255,255,255,0.08)';
+                    el.style.borderColor = 'rgba(255,255,255,0.2)';
+                    el.style.color = '#fff';
+                  }
+                }}
+                onMouseLeave={e => {
+                  const el = e.currentTarget as HTMLButtonElement;
+                  if (!isActive) {
+                    el.style.background = 'rgba(255,255,255,0.03)';
+                    el.style.borderColor = 'rgba(255,255,255,0.08)';
+                    el.style.color = 'rgba(255,255,255,0.6)';
+                  }
+                }}
+              >
+                {btn.icon}
+                <span>{btn.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Reset button */}
+        <AnimatePresence>
+          {activeFilter && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="overflow-hidden flex justify-center mt-3"
             >
-              {btn.label}
-            </button>
-          );
-        })}
+              <button
+                onClick={() => setActiveFilter(null)}
+                className="text-[10px] text-gray-500 hover:text-white transition-colors tracking-wider uppercase flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-white/5 bg-white/2 backdrop-blur-md"
+              >
+                <ChevronDown size={10} className="rotate-180" />
+                Show all sections
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </section>
 
       {/* ── Members ───────────────────────────────────────────────────────────── */}
       <section className="px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl mx-auto">
-        {visibleSections.map(sec => {
-          const members = sec.id === 'alumni' ? allMembers.filter(m => m.batch === sec.batch) : allMembers.filter(m => m.batch === sec.batch);
-          return (
-            <div key={sec.id}>
-              <SectionHeader title={sec.title} color={sec.color} id={sec.id} />
-              <div className={`grid gap-8 xl:gap-10 place-items-center mb-16 ${
-                sec.id === 'alumni' 
-                  ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-5xl mx-auto' 
-                  : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
-              }`}>
-                {members.map((m, i) => (
-                  <MemberCard key={m.name} m={m} idx={i} />
-                ))}
-              </div>
-            </div>
-          );
-        })}
+        <AnimatePresence mode="wait">
+          {visibleSections.map(sec => {
+            const members = allMembers.filter(m => m.batch === sec.batch);
+            return (
+              <motion.div
+                key={sec.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+              >
+                <SectionHeader title={sec.title} color={sec.color} id={sec.id} icon={sec.icon} />
+                <div className={`grid gap-6 sm:gap-8 xl:gap-10 place-items-center mb-20 ${
+                  sec.id === 'alumni'
+                    ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-5xl mx-auto'
+                    : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+                }`}>
+                  {members.map((m, i) => (
+                    <MemberCard key={m.name} m={m} idx={i} />
+                  ))}
+                </div>
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
       </section>
     </div>
   );

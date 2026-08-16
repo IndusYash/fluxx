@@ -1,312 +1,244 @@
 import React from 'react';
 import { Mail, Linkedin, Globe } from 'lucide-react';
 import { FacultyMember } from './facultyData';
+import { motion } from 'framer-motion';
 
 interface FacultyCardProps {
   faculty: FacultyMember;
+  idx?: number;
 }
 
-const FacultyCard: React.FC<FacultyCardProps> = ({ faculty }) => {
+const FacultyCard: React.FC<FacultyCardProps> = ({ faculty, idx = 0 }) => {
+  // Accent colors based on whether it's HOD or Coordinator
+  const isHOD = faculty.id === 100 || faculty.id === 101;
+  const accentColor = isHOD ? '#00FFC6' : '#a78bfa';
+  const shadowColor = isHOD ? 'rgba(0, 255, 198, 0.15)' : 'rgba(167, 139, 250, 0.15)';
+  const borderColorHover = isHOD ? 'rgba(0, 255, 198, 0.4)' : 'rgba(167, 139, 250, 0.4)';
+
   // Helper function to render metrics based on faculty ID
   const renderMetrics = () => {
-  // UNDER GUIDANCE (Both: Saini + Rakesh)
-  if (faculty.id === 100 || faculty.id === 101) {
-    return (
-      <>
-        {faculty.teachingExperienceUG && (
-          <MetricItem value={`${faculty.teachingExperienceUG}+`} label="UG Years" />
-        )}
-        {faculty.teachingExperiencePG && (
-          <MetricItem value={`${faculty.teachingExperiencePG}+`} label="PG Years" />
-        )}
-        {faculty.seminarsOrganised && (
-          <MetricItem value={`${faculty.seminarsOrganised}+`} label="Seminars Org" />
-        )}
-        {faculty.seminarsAttended && (
-          <MetricItem value={`${faculty.seminarsAttended}+`} label="Seminars Att" />
-        )}
-        {faculty.mtechSupervised && (
-          <MetricItem value={`${faculty.mtechSupervised}+`} label="M.Tech" />
-        )}
-        {faculty.phdSupervised && (
-          <MetricItem value={`${faculty.phdSupervised}+`} label="Ph.D" />
-        )}
-      </>
-    );
-  }
-
-  // FACULTY COORDINATORS (existing logic)
-  switch (faculty.id) {
-    case 1:
+    // UNDER GUIDANCE (Both: Saini + Rakesh)
+    if (faculty.id === 100 || faculty.id === 101) {
       return (
         <>
-          {faculty.articles && <MetricItem value={faculty.articles} label="Articles" />}
-          {faculty.citations && <MetricItem value={faculty.citations} label="Citations" />}
-          {faculty.experience && <MetricItem value={`${faculty.experience}+`} label="Years" />}
-          {faculty.booksPublished && <MetricItem value={faculty.booksPublished} label="Books" />}
-          {faculty.organisations && <MetricItem value={faculty.organisations} label="Orgs" />}
+          {faculty.teachingExperienceUG && <MetricItem value={`${faculty.teachingExperienceUG}+`} label="UG Years" color={accentColor} />}
+          {faculty.teachingExperiencePG && <MetricItem value={`${faculty.teachingExperiencePG}+`} label="PG Years" color={accentColor} />}
+          {faculty.seminarsOrganised && <MetricItem value={`${faculty.seminarsOrganised}+`} label="Seminars Org" color={accentColor} />}
+          {faculty.seminarsAttended && <MetricItem value={`${faculty.seminarsAttended}+`} label="Seminars Att" color={accentColor} />}
+          {faculty.mtechSupervised && <MetricItem value={`${faculty.mtechSupervised}+`} label="M.Tech" color={accentColor} />}
+          {faculty.phdSupervised && <MetricItem value={`${faculty.phdSupervised}+`} label="Ph.D" color={accentColor} />}
         </>
       );
+    }
 
-    case 2:
-      return (
-        <>
-          {faculty.patents && <MetricItem value={faculty.patents} label="Patents" />}
-          {faculty.citations && <MetricItem value={faculty.citations} label="Citations" />}
-          {faculty.projectPublications && <MetricItem value={faculty.projectPublicications} label="Projects" />}
-          {faculty.booksPublished && <MetricItem value={faculty.booksPublished} label="Books" />}
-          {faculty.internationalPublications && (
-            <MetricItem value={faculty.internationalPublications} label="Intl Pubs" />
-          )}
-        </>
-      );
+    // FACULTY COORDINATORS (existing logic)
+    switch (faculty.id) {
+      case 1:
+        return (
+          <>
+            {faculty.articles && <MetricItem value={faculty.articles} label="Articles" color={accentColor} />}
+            {faculty.citations && <MetricItem value={faculty.citations} label="Citations" color={accentColor} />}
+            {faculty.experience && <MetricItem value={`${faculty.experience}+`} label="Years" color={accentColor} />}
+            {faculty.booksPublished && <MetricItem value={faculty.booksPublished} label="Books" color={accentColor} />}
+            {faculty.organisations && <MetricItem value={faculty.organisations} label="Orgs" color={accentColor} />}
+          </>
+        );
 
-    case 3:
-      return (
-        <>
-          {faculty.citations && <MetricItem value={faculty.citations} label="Citations" />}
-          {faculty.patents && <MetricItem value={faculty.patents} label="Patents" />}
-          {faculty.internationalConferences && (
-            <MetricItem value={faculty.internationalConferences} label="Intl Conf" />
-          )}
-          {faculty.internationalPublications && (
-            <MetricItem value={faculty.internationalPublications} label="Intl Pubs" />
-          )}
-          {faculty.organisations && <MetricItem value={faculty.organisations} label="Orgs" />}
-          {faculty.review && <MetricItem value={`${faculty.review}+`} label="Reviews" />}
-           {faculty.booksPublished && <MetricItem value={faculty.booksPublished} label="Books" />}
-        </>
-      );
+      case 2:
+        return (
+          <>
+            {faculty.patents && <MetricItem value={faculty.patents} label="Patents" color={accentColor} />}
+            {faculty.citations && <MetricItem value={faculty.citations} label="Citations" color={accentColor} />}
+            {faculty.projectPublications && <MetricItem value={faculty.projectPublicications} label="Projects" color={accentColor} />}
+            {faculty.booksPublished && <MetricItem value={faculty.booksPublished} label="Books" color={accentColor} />}
+            {faculty.internationalPublications && <MetricItem value={faculty.internationalPublications} label="Intl Pubs" color={accentColor} />}
+          </>
+        );
 
+      case 3:
       case 4:
-      return (
-        <>
-          {faculty.citations && <MetricItem value={faculty.citations} label="Citations" />}
-          {faculty.patents && <MetricItem value={faculty.patents} label="Patents" />}
-          {faculty.internationalConferences && (
-            <MetricItem value={faculty.internationalConferences} label="Intl Conf" />
-          )}
-          {faculty.internationalPublications && (
-            <MetricItem value={faculty.internationalPublications} label="Intl Pubs" />
-          )}
-          {faculty.organisations && <MetricItem value={faculty.organisations} label="Orgs" />}
-          {faculty.review && <MetricItem value={`${faculty.review}+`} label="Reviews" />}
-        </>
-      );
       case 5:
-      return (
-        <>
-          {faculty.citations && <MetricItem value={faculty.citations} label="Citations" />}
-          {faculty.patents && <MetricItem value={faculty.patents} label="Patents" />}
-          {faculty.internationalConferences && (
-            <MetricItem value={faculty.internationalConferences} label="Intl Conf" />
-          )}
-          {faculty.internationalPublications && (
-            <MetricItem value={faculty.internationalPublications} label="Intl Pubs" />
-          )}
-          {faculty.organisations && <MetricItem value={faculty.organisations} label="Orgs" />}
-          {faculty.review && <MetricItem value={`${faculty.review}+`} label="Reviews" />}
-        </>
-      );
       case 6:
-      return (
-        <>
-          {faculty.citations && <MetricItem value={faculty.citations} label="Citations" />}
-          {faculty.patents && <MetricItem value={faculty.patents} label="Patents" />}
-          {faculty.internationalConferences && (
-            <MetricItem value={faculty.internationalConferences} label="Intl Conf" />
-          )}
-          {faculty.internationalPublications && (
-            <MetricItem value={faculty.internationalPublications} label="Intl Pubs" />
-          )}
-          {faculty.organisations && <MetricItem value={faculty.organisations} label="Orgs" />}
-          {faculty.review && <MetricItem value={`${faculty.review}+`} label="Reviews" />}
-        </>
-      );
       case 7:
-      return (
-        <>
-          {faculty.citations && <MetricItem value={faculty.citations} label="Citations" />}
-          {faculty.patents && <MetricItem value={faculty.patents} label="Patents" />}
-          {faculty.internationalConferences && (
-            <MetricItem value={faculty.internationalConferences} label="Intl Conf" />
-          )}
-          {faculty.internationalPublications && (
-            <MetricItem value={faculty.internationalPublications} label="Intl Pubs" />
-          )}
-          {faculty.organisations && <MetricItem value={faculty.organisations} label="Orgs" />}
-          {faculty.review && <MetricItem value={`${faculty.review}+`} label="Reviews" />}
-        </>
-      );
+        return (
+          <>
+            {faculty.citations && <MetricItem value={faculty.citations} label="Citations" color={accentColor} />}
+            {faculty.patents && <MetricItem value={faculty.patents} label="Patents" color={accentColor} />}
+            {faculty.internationalConferences && <MetricItem value={faculty.internationalConferences} label="Intl Conf" color={accentColor} />}
+            {faculty.internationalPublications && <MetricItem value={faculty.internationalPublications} label="Intl Pubs" color={accentColor} />}
+            {faculty.organisations && <MetricItem value={faculty.organisations} label="Orgs" color={accentColor} />}
+            {faculty.review && <MetricItem value={`${faculty.review}+`} label="Reviews" color={accentColor} />}
+            {faculty.booksPublished && <MetricItem value={faculty.booksPublished} label="Books" color={accentColor} />}
+          </>
+        );
 
-    default:
-      return null;
-  }
-};
-
+      default:
+        return null;
+    }
+  };
 
   return (
-    <div className="relative w-full h-full
-                    bg-gradient-to-br from-gray-900 via-gray-950 to-black
-                    rounded-3xl p-6 md:p-8 
-                    border-2 border-green-400/40
-                    transition-all duration-500 ease-out 
-                    hover:transform hover:scale-[1.02] 
-                    hover:-translate-y-2
-                    hover:shadow-2xl hover:shadow-green-400/20
-                    hover:border-green-400/60
-                    cursor-pointer group
-                    backdrop-blur-sm
-                    flex flex-col">
-      
-      {/* Content Layer */}
-      <div className="flex flex-col md:flex-row gap-6 md:gap-8 text-white h-full">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: (idx % 10) * 0.1 }}
+      className="group relative flex w-full"
+    >
+      <div 
+        className="w-full bg-white/[0.02] backdrop-blur-md rounded-3xl p-6 md:p-8 flex flex-col transition-all duration-500 hover:-translate-y-2 overflow-hidden border border-white/10"
+        style={{
+          boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.borderColor = borderColorHover;
+          e.currentTarget.style.boxShadow = `0 20px 50px ${shadowColor}`;
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
+          e.currentTarget.style.boxShadow = '0 10px 40px rgba(0,0,0,0.5)';
+        }}
+      >
         
-        {/* Profile Section */}
-        <div className="flex-shrink-0 flex flex-col items-center md:items-start">
-          
-          {/* Profile Image */}
-          <div className="relative group/image mb-4">
-            <img 
-              src={faculty.profileImage} 
-              alt={faculty.name}
-              className="w-32 h-32 md:w-36 md:h-36 lg:w-40 lg:h-40
-                         rounded-2xl border-3 border-green-400/60 
-                         object-cover transition-all duration-300 
-                         group-hover:scale-105 group-hover:border-green-300/80
-                         shadow-lg contrast-110 saturate-110"
-            />
-            
-            {/* Status indicator */}
-            <div className="absolute -bottom-2 -right-2 
-                            w-6 h-6 md:w-7 md:h-7 
-                            rounded-full border-3 border-white 
-                            bg-gradient-to-r from-green-400 to-emerald-500
-                            shadow-lg">
-              <div className="absolute inset-[2px] rounded-full 
-                              bg-gradient-to-r from-white/90 to-green-100/90
-                              animate-pulse"></div>
-            </div>
-          </div>
+        {/* Subtle Top Glow Line */}
+        <div className="absolute top-0 left-0 w-full h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: `linear-gradient(90deg, transparent, ${accentColor}, transparent)` }} />
 
-          {/* Social Links */}
-          <div className="flex flex-row md:flex-col gap-3">
-            {faculty.linkedinUrl && (
-              <SocialLink href={faculty.linkedinUrl} icon={<Linkedin size={16} />} />
-            )}
+        {/* Content Layer */}
+        <div className="flex flex-col md:flex-row gap-6 md:gap-8 text-white h-full relative z-10">
+          
+          {/* Profile Section */}
+          <div className="flex-shrink-0 flex flex-col items-center md:items-start">
             
-            {faculty.websiteUrl && (
-              <SocialLink href={faculty.websiteUrl} icon={<Globe size={16} />} />
-            )}
-            
-            {faculty.googleScholarUrl && (
-              <SocialLink 
-                href={faculty.googleScholarUrl} 
-                icon={
-                  <div className="w-4 h-4 bg-gray-300 group-hover/link:bg-green-200 
-                                  transition-colors duration-300 rounded-sm text-xs 
-                                  flex items-center justify-center font-bold text-black">
-                    G
-                  </div>
-                } 
+            {/* Profile Image */}
+            <div className="relative mb-6 rounded-2xl overflow-hidden shadow-2xl border border-white/10 group-hover:border-white/30 transition-all duration-500">
+              <img 
+                src={faculty.profileImage} 
+                alt={faculty.name}
+                className="w-36 h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 object-cover object-top transition-transform duration-700 group-hover:scale-110"
               />
-            )}
-            
-            <SocialLink href={`mailto:${faculty.email}`} icon={<Mail size={16} />} />
-          </div>
-        </div>
-
-        {/* Faculty Information - Using flex-1 and flex column with justify-between */}
-        <div className="flex-1 flex flex-col min-w-0 h-full">
-          
-          {/* Header Info */}
-          <div className="flex-shrink-0 mb-4">
-            <h3 className="text-2xl md:text-3xl font-bold mb-2 
-                           text-gray-100 leading-tight
-                           group-hover:text-green-100 transition-colors duration-300">
-              {faculty.name}
-            </h3>
-            <div className="text-lg md:text-xl font-semibold mb-2 
-                            text-green-400 group-hover:text-green-300 transition-colors duration-300">
-              {faculty.title}
+              {/* Overlay Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
             </div>
-            <p className="text-gray-400 text-sm md:text-base mb-3 
-                          group-hover:text-gray-300 transition-colors duration-300">
-              {faculty.department}
-            </p>
-            
-            <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 md:line-clamp-3
-                          group-hover:text-gray-400 transition-colors duration-300">
-              {faculty.description}
-            </p>
-          </div>
 
-          {/* Middle section that grows to fill space */}
-          <div className="flex-1 flex flex-col justify-center">
-            {/* Stats Section */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
-              {renderMetrics()}
-            </div>
-          </div>
-
-          {/* Bottom section - Specialization Tags (consistent for all) */}
-          <div className="flex-shrink-0">
-            <div className="flex flex-wrap gap-2 justify-start">
-              {faculty.specialization.slice(0, 3).map((skill, index) => (
-                <span 
-                  key={index} 
-                  className="bg-gradient-to-r from-green-400/15 to-emerald-400/10 
-                             backdrop-blur-sm border border-green-400/30 
-                             px-3 py-1.5 rounded-xl text-xs md:text-sm font-medium 
-                             transition-all duration-300 hover:bg-green-400/25 
-                             text-gray-300 hover:text-green-200 
-                             hover:border-green-300/60 flex-shrink-0"
-                >
-                  {skill.length > 15 ? skill.substring(0, 13) + '...' : skill}
-                </span>
-              ))}
-              {faculty.specialization.length > 3 && (
-                <span className="bg-gradient-to-r from-green-400/15 to-emerald-400/10 
-                                 backdrop-blur-sm border border-green-400/30 
-                                 px-3 py-1.5 rounded-xl text-xs md:text-sm 
-                                 font-medium text-gray-300 flex-shrink-0">
-                  +{faculty.specialization.length - 3}
-                </span>
+            {/* Social Links */}
+            <div className="flex flex-row md:flex-col gap-3">
+              {faculty.linkedinUrl && (
+                <SocialLink href={faculty.linkedinUrl} icon={<Linkedin size={18} />} color={accentColor} />
               )}
+              {faculty.websiteUrl && (
+                <SocialLink href={faculty.websiteUrl} icon={<Globe size={18} />} color={accentColor} />
+              )}
+              {faculty.googleScholarUrl && (
+                <SocialLink 
+                  href={faculty.googleScholarUrl} 
+                  icon={
+                    <div className="w-5 h-5 rounded flex items-center justify-center font-bold text-[10px]">
+                      G
+                    </div>
+                  } 
+                  color={accentColor}
+                />
+              )}
+              <SocialLink href={`mailto:${faculty.email}`} icon={<Mail size={18} />} color={accentColor} />
             </div>
+          </div>
+
+          {/* Faculty Information */}
+          <div className="flex-1 flex flex-col min-w-0 h-full">
+            
+            {/* Header Info */}
+            <div className="flex-shrink-0 mb-6">
+              <h3 className="text-3xl md:text-4xl font-bold mb-2 tracking-wide" style={{ fontFamily: "'Playfair Display', serif" }}>
+                {faculty.name}
+              </h3>
+              <div className="text-sm md:text-base font-semibold tracking-wider uppercase mb-2" style={{ color: accentColor }}>
+                {faculty.title}
+              </div>
+              <p className="text-white/60 text-xs md:text-sm tracking-wider uppercase mb-4">
+                {faculty.department}
+              </p>
+              
+              <p className="text-gray-400 text-sm md:text-base leading-relaxed line-clamp-3 group-hover:text-gray-300 transition-colors">
+                {faculty.description}
+              </p>
+            </div>
+
+            {/* Stats Section */}
+            <div className="flex-1 flex flex-col justify-center mb-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-y-6 gap-x-4">
+                {renderMetrics()}
+              </div>
+            </div>
+
+            {/* Specialization Tags */}
+            <div className="flex-shrink-0 border-t border-white/5 pt-5">
+              <div className="flex flex-wrap gap-2 justify-start">
+                {faculty.specialization.slice(0, 4).map((skill, index) => (
+                  <span 
+                    key={index} 
+                    className="px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-colors"
+                    style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#d1d5db' }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = `${accentColor}20`;
+                      e.currentTarget.style.borderColor = `${accentColor}50`;
+                      e.currentTarget.style.color = '#fff';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.05)';
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
+                      e.currentTarget.style.color = '#d1d5db';
+                    }}
+                  >
+                    {skill.length > 20 ? skill.substring(0, 18) + '...' : skill}
+                  </span>
+                ))}
+                {faculty.specialization.length > 4 && (
+                  <span className="px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wide" style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#d1d5db' }}>
+                    +{faculty.specialization.length - 4}
+                  </span>
+                )}
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
 // Helper Components
-const MetricItem: React.FC<{ value: string; label: string }> = ({ value, label }) => (
-  <div className="text-center group/metric">
-    <div className="text-xl md:text-2xl font-bold 
-                    text-green-400 group-hover:text-green-300 transition-colors duration-300 
-                    group-hover/metric:scale-110 transition-transform duration-300">
+const MetricItem: React.FC<{ value: string; label: string; color: string }> = ({ value, label, color }) => (
+  <div className="text-left group/metric">
+    <div className="text-2xl md:text-3xl font-bold mb-1 transition-transform origin-left group-hover/metric:scale-110" style={{ color: color }}>
       {value}
     </div>
-    <div className="text-xs text-gray-500 uppercase tracking-wide font-medium">
+    <div className="text-[10px] md:text-xs text-gray-500 uppercase tracking-widest font-semibold">
       {label}
     </div>
   </div>
 );
 
-const SocialLink: React.FC<{ href: string; icon: React.ReactNode }> = ({ href, icon }) => (
+const SocialLink: React.FC<{ href: string; icon: React.ReactNode; color: string }> = ({ href, icon, color }) => (
   <a 
     href={href}
     target="_blank"
     rel="noopener noreferrer"
-    className="p-2.5 bg-green-400/15 backdrop-blur-sm border border-green-400/40 
-               rounded-xl transition-all duration-300 
-               hover:bg-green-400/30 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-400/40
-               hover:border-green-300/70 group/link
-               hover:scale-110"
+    className="p-3 bg-white/5 border border-white/10 rounded-xl transition-all duration-300 hover:-translate-y-1"
+    onMouseEnter={(e) => {
+      e.currentTarget.style.backgroundColor = `${color}20`;
+      e.currentTarget.style.borderColor = `${color}50`;
+      e.currentTarget.style.color = '#fff';
+      e.currentTarget.style.boxShadow = `0 10px 20px ${color}20`;
+    }}
+    onMouseLeave={(e) => {
+      e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.05)';
+      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
+      e.currentTarget.style.color = 'inherit';
+      e.currentTarget.style.boxShadow = 'none';
+    }}
   >
-    <div className="text-gray-300 group-hover/link:text-green-200 transition-colors duration-300">
+    <div className="text-gray-400 transition-colors">
       {icon}
     </div>
   </a>
