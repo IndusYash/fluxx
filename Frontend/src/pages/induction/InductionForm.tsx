@@ -188,7 +188,7 @@ const InductionForm: React.FC = () => {
     const e: Record<string, string> = {};
     if (s === 1) {
       if (!/^[a-zA-Z\s]+$/.test(formData.name.trim()))                                        e.name    = 'Enter valid name';
-      if (!formData.rollNo || !/^\d{10}$/.test(formData.rollNo))           e.rollNo  = 'Must be exactly 10 digits';
+      if (formData.rollNo && formData.rollNo.trim() !== '' && !/^\d{10}$/.test(formData.rollNo))           e.rollNo  = 'Must be exactly 10 digits';
       if (!formData.branch)                                             e.branch  = 'Select a branch';
       if (!formData.year)                                               e.year    = 'Select a year';
       if (!formData.section || !/^[ABCDabcd]$/.test(formData.section.trim()))                                     e.section = 'Enter your section (e.g. A, B)';
@@ -412,7 +412,7 @@ const InductionForm: React.FC = () => {
                         <input className={iInp} value={formData.name} onChange={e => set('name', e.target.value)} placeholder="Your full name" />
                       </div>
                     </Field>
-                    <Field label="Roll Number" required error={errors.rollNo} hint="10 chars">
+                    <Field label="Roll Number" error={errors.rollNo} hint="10 chars (optional)">
                       <input className={inp} value={formData.rollNo} onChange={e => set('rollNo', e.target.value.toUpperCase())} maxLength={10} placeholder="23XXXXXXXX" />
                     </Field>
                     <Field label="Branch" required error={errors.branch}>
@@ -425,6 +425,7 @@ const InductionForm: React.FC = () => {
                       <select className={sel} value={formData.year} onChange={e => set('year', e.target.value)}>
                         <option value="">Select year</option>
                         <option value="1st Year">1st Year</option>
+                        <option value="2nd Year (Lateral Entry)">2nd Year (Lateral Entry)</option>
                       </select>
                     </Field>
                     <Field label="Section" required error={errors.section} sub="(A, B, C…)">

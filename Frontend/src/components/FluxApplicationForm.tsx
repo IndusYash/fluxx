@@ -53,7 +53,11 @@ const applicationSchema = z.object({
   rollNo: z
     .string()
     .trim()
-    .length(10, "Roll number must be exactly 10 characters"),
+    .optional()
+    .or(z.literal(""))
+    .refine((val) => !val || val.length === 10, {
+      message: "Roll number must be exactly 10 characters",
+    }),
 
   year: z.string().min(1, "Year is required"),
   branch: z.string().min(1, "Branch is required"),
@@ -74,7 +78,7 @@ const applicationSchema = z.object({
 
 type ApplicationForm = z.infer<typeof applicationSchema>;
 
-const years = ["3rd Year"];
+const years = ["1st Year", "2nd Year (Lateral Entry)", "3rd Year"];
 const branches = [
   "Computer Science Engineering",
   "Electronics & Communication Engineering",

@@ -33,7 +33,7 @@ const applicationSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
   phone: z.string().min(10, "Phone number must be at least 10 digits"),
-  rollNo: z.string().min(1, "Roll number is required"),
+  rollNo: z.string().optional().or(z.literal("")),
   year: z.string().min(1, "Year is required"),
   branch: z.string().min(1, "Branch is required"),
   softSkills: z.string().min(1, "Please mention at least one soft skill"),
@@ -47,7 +47,7 @@ const applicationSchema = z.object({
 
 type ApplicationForm = z.infer<typeof applicationSchema>;
 
-const years = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
+const years = ["1st Year", "2nd Year (Lateral Entry)", "2nd Year", "3rd Year", "4th Year"];
 const branches = [
   "Computer Science Engineering",
   "Electronics & Communication Engineering",

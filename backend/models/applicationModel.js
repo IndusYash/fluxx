@@ -4,7 +4,7 @@ const applicationSchema = new mongoose.Schema(
   {
     // Personal Information
     name: { type: String, required: true, maxlength: 200 },
-    rollNo: { type: String, required: true, unique: true, minlength: 10, maxlength: 10 },
+    rollNo: { type: String, default: '' },
     branch: { type: String, required: true, maxlength: 200 },
     year: { type: String, required: true, maxlength: 20 },
     section: { type: String, default: '' },

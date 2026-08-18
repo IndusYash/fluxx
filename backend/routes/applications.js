@@ -9,13 +9,18 @@ router.post('/', async (req, res) => {
     const applicationData = req.body;
 
     // Check for duplicate phone / email / rollNo
-    const duplicate = await ApplicationModel.findOne({
+    const query = {
       $or: [
         { email: applicationData.email },
-        { phone: applicationData.phone },
-        { rollNo: applicationData.rollNo }
-      ],
-    });
+        { phone: applicationData.phone }
+      ]
+    };
+
+    if (applicationData.rollNo && applicationData.rollNo.trim() !== '') {
+      query.$or.push({ rollNo: applicationData.rollNo });
+    }
+
+    const duplicate = await ApplicationModel.findOne(query);
 
     if (duplicate) {
       return res.status(409).json({
