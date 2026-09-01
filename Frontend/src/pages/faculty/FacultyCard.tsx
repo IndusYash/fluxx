@@ -8,90 +8,15 @@ interface FacultyCardProps {
 }
 
 const FacultyCard: React.FC<FacultyCardProps> = ({ faculty, idx = 0 }) => {
-  const isHOD = faculty.id === 100 || faculty.id === 101;
-  const accentColor = isHOD ? "#E5E5E5" : "#E5E5E5";
+  const accentColor = "#E5E5E5";
 
   const renderMetrics = () => {
-    if (faculty.id === 100 || faculty.id === 101) {
-      return (
-        <>
-          {faculty.teachingExperienceUG && (
-            <MetricItem
-              value={`${faculty.teachingExperienceUG}+`}
-              label="UG Years"
-              color={accentColor}
-            />
-          )}
-          {faculty.teachingExperiencePG && (
-            <MetricItem
-              value={`${faculty.teachingExperiencePG}+`}
-              label="PG Years"
-              color={accentColor}
-            />
-          )}
-          {faculty.seminarsOrganised && (
-            <MetricItem
-              value={`${faculty.seminarsOrganised}+`}
-              label="Seminars Org"
-              color={accentColor}
-            />
-          )}
-          {faculty.seminarsAttended && (
-            <MetricItem
-              value={`${faculty.seminarsAttended}+`}
-              label="Seminars Att"
-              color={accentColor}
-            />
-          )}
-          {faculty.mtechSupervised && (
-            <MetricItem
-              value={`${faculty.mtechSupervised}+`}
-              label="M.Tech"
-              color={accentColor}
-            />
-          )}
-          {faculty.phdSupervised && (
-            <MetricItem
-              value={`${faculty.phdSupervised}+`}
-              label="Ph.D"
-              color={accentColor}
-            />
-          )}
-        </>
-      );
+    if (faculty.id === 0 || faculty.id === 1) {
+      return null;
     }
 
     switch (faculty.id) {
-      case 1:
-        return (
-          <>
-            {faculty.articles && (
-              <MetricItem value={faculty.articles} label="Articles" color={accentColor} />
-            )}
-            {faculty.citations && (
-              <MetricItem value={faculty.citations} label="Citations" color={accentColor} />
-            )}
-            {faculty.experience && (
-              <MetricItem
-                value={`${faculty.experience}+`}
-                label="Years"
-                color={accentColor}
-              />
-            )}
-            {faculty.booksPublished && (
-              <MetricItem
-                value={faculty.booksPublished}
-                label="Books"
-                color={accentColor}
-              />
-            )}
-            {faculty.organisations && (
-              <MetricItem value={faculty.organisations} label="Orgs" color={accentColor} />
-            )}
-          </>
-        );
-
-      case 2:
+      case 4:
         return (
           <>
             {faculty.patents && (
@@ -124,11 +49,7 @@ const FacultyCard: React.FC<FacultyCardProps> = ({ faculty, idx = 0 }) => {
           </>
         );
 
-      case 3:
-      case 4:
       case 5:
-      case 6:
-      case 7:
         return (
           <>
             {faculty.citations && (
@@ -158,13 +79,6 @@ const FacultyCard: React.FC<FacultyCardProps> = ({ faculty, idx = 0 }) => {
               <MetricItem
                 value={`${faculty.review}+`}
                 label="Reviews"
-                color={accentColor}
-              />
-            )}
-            {faculty.booksPublished && (
-              <MetricItem
-                value={faculty.booksPublished}
-                label="Books"
                 color={accentColor}
               />
             )}

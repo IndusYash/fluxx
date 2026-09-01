@@ -1,8 +1,6 @@
 import React from "react";
 import FacultyCard from "./FacultyCard";
-import StatsCounter from "./StatsCounter";
 import { underGuidance, facultyCoordinators } from "./facultyData";
-import { BookOpen, Award, Users, Sparkles } from "lucide-react";
 
 const FacultyPage: React.FC = () => {
   return (
@@ -25,35 +23,6 @@ const FacultyPage: React.FC = () => {
         <p className="text-gray-400 text-lg sm:text-xl max-w-2xl font-light mb-10">
           "Leading with excellence, inspiring with vision, and shaping the future of tech at MMMUT."
         </p>
-
-        {/* Stats preview */}
-        <div className="flex flex-wrap justify-center gap-6 mb-12">
-          {[
-            { icon: BookOpen, label: "Publications", value: "150+" },
-            { icon: Award, label: "Patents", value: "25+" },
-            { icon: Users, label: "Mentors", value: "10+" },
-            { icon: Sparkles, label: "Awards", value: "8+" },
-          ].map((stat) => {
-            const Icon = stat.icon;
-            return (
-              <div
-                key={stat.label}
-                className="card-outline flex items-center gap-3 px-5 py-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm"
-              >
-                <Icon className="w-5 h-5 text-white/80" />
-                <div className="text-left">
-                  <p className="text-lg font-bold text-white">{stat.value}</p>
-                  <p className="text-[10px] uppercase tracking-wider text-gray-500">{stat.label}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* ── Stats Counter ───────────────────────────────────────────────────── */}
-      <section className="relative z-10 px-4 md:px-8 max-w-7xl mx-auto">
-        <StatsCounter />
       </section>
 
       {/* ── Under Guidance Section ─────────────────────────────────────────── */}

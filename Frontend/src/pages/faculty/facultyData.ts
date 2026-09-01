@@ -49,7 +49,7 @@ export interface FacultyMember {
 
 export const facultyData: FacultyMember[] = [
 
-  // ⭐ UNDER GUIDANCE — Prof. Anuoama Kaushik Sharma
+  // ⭐ UNDER GUIDANCE — Prof. Anupama Kaushik Sharma
   {
     id: 0,
     name: "Prof. Anupama Kaushik Sharma",
@@ -76,10 +76,7 @@ export const facultyData: FacultyMember[] = [
       "Mobile & Distributed Computing",
       "Internet of Things",
       "Sensor Networks",
-      "Network Security",
-      "Machine Learning",
-      "Cloud Computing",
-      "Image Processing"
+      "Network Security"
     ],
     email: "rkiitr@gmail.com",
     phone: "+91-XXXXXXXXXX",
@@ -88,13 +85,6 @@ export const facultyData: FacultyMember[] = [
       "Leading the Computer Science and Engineering department with extensive expertise in mobile computing and distributed systems.",
     isHOD: true,
     qualification: "PhD / IIT Roorkee",
-    teachingExperienceUG: 32,
-    teachingExperiencePG: 28,
-    seminarsOrganised: 16,
-    seminarsAttended: 45,
-    memberships: ["IEEE", "FIE(India)", "FIETE", "CSI", "ISTE", "ACM", "IAENG"],
-    mtechSupervised: 32,
-    phdSupervised: 12,
     additionalInfo: "Recipient of Best Teacher Award."
   },
 
@@ -151,9 +141,30 @@ export const facultyData: FacultyMember[] = [
   //   booksPublished: "8+",
   // },
 
-  // ⭐ Dr. Shwet Ketu
+  // ⭐ Dr. Satvik Vats
   {
     id: 4,
+    name: "Dr. Satvik Vats",
+    title: "Assistant Professor",
+    department: "Computer Science and Engineering",
+    specialization: ["Big Data", "Deep Learning", "Machine Learning", "AI"],
+    email: "svcse@mmmut.ac.in",
+    phone: "+91-XXXXXXXXXX",
+    profileImage: SatvikSir,
+    description:
+      "Specializing in Big Data analytics and Deep Learning applications.",
+    linkedinUrl: "https://www.linkedin.com/in/satvik-vats",
+    websiteUrl: "https://svats.in",
+    citations: "2700+",
+    patents: "20+",
+    projectPublications: "75+",
+    booksPublished: "4+",
+    internationalPublications: "18+"
+  },
+
+  // ⭐ Dr. Shwet Ketu
+  {
+    id: 5,
     name: "Dr. Shwet Ketu",
     title: "Assistant Professor",
     department: "Computer Science & Engineering",
@@ -176,27 +187,6 @@ export const facultyData: FacultyMember[] = [
     internationalPublications: "13+",
     organisations: "5+",
     review: "10"
-  },
-
-  // ⭐ Dr. Satvik Vats
-  {
-    id: 5,
-    name: "Dr. Satvik Vats",
-    title: "Assistant Professor",
-    department: "Computer Science and Engineering",
-    specialization: ["Big Data", "Deep Learning", "Machine Learning", "AI"],
-    email: "svcse@mmmut.ac.in",
-    phone: "+91-XXXXXXXXXX",
-    profileImage: SatvikSir,
-    description:
-      "Specializing in Big Data analytics and Deep Learning applications.",
-    linkedinUrl: "https://www.linkedin.com/in/satvik-vats",
-    websiteUrl: "https://svats.in",
-    citations: "2700+",
-    patents: "20+",
-    projectPublications: "75+",
-    booksPublished: "4+",
-    internationalPublications: "18+"
   },
 
   // // ⭐ Dr. Shantanu Shahi

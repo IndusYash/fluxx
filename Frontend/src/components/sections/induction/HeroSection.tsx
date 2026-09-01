@@ -1,6 +1,6 @@
  import React from "react";
 import Threads from "./Threads";
-import { Zap, Users, Rocket, Star } from "lucide-react";
+import { Rocket } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface HeroSectionProps {
@@ -71,25 +71,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             >
               Learn More
             </button>
-          </div>
-
-          {/* Stats row */}
-          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10">
-            {[
-              { icon: Users, label: "Active Members", value: "100+" },
-              { icon: Star, label: "Projects Shipped", value: "20+" },
-              { icon: Zap, label: "Events Per Year", value: "10+" },
-            ].map(({ icon: Icon, label, value }) => (
-              <div key={label} className="flex items-center gap-3">
-                <div className="card-outline w-9 h-9 rounded-xl bg-[#E5E5E5]/10 border border-[#E5E5E5]/20 flex items-center justify-center shrink-0">
-                  <Icon size={15} className="text-[#E5E5E5]" />
-                </div>
-                <div className="text-left">
-                  <p className="text-white font-bold text-sm leading-none">{value}</p>
-                  <p className="text-gray-600 text-[11px] mt-0.5">{label}</p>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </div>

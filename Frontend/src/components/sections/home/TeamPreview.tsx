@@ -19,17 +19,6 @@ interface TeamMember {
   emoji: string;
 }
 
-interface StatItem {
-  label: string;
-  value: string;
-}
-
-const stats: StatItem[] = [
-  { label: "Team Members", value: "10+" },
-  { label: "Projects", value: "20+" },
-  { label: "Events", value: "15+" },
-];
-
 export default function TeamPreview() {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -37,7 +26,7 @@ export default function TeamPreview() {
   const teamMembers: TeamMember[] = [
     {
       id: 0,
-      role: "Pre-final Year",
+      role: "Final Year",
       name: "Vishesh Mishra",
       icon: vish,
       color: "from-white/60 to-gray-400/60",
@@ -47,7 +36,7 @@ export default function TeamPreview() {
     },
     {
       id: 1,
-      role: "Pre-final Year",
+      role: "Final Year",
       name: "Yashasvi Sharma",
       icon: ysv,
       color: "from-white/60 to-gray-400/60",
@@ -57,7 +46,7 @@ export default function TeamPreview() {
     },
     {
       id: 2,
-      role: "Pre-final Year",
+      role: "Final Year",
       name: "Shivam Mishra",
       icon: shiv,
       color: "from-white/60 to-gray-400/60",
@@ -389,72 +378,6 @@ export default function TeamPreview() {
             ))}
           </div>
         </div>
-
-        {/* Animated stats section */}
-        <motion.div
-          className="mt-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-        >
-          <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                className="text-center group cursor-pointer"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <motion.div
-                  className="card-outline relative p-6 rounded-2xl bg-white/5 backdrop-blur-sm overflow-hidden"
-                  whileHover={{ scale: 1.05, y: -2 }}
-                >
-                  {/* Animated background */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-white/10 to-white/5 rounded-2xl"
-                    animate={{ scale: [0, 1.1, 1] }}
-                    transition={{ duration: 0.5 }}
-                  />
-
-                  {/* Content */}
-                  <div className="relative z-10">
-                    <motion.div 
-                      className="text-4xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent mb-2"
-                      whileHover={{ scale: 1.1 }}
-                    >
-                      {stat.value}
-                    </motion.div>
-                    <div className="text-sm text-gray-400 font-medium">
-                      {stat.label}
-                    </div>
-                  </div>
-
-                  {/* Floating particles on hover */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                    {[...Array(6)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        className="absolute w-1 h-1 bg-white/60 rounded-full"
-                        style={{
-                          left: `${20 + Math.random() * 60}%`,
-                          top: `${20 + Math.random() * 60}%`,
-                        }}
-                        animate={{ y: [0, -20, 0], scale: [1, 1.5, 1] }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          delay: i * 0.2,
-                          ease: "easeInOut",
-                        }}
-                      />
-                    ))}
-                  </div>
-                </motion.div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
 
         {/* Team collaboration visualization */}
         <motion.div
