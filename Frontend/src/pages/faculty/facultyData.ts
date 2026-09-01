@@ -150,7 +150,26 @@ export const facultyData: FacultyMember[] = [
   //   review: "12",
   //   booksPublished: "8+",
   // },
-
+  // ⭐ Dr. Satvik Vats
+  {
+    id: 5,
+    name: "Dr. Satvik Vats",
+    title: "Assistant Professor",
+    department: "Computer Science and Engineering",
+    specialization: ["Big Data", "Deep Learning", "Machine Learning", "AI"],
+    email: "svcse@mmmut.ac.in",
+    phone: "+91-XXXXXXXXXX",
+    profileImage: SatvikSir,
+    description:
+      "Specializing in Big Data analytics and Deep Learning applications.",
+    linkedinUrl: "https://www.linkedin.com/in/satvik-vats",
+    websiteUrl: "https://svats.in",
+    citations: "2700+",
+    patents: "20+",
+    projectPublications: "75+",
+    booksPublished: "4+",
+    internationalPublications: "18+"
+  },
   // ⭐ Dr. Shwet Ketu
   {
     id: 4,
@@ -178,26 +197,7 @@ export const facultyData: FacultyMember[] = [
     review: "10"
   },
 
-  // ⭐ Dr. Satvik Vats
-  {
-    id: 5,
-    name: "Dr. Satvik Vats",
-    title: "Assistant Professor",
-    department: "Computer Science and Engineering",
-    specialization: ["Big Data", "Deep Learning", "Machine Learning", "AI"],
-    email: "svcse@mmmut.ac.in",
-    phone: "+91-XXXXXXXXXX",
-    profileImage: SatvikSir,
-    description:
-      "Specializing in Big Data analytics and Deep Learning applications.",
-    linkedinUrl: "https://www.linkedin.com/in/satvik-vats",
-    websiteUrl: "https://svats.in",
-    citations: "2700+",
-    patents: "20+",
-    projectPublications: "75+",
-    booksPublished: "4+",
-    internationalPublications: "18+"
-  },
+  
 
   // // ⭐ Dr. Shantanu Shahi
   // {
