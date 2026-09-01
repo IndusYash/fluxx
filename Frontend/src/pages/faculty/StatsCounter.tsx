@@ -10,8 +10,8 @@ const StatsCounter: React.FC = React.memo(() => {
     threshold: 0.3,
   });
 
-  const totalFaculty = useCountAnimation(47, 2000, isVisible);
-  const departments = useCountAnimation(8, 2000, isVisible);
+  const totalFaculty = useCountAnimation(2, 2000, isVisible);
+  const departments = useCountAnimation(1, 2000, isVisible);
   const publications = useCountAnimation(250, 2500, isVisible);
   const awards = useCountAnimation(32, 2000, isVisible);
 
