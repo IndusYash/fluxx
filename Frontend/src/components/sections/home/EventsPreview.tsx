@@ -20,7 +20,7 @@ const upcomingEvents = [
     type: "Event",
     participants: "300+",
     description:
-      "Get ready for ByteBrawl — a high-energy coding showdown where creativity meets code. Build, experiment, and ship cool projects in a collaborative, vibe-driven environment. Lead: She Lead.",
+      "Get ready for ByteBrawl — a high-energy coding showdown where creativity meets code. Build, experiment, and ship cool projects in a collaborative, vibe-driven environment.",
   },
   {
     id: 3,
@@ -57,11 +57,11 @@ export default function EventsPreview() {
         </div>
 
         {/* Events Grid */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-16">
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-16">
           {upcomingEvents.map((event, index) => (
             <div
               key={event.id}
-              className="card-outline group p-6 rounded-2xl bg-white/5 transition-all duration-300 hover:bg-white/10 hover:shadow-[0_8px_0_rgba(255,255,255,0.12)]"
+              className="card-outline group p-6 rounded-2xl bg-white/5 transition-all duration-300 hover:bg-white/10 hover:shadow-[0_8px_0_rgba(255,255,255,0.12)] w-full"
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center">

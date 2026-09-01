@@ -88,7 +88,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-gray-400 leading-relaxed text-sm mb-6 relative z-10">
-              Pioneering the next era of technology. A community of developers and tech enthusiasts building together.
+              Pioneering the next era of technology — where curious developers, bold innovators, and passionate tech enthusiasts unite to design, build, and shape the digital landscape of tomorrow.
             </p>
             
             <div className="flex gap-3 relative z-10">

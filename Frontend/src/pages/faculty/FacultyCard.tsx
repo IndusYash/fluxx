@@ -1,7 +1,6 @@
 import React from "react";
 import { Mail, Linkedin, Globe } from "lucide-react";
 import { FacultyMember } from "./facultyData";
-import { motion } from "framer-motion";
 
 interface FacultyCardProps {
   faculty: FacultyMember;
@@ -177,25 +176,8 @@ const FacultyCard: React.FC<FacultyCardProps> = ({ faculty, idx = 0 }) => {
     }
   };
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
-    },
-  };
-
   return (
-    <motion.div
-      variants={cardVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: (idx % 10) * 0.1 }}
-      className="group relative flex w-full"
-    >
+    <div className="group relative flex w-full">
       <div className="absolute -inset-1 bg-gradient-to-r from-white/0 via-white/5 to-white/0 rounded-[2rem] blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-700 pointer-events-none" />
 
       <div
@@ -213,45 +195,20 @@ const FacultyCard: React.FC<FacultyCardProps> = ({ faculty, idx = 0 }) => {
           }}
         />
 
-        {/* Floating inner glow dots */}
-        <motion.div
-          className="absolute top-8 right-8 w-1 h-1 bg-white/30 rounded-full"
-          animate={{ opacity: [0.3, 0.8, 0.3], scale: [1, 1.5, 1] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute bottom-8 left-8 w-1.5 h-1.5 bg-white/20 rounded-full"
-          animate={{ opacity: [0.2, 0.6, 0.2], scale: [1, 2, 1] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
-        />
-
         {/* Content Layer */}
         <div className="flex flex-col md:flex-row gap-6 md:gap-8 text-white h-full relative z-10">
           {/* Profile Section */}
           <div className="flex-shrink-0 flex flex-col items-center md:items-start">
-            <motion.div
-              className="relative mb-6 rounded-2xl overflow-hidden shadow-2xl border border-white/10 group-hover:border-white/30 transition-all duration-500"
-              whileHover={{ rotate: 0.5 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-            >
-              <motion.img
+            <div className="relative mb-6 rounded-2xl overflow-hidden shadow-2xl border border-white/10 group-hover:border-white/30 transition-all duration-500">
+              <img
                 src={faculty.profileImage}
                 alt={faculty.name}
                 className="w-36 h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 object-cover object-top transition-transform duration-700 group-hover:scale-105"
                 style={{ imageRendering: "crispEdges" }}
-                whileHover={{ scale: 1.08 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-60" />
               <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-15 transition-opacity duration-500" />
-
-              {/* Glow ring around image */}
-              <motion.div
-                className="absolute -inset-1 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{
-                  boxShadow: "0 0 30px rgba(255,255,255,0.3)",
-                }}
-              />
-            </motion.div>
+            </div>
 
             {/* Social Links */}
             <div className="flex flex-row md:flex-col gap-3">
@@ -280,30 +237,21 @@ const FacultyCard: React.FC<FacultyCardProps> = ({ faculty, idx = 0 }) => {
           <div className="flex-1 flex flex-col min-w-0 h-full">
             {/* Header Info */}
             <div className="flex-shrink-0 mb-6">
-              <h3
-                className="text-3xl md:text-4xl font-bold mb-2 tracking-wide"
-              >
+              <h3 className="text-3xl md:text-4xl font-bold mb-2 tracking-wide">
                 {faculty.name}
               </h3>
-              <motion.div
+              <div
                 className="text-sm md:text-base font-semibold tracking-wider uppercase mb-2"
                 style={{ color: accentColor }}
-                whileHover={{ letterSpacing: "0.2em" }}
-                transition={{ duration: 0.4 }}
               >
                 {faculty.title}
-              </motion.div>
+              </div>
               <p className="text-white/60 text-xs md:text-sm tracking-wider uppercase mb-4">
                 {faculty.department}
               </p>
-              <motion.p
-                className="text-gray-400 text-sm md:text-base leading-relaxed line-clamp-3 group-hover:text-gray-300 transition-colors"
-                initial={{ opacity: 0.6 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.8 }}
-              >
+              <p className="text-gray-400 text-sm md:text-base leading-relaxed line-clamp-3 group-hover:text-gray-300 transition-colors">
                 {faculty.description}
-              </motion.p>
+              </p>
             </div>
 
             {/* Stats Section */}
@@ -317,7 +265,7 @@ const FacultyCard: React.FC<FacultyCardProps> = ({ faculty, idx = 0 }) => {
             <div className="flex-shrink-0 border-t border-white/5 pt-5">
               <div className="flex flex-wrap gap-2 justify-start">
                 {faculty.specialization.slice(0, 4).map((skill, index) => (
-                  <motion.span
+                  <span
                     key={index}
                     className="px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all duration-300"
                     style={{
@@ -325,36 +273,21 @@ const FacultyCard: React.FC<FacultyCardProps> = ({ faculty, idx = 0 }) => {
                       border: "1px solid rgba(255,255,255,0.08)",
                       color: "#d1d5db",
                     }}
-                    whileHover={{
-                      backgroundColor: `${accentColor}20`,
-                      borderColor: `${accentColor}50`,
-                      color: "#fff",
-                      y: -2,
-                      scale: 1.05,
-                    }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
                   >
                     {skill.length > 20 ? skill.substring(0, 18) + "..." : skill}
-                  </motion.span>
+                  </span>
                 ))}
                 {faculty.specialization.length > 4 && (
-                  <motion.span
+                  <span
                     className="px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wide"
                     style={{
                       backgroundColor: "rgba(255,255,255,0.04)",
                       border: "1px solid rgba(255,255,255,0.08)",
                       color: "#9ca3af",
                     }}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: 0.3 }}
                   >
                     +{faculty.specialization.length - 4}
-                  </motion.span>
+                  </span>
                 )}
               </div>
             </div>
@@ -369,7 +302,7 @@ const FacultyCard: React.FC<FacultyCardProps> = ({ faculty, idx = 0 }) => {
           />
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -378,24 +311,17 @@ const MetricItem: React.FC<{ value: string; label: string; color: string }> = ({
   label,
   color,
 }) => (
-  <motion.div
-    className="text-left group/metric"
-    initial={{ opacity: 0, x: -10 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.4 }}
-  >
-    <motion.div
+  <div className="text-left group/metric">
+    <div
       className="text-2xl md:text-3xl font-bold mb-1 transition-transform origin-left group-hover/metric:scale-110"
       style={{ color: color }}
-      whileHover={{ textShadow: "0 0 10px rgba(255,255,255,0.3)" }}
     >
       {value}
-    </motion.div>
+    </div>
     <div className="text-[10px] md:text-xs text-gray-500 uppercase tracking-widest font-semibold">
       {label}
     </div>
-  </motion.div>
+  </div>
 );
 
 const SocialLink: React.FC<{
@@ -403,17 +329,12 @@ const SocialLink: React.FC<{
   icon: React.ReactNode;
   color: string;
 }> = ({ href, icon, color }) => (
-  <motion.a
+  <a
     href={href}
     target="_blank"
     rel="noopener noreferrer"
     className="p-3 bg-white/5 border border-white/10 rounded-xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden group/social"
     style={{ color: "inherit" }}
-    whileHover={{ scale: 1.1 }}
-    transition={{ duration: 0.3, ease: "easeOut" }}
-    initial={{ opacity: 0, scale: 0.8 }}
-    whileInView={{ opacity: 1, scale: 1 }}
-    viewport={{ once: true }}
   >
     <div
       className="absolute -inset-2 opacity-0 group-hover/social:opacity-100 transition-opacity duration-500 pointer-events-none"
@@ -421,13 +342,10 @@ const SocialLink: React.FC<{
         background: `radial-gradient(circle at center, ${color}20, transparent 70%)`,
       }}
     />
-    <motion.div
-      className="text-gray-400 transition-colors group-hover/social:text-white relative z-10"
-      whileHover={{ color }}
-    >
+    <div className="text-gray-400 transition-colors group-hover/social:text-white relative z-10">
       {icon}
-    </motion.div>
-  </motion.a>
+    </div>
+  </a>
 );
 
 export default FacultyCard;

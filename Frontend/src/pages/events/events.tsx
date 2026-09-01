@@ -73,7 +73,7 @@ const EventsPage: React.FC = () => {
       icon: "WEEK TWO",
       phase: "Workshop",
       description:
-        "Get ready for ByteBrawl — a high-energy coding showdown where creativity meets code. Build, experiment, and ship cool projects in a collaborative, vibe-driven environment. Lead by She Lead.",
+        "Get ready for ByteBrawl — a high-energy coding showdown where creativity meets code. Build, experiment, and ship cool projects in a collaborative, vibe-driven environment.",
       attendees: 300,
     },
     {

@@ -213,7 +213,7 @@ function Contact() {
             </motion.div>
 
             <p className="text-gray-400 text-base mb-6">
-              CSED, MMMUT, Tech District, Gorakhpur, U.P.
+              CSED, MMMUT, Gorakhpur, U.P.
             </p>
 
             <motion.a

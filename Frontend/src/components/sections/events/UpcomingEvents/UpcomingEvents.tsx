@@ -45,7 +45,7 @@ const events: EventProps[] = [
     title: 'ByteBrawl',
     date: 'Coming Soon',
     description:
-      "Get ready for ByteBrawl — a high-energy coding showdown where creativity meets code. Build, experiment, and ship cool projects in a collaborative, vibe-driven environment. Lead: She Lead.",
+      "Get ready for ByteBrawl — a high-energy coding showdown where creativity meets code. Build, experiment, and ship cool projects in a collaborative, vibe-driven environment.",
     imageUrl: conferenceImg,
     isUpcoming: true,
     location: 'MMMUT Gorakhpur',
