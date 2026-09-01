@@ -29,7 +29,7 @@ const activities: Activity[] = [
         icon: <Zap className="w-8 h-8" />,
         features: ['24-48 Hour Challenges', 'Real-world Problems'],
         imageUrl: hackathonImg,
-        color: 'from-blue-600 to-purple-600',
+        color: 'from-white/60 to-gray-400/60',
     },
     {
         id: 2,
@@ -39,7 +39,7 @@ const activities: Activity[] = [
         icon: <Sparkles className="w-8 h-8" />,
         features: ['Expert Speakers', 'Networking Sessions'],
         imageUrl: conferenceImg,
-        color: 'from-green-600 to-teal-600',
+        color: 'from-white/60 to-gray-400/60',
     },
     {
         id: 3,
@@ -49,7 +49,7 @@ const activities: Activity[] = [
         icon: <FileText className="w-8 h-8" />,
         features: ['Interactive Labs', 'Skill Development'],
         imageUrl: workshopImg,
-        color: 'from-purple-500 to-pink-500',
+        color: 'from-white/60 to-gray-400/60',
     },
     {
         id: 4,
@@ -59,7 +59,7 @@ const activities: Activity[] = [
         icon: <Presentation className="w-8 h-8" />,
         features: ['Knowledge Sharing', 'Interactive Q&A'],
         imageUrl: seminarImg,
-        color: 'from-yellow-400 to-orange-400',
+        color: 'from-white/60 to-gray-400/60',
     },
     {
         id: 5,
@@ -69,7 +69,7 @@ const activities: Activity[] = [
         icon: <Trophy className="w-8 h-8" />,
         features: ['Prizes & Recognition', 'Skill Challenges'],
         imageUrl: competitionImg,
-        color: 'from-red-500 to-pink-500',
+        color: 'from-white/60 to-gray-400/60',
     },
     {
         id: 6,
@@ -79,9 +79,9 @@ const activities: Activity[] = [
         icon: <Lightbulb className="w-8 h-8" />,
         features: ['Hands-on Prototyping', 'Creative Collaboration'],
         imageUrl: labsImg,
-        color: 'from-blue-500 to-indigo-500',
+        color: 'from-white/60 to-gray-400/60',
     }
-];
+  ];
 
 const WhatWeDoSection: React.FC = () => {
     return (
@@ -99,7 +99,7 @@ const WhatWeDoSection: React.FC = () => {
                         transition={{ duration: 0.8 }}
                         className="text-center mb-16"
                     >
-                        <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-green-400 to-white bg-clip-text text-transparent">
+                        <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">
                             What We Do
                         </h2>
                         <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">

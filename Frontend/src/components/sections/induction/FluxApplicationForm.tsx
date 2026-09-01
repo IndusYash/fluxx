@@ -149,7 +149,7 @@ export const FluxApplicationForm = () => {
   };
 
   return (
-    <Card className="bg-card/50 backdrop-blur-md border-flux-border">
+    <Card className="card-outline bg-card/50 backdrop-blur-md border-flux-border">
       <CardContent className="p-8">
         {/* Header */}
         <div className="mb-8">

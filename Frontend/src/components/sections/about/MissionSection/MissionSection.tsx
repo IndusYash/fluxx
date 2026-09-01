@@ -1,105 +1,52 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import type { MissionSectionProps } from './MissionSection.types';
-import { useIntersectionObserver } from '../../../../hooks/useIntersectionObserver';
-import ParticlesContainer from '../common/Particles';
-import { motion } from 'framer-motion';
 
-// --- Animated Mission Item Component ---
+// --- Mission Item Component ---
 const MissionItem: React.FC<{ mission: string; index: number }> = ({ mission, index }) => {
   return (
-    <motion.div
-      // Updated hover effects with green shadow instead of amber
-      whileHover={{ y: -8, scale: 1.05, boxShadow: "0 10px 20px rgba(34, 197, 94, 0.25)" }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="flex items-start space-x-6 p-6 rounded-2xl cursor-pointer
-        bg-black/80 backdrop-blur-md border border-green-400/20 shadow-lg shadow-green-500/10
-        hover:border-green-400/40 hover:shadow-xl hover:shadow-green-500/20 transition-colors duration-300"
+    <div
+      className="relative flex items-start space-x-5 p-6 md:p-7 rounded-2xl
+        bg-white/[0.04] border border-white/[0.12] shadow-lg shadow-white/5
+        hover:border-white/20 transition-all duration-300 group overflow-hidden"
     >
-      <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-lg ring-2 ring-green-400/30 shadow-sm shadow-green-400/20">
+      <div className="relative z-10 flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-white to-gray-400 flex items-center justify-center text-black font-bold text-lg ring-2 ring-white/30 shadow-lg shadow-white/10">
         {index + 1}
       </div>
-      <div>
-        <p className="text-gray-300 leading-relaxed">
+      <div className="relative z-10 flex-1">
+        <p className="text-gray-200 leading-relaxed text-sm md:text-base">
           {mission}
         </p>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
 // --- Main MissionSection Component ---
 const MissionSection: React.FC<MissionSectionProps> = ({ title, missions, subtitle }) => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const isVisible = useIntersectionObserver(sectionRef, { threshold: 0.1, triggerOnce: true });
-
-  // Fixed stagger animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { 
-        staggerChildren: 0.2,
-        delayChildren: 0.3
-      }
-    },
-  };
-
-  // Simplified item variants for reliable stagger
-  const itemVariants = {
-    hidden: { 
-      opacity: 0, 
-      x: 40,
-      y: 20
-    },
-    visible: { 
-      opacity: 1, 
-      x: 0,
-      y: 0,
-      transition: { 
-        duration: 0.6, 
-        ease: "easeOut" 
-      } 
-    },
-  };
-
   if (!missions?.length) return null;
 
   return (
-    <section ref={sectionRef} className="relative py-20 lg:py-32 bg-black text-white overflow-hidden">
-      {/* Pure black background */}
+      <section className="relative py-20 lg:py-32 bg-[#020202] text-white overflow-hidden">
       <div className="absolute inset-0 z-0 bg-black"></div>
-      <ParticlesContainer />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-        {/* Header with separate animation */}
-        <div className={`text-center mb-20 transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}>
-          <h2 className="text-4xl md:text-6xl font-bold mb-4 text-white">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white tracking-tight">
             {title}
           </h2>
-          {/* Subtitle */}
-          <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">
+          <p className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed text-center">
             {subtitle}
           </p>
-          {/* Simple green underline */}
-          <div className="relative mt-6 mx-auto w-48 h-1 bg-gray-800 rounded-full">
-            <div className={`absolute top-0 left-0 h-full rounded-full bg-green-400 transition-all duration-1000 ease-out ${isVisible ? 'w-full' : 'w-0'}`}></div>
+          <div className="relative mt-8 mx-auto w-32 h-[2px] bg-white/10 rounded-full overflow-hidden">
+            <div className="absolute top-0 left-0 h-full rounded-full bg-gradient-to-r from-white to-gray-400"></div>
           </div>
         </div>
         
-        {/* Fixed staggered animation container */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
-          className="grid lg:grid-cols-2 gap-8"
-        >
+        <div className="grid lg:grid-cols-2 gap-5 lg:gap-6">
           {missions.map((mission, index) => (
-            <motion.div key={index} variants={itemVariants}>
-              <MissionItem mission={mission} index={index} />
-            </motion.div>
+            <MissionItem key={index} mission={mission} index={index} />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -35,7 +35,7 @@ const ShinyText: React.FC<ShinyTextProps> = ({
 
         /* TEXT GLOW */
         textShadow:
-          '0 0 3px rgba(229, 255, 251, 0.35), 0 0 8px rgba(154, 245, 255, 0.45), 0 0 16px rgba(108, 255, 247, 0.55)',
+          '0 0 3px rgba(229, 255, 251, 0.35), 0 0 8px rgba(154, 245, 255, 0.45), 0 0 16px rgba(255, 255, 255, 0.55)',
 
         /* APPLY STYLES FROM Ideathon.tsx */
         ...style, // <-- MERGE user styles LAST to override defaults

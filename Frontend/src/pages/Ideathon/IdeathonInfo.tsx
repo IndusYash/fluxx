@@ -8,27 +8,27 @@ import { useNavigate } from 'react-router-dom';
 
 const infoCards = [
     {
-        icon: <Calendar className="w-10 h-10 text-primary" />,
+        icon: <Calendar className="w-10 h-10 text-white" />,
         title: "Event Dates",
         desc: "December 10-19, 2025",
-        gradient: "from-blue-500/40 to-cyan-400/40",
-        glowColor: "rgba(59, 130, 246, 0.3)",
+        gradient: "from-white/40 to-gray-400/40",
+        glowColor: "rgba(255, 255, 255, 0.15)",
     },
     {
-        icon: <Globe className="w-10 h-10 text-primary animate-spin-slow" />,
+        icon: <Globe className="w-10 h-10 text-white animate-spin-slow" />,
         title: "Mode",
         desc: "Offline",
-        gradient: "from-green-500/40 to-emerald-400/40",
-        glowColor: "rgba(34, 197, 94, 0.3)",
+        gradient: "from-white/40 to-gray-400/40",
+        glowColor: "rgba(255, 255, 255, 0.15)",
     },
     {
-        icon: <Trophy className="w-10 h-10 text-primary animate-pulse" />,
+        icon: <Trophy className="w-10 h-10 text-white animate-pulse" />,
         title: "Prize Pool",
         desc: "Exciting Goodies, Certificates & Patent Grants,etc",
-        gradient: "from-yellow-400/40 to-orange-400/40",
-        glowColor: "rgba(251, 191, 36, 0.3)",
+        gradient: "from-white/40 to-gray-400/40",
+        glowColor: "rgba(255, 255, 255, 0.15)",
     },
-];
+  ];
 
 const containerVariants: Variants = {
     hidden: {},
@@ -96,14 +96,14 @@ const IdeathonInfo: React.FC = () => {
                         <motion.div
                             key={item.title}
                             variants={itemVariants}
-                            className="group relative min-h-[220px]  flex flex-col rounded-2xl border border-border/50 bg-card/80 backdrop-blur-sm p-8 transition-all duration-500 overflow-hidden hover:border-cyan-400 hover:shadow-[0_0_35px_10px_rgba(6,182,212,0.5)]"
+                            className="card-outline group relative min-h-[220px]  flex flex-col rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 transition-all duration-500 overflow-hidden hover:border-white/40 hover:shadow-[0_0_35px_10px_rgba(255,255,255,0.15)]"
                         >
                             {/* Hover glow */}
-                            <div className="absolute inset-0 opacity-0 group-hover:opacity-50 transition-opacity duration-500 bg-gradient-to-br from-cyan-400/20 to-blue-500/20  blur-2xl rounded-2xl">
+                            <div className="absolute inset-0 opacity-0 group-hover:opacity-50 transition-opacity duration-500 bg-gradient-to-br from-white/20 to-gray-400/20  blur-2xl rounded-2xl">
                             </div>
-                            {/* Remove hover gradient overlay for clean blue border/shadow effect */}
+                            {/* Remove hover gradient overlay for clean border/shadow effect */}
                             <div className="relative z-10 flex flex-col h-full items-center justify-center">
-                                <div className="mb-4 mt-4 inline-flex items-center justify-center bg-primary/20 rounded-xl p-4 w-fit mx-auto transform transition-transform duration-300 hovering:shadow-[0_0_32px_8px_rgba(6,182,212,0.4)] hover:shadow-xl group-hover:scale-125">
+                                <div className="mb-4 mt-4 inline-flex items-center justify-center bg-white/20 rounded-xl p-4 w-fit mx-auto transform transition-transform duration-300 group-hover:shadow-[0_0_32px_8px_rgba(255,255,255,0.3)] hover:shadow-xl group-hover:scale-125">
                                     {item.icon}
                                 </div>
                                 <h3 className="text-xl font-semibold mb-2 text-center group-hover:text-primary transition-colors">
@@ -129,16 +129,16 @@ const IdeathonInfo: React.FC = () => {
                     {guidelines.map((rule, index) => (
                         <li key={index}>
                             <motion.div
-                                className="flex items-center gap-3 bg-card/70 border border-border/40 rounded-xl px-4 py-3 shadow-sm hover:shadow-lg hover:bg-primary/10 transition-all duration-200 group cursor-pointer relative"
+                                className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3 shadow-sm hover:shadow-lg hover:bg-white/10 transition-all duration-200 group cursor-pointer relative"
                                 role="button"
                             >
                                 <span className="group-hover:scale-125 transition-transform duration-200 ">
                                     {rule.icon}
                                 </span>
-                                <span className="font-semibold text-white group-hover:text-primary transition-colors duration-200">
+                                <span className="font-semibold text-white group-hover:text-white transition-colors duration-200">
                                     {rule.title}
                                 </span>
-                                <span className="text-muted-foreground/80 ml-1">
+                                <span className="text-gray-400 ml-1">
                                     {rule.details}
                                 </span>
                                </motion.div>
@@ -173,25 +173,25 @@ const IdeathonInfo: React.FC = () => {
                 <h2 className="text-2xl font-bold tracking-tight text-white mb-10">STAGES OF COMPETITION</h2>
                 <div className="relative flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
                     {/* Stage 1 */}
-                    <div className="relative z-10 flex-1 min-w-[220px] max-w-xs py-10 bg-card/80 border-2 border-primary rounded-2xl p-6 shadow-[0_0_32px_8px_rgba(6,182,212,0.4)] text-center text-white font-semibold stage-double-border">
-                        <div className="text-primary text-lg font-bold mb-2">STAGE 1</div>
+                    <div className="relative z-10 flex-1 min-w-[220px] max-w-xs py-10 bg-white/5 border-2 border-white/20 rounded-2xl p-6 shadow-[0_0_32px_8px_rgba(255,255,255,0.15)] text-center text-white font-semibold stage-double-border">
+                        <div className="text-white text-lg font-bold mb-2">STAGE 1</div>
                         <div className="text-base font-medium mb-1">REGISTRATION & PPT SUBMISSION</div>
-                        <div className="text-primary/80 text-sm">December 10-15, 2025</div>
+                        <div className="text-white/80 text-sm">December 10-15, 2025</div>
                     </div>
                    
                     {/* Stage 2 */}
-                    <div className="relative z-10 flex-1 min-w-[220px] max-w-xs py-10 bg-card/80 border-2 border-primary rounded-2xl p-6 shadow-[0_0_32px_8px_rgba(6,182,212,0.4)] text-center text-white font-semibold stage-double-border">
-                        <div className="text-primary text-lg font-bold mb-2">STAGE 2</div>
+                    <div className="relative z-10 flex-1 min-w-[220px] max-w-xs py-10 bg-white/5 border-2 border-white/20 rounded-2xl p-6 shadow-[0_0_32px_8px_rgba(255,255,255,0.15)] text-center text-white font-semibold stage-double-border">
+                        <div className="text-white text-lg font-bold mb-2">STAGE 2</div>
                         <div className="text-base font-medium mb-1">SHORTLISTING & MENTORSHIP</div>
-                        <div className="text-primary/80 text-sm">December 17, 2025</div>
+                        <div className="text-white/80 text-sm">December 17, 2025</div>
                     </div>
                     {/* Connector (optional, can be removed for more separation) */}
-                    {/* <div className="hidden md:block absolute left-2/3 top-1/2 w-1/3 h-0 border-t-2 border-dashed border-cyan-400 z-0" style={{transform: 'translateY(-50%)'}}></div> */}
+                    {/* <div className="hidden md:block absolute left-2/3 top-1/2 w-1/3 h-0 border-t-2 border-dashed border-white/40 z-0" style={{transform: 'translateY(-50%)'}}></div> */}
                     {/* Stage 3 */}
-                    <div className="relative z-10 flex-1 min-w-[220px] max-w-xs py-10 bg-card/80 border-2 border-primary rounded-2xl p-6 shadow-[0_0_32px_8px_rgba(6,182,212,0.4)] text-center text-white font-semibold stage-double-border">
-                        <div className="text-primary text-lg font-bold mb-2">STAGE 3</div>
+                    <div className="relative z-10 flex-1 min-w-[220px] max-w-xs py-10 bg-white/5 border-2 border-white/20 rounded-2xl p-6 shadow-[0_0_32px_8px_rgba(255,255,255,0.15)] text-center text-white font-semibold stage-double-border">
+                        <div className="text-white text-lg font-bold mb-2">STAGE 3</div>
                         <div className="text-base font-medium mb-1">FINAL PRESENTATION <span className="text-white font-normal">| WINNERS</span></div>
-                        <div className="text-primary/80 text-sm">December 18, 2025</div>
+                        <div className="text-white/80 text-sm">December 18, 2025</div>
                     </div>
                 </div>
                                 </section>
@@ -205,8 +205,8 @@ const IdeathonInfo: React.FC = () => {
                                             align-items: center;
                                             justify-content: center;
                                             padding: 0.85rem 2.2rem;
-                                            background: rgba(150,255,245,0.08);
-                                            border: 2px solid rgba(6,182,212,0.25);
+                                            background: rgba(255,255,255,0.08);
+                                            border: 2px solid rgba(255,255,255,0.25);
                                             border-radius: 14px;
                                             font-family: 'Inter', system-ui, -apple-system, sans-serif;
                                             font-size: 1.18rem;
@@ -214,7 +214,7 @@ const IdeathonInfo: React.FC = () => {
                                             color: #fff;
                                             cursor: pointer;
                                             transition: all 0.3s ease;
-                                            box-shadow: 0 0 18px rgba(6,182,212,0.13);
+                                            box-shadow: 0 0 18px rgba(255,255,255,0.13);
                                             overflow: hidden;
                                             letter-spacing: 0.09em;
                                             text-transform: uppercase;
@@ -223,7 +223,7 @@ const IdeathonInfo: React.FC = () => {
                                             content: '';
                                             position: absolute;
                                             inset: -2px;
-                                            background: linear-gradient(135deg, rgba(229,255,251,0.25), rgba(6,182,212,0.18), rgba(229,255,251,0.25));
+                                            background: linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.4), rgba(255,255,255,0.25));
                                             border-radius: 14px;
                                             opacity: 0;
                                             transition: opacity 0.3s ease;
@@ -234,8 +234,8 @@ const IdeathonInfo: React.FC = () => {
                                         }
                                         .register-now-btn:hover {
                                             transform: translateY(-2px) scale(1.04);
-                                            border-color: rgba(6,182,212,0.45);
-                                            box-shadow: 0 0 24px rgba(6,182,212,0.22), 0 6px 24px rgba(0,0,0,0.18);
+                                            border-color: rgba(255,255,255,0.45);
+                                            box-shadow: 0 0 24px rgba(255,255,255,0.22), 0 6px 24px rgba(0,0,0,0.18);
                                         }
                                     `}</style>
                                     <button
@@ -259,15 +259,15 @@ const IdeathonInfo: React.FC = () => {
                         position: absolute;
                         inset: -6px;
                         border-radius: 1.25rem;
-                        border: 2px solid #06b6d4; /* cyan-400 */
-                        box-shadow: 0 0 24px 4px #06b6d4, 0 0 8px 2px var(--tw-color-primary);
+                        border: 2px solid rgba(255,255,255,0.6);
+                        box-shadow: 0 0 24px 4px rgba(255,255,255,0.2), 0 0 8px 2px var(--tw-color-primary);
                         animation: borderGlow 2.5s linear infinite alternate;
                         pointer-events: none;
                         z-index: 1;
                     }
                     @keyframes borderGlow {
-                        0% { box-shadow: 0 0 24px 4px #06b6d4, 0 0 8px 2px var(--tw-color-primary); }
-                        100% { box-shadow: 0 0 36px 8px #06b6d4, 0 0 16px 4px var(--tw-color-primary); }
+                        0% { box-shadow: 0 0 24px 4px rgba(255,255,255,0.2), 0 0 8px 2px var(--tw-color-primary); }
+                        100% { box-shadow: 0 0 36px 8px rgba(255,255,255,0.3), 0 0 16px 4px var(--tw-color-primary); }
                     }
                 `}</style>
         </>

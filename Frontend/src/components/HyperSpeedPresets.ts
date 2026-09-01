@@ -218,13 +218,13 @@ export const hyperspeedPresets = {
   shoulderLines: 0x131318,
   brokenLines: 0x131318,
 
-  // 🔵 Updated: Cool blue neon shades
-  leftCars: [0x00b7ff, 0x0077ff, 0x00f2ff],
+  // Monochrome white/gray shades
+  leftCars: [0xffffff, 0xcccccc, 0x999999],
 
-  // You can keep rightCars or also update — here is a soft cyan/white mix
-  rightCars: [0xdffaff, 0xbbe4ff, 0x8ecfff],
+  // Soft white/gray mix
+  rightCars: [0xf5f5f5, 0xdadada, 0xb0b0b0],
 
-  sticks: 0x00f2ff // glowing blue sticks
+  sticks: 0xffffff // glowing white sticks
 }
 
   }

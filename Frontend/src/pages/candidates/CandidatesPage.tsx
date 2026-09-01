@@ -4,6 +4,7 @@ import {
     Loader2, AlertCircle, Users, ChevronDown, ChevronUp, Eye, EyeOff,
     Linkedin,
 } from 'lucide-react';
+import logo from "@/assets/images/flux-logo-silver.jpg";
 
 const API = (import.meta as any).env?.VITE_REG_API_URL || '';
 const ADMIN_PASSWORD = 'flux@admin2025';
@@ -55,14 +56,21 @@ const Field: React.FC<{ label: string; value?: string | string[] }> = ({ label, 
 };
 
 const CandidateModal: React.FC<{ candidate: Candidate; onClose: () => void }> = ({ candidate, onClose }) => (
-    <div
-        className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-start justify-center p-4 overflow-y-auto"
-        onClick={onClose}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-start justify-center p-4 overflow-y-auto"
+      onClick={onClose}
     >
-        <div
-            className="relative bg-[#0d0d0d] border border-[#4ade80]/20 rounded-2xl w-full max-w-2xl my-8 p-6"
-            onClick={e => e.stopPropagation()}
-        >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        transition={{ type: "spring", stiffness: 300, damping: 25 }}
+        className="card-outline relative bg-[#0d0d0d] border border-white/10 rounded-2xl w-full max-w-2xl my-8 p-6 backdrop-blur-xl"
+        onClick={e => e.stopPropagation()}
+      >
             <button
                 onClick={onClose}
                 className="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors"
@@ -76,11 +84,11 @@ const CandidateModal: React.FC<{ candidate: Candidate; onClose: () => void }> = 
                     <img
                         src={candidate.imageUrl}
                         alt={candidate.name}
-                        className="w-16 h-16 rounded-full object-cover border-2 border-[#4ade80]/40"
+                        className="w-16 h-16 rounded-full object-cover border-2 border-[#E5E5E5]/40"
                     />
                 ) : (
-                    <div className="w-16 h-16 rounded-full bg-[#4ade80]/10 border border-[#4ade80]/30 flex items-center justify-center">
-                        <User size={28} className="text-[#4ade80]" />
+                    <div className="w-16 h-16 rounded-full bg-[#E5E5E5]/10 border border-[#E5E5E5]/30 flex items-center justify-center">
+                        <User size={28} className="text-[#E5E5E5]" />
                     </div>
                 )}
                 <div>
@@ -89,7 +97,7 @@ const CandidateModal: React.FC<{ candidate: Candidate; onClose: () => void }> = 
                     {candidate.domain && candidate.domain.length > 0 && (
                         <div className="flex flex-wrap gap-1 mt-1">
                             {candidate.domain.map(d => (
-                                <span key={d} className="text-xs px-2 py-0.5 rounded-full bg-[#4ade80]/10 border border-[#4ade80]/20 text-[#4ade80]">
+                                <span key={d} className="text-xs px-2 py-0.5 rounded-full bg-[#E5E5E5]/10 border border-[#E5E5E5]/20 text-[#E5E5E5]">
                                     {d}
                                 </span>
                             ))}
@@ -107,7 +115,7 @@ const CandidateModal: React.FC<{ candidate: Candidate; onClose: () => void }> = 
                     <Phone size={13} /> {candidate.phone}
                 </a>
                 {candidate.linkedinProfile && (
-                    <a href={candidate.linkedinProfile} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-xs text-blue-400 hover:text-blue-300 transition-colors">
+                    <a href={candidate.linkedinProfile} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-xs text-white hover:text-gray-300 transition-colors">
                         <Linkedin size={13} /> LinkedIn
                     </a>
                 )}
@@ -117,7 +125,7 @@ const CandidateModal: React.FC<{ candidate: Candidate; onClose: () => void }> = 
                     </a>
                 )}
                 {candidate.resumeUrl && (
-                    <a href={candidate.resumeUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-xs text-purple-400 hover:text-purple-300 transition-colors">
+                    <a href={candidate.resumeUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-xs text-white hover:text-gray-300 transition-colors">
                         <ExternalLink size={13} /> Resume
                     </a>
                 )}
@@ -125,23 +133,23 @@ const CandidateModal: React.FC<{ candidate: Candidate; onClose: () => void }> = 
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
                 <div>
-                    <p className="text-xs font-semibold text-[#4ade80] uppercase tracking-wider mb-3 border-b border-[#4ade80]/10 pb-1">Personal</p>
+                    <p className="text-xs font-semibold text-[#E5E5E5] uppercase tracking-wider mb-3 border-b border-[#E5E5E5]/10 pb-1">Personal</p>
                     <Field label="Section" value={candidate.section} />
                     <Field label="Residence" value={candidate.residence} />
                     <Field label="Availability" value={candidate.availability} />
                 </div>
                 <div>
-                    <p className="text-xs font-semibold text-[#4ade80] uppercase tracking-wider mb-3 border-b border-[#4ade80]/10 pb-1">Previous Experience</p>
+                    <p className="text-xs font-semibold text-[#E5E5E5] uppercase tracking-wider mb-3 border-b border-[#E5E5E5]/10 pb-1">Previous Experience</p>
                     <Field label="Society" value={candidate.prevSociety} />
                     <Field label="Role" value={candidate.prevRole} />
                 </div>
                 <div>
-                    <p className="text-xs font-semibold text-[#4ade80] uppercase tracking-wider mb-3 border-b border-[#4ade80]/10 pb-1">Skills</p>
+                    <p className="text-xs font-semibold text-[#E5E5E5] uppercase tracking-wider mb-3 border-b border-[#E5E5E5]/10 pb-1">Skills</p>
                     <Field label="Hard Skills" value={candidate.hardSkills} />
                     <Field label="Soft Skills" value={candidate.softSkills} />
                 </div>
                 <div>
-                    <p className="text-xs font-semibold text-[#4ade80] uppercase tracking-wider mb-3 border-b border-[#4ade80]/10 pb-1">Coding</p>
+                    <p className="text-xs font-semibold text-[#E5E5E5] uppercase tracking-wider mb-3 border-b border-[#E5E5E5]/10 pb-1">Coding</p>
                     <Field label="DSA Level" value={candidate.dsaLevel} />
                     <Field label="LeetCode" value={candidate.leetcodeHandle} />
                     <Field label="Codeforces" value={candidate.codeforcesHandle} />
@@ -150,7 +158,7 @@ const CandidateModal: React.FC<{ candidate: Candidate; onClose: () => void }> = 
             </div>
 
             <div className="mt-4 space-y-1">
-                <p className="text-xs font-semibold text-[#4ade80] uppercase tracking-wider mb-3 border-b border-[#4ade80]/10 pb-1">Essays</p>
+                <p className="text-xs font-semibold text-[#E5E5E5] uppercase tracking-wider mb-3 border-b border-[#E5E5E5]/10 pb-1">Essays</p>
                 <Field label="Introduction" value={candidate.introduction} />
                 <Field label="Domain Reason" value={candidate.domainReason} />
                 <Field label="Why Join" value={candidate.whyJoin} />
@@ -177,10 +185,10 @@ const CandidateRow: React.FC<{ candidate: Candidate; index: number; onClick: () 
         <td className="px-4 py-3">
             <div className="flex items-center gap-3">
                 {candidate.imageUrl ? (
-                    <img src={candidate.imageUrl} alt="" className="w-8 h-8 rounded-full object-cover border border-[#4ade80]/30 flex-shrink-0" />
+                    <img src={candidate.imageUrl} alt="" className="w-8 h-8 rounded-full object-cover border border-[#E5E5E5]/30 flex-shrink-0" />
                 ) : (
-                    <div className="w-8 h-8 rounded-full bg-[#4ade80]/10 border border-[#4ade80]/20 flex items-center justify-center flex-shrink-0">
-                        <User size={14} className="text-[#4ade80]" />
+                    <div className="w-8 h-8 rounded-full bg-[#E5E5E5]/10 border border-[#E5E5E5]/20 flex items-center justify-center flex-shrink-0">
+                        <User size={14} className="text-[#E5E5E5]" />
                     </div>
                 )}
                 <div>
@@ -195,7 +203,7 @@ const CandidateRow: React.FC<{ candidate: Candidate; index: number; onClick: () 
         <td className="px-4 py-3 hidden md:table-cell">
             <div className="flex flex-wrap gap-1">
                 {(candidate.domain || []).slice(0, 2).map(d => (
-                    <span key={d} className="text-xs px-2 py-0.5 rounded-full bg-[#4ade80]/10 border border-[#4ade80]/20 text-[#4ade80]">
+                    <span key={d} className="text-xs px-2 py-0.5 rounded-full bg-[#E5E5E5]/10 border border-[#E5E5E5]/20 text-[#E5E5E5]">
                         {d}
                     </span>
                 ))}
@@ -205,7 +213,7 @@ const CandidateRow: React.FC<{ candidate: Candidate; index: number; onClick: () 
             </div>
         </td>
         <td className="px-4 py-3">
-            <button className="text-xs text-[#4ade80]/70 hover:text-[#4ade80] flex items-center gap-1 transition-colors">
+            <button className="text-xs text-[#E5E5E5]/70 hover:text-[#E5E5E5] flex items-center gap-1 transition-colors">
                 <Eye size={13} /> View
             </button>
         </td>
@@ -307,49 +315,94 @@ export default function CandidatesPage() {
     // ── Login screen ──────────────────────────────────────────────────────────
     if (!authed) {
         return (
-            <div className="min-h-screen bg-black flex items-center justify-center p-4">
-                <div className="w-full max-w-sm bg-[#0d0d0d] border border-[#4ade80]/20 rounded-2xl p-8">
-                    <div className="flex items-center gap-3 mb-8">
-                        <div className="w-10 h-10 rounded-full bg-[#4ade80]/10 border border-[#4ade80]/30 flex items-center justify-center">
-                            <Users size={20} className="text-[#4ade80]" />
-                        </div>
-                        <div>
-                            <h1 className="text-lg font-bold text-white">Candidates Panel</h1>
-                            <p className="text-xs text-gray-500">Admin access required</p>
-                        </div>
-                    </div>
+            <div className="min-h-screen bg-black flex items-center justify-center p-4 relative overflow-hidden">
+                {/* Background effects */}
+                <div className="absolute inset-0 z-0">
+                    <motion.div 
+                      className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-800/20 via-black to-black"
+                      animate={{ opacity: [0.8, 1, 0.8] }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                    <motion.div 
+                      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/5 rounded-full blur-[120px] pointer-events-none"
+                      animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
+                      transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                </div>
 
-                    <div className="space-y-4">
-                        <div className="relative">
-                            <input
-                                type={showPw ? 'text' : 'password'}
-                                value={pwInput}
-                                onChange={e => setPwInput(e.target.value)}
-                                onKeyDown={e => e.key === 'Enter' && handleLogin()}
-                                placeholder="Enter admin password"
-                                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 pr-10 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#4ade80]/50"
-                            />
-                            <button
-                                type="button"
-                                onClick={() => setShowPw(s => !s)}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white"
-                            >
-                                {showPw ? <EyeOff size={15} /> : <Eye size={15} />}
-                            </button>
+                <motion.div 
+                  className="w-full max-w-sm relative z-10"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                    <motion.div 
+                      className="card-outline bg-[#0a0a0a]/80 backdrop-blur-xl border border-white/10 shadow-[0_0_40px_rgba(255,255,255,0.05)] rounded-2xl p-8"
+                      whileHover={{ borderColor: "rgba(255,255,255,0.2)" }}
+                      transition={{ duration: 0.5 }}
+                    >
+                        <div className="flex flex-col items-center mb-8">
+                            <div className="relative mb-6 group">
+                                <div className="absolute -inset-1 bg-gradient-to-r from-gray-400 via-white to-gray-400 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                                <img src={logo} alt="FLUX Logo" className="relative w-24 h-24 object-contain rounded-xl border border-white/10 bg-black p-2 transform transition-transform group-hover:scale-105 duration-500" />
+                            </div>
+                            <h1 className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-gray-300 via-white to-gray-300 tracking-wider">CANDIDATES</h1>
+                            <p className="text-xs text-gray-500 tracking-[0.2em] uppercase mt-2 font-semibold">Admin Access</p>
                         </div>
 
-                        {pwError && (
-                            <p className="text-xs text-red-400 flex items-center gap-1">
-                                <AlertCircle size={12} /> {pwError}
-                            </p>
-                        )}
+                            <div className="space-y-5">
+                                <motion.div 
+                                  className="relative group"
+                                  whileHover={{ scale: 1.01 }}
+                                >
+                                    <motion.div 
+                                      className="absolute -inset-0.5 bg-gradient-to-r from-gray-600 to-gray-400 rounded-lg blur opacity-0 group-hover:opacity-20 transition duration-500"
+                                      animate={{ opacity: [0, 0.1, 0] }}
+                                      transition={{ duration: 2, repeat: Infinity }}
+                                    />
+                                    <div className="relative flex items-center">
+                                        <input
+                                            type={showPw ? 'text' : 'password'}
+                                            value={pwInput}
+                                            onChange={e => setPwInput(e.target.value)}
+                                            onKeyDown={e => e.key === 'Enter' && handleLogin()}
+                                            placeholder="Enter admin password"
+                                            className="w-full bg-[#111] border border-white/10 rounded-lg px-4 py-3 pr-10 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-white/40 focus:ring-1 focus:ring-white/40 transition-all duration-300"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPw(s => !s)}
+                                            className="absolute right-3 text-gray-500 hover:text-white transition-colors"
+                                        >
+                                            {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
+                                        </button>
+                                    </div>
+                                </motion.div>
 
-                        <button
-                            onClick={handleLogin}
-                            className="w-full bg-[#4ade80] text-black font-semibold py-3 rounded-lg text-sm hover:bg-[#22c55e] transition-colors"
-                        >
-                            Access Panel
-                        </button>
+                                {pwError && (
+                                    <motion.p 
+                                      className="text-xs text-white flex items-center gap-1.5"
+                                      initial={{ opacity: 0, x: -10 }}
+                                      animate={{ opacity: 1, x: 0 }}
+                                    >
+                                        <AlertCircle size={14} /> {pwError}
+                                    </motion.p>
+                                )}
+
+                                <motion.button
+                                    onClick={handleLogin}
+                                    className="w-full relative group overflow-hidden rounded-lg p-[1px]"
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                >
+                                    <span className="absolute inset-0 bg-gradient-to-r from-gray-400 via-white to-gray-400 opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
+                                    <div className="relative bg-black group-hover:bg-transparent transition-colors duration-300 rounded-lg px-4 py-3 flex items-center justify-center">
+                                        <span className="text-sm font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-300 via-white to-gray-300 group-hover:text-black transition-colors duration-300 uppercase tracking-widest">
+                                            Access Panel
+                                        </span>
+                                    </div>
+                                </motion.button>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -364,8 +417,8 @@ export default function CandidatesPage() {
             {/* Header */}
             <div className="border-b border-white/10 bg-[#0a0a0a] px-6 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-[#4ade80]/10 border border-[#4ade80]/30 flex items-center justify-center">
-                        <Users size={18} className="text-[#4ade80]" />
+                    <div className="w-9 h-9 rounded-full bg-[#E5E5E5]/10 border border-[#E5E5E5]/30 flex items-center justify-center">
+                        <Users size={18} className="text-[#E5E5E5]" />
                     </div>
                     <div>
                         <h1 className="text-base font-bold text-white">Candidates</h1>
@@ -373,12 +426,12 @@ export default function CandidatesPage() {
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
-                    <span className="text-xs bg-[#4ade80]/10 border border-[#4ade80]/20 text-[#4ade80] px-3 py-1 rounded-full">
+                    <span className="text-xs bg-[#E5E5E5]/10 border border-[#E5E5E5]/20 text-[#E5E5E5] px-3 py-1 rounded-full">
                         {filtered.length} / {candidates.length} candidates
                     </span>
                     <button
                         onClick={() => { sessionStorage.removeItem('flux_admin_ok'); setAuthed(false); }}
-                        className="text-xs text-gray-500 hover:text-red-400 transition-colors"
+                        className="text-xs text-gray-500 hover:text-white transition-colors"
                     >
                         Logout
                     </button>
@@ -395,7 +448,7 @@ export default function CandidatesPage() {
                             value={search}
                             onChange={e => setSearch(e.target.value)}
                             placeholder="Search name, roll no, email..."
-                            className="w-full bg-white/5 border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#4ade80]/40"
+                            className="w-full bg-white/5 border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#E5E5E5]/40"
                         />
                         {search && (
                             <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white">
@@ -407,7 +460,7 @@ export default function CandidatesPage() {
                     <select
                         value={filterBranch}
                         onChange={e => setFilterBranch(e.target.value)}
-                        className="bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#4ade80]/40"
+                        className="bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#E5E5E5]/40"
                     >
                         <option value="">All Branches</option>
                         {branches.map(b => <option key={b} value={b}>{b}</option>)}
@@ -416,7 +469,7 @@ export default function CandidatesPage() {
                     <select
                         value={filterYear}
                         onChange={e => setFilterYear(e.target.value)}
-                        className="bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#4ade80]/40"
+                        className="bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#E5E5E5]/40"
                     >
                         <option value="">All Years</option>
                         {years.map(y => <option key={y} value={y}>{y}</option>)}
@@ -425,7 +478,7 @@ export default function CandidatesPage() {
                     <select
                         value={filterDomain}
                         onChange={e => setFilterDomain(e.target.value)}
-                        className="bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#4ade80]/40"
+                        className="bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#E5E5E5]/40"
                     >
                         <option value="">All Domains</option>
                         {domains.map(d => <option key={d} value={d}>{d}</option>)}
@@ -435,12 +488,12 @@ export default function CandidatesPage() {
                 {/* Content */}
                 {loading && (
                     <div className="flex items-center justify-center py-20">
-                        <Loader2 size={32} className="text-[#4ade80] animate-spin" />
+                        <Loader2 size={32} className="text-[#E5E5E5] animate-spin" />
                     </div>
                 )}
 
                 {error && (
-                    <div className="flex items-center gap-2 text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg p-4">
+                    <div className="flex items-center gap-2 text-white bg-white/10 border border-white/20 rounded-lg p-4">
                         <AlertCircle size={16} /> {error}
                     </div>
                 )}

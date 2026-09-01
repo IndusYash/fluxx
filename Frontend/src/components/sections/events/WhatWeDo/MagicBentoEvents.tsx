@@ -525,37 +525,8 @@ const MagicBentoEvents: React.FC<BentoProps> = ({
             }
             
             .card-responsive {
-                grid-template-columns: 1fr;
-                width: 90%;
+                width: 100%;
                 margin: 0 auto;
-                padding: 0.5rem;
-            }
-            
-            @media (min-width: 600px) {
-                .card-responsive {
-                    grid-template-columns: repeat(2, 1fr);
-                }
-            }
-            
-            @media (min-width: 1024px) {
-                .card-responsive {
-                    grid-template-columns: repeat(4, 1fr);
-                }
-                
-                .card-responsive .card:nth-child(3) {
-                    grid-column: span 2;
-                    grid-row: span 2;
-                }
-                
-                .card-responsive .card:nth-child(4) {
-                    grid-column: 1 / span 2;
-                    grid-row: 2 / span 2;
-                }
-                
-                .card-responsive .card:nth-child(6) {
-                    grid-column: 4;
-                    grid-row: 3;
-                }
             }
             
             .card--border-glow::after {
@@ -646,11 +617,11 @@ const MagicBentoEvents: React.FC<BentoProps> = ({
             )}
 
             {/* Use the new data to render cards */}
-            <div className="bento-section grid gap-6 p-3 w-full max-w-[1200px] mx-auto select-none relative" ref={gridRef}>
-                <div className="card-recard-responsive grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
+            <div className="bento-section flex gap-6 p-3 w-full max-w-[1200px] mx-auto select-none relative" ref={gridRef}>
+                <div className="card-responsive grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
                     {/* Iterate over the 'activities' prop */}
                     {activities.map((activity, index) => {
-                        const baseClassName = `card flex flex-col justify-between relative h-[250px] md:h-[280px] w-[300px] max-w-full p-5 rounded-[20px] border border-solid font-light overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] ${enableBorderGlow ? 'card--border-glow' : ''}`;
+                        const baseClassName = `card-outline card flex flex-col justify-between relative h-[250px] md:h-[280px] w-full max-w-[300px] p-5 rounded-[20px] border border-solid font-light overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] ${enableBorderGlow ? 'card--border-glow' : ''}`;
                         const cardStyle = {
                             backgroundColor: 'transparent', 
                             borderColor: 'var(--border-color)',
@@ -678,11 +649,7 @@ const MagicBentoEvents: React.FC<BentoProps> = ({
                                     enableMagnetism={enableMagnetism}
                                 >
                                     {/* Use data from the 'activity' object */}
-                                    <div
-                                        key={activity.id}
-                                        className={baseClassName}
-                                        style={cardStyle}
-                                    >
+                                    <div>
                                         {/* This is the nested div for the background image with reduced opacity */}
                                         <div
                                             className="absolute inset-0 z-0 opacity-10 group-hover:opacity-60 transition-opacity duration-300"
@@ -696,7 +663,7 @@ const MagicBentoEvents: React.FC<BentoProps> = ({
                                         {/* The black overlay is now positioned correctly to cover the entire card */}
                                         <div className="absolute inset-0 bg-black/60 group-hover:bg-black/30 transition-all duration-300"></div>
 
-                                        <div className="flex flex-col h-full justify-between relative z-10 p-5">
+                                        <div className="absolute inset-0 flex flex-col justify-between z-10 p-5">
                                             <div className="card__header flex justify-between gap-3 relative text-white">
                                                 <div className={`p-3 rounded-xl bg-gradient-to-r ${activity.color}`}>
                                                     {activity.icon}

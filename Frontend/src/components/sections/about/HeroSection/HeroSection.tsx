@@ -1,108 +1,50 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import type { HeroSectionProps } from './HeroSection.types';
-import fluxVideo from "@/assets/videos/flux-background.mp4";
-
-const phrases = [
-  'Future Leaders of Unbound Xperiments',
-  'Innovate. Interact. Impact.'
-];
-
-const TYPING_SPEED = 120;
-const ERASING_SPEED = 80;
-const PAUSE_AFTER_TYPING = 2000;
-const PAUSE_AFTER_ERASING = 500;
+import './HeroSection.css';
+import ParticleText from './ParticleText';
 
 const HeroSection: React.FC<HeroSectionProps> = ({ description }) => {
-  const [displayText, setDisplayText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [phraseIndex, setPhraseIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
-  const typingTimeout = useRef<NodeJS.Timeout | null>(null);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = true;
-      videoRef.current.volume = 0;
-    }
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      if (typingTimeout.current) clearTimeout(typingTimeout.current);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!isDeleting) {
-      if (charIndex < phrases[phraseIndex].length) {
-        typingTimeout.current = setTimeout(() => {
-          setDisplayText(phrases[phraseIndex].slice(0, charIndex + 1));
-          setCharIndex(charIndex + 1);
-        }, TYPING_SPEED);
-      } else {
-        typingTimeout.current = setTimeout(() => setIsDeleting(true), PAUSE_AFTER_TYPING);
-      }
-    } else {
-      if (charIndex > 0) {
-        typingTimeout.current = setTimeout(() => {
-          setDisplayText(phrases[phraseIndex].slice(0, charIndex - 1));
-          setCharIndex(charIndex - 1);
-        }, ERASING_SPEED);
-      } else {
-        setTimeout(() => {
-          setIsDeleting(false);
-          setPhraseIndex((phraseIndex + 1) % phrases.length);
-        }, PAUSE_AFTER_ERASING);
-      }
-    }
-  }, [charIndex, isDeleting, phraseIndex]);
-
   return (
-    <section className="relative w-full h-screen overflow-hidden">
-      {/* Background Video */}
-      <video
-        ref={videoRef}
-        className="absolute inset-0 w-full h-full object-cover"
-        autoPlay
-        muted
-        loop
-        playsInline
-        onLoadedData={() => {
-          if (videoRef.current) {
-            videoRef.current.muted = true;
-            videoRef.current.volume = 0;
-          }
-        }}
-      >
-        <source src={fluxVideo} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/50"></div>
-
-      {/* Hero Content - Mobile Compatible */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center -translate-y-[1.5cm] px-4">
-        {/* Title - Responsive Sizing */}
-        <div className="mb-6 md:mb-8">
-          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold leading-tight">
-            <span className="text-white">Welcome To</span>{' '}
-            <span className="text-green-400 block sm:inline">FLUX</span>
-          </h1>
+    <section className="relative w-full h-screen overflow-hidden bg-black">
+      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 gap-2 sm:gap-3">
+        <div className="w-full flex-shrink-0">
+          <ParticleText
+            text="Welcome To FLUX"
+            particleSize={2.2}
+            density={4}
+            color="#ffffff"
+            highlightColor="#9ca3af"
+            scatter={190}
+            gatherDuration={1600}
+            stagger={420}
+            pointerRepel={42}
+            repelRadius={120}
+            idleDrift={0.8}
+            trigger="mount"
+            fontSize="clamp(3.5rem, 13vw, 9rem)"
+            fontWeight={800}
+            fontFamily="inherit"
+            glow
+            style={{ width: '100%', height: 220, background: '#000000' }}
+          />
         </div>
 
-        {/* Typewriter Effect - Mobile Optimized */}
-        <div className="mb-8 md:mb-12 h-12 sm:h-16 md:h-20 flex items-center justify-center px-2">
-          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl font-semibold min-h-[2rem] md:min-h-[3rem] flex items-center text-center">
-            <span className="text-green-300">{displayText}</span>
-            <span className="animate-pulse">|</span>
+        <div className="flex-shrink-0">
+          <h2 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold min-h-[1.5rem] flex items-center text-center">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-300 to-white">
+              Future Leaders of Unbound Xperiments
+            </span>
           </h2>
         </div>
 
-        {/* Caption - Mobile Responsive */}
-        <div className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 w-full max-w-4xl px-4 md:px-6">
-          <p className="text-xs sm:text-sm md:text-base text-white leading-relaxed text-center">
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <div className="w-8 h-px bg-gradient-to-r from-transparent to-white/50" />
+          <div className="w-1 h-1 rounded-full bg-white animate-pulse" />
+          <div className="w-8 h-px bg-gradient-to-l from-transparent to-white/50" />
+        </div>
+
+        <div className="w-full max-w-2xl flex-shrink-0">
+          <p className="text-xs sm:text-sm text-gray-400 leading-relaxed text-center">
             {description}
           </p>
         </div>

@@ -18,8 +18,6 @@ import TeamPage from "@/pages/team/team";
 import FDPDetailsPage from "@/components/sections/events/UpcomingEvents/fdp";
 import IdeathonPage from "@/pages/Ideathon/Ideathon";
 import GalleryPage from "@/pages/gallery/GalleryPage";
-import InductionLanding from "@/pages/induction/LandingPage";
-import InductionForm from "@/pages/induction/InductionForm";
 import JudgePanel from "@/pages/judge/JudgePanel";
 
 import { Toaster } from "@/components/ui/toaster";
@@ -78,11 +76,11 @@ export default function App() {
             <Route path="/gallery" element={<GalleryPage isMobile={isMobile} />} />
             <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
             <Route path="/ideathon" element={<IdeathonPage />} />
-            <Route path="/induction" element={<InductionLanding />} />
-            <Route path="/induction/apply" element={<InductionForm />} />
+            <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
           </Route>
         </Routes>
       </div>
+      
       <Toaster />
     </BrowserRouter>
   );

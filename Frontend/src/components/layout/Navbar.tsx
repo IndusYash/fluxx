@@ -1,199 +1,162 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { SiGmail } from "react-icons/si";
-import { FaWhatsapp, FaInstagram, FaBars, FaTimes, FaLinkedin } from "react-icons/fa";
-import { motion } from "framer-motion";
-import logo from "@/assets/images/flux_logo.webp";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
+import logo from "@/assets/images/flux-logo-silver.jpg";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [showNavbar, setShowNavbar] = useState<boolean>(true);
-  const lastScrollY = useRef<number>(0);
   const location = useLocation();
 
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     { name: "Faculty", path: "/faculty" },
-    { name: "Our Team", path: "/team" },
+    { name: "Team", path: "/team" },
     { name: "Events", path: "/events" },
     { name: "Gallery", path: "/gallery" },
     { name: "Ideathon", path: "/ideathon" },
-    // { name: "Induction", path: "/induction" },
     { name: "Contact", path: "/contact" },
   ];
 
-  useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const currentScrollY = window.scrollY;
-          if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
-            setShowNavbar(false);
-          } else {
-            setShowNavbar(true);
-          }
-          lastScrollY.current = currentScrollY;
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const toggleMenu = () => setIsOpen(!isOpen);
-
   return (
     <>
-      {/* Subtle Tech Grid Background */}
-      <div className="fixed top-0 left-0 w-full h-20 pointer-events-none z-40">
-        <svg className="w-full h-full opacity-5">
-          <defs>
-            <pattern id="navGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.5" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#navGrid)" />
-        </svg>
-      </div>
-
-      {/* Navbar */}
       <motion.nav
-        className={`fixed w-full top-0 left-0 z-50 transition-all duration-500 ${
-          showNavbar ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full"
-        }`}
+        className="fixed top-0 left-0 right-0 z-50 opacity-100 translate-y-0"
         style={{
-          height: "4rem",
-          background: `linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(26,26,26,0.4) 50%, rgba(0,0,0,0.3) 100%)`,
-          backdropFilter: "blur(15px)",
-          borderBottom: "1px solid rgba(16, 185, 129, 0.15)",
-          boxShadow: "0 2px 20px rgba(0,0,0,0.2), 0 0 15px rgba(16, 185, 129, 0.05)",
+          height: "3rem",
+          background: "rgba(0, 0, 0, 0.4)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.45)",
+          borderBottom: "0.5px solid rgba(255, 255, 255, 0.7)",
           zIndex: 50,
         }}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-full">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 flex-none">
-            <motion.img
-              src={logo}
-              alt="FLUX Logo"
-              className="w-12 h-12 object-contain flex-none"
-              style={{ filter: "drop-shadow(0 0 12px rgba(16, 185, 129, 0.4))" }}
-              animate={{
-                filter: [
-                  "drop-shadow(0 0 12px rgba(16, 185, 129, 0.4))",
-                  "drop-shadow(0 0 20px rgba(16, 185, 129, 0.6))",
-                  "drop-shadow(0 0 12px rgba(16, 185, 129, 0.4))",
-                ],
-              }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              whileHover={{ scale: 1.1 }}
-            />
-            <motion.span
-              className="text-2xl font-black tracking-wide text-white select-none"
-              style={{ fontFamily: "'Orbitron', 'Space Grotesk', sans-serif" }}
+        <div className="max-w-6xl mx-auto px-6 h-full relative">
+          <div className="flex items-center justify-between h-full">
+            {/* Logo - Left Side */}
+            <Link
+              to="/"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center gap-3 flex-none relative group z-10"
             >
-              FLUX
-            </motion.span>
-          </Link>
-
-          {/* Desktop Navigation Links */}
-          <ul
-  className="hidden md:flex gap-8 text-sm font-semibold tracking-wider uppercase flex-auto justify-center"
-  style={{ fontFamily: "'Space Grotesk', 'Inter', sans-serif" }}
->
-  {navLinks.map((link, i) => (
-    <motion.li
-      key={i}
-      className="cursor-pointer relative group"
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: i * 0.1, duration: 0.5 }}
-    >
-      <Link
-        to={link.path}
-        className={`relative z-10 transition-colors duration-300 ${
-          location.pathname === link.path
-            ? "text-[#00FFC6]"
-            : "text-gray-300/90 hover:text-[#00FFC6]"
-        }`}
-      >
-        {link.name}
-      </Link>
-
-      {/* Active underline */}
-      {location.pathname.toLowerCase() === link.path.toLowerCase() && (
-  <motion.div
-    layoutId="activeTab"
-    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#00FFC6]"
-    style={{ boxShadow: "0 0 6px rgba(0,255,198,0.6)" }}
-    transition={{
-      layout: { type: "spring", stiffness: 350, damping: 30 },
-      duration: 0.35
-    }}
-  />
-)}
-
-    </motion.li>
-  ))}
-</ul>
-          {/* Social Icons (Desktop) */}
-          <div className="hidden md:flex items-center gap-6">
-            {[SiGmail, FaWhatsapp, FaInstagram, FaLinkedin].map((Icon, i) => (
-              <motion.a
-                key={i}
-                href={
-                  Icon === SiGmail
-                    ? "mailto:flux@mmmut.ac.in"
-                    : Icon === FaWhatsapp
-                    ? "https://chat.whatsapp.com/F8O8hTu2aCZ6NKLeRVqJ0R?mode=ac_t"
-                    : Icon === FaInstagram
-                    ? "https://www.instagram.com/flux.mmmut"
-                    : "https://www.linkedin.com/company/flux-mmm/"
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative group cursor-pointer text-gray-400/70 pointer-events-auto transition-colors duration-300"
-                whileHover={{ scale: 1.2, rotate: 5 }}
-                whileTap={{ scale: 0.9 }}
+              <motion.div 
+                className="relative bg-black/70 backdrop-blur-md rounded-lg overflow-hidden flex items-center justify-center"
+                style={{ 
+                  width: "44px", 
+                  height: "44px",
+                }}
+                whileHover={{ scale: 1.05 }}
               >
-                <Icon size={20} />
-              </motion.a>
-            ))}
-          </div>
-
-          {/* Mobile Hamburger */}
-          <motion.div className="md:hidden relative">
-            <motion.button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg border border-primary/20 backdrop-blur-sm"
-              style={{
-                background: "rgba(16, 185, 129, 0.05)",
-                boxShadow: "0 0 10px rgba(16, 185, 129, 0.15)",
-              }}
-              whileTap={{ scale: 0.9 }}
-              aria-label={isOpen ? "Close menu" : "Open menu"}
-            >
-              <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.3 }} className="text-primary/80">
-                {isOpen ? (
-                  <FaTimes size={20} />
-                ) : (
-                  <FaBars size={20} />
-                )}
+                <img 
+                  src={logo}
+                  alt="FLUX Logo"
+                  className="w-full h-full object-contain p-1"
+                />
               </motion.div>
-            </motion.button>
-          </motion.div>
+              <span
+                className="text-white text-2xl font-bold tracking-[0.04em]"
+              >
+                FLUX
+              </span>
+            </Link>
+
+            {/* Navigation - Right Side */}
+            <div 
+              className="hidden md:flex items-center gap-8"
+              style={{ 
+                background: "transparent",
+              }}
+            >
+              {navLinks.map((link, i) => {
+                const isActive = location.pathname === link.path;
+                return (
+                  <motion.div
+                    key={i}
+                    className="cursor-pointer"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.05, duration: 0.4 }}
+                  >
+                    <Link
+                      to={link.path}
+                      className={`relative z-10 inline-block px-1 py-2 border-b transition-all duration-300 text-sm font-semibold tracking-wider uppercase ${
+                        isActive
+                          ? "text-white border-white"
+                          : "text-white border-transparent hover:border-white/60"
+                      }`}
+                      style={{
+                        borderBottomWidth: "0.5px",
+                      }}
+                    >
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            {/* Mobile Hamburger */}
+            <motion.div className="md:hidden relative z-10">
+              <motion.button
+                onClick={() => setIsOpen(!isOpen)}
+                className="p-2 rounded-full border border-white/30 bg-white/10 backdrop-blur-md"
+                style={{ boxShadow: "0 0 15px rgba(255,255,255,0.1)" }}
+                whileTap={{ scale: 0.9 }}
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+              >
+                <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.3 }} className="text-white">
+                  {isOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
+                </motion.div>
+              </motion.button>
+            </motion.div>
+          </div>
         </div>
       </motion.nav>
 
-      {/* Floating Neon Cursor */}
-      
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 bg-black/80 backdrop-blur-xl md:hidden"
+          >
+            <div className="flex flex-col items-center justify-center h-full gap-5">
+              {navLinks.map((link, i) => {
+                const isActive = location.pathname === link.path;
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                  >
+                    <Link
+                      to={link.path}
+                      onClick={() => setIsOpen(false)}
+                      className={`text-base font-bold tracking-wider uppercase px-1 py-3 border-b transition-all duration-300 ${
+                        isActive
+                          ? "text-white border-white"
+                          : "text-white border-transparent hover:border-white/60"
+                      }`}
+                      style={{ borderBottomWidth: "0.5px" }}
+                    >
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

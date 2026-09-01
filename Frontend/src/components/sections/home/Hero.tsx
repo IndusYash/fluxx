@@ -1,485 +1,418 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
-import { Variants } from "framer-motion";
+"use client";
+
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { ArrowRight, Sparkles, Zap, Target } from "lucide-react";
+import { useEffect, useState, useRef, useMemo } from "react";
 
-const textParent: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      delayChildren: 0.6,
-      staggerChildren: 0.08,
-      ease: "easeInOut",
-      duration: 0.4,
-    },
-  },
-};
+// --- Magnetic Button Component ---
+const MagneticButton = ({ children, onClick, className }: any) => {
+  const ref = useRef<HTMLButtonElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
-const textChild: Variants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.3,
-      ease: "easeInOut",
-    },
-  },
-};
+  const handleMouse = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { clientX, clientY } = e;
+    const { height, width, left, top } = ref.current!.getBoundingClientRect();
+    const middleX = clientX - (left + width / 2);
+    const middleY = clientY - (top + height / 2);
+    setPosition({ x: middleX * 0.3, y: middleY * 0.3 });
+  };
 
-// TypewriterMotto component remains the same
-const TypewriterMotto = () => {
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [currentText, setCurrentText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  const words = ["INNOVATE", "INTERACT", "IMPACT"];
-
-  useEffect(() => {
-    const word = words[currentWordIndex];
-    const typingSpeed = isDeleting ? 40 : 80;
-    const pauseDuration = isDeleting ? 400 : 1500;
-
-    const timeout = setTimeout(() => {
-      if (!isDeleting && currentText === word) {
-        setTimeout(() => setIsDeleting(true), pauseDuration);
-      } else if (isDeleting && currentText === "") {
-        setIsDeleting(false);
-        setCurrentWordIndex((prev) => (prev + 1) % words.length);
-      } else if (isDeleting) {
-        setCurrentText(word.substring(0, currentText.length - 1));
-      } else {
-        setCurrentText(word.substring(0, currentText.length + 1));
-      }
-    }, typingSpeed);
-
-    return () => clearTimeout(timeout);
-  }, [currentText, isDeleting, currentWordIndex]);
+  const reset = () => {
+    setPosition({ x: 0, y: 0 });
+  };
 
   return (
-    <span
-      className="relative inline-block min-w-[200px] font-mono"
-      style={{
-        background:
-          "linear-gradient(135deg, hsl(var(--primary)) 0%, #10b981 50%, #059669 100%)",
-        WebkitBackgroundClip: "text",
-        WebkitTextFillColor: "transparent",
-        backgroundClip: "text",
-        backgroundSize: "200% 200%",
-        filter: "drop-shadow(0 0 15px rgba(16, 185, 129, 0.5))",
-        fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace",
-      }}
+    <motion.button
+      ref={ref}
+      onMouseMove={handleMouse}
+      onMouseLeave={reset}
+      onClick={onClick}
+      animate={{ x: position.x, y: position.y }}
+      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      className={className}
     >
-      <motion.span
-        animate={{
-          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-        }}
-        transition={{
-          duration: 3,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        style={{
-          background: "inherit",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          backgroundClip: "text",
-        }}
-      >
-        {currentText}
-      </motion.span>
-      <motion.span
-        className="inline-block w-0.5 h-10 sm:h-12 ml-2 align-middle"
-        style={{
-          background: "linear-gradient(180deg, hsl(var(--primary)), #10b981)",
-          boxShadow: "0 0 10px hsl(var(--primary))",
-        }}
-        animate={{
-          opacity: [0, 1, 0],
-          scaleY: [0.8, 1, 0.8],
-        }}
-        transition={{
-          duration: 1,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
+      {children}
+    </motion.button>
+  );
+};
+
+// --- Typing Effect Component ---
+const TypingEffect = ({ words, className }: { words: string[], className?: string }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const wordsRef = useRef(words);
+  wordsRef.current = words;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex(prev => (prev + 1) % wordsRef.current.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Find the longest word to use as the "spacer" for height
+  const longestIndex = words.reduce((maxI, w, i, arr) => w.length > arr[maxI].length ? i : maxI, 0);
+
+  return (
+    <span className={`${className} relative inline-block`}>
+      {/* Invisible spacer word to reserve height/width */}
+      <span className="invisible">{words[longestIndex]}</span>
+      {words.map((word, index) => (
+        <span
+          key={index}
+          className="absolute left-0 top-0 whitespace-nowrap transition-all duration-700 ease-in-out"
+          style={{
+            opacity: index === currentIndex ? 1 : 0,
+            transform: index === currentIndex ? 'translateY(0) scale(1)' : 'translateY(12px) scale(0.95)',
+            filter: index === currentIndex ? 'blur(0)' : 'blur(2px)',
+          }}
+        >
+          {word}
+        </span>
+      ))}
     </span>
   );
 };
 
-export default function Hero() {
-  const navigate = useNavigate();
-  const [isHovered, setIsHovered] = useState(false);
-  const [intensity, setIntensity] = useState(1);
-  const sectionRef = useRef<HTMLElement>(null);
-  const lastIntensityRef = useRef(1);
-
+// --- FLUX Animated Text Component ---
+const FluxAnimatedText = () => {
+  const [visibleLetters, setVisibleLetters] = useState<Set<number>>(new Set());
+  const titleText = useMemo(() => "FLUX".split(""), []);
+  
   useEffect(() => {
-    let ticking = false;
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!ticking && sectionRef.current) {
-        window.requestAnimationFrame(() => {
-          if (sectionRef.current) {
-            const rect = sectionRef.current.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
+    const interval = setInterval(() => {
+      setVisibleLetters(prev => {
+        const next = new Set(prev);
+        const nextIndex = titleText.findIndex((_, i) => !next.has(i));
+        if (nextIndex !== -1) {
+          next.add(nextIndex);
+        }
+        return next;
+      });
+    }, 400);
+    
+    return () => clearInterval(interval);
+  }, [titleText]);
+  
+  return (
+    <motion.h1 
+      className="flex text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-none mb-6"
+    >
 
-            const centerX = 50;
-            const centerY = 50;
-            const distance = Math.sqrt(
-              Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2)
-            );
-            const maxDistance = Math.sqrt(5000);
-            const newIntensity = Number((1 + (distance / maxDistance) * 2).toFixed(2));
-            
-            if (Math.abs(newIntensity - lastIntensityRef.current) > 0.15) {
-              lastIntensityRef.current = newIntensity;
-              setIntensity(newIntensity);
-            }
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    const section = sectionRef.current;
-    if (section) {
-      section.addEventListener("mousemove", handleMouseMove, { passive: true });
-      return () => section.removeEventListener("mousemove", handleMouseMove);
-    }
-  }, []);
-
-  // Location: Lines ~147-153
-const [isMobile, setIsMobile] = useState(false);
-useEffect(() => {
-  const updateMobile = () => setIsMobile(window.innerWidth < 768);
-  updateMobile();
-  window.addEventListener("resize", updateMobile);
-  return () => window.removeEventListener("resize", updateMobile);
-}, []);
-
-  const handleJoinClick = () => {
-    navigate("/events");
-  };
-
-  const handleExploreClick = () => {
-    if (isMobile) {
-      document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
-    } else {
-      navigate("/about");
-    }
-  };
-
- const handleEvent = () => {
-  navigate("/ideathon"); // 🔥 same behavior for mobile & desktop
+      {titleText.map((char, i) => {
+        const isVisible = visibleLetters.has(i);
+        return (
+          <motion.span
+            key={i}
+            initial={{ opacity: 0, y: 60, rotateX: -90, scale: 0.8 }}
+            animate={{ 
+              opacity: isVisible ? 1 : 0,
+              y: isVisible ? 0 : 60,
+              rotateX: isVisible ? 0 : -90,
+              scale: isVisible ? 1 : 0.8,
+            }}
+            transition={{ 
+              duration: 1,
+              ease: "easeOut"
+            }}
+            className="inline-block relative"
+            style={{
+              background: "linear-gradient(135deg, #ffffff 0%, #e5e5e5 50%, #ffffff 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              filter: "drop-shadow(0 0 30px rgba(255,255,255,0.5))",
+            }}
+          >
+            {char}
+          </motion.span>
+        );
+      })}
+    </motion.h1>
+  );
 };
 
-
-
-  const handleEventsClick = () => {
-    if (isMobile) {
-      document.getElementById("events")?.scrollIntoView({ behavior: "smooth" });
-    } else {
-      navigate("/events");
-    }
-  };
-
+// --- FLUX Animated Boxes Component ---
+const FluxAnimatedBoxes = () => {
+  const [glowingBoxes, setGlowingBoxes] = useState<Set<string>>(new Set());
+  const [phase, setPhase] = useState<"waiting" | "glowing" | "full" | "disappearing">("waiting");
+  
+  const gridSize = 5;
+  
+  const targetBoxes = [
+    [0, 0], [0, 2], [0, 3], [0, 4],
+    [1, 1],
+    [2, 0], [2, 3], [2, 4],
+    [3, 2],
+    [4, 0], [4, 1]
+  ];
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setGlowingBoxes(prev => {
+        const next = new Set(prev);
+        
+        if (phase === "waiting") {
+          setPhase("glowing");
+          return next;
+        } else if (phase === "glowing") {
+          const offBoxes = targetBoxes.filter(([r, c]) => !next.has(`${r},${c}`));
+          if (offBoxes.length > 0) {
+            const [r, c] = offBoxes[Math.floor(Math.random() * offBoxes.length)];
+            next.add(`${r},${c}`);
+          } else {
+            setPhase("full");
+          }
+          return next;
+        } else if (phase === "full") {
+          setPhase("disappearing");
+          return next;
+        } else if (phase === "disappearing") {
+          const onBoxes = targetBoxes.filter(([r, c]) => next.has(`${r},${c}`));
+          if (onBoxes.length > 0) {
+            const [r, c] = onBoxes[Math.floor(Math.random() * onBoxes.length)];
+            next.delete(`${r},${c}`);
+          } else {
+            setPhase("waiting");
+          }
+          return next;
+        }
+        
+        return next;
+      });
+    }, phase === "glowing" || phase === "disappearing" ? 500 : 1500);
+    
+    return () => clearInterval(interval);
+  }, [phase]);
+  
+  const isGlowing = (row: number, col: number) => glowingBoxes.has(`${row},${col}`);
+  
   return (
-    <>
-      <section
-        ref={sectionRef}
-        className="relative min-h-[600px] md:min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/90 px-4 md:px-8"
-      >
-        {!isMobile && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <motion.span
-              className="text-[clamp(18rem,35vw,30rem)] font-black leading-none tracking-tighter select-none opacity-8"
-              style={{
-                background:
-                  "linear-gradient(135deg, hsl(var(--primary)), #10b981, #059669)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                backgroundSize: "200% 200%",
-                fontFamily: "'Orbitron', 'Exo 2', 'Inter', sans-serif",
-                fontWeight: 900,
-              }}
-              animate={{
-                backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                opacity: [0.08, 0.15, 0.08],
-                scale: [1, 1 + (intensity - 1) * 0.1, 1],
-              }}
-              transition={{
-                backgroundPosition: {
-                  duration: 15,
-                  repeat: Infinity,
-                  ease: "linear",
-                },
-                opacity: { duration: 8, repeat: Infinity, ease: "easeInOut" },
-                scale: { duration: 2, ease: "easeOut" },
-              }}
-            >
-              FLUX
-            </motion.span>
-          </div>
-        )}
-
-        <div className="relative z-20 text-center max-w-full sm:max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            variants={textParent}
-            initial="hidden"
-            animate="visible"
-            className="space-y-4"
-          >
-            <motion.div variants={textChild} className="space-y-3">
-              <h1
-                className="text-4xl sm:text-5xl md:text-[clamp(3rem,7vw,5rem)] font-black leading-tight tracking-tight text-white"
-                style={{ fontFamily: "'JetBrains Mono', 'Fira Code', monospace" }}
-              >
-                <TypewriterMotto />
-              </h1>
-
-              <motion.h2
-                className="text-xl sm:text-2xl md:text-[clamp(1.8rem,5vw,3rem)] font-bold leading-tight tracking-tight"
-                style={{
-                  fontFamily: "'Inter', 'Segoe UI', 'Roboto', sans-serif",
+    <div className="relative flex items-center justify-center">
+      <div className="grid grid-cols-5 gap-0">
+        {Array.from({ length: gridSize }).map((_, row) => 
+          Array.from({ length: gridSize }).map((_, col) => {
+            const glowing = isGlowing(row, col);
+            return (
+              <motion.div
+                key={`${row}-${col}`}
+                className="relative"
+                animate={{ 
+                  opacity: glowing ? 1 : 0.08,
+                  scale: glowing ? 1 : 0.85,
                 }}
-                animate={{ y: [0, -3, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 0.15,
+                  ease: "easeOut"
+                }}
               >
-                <span className="text-gray-100 mr-3">Igniting Ideas,</span>
-                <motion.span
-                  style={{
-                    background:
-                      "linear-gradient(135deg, hsl(var(--primary)) 0%, #10b981 50%, #059669 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                    backgroundSize: "200% 200%",
-                    filter: "drop-shadow(0 0 20px rgba(16, 185, 129, 0.5))",
-                    fontFamily: "'Space Grotesk', 'Inter', sans-serif",
-                    fontWeight: 700,
-                  }}
+                <motion.div
+                  className="card-outline w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 relative"
                   animate={{
-                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                    backgroundColor: glowing 
+                      ? ["#ffffff", "#e5e5e5", "#ffffff"]
+                      : "rgba(255,255,255,0.02)",
+                    boxShadow: glowing 
+                      ? [
+                          "0 0 20px rgba(255,255,255,0.6), 0 0 40px rgba(255,255,255,0.3)",
+                          "0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,255,255,0.4)",
+                          "0 0 20px rgba(255,255,255,0.6), 0 0 40px rgba(255,255,255,0.3)"
+                        ]
+                      : "0 0 0px rgba(255,255,255,0)",
                   }}
                   transition={{
-                    duration: 4,
-                    repeat: Infinity,
+                    duration: glowing ? 1.5 : 0.3,
+                    repeat: glowing ? Infinity : 0,
                     ease: "easeInOut",
                   }}
+                  style={{
+                    border: glowing ? "1px solid rgba(255,255,255,0.9)" : "1px solid rgba(255,255,255,0.02)",
+                  }}
+                />
+              </motion.div>
+            );
+          })
+        )}
+      </div>
+      
+      {/* Glow effect behind boxes */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        animate={{
+          opacity: glowingBoxes.size > 0 ? [0.4, 0.7, 0.4] : 0,
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        style={{
+          background: "radial-gradient(circle, rgba(255,255,255,0.25) 0%, transparent 70%)",
+          filter: "blur(50px)",
+        }}
+      />
+    </div>
+  );
+};
+
+// --- Main Hero Component ---
+import Galaxy from "@/components/ui/Galaxy/Galaxy";
+
+export default function Hero() {
+  const navigate = useNavigate();
+
+  return (
+    <section 
+      className="relative h-[100svh] w-full flex items-center justify-center overflow-hidden bg-black"
+    >
+      {/* Galaxy Background */}
+      <div className="absolute inset-0 z-0">
+        <Galaxy 
+          mouseRepulsion={true}
+          mouseInteraction={true}
+          density={1}
+          glowIntensity={0.3}
+          saturation={0}
+          hueShift={140}
+          twinkleIntensity={0.3}
+          rotationSpeed={0.1}
+          repulsionStrength={2}
+          autoCenterRepulsion={0}
+          starSpeed={0.5}
+          speed={1}
+        />
+      </div>
+      {/* Dark overlay to ensure text readability */}
+      <div
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.55) 48%, rgba(0,0,0,0.35) 100%), linear-gradient(0deg, rgba(0,0,0,0.75) 0%, transparent 55%)",
+        }}
+      />
+
+      {/* Animated grid overlay */}
+      <div 
+        className="absolute inset-0 z-0 opacity-[0.08] pointer-events-none"
+        style={{
+          backgroundImage: "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+        }}
+      />
+
+      {/* Floating particles */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-white rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              opacity: [0, 0.8, 0],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Main Content - Split Layout */}
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16 lg:gap-20 h-full">
+        
+        {/* Left Section - FLUX Text */}
+        <div
+          className="flex-1 flex flex-col items-center md:items-start text-center md:text-left gap-6"
+        >
+          {/* FLUX Title */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <FluxAnimatedText />
+          </motion.div>
+
+          {/* Description */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.8 }}
+            className="max-w-xl"
+          >
+            <p className="text-base sm:text-lg md:text-xl text-gray-400 font-light leading-relaxed">
+              Pioneering the next era of <span className="text-white font-medium">technology</span> — where developers, innovators, and tech enthusiasts shape tomorrow's digital landscape.
+            </p>
+          </motion.div>
+
+          {/* INNOVATE INTERACT IMPACT Tags with Typing Effect */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 2.0 }}
+            className="w-full flex justify-center md:justify-start"
+          >
+            <TypingEffect 
+              words={["INNOVATE", "INTERACT", "IMPACT"]}
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-wider text-white"
+            />
+          </motion.div>
+
+          {/* Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 2.6, ease: "easeOut" }}
+            className="flex flex-col sm:flex-row gap-3 items-center md:items-start relative z-30 mt-2"
+          >
+            <button
+              onClick={() => navigate("/contact")}
+              className="relative group overflow-hidden rounded-2xl p-[1px]"
+            >
+              <span className="absolute inset-0 bg-gradient-to-r from-gray-400 via-white to-gray-400 opacity-70 group-hover:opacity-100 transition-opacity duration-300"></span>
+              <div className="relative bg-black group-hover:bg-transparent transition-colors duration-300 rounded-2xl px-8 py-3.5 flex items-center justify-center gap-2">
+                <span className="text-sm font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-300 via-white to-gray-300 group-hover:text-black transition-colors duration-300 tracking-wider uppercase">
+                  Contact Us
+                </span>
+                <motion.span
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                  className="text-gray-300 group-hover:text-black transition-colors duration-300"
                 >
-                  Shaping Futures
+                  <ArrowRight size={16} />
                 </motion.span>
-              </motion.h2>
-            </motion.div>
-
-            <motion.div
-              variants={textChild}
-              className="space-y-4 max-w-3xl mx-auto"
-            >
-              <p
-                className="text-base sm:text-lg text-gray-200 leading-relaxed font-medium"
-                style={{ fontFamily: "'Inter', 'Segoe UI', sans-serif" }}
-              >
-                <span className="text-xl mr-2">🚀</span>
-                <strong
-                  style={{
-                    background:
-                      "linear-gradient(135deg, hsl(var(--primary)), #10b981)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                    fontFamily: "'Space Grotesk', 'Inter', sans-serif",
-                  }}
-                >
-                  Unleashing Innovation
-                </strong>{" "}
-                in Computer Science & Engineering
-              </p>
-
-              <p
-                className="text-base text-gray-300 leading-relaxed"
-                style={{ fontFamily: "'Inter', 'Segoe UI', sans-serif" }}
-              >
-                Join{" "}
-                <motion.strong
-                  className="font-bold text-xl"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, hsl(var(--primary)) 0%, #10b981 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                    backgroundSize: "200% 100%",
-                    filter: "drop-shadow(0 0 15px rgba(16, 185, 129, 0.4))",
-                    fontFamily: "'JetBrains Mono', monospace",
-                  }}
-                  animate={{
-                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                  }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                >
-                  FLUX
-                </motion.strong>{" "}
-                – where brilliant minds converge to push the boundaries of
-                technology, foster groundbreaking research, and build the future
-                of computing.
-              </p>
-
-              <div className="flex flex-col sm:flex-row justify-center gap-4 pt-3">
-                {["Innovation Hub", "Research Excellence", "Future Tech"].map(
-                  (label, i) => (
-                    <motion.div
-                      key={label}
-                      className="flex items-center space-x-2 px-3 py-1.5 rounded-full border border-primary/40 bg-primary/10 backdrop-blur-sm"
-                      animate={{
-                        y: [0, -3, 0],
-                        borderColor: [
-                          "rgba(16, 185, 129, 0.4)",
-                          "rgba(16, 185, 129, 0.7)",
-                          "rgba(16, 185, 129, 0.4)",
-                        ],
-                      }}
-                      transition={{
-                        y: { duration: 4, repeat: Infinity, delay: i * 0.3 },
-                        borderColor: {
-                          duration: 3,
-                          repeat: Infinity,
-                          delay: i * 0.3,
-                        },
-                      }}
-                    >
-                      <div
-                        className="w-2 h-2 rounded-full bg-primary"
-                        style={{ boxShadow: "0 0 8px hsl(var(--primary))" }}
-                      />
-                      <span
-                        className="text-gray-300 font-medium text-sm"
-                        style={{
-                          fontFamily: "'Space Grotesk', 'Inter', sans-serif",
-                        }}
-                      >
-                        {label}
-                      </span>
-                    </motion.div>
-                  )
-                )}
               </div>
-            </motion.div>
-
-            <motion.div
-              variants={textChild}
-              className="flex flex-col sm:flex-row justify-center gap-4 pt-6"
+            </button>
+            
+            <button
+              onClick={() => navigate("/events")}
+              className="flex items-center gap-2 border border-white/15 hover:border-white/40 text-gray-300 hover:text-white px-8 py-3.5 rounded-2xl text-sm font-medium transition-all duration-200 bg-white/[0.03] hover:bg-white/[0.06]"
             >
-              {/* 
-              <motion.div
-                whileHover={{ scale: 1.03, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                className="rounded-lg overflow-hidden shadow-md"
-                style={{
-                  background:
-                    "linear-gradient(45deg, hsl(var(--primary)), #10b981)",
-                  boxShadow: "0 0 20px rgba(16, 185, 129, 0.4)",
-                }}
-              >
-                <button
-                  onClick={handleJoinClick}
-                  className="px-6 py-3 inline-block bg-gradient-to-r from-[#707d7d] to-[#047481] rounded-lg hover:opacity-90 transition text-white font-semibold text-center"
-                  style={{ fontFamily: "'Space Grotesk', 'Inter', sans-serif" }}
-                >
-                  🚀 Join FLUX
-                </button>
-              </motion.div>
-              */}
-
-              {/* <motion.button
-                onClick={handleExploreClick}
-                whileHover={{ scale: 1.03, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                className="rounded-lg border-2 border-primary/50 bg-primary/10 backdrop-blur-sm overflow-hidden px-6 py-3 text-center text-gray-300 font-semibold"
-                style={{ boxShadow: "0 0 15px rgba(16, 185, 129, 0.2)" }}
-              >
-                🔥 Explore FLUX
-              </motion.button> */}
-              <div
-  style={{
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-  }}
->
-  {/* <motion.button
-    onClick={handleEvent}
-    initial={{ scale: 1 }}
-    animate={{ scale: [1, 1.04, 1] }}
-    transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-    whileHover={{ scale: 1.14, y: -3 }}
-    whileTap={{ scale: 0.95 }}
-    className="rounded-xl border-2 bg-transparent backdrop-blur-md font-extrabold tracking-wider pointer-events-auto"
-    style={{
-    width: "clamp(240px, 80vw, 340px)",
-      padding: "1.2rem 2rem",
-      fontSize: "1.25rem",
-      color: "#E5FFFB",
-      borderColor: "rgba(108, 255, 247, 0.45)",
-      cursor: "pointer",
-      boxShadow:
-        "0 0 10px rgba(108,255,247,0.45)," +
-        "0 0 28px rgba(108,255,247,0.35)",
-    }}
-  >
-    🚀 Ideathon Registration
-  </motion.button> */}
-</div>
-
-
-              {/* <motion.button
-                onClick={handleEventsClick}
-                whileHover={{ scale: 1.03, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                className="rounded-lg border-2 border-primary/50 bg-primary/10 backdrop-blur-sm overflow-hidden px-6 py-3 text-center text-gray-300 font-semibold"
-                style={{ boxShadow: "0 0 15px rgba(16, 185, 129, 0.2)" }}
-              >
-                ⚡ Upcoming Events
-              </motion.button> */}
-            </motion.div>
-
-            <motion.div
-              variants={textChild}
-              className="pt-4 overflow-hidden"
-              onHoverStart={() => setIsHovered(true)}
-              onHoverEnd={() => setIsHovered(false)}
-            >
-              <motion.div
-                className="whitespace-nowrap text-sm font-medium text-gray-500"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                animate={{ x: [0, -100] }}
-                transition={{
-                  duration: isHovered ? 30 : 12,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-              >
-                <span className="mr-8 font-bold text-gray-400">
-                  Future Leaders of Unbound Experiments
-                </span>
-                <span className="mr-8">Innovation • Research • Excellence</span>
-                <span className="mr-8">Building Tomorrow's Technology</span>
-                <span className="mr-8">Computer Science & Engineering</span>
-                <span className="mr-8 font-bold text-primary">
-                  MMMIT Gorakhpur
-                </span>
-              </motion.div>
-            </motion.div>
+              Explore Events
+            </button>
           </motion.div>
         </div>
-      </section>
-    </>
+
+        {/* Right Section - Animated FLUX Logo Boxes */}
+        <motion.div
+          initial={{ opacity: 0, x: 50, scale: 0.8 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ duration: 1.2, delay: 0.8, ease: "easeOut" }}
+          className="flex-1 flex items-center justify-center hidden md:flex"
+        >
+          <FluxAnimatedBoxes />
+        </motion.div>
+      </div>
+
+      {/* Bottom gradient fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent pointer-events-none z-10" />
+    </section>
   );
 }

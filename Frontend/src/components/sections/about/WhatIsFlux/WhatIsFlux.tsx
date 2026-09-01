@@ -1,15 +1,11 @@
 import React, { useRef } from 'react';
 import type { WhatIsFluxProps } from './WhatIsFlux.types';
-import { useIntersectionObserver } from '../../../../hooks/useIntersectionObserver';
 import PatronCard from './PatronCard';
 import FeatureCards from './FeatureCards';
-import ParticlesContainer from '../common/Particles';
-import { motion } from 'framer-motion';
 import anupamakaushik from "@/assets/images/Prof. Anupama Kaushik Sharma vc maam.jpeg"
 
 const WhatIsFlux: React.FC<WhatIsFluxProps> = ({ description, patron }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const isVisible = useIntersectionObserver(containerRef, { threshold: 0.1, triggerOnce: true });
 
   const featureData = [
     {
@@ -45,68 +41,42 @@ const WhatIsFlux: React.FC<WhatIsFluxProps> = ({ description, patron }) => {
   ];
 
   return (
-    <section ref={containerRef} className="relative py-20 lg:py-32 bg-black text-white overflow-hidden">
-      <ParticlesContainer />
-
+      <section ref={containerRef} className="relative scroll-mt-24 pt-24 pb-20 lg:pt-36 lg:pb-32 bg-[#020202] text-white overflow-hidden">
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-20">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="relative text-4xl md:text-6xl font-bold mb-8 text-white"
-          >
-            What is <span className="text-green-400">FLUX?</span>
-            <div className="relative mt-4 mx-auto w-48 h-1 bg-green-800 rounded-full">
-              <motion.div
-                initial={{ scaleX: 0 }}
-                animate={isVisible ? { scaleX: 1 } : { scaleX: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
-                className="absolute left-0 top-0 h-full w-full bg-gradient-to-r from-green-400 via-emerald-500 to-green-400 rounded-full origin-left"
-              />
+          <h2 className="relative text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-white tracking-tight">
+            What is <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-300 to-white">FLUX?</span>
+            <div className="relative mt-4 mx-auto w-32 h-1 bg-white/10 rounded-full overflow-hidden">
+              <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-r from-white via-gray-400 to-white rounded-full origin-left shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
             </div>
-          </motion.h2>
+          </h2>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
-            className="text-lg md:text-xl text-gray-300 max-w-4xl mx-auto"
-          >
+          <p className="text-base md:text-lg text-gray-400 max-w-4xl mx-auto leading-relaxed text-center">
             {description}
-          </motion.p>
+          </p>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
-        >
-          <FeatureCards features={featureData} />
-        </motion.div>
+        <FeatureCards features={featureData} />
 
         {patron && (
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
-            className="mt-32"
-          >
+          <div className="mt-24 lg:mt-32">
             <div className="text-center mb-12">
-              <h3 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-                Leadership & <span className="text-green-400">Vision</span>
+              <h3 className="text-2xl md:text-4xl font-bold mb-4 text-white tracking-tight">
+                Leadership & <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">Vision</span>
               </h3>
-              <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+              <p className="text-base md:text-lg text-gray-500 max-w-3xl mx-auto leading-relaxed">
                 FLUX is conceptualized and nurtured under the distinguished guidance of our esteemed Vice Chancellor.
               </p>
             </div>
-            <PatronCard
-              name="Prof. Anupama Kaushik Sharma"
-              title="Hon'ble Vice Chancellor, MMMUT Gorakhpur"
-              imageUrl={anupamakaushik}
-              visionQuote="FLUX represents our unwavering commitment to fostering innovation and research excellence, creating leaders who will drive technological advancement and make meaningful contributions to society."
-            />
-          </motion.div>
+            <div className="relative">
+              <PatronCard
+                name="Prof. Anupama Kaushik Sharma"
+                title="Hon'ble Vice Chancellor, MMMUT Gorakhpur"
+                imageUrl={anupamakaushik}
+                visionQuote="FLUX represents our unwavering commitment to fostering innovation and research excellence, creating leaders who will drive technological advancement and make meaningful contributions to society."
+              />
+            </div>
+          </div>
         )}
       </div>
     </section>

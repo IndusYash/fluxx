@@ -5,6 +5,7 @@ import {
   Loader2, CheckCircle2, XCircle, Clock, Users, Eye, Trophy,
   MessageSquare, Code2, Hash, Layers, Palette, Briefcase,
 } from 'lucide-react';
+import logo from "@/assets/images/flux-logo-silver.jpg";
 
 const API = (import.meta as any).env?.VITE_REG_API_URL || '';
 const STORAGE_KEY = 'flux_judge_token';
@@ -27,12 +28,12 @@ const DEFAULT_CATS: CategoryScores = {
 };
 
 const CATS: { key: keyof CategoryScores; label: string; Icon: React.FC<any>; color: string }[] = [
-  { key: 'communication', label: 'Communication',     Icon: MessageSquare, color: 'text-blue-400'   },
-  { key: 'webDev',        label: 'Web Dev',           Icon: Code2,         color: 'text-purple-400' },
-  { key: 'dsa',           label: 'DSA / Coding',      Icon: Hash,          color: 'text-yellow-400' },
-  { key: 'projects',      label: 'Projects',          Icon: Layers,        color: 'text-orange-400' },
-  { key: 'creative',      label: 'Creative & Design', Icon: Palette,       color: 'text-pink-400'   },
-  { key: 'management',    label: 'Management',        Icon: Briefcase,     color: 'text-green-400'  },
+  { key: 'communication', label: 'Communication',     Icon: MessageSquare, color: 'text-white'   },
+  { key: 'webDev',        label: 'Web Dev',           Icon: Code2,         color: 'text-gray-300' },
+  { key: 'dsa',           label: 'DSA / Coding',      Icon: Hash,          color: 'text-white' },
+  { key: 'projects',      label: 'Projects',          Icon: Layers,        color: 'text-gray-300' },
+  { key: 'creative',      label: 'Creative & Design', Icon: Palette,       color: 'text-white'   },
+  { key: 'management',    label: 'Management',        Icon: Briefcase,     color: 'text-gray-300'  },
 ];
 
 interface ScoreEntry {
@@ -80,9 +81,9 @@ interface JudgeInfo { name: string; email: string; }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 const statusBg = (s: string) =>
-  s === 'selected' ? 'bg-[#00FFC6]/10 border-[#00FFC6]/30 text-[#00FFC6]'
-  : s === 'rejected' ? 'bg-red-500/10 border-red-500/30 text-red-400'
-  : 'bg-yellow-500/10 border-yellow-500/30 text-yellow-400';
+  s === 'selected' ? 'bg-white/10 border-white/30 text-white'
+  : s === 'rejected' ? 'bg-white/10 border-white/30 text-white'
+  : 'bg-white/10 border-white/30 text-white';
 
 const catBg = (c: string) => c.replace('text-', 'bg-');
 
@@ -97,7 +98,7 @@ const Row: React.FC<{ label: string; value?: string }> = ({ label, value }) =>
 const Divider: React.FC<{ title: string }> = ({ title }) => (
   <div className="flex items-center gap-3 pt-1">
     <div className="flex-1 h-px bg-white/[0.05]" />
-    <p className="text-[10px] font-bold text-[#00FFC6] uppercase tracking-[0.15em] shrink-0">{title}</p>
+    <p className="text-[10px] font-bold text-[#E5E5E5] uppercase tracking-[0.15em] shrink-0">{title}</p>
     <div className="flex-1 h-px bg-white/[0.05]" />
   </div>
 );
@@ -115,13 +116,19 @@ const ScoreChip: React.FC<{ overall?: number; status?: Status | null; small?: bo
   }
   return (
     <div className="flex items-center gap-1.5 flex-wrap">
-      <span className={`font-black text-white ${small ? 'text-xs' : 'text-sm'}`}>
+      <motion.span 
+        className={`font-black text-white ${small ? 'text-xs' : 'text-sm'}`}
+        whileHover={{ scale: 1.1 }}
+      >
         {overall.toFixed(1)}/10
-      </span>
+      </motion.span>
       {status && (
-        <span className={`${small ? 'text-[9px]' : 'text-[10px]'} font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full border ${statusBg(status)}`}>
+        <motion.span 
+          className={`${small ? 'text-[9px]' : 'text-[10px]'} font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full border ${statusBg(status)}`}
+          whileHover={{ scale: 1.05 }}
+        >
           {status}
-        </span>
+        </motion.span>
       )}
     </div>
   );
@@ -139,7 +146,7 @@ const CatRow: React.FC<{
         <Icon size={11} className={color} />
         <span className="text-xs font-semibold text-gray-400">{label}</span>
       </div>
-      <span className={`text-sm font-black ${value >= 8 ? 'text-[#00FFC6]' : value >= 5 ? 'text-white' : 'text-red-400'}`}>
+      <span className={`text-sm font-black ${value >= 8 ? 'text-white' : value >= 5 ? 'text-gray-300' : 'text-gray-500'}`}>
         {value}
       </span>
     </div>
@@ -148,9 +155,9 @@ const CatRow: React.FC<{
         <button key={n} type="button" onClick={() => onChange(n)}
           className={`flex-1 h-5 rounded text-[8px] font-black transition-all border
             ${value === n
-              ? n >= 8 ? 'bg-[#00FFC6] border-[#00FFC6] text-black'
+              ? n >= 8 ? 'bg-white border-white text-black'
                 : n >= 5 ? 'bg-white/20 border-white/40 text-white'
-                : 'bg-red-500/20 border-red-500/40 text-red-400'
+                : 'bg-white/20 border-white/40 text-gray-300'
               : 'bg-white/[0.02] border-white/[0.08] text-gray-700 hover:border-white/20 hover:text-gray-400'}`}>
           {n}
         </button>
@@ -206,21 +213,24 @@ const ScoreForm: React.FC<{
   };
 
   return (
-    <div className="space-y-4 bg-white/[0.025] border border-white/[0.07] rounded-2xl p-5">
+    <div className="space-y-4 bg-white/[0.025] border border-white/[0.07] rounded-2xl p-5 backdrop-blur-sm">
       <div className="flex items-center justify-between">
-        <p className="text-[10px] font-black text-[#00FFC6] uppercase tracking-[0.15em]">
+        <p className="text-[10px] font-black text-[#E5E5E5] uppercase tracking-[0.15em]">
           {existing ? 'Update Score' : 'Score This Candidate'}
         </p>
-        <div className="flex items-center gap-1.5">
+        <motion.div 
+          className="flex items-center gap-1.5"
+          whileHover={{ scale: 1.02 }}
+        >
           <span className="text-[9px] text-gray-600 uppercase tracking-wider">Avg</span>
-          <span className={`text-2xl font-black ${computedAvg >= 7 ? 'text-[#00FFC6]' : computedAvg >= 5 ? 'text-white' : 'text-red-400'}`}>
+          <span className={`text-2xl font-black ${computedAvg >= 7 ? 'text-white' : computedAvg >= 5 ? 'text-gray-300' : 'text-gray-500'}`}>
             {computedAvg}
           </span>
           <span className="text-[10px] text-gray-600">/10</span>
-        </div>
+        </motion.div>
       </div>
 
-      <div className="space-y-3 border border-white/[0.05] rounded-xl p-4 bg-white/[0.015]">
+      <div className="space-y-3 border border-white/[0.05] rounded-xl p-4 bg-white/[0.015] backdrop-blur-sm">
         {CATS.map(({ key, label, Icon, color }) => (
           <CatRow key={key} catKey={key} label={label} Icon={Icon} color={color}
             value={cats[key]} onChange={v => { setOneCat(key, v); setDirty(true); }} />
@@ -244,16 +254,16 @@ const ScoreForm: React.FC<{
       </div>
 
       <textarea rows={3}
-        className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-700 focus:border-[#00FFC6]/40 focus:outline-none resize-none leading-relaxed"
+        className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-700 focus:border-[#E5E5E5]/40 focus:outline-none resize-none leading-relaxed"
         placeholder="Interview notes, observations..."
         value={remarks} onChange={e => { setRemarks(e.target.value); setDirty(true); }} />
 
-      {err && <p className="text-xs text-red-400 flex items-center gap-1.5"><AlertCircle size={11} />{err}</p>}
+      {err && <p className="text-xs text-white flex items-center gap-1.5"><AlertCircle size={11} />{err}</p>}
 
       {scoreTable}
 
       <button onClick={save} disabled={saving}
-        className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-[#00FFC6] hover:bg-[#00e5b3] disabled:bg-gray-800 disabled:text-gray-600 text-black font-bold text-sm transition-all">
+        className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-[#E5E5E5] hover:bg-[#FFFFFF] disabled:bg-gray-800 disabled:text-gray-600 text-black font-bold text-sm transition-all">
         {saving ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />}
         {saving ? 'Saving...' : existing ? 'Update Score' : 'Save Score'}
       </button>
@@ -296,8 +306,8 @@ const DetailModal: React.FC<{
         <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 bg-[#07090e] border-b border-white/[0.05] rounded-t-3xl">
           <div className="flex items-center gap-3">
             {app.imageUrl
-              ? <img src={app.imageUrl} alt="" className="w-10 h-10 rounded-full object-cover border-2 border-[#00FFC6]/30" />
-              : <div className="w-10 h-10 rounded-full bg-[#00FFC6]/10 border border-[#00FFC6]/20 flex items-center justify-center"><User size={16} className="text-[#00FFC6]" /></div>
+              ? <img src={app.imageUrl} alt="" className="w-10 h-10 rounded-full object-cover border-2 border-[#E5E5E5]/30" />
+              : <div className="w-10 h-10 rounded-full bg-[#E5E5E5]/10 border border-[#E5E5E5]/20 flex items-center justify-center"><User size={16} className="text-[#E5E5E5]" /></div>
             }
             <div>
               <p className="text-sm font-black text-white">{app.name}</p>
@@ -381,7 +391,7 @@ const DetailModal: React.FC<{
           {app.whyJoin && (
             <>
               <Divider title="Why Flux?" />
-              <div className="bg-[#00FFC6]/4 border border-[#00FFC6]/10 rounded-2xl p-4">
+              <div className="bg-[#E5E5E5]/4 border border-[#E5E5E5]/10 rounded-2xl p-4">
                 <p className="text-sm text-gray-300 leading-relaxed">{app.whyJoin}</p>
               </div>
             </>
@@ -389,7 +399,7 @@ const DetailModal: React.FC<{
 
           {app.resumeUrl && (
             <a href={app.resumeUrl} target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm text-[#00FFC6] hover:underline">
+              className="flex items-center gap-2 text-sm text-[#E5E5E5] hover:underline">
               <Paperclip size={13} /> View Resume
             </a>
           )}
@@ -428,7 +438,7 @@ const DetailModal: React.FC<{
                                 {s.categories?.[key] ?? 0}
                               </td>
                             ))}
-                            <td className="px-2 py-2 text-center text-[#00FFC6] font-bold">{s.overall?.toFixed(1)}</td>
+                            <td className="px-2 py-2 text-center text-[#E5E5E5] font-bold">{s.overall?.toFixed(1)}</td>
                             <td className="px-2 py-2 text-center">
                               <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded-full border ${statusBg(s.status)}`}>
                                 {s.status}
@@ -444,7 +454,7 @@ const DetailModal: React.FC<{
                               {app.avgCategories?.[key] ?? 0}
                             </td>
                           ))}
-                          <td className="px-2 py-2 text-center text-[#00FFC6] font-bold">{(app.avgOverall ?? 0).toFixed(1)}</td>
+                          <td className="px-2 py-2 text-center text-[#E5E5E5] font-bold">{(app.avgOverall ?? 0).toFixed(1)}</td>
                           <td className="px-2 py-2 text-center">
                             {app.consensusStatus ? (
                               <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded-full border ${statusBg(app.consensusStatus)}`}>
@@ -471,11 +481,11 @@ const DetailModal: React.FC<{
 
 // ── App Card ──────────────────────────────────────────────────────────────────
 const AppCard: React.FC<{ app: Application; onView: () => void }> = ({ app, onView }) => (
-  <div className="bg-white/[0.02] border border-white/[0.06] hover:border-[#00FFC6]/20 rounded-2xl p-4 transition-all duration-200 hover:bg-white/[0.04] cursor-pointer group"
+  <div className="card-outline bg-white/[0.02] border border-white/[0.06] hover:border-[#E5E5E5]/20 rounded-2xl p-4 transition-all duration-200 hover:bg-white/[0.04] cursor-pointer group"
     onClick={onView}>
     <div className="flex items-start gap-3">
       {app.imageUrl
-        ? <img src={app.imageUrl} alt="" className="w-11 h-11 rounded-full object-cover border-2 border-white/10 group-hover:border-[#00FFC6]/30 shrink-0" />
+        ? <img src={app.imageUrl} alt="" className="w-11 h-11 rounded-full object-cover border-2 border-white/10 group-hover:border-[#E5E5E5]/30 shrink-0" />
         : <div className="w-11 h-11 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center shrink-0"><User size={16} className="text-gray-600" /></div>
       }
       <div className="flex-1 min-w-0">
@@ -507,7 +517,7 @@ const AppCard: React.FC<{ app: Application; onView: () => void }> = ({ app, onVi
         <div className="flex items-center gap-1.5 mt-2 flex-wrap">
           <span className="text-[9px] text-gray-600 bg-white/[0.03] rounded-lg px-2 py-1 border border-white/[0.05]">Sec {app.section}</span>
           {app.domain?.map(d => (
-            <span key={d} className="text-[9px] text-[#00FFC6]/60 bg-[#00FFC6]/5 rounded-lg px-2 py-1 border border-[#00FFC6]/10">{d}</span>
+            <span key={d} className="text-[9px] text-[#E5E5E5]/60 bg-[#E5E5E5]/5 rounded-lg px-2 py-1 border border-[#E5E5E5]/10">{d}</span>
           ))}
           {app.resumeUrl && <span className="text-[9px] text-gray-600 bg-white/[0.03] rounded-lg px-2 py-1 border border-white/[0.05]">CV</span>}
           {app.consensusStatus && (
@@ -522,7 +532,7 @@ const AppCard: React.FC<{ app: Application; onView: () => void }> = ({ app, onVi
           )}
         </div>
       </div>
-      <Eye size={14} className="text-gray-700 group-hover:text-[#00FFC6] transition-colors shrink-0 mt-1" />
+      <Eye size={14} className="text-gray-700 group-hover:text-[#E5E5E5] transition-colors shrink-0 mt-1" />
     </div>
   </div>
 );
@@ -530,9 +540,9 @@ const AppCard: React.FC<{ app: Application; onView: () => void }> = ({ app, onVi
 // ── Leaderboard Row ───────────────────────────────────────────────────────────
 const LBRow: React.FC<{ entry: LeaderboardEntry; rank: number; onView: () => void }> = ({ entry, rank, onView }) => (
   <div className={`flex items-center gap-4 px-4 py-3 rounded-2xl border transition-all
-    ${rank === 1 ? 'bg-[#00FFC6]/5 border-[#00FFC6]/20' : rank === 2 ? 'bg-white/[0.03] border-white/[0.08]' : rank === 3 ? 'bg-white/[0.02] border-white/[0.06]' : 'bg-transparent border-white/[0.04] hover:border-white/[0.08]'}`}>
+    ${rank === 1 ? 'bg-[#E5E5E5]/5 border-[#E5E5E5]/20' : rank === 2 ? 'bg-white/[0.03] border-white/[0.08]' : rank === 3 ? 'bg-white/[0.02] border-white/[0.06]' : 'bg-transparent border-white/[0.04] hover:border-white/[0.08]'}`}>
     <div className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black shrink-0
-      ${rank === 1 ? 'bg-[#00FFC6] text-black' : rank === 2 ? 'bg-white/20 text-white' : rank === 3 ? 'bg-white/10 text-gray-300' : 'text-gray-600'}`}>
+      ${rank === 1 ? 'bg-[#E5E5E5] text-black' : rank === 2 ? 'bg-white/20 text-white' : rank === 3 ? 'bg-white/10 text-gray-300' : 'text-gray-600'}`}>
       {rank <= 3 ? <Trophy size={12} /> : rank}
     </div>
 
@@ -560,7 +570,7 @@ const LBRow: React.FC<{ entry: LeaderboardEntry; rank: number; onView: () => voi
     </div>
 
     <div className="text-right shrink-0">
-      <p className={`text-xl font-black ${entry.avgOverall >= 7 ? 'text-[#00FFC6]' : entry.avgOverall >= 5 ? 'text-white' : 'text-red-400'}`}>
+      <p className={`text-xl font-black ${entry.avgOverall >= 7 ? 'text-white' : entry.avgOverall >= 5 ? 'text-gray-300' : 'text-gray-500'}`}>
         {entry.avgOverall.toFixed(1)}
       </p>
       <div className="flex items-center gap-1 justify-end mt-0.5">
@@ -576,7 +586,7 @@ const LBRow: React.FC<{ entry: LeaderboardEntry; rank: number; onView: () => voi
     <button
       type="button"
       onClick={onView}
-      className="ml-2 flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold border border-white/[0.08] text-gray-500 hover:text-[#00FFC6] hover:border-[#00FFC6]/30 transition-colors"
+      className="ml-2 flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold border border-white/[0.08] text-gray-500 hover:text-[#E5E5E5] hover:border-[#E5E5E5]/30 transition-colors"
     >
       <Eye size={11} /> View
     </button>
@@ -662,10 +672,10 @@ const CandidatesTab: React.FC<{ token: string }> = ({ token }) => {
       <div className="grid grid-cols-5 gap-3">
         {[
           { label: 'Total',    value: total,    color: 'text-gray-300' },
-          { label: 'Pending',  value: pending,  color: 'text-yellow-400' },
-          { label: 'Scored',   value: scored,   color: 'text-blue-400' },
-          { label: 'Selected', value: selCount, color: 'text-[#00FFC6]' },
-          { label: 'Rejected', value: rejCount, color: 'text-red-400' },
+          { label: 'Pending',  value: pending,  color: 'text-white' },
+          { label: 'Scored',   value: scored,   color: 'text-gray-300' },
+          { label: 'Selected', value: selCount, color: 'text-white' },
+          { label: 'Rejected', value: rejCount, color: 'text-gray-500' },
         ].map(({ label, value, color }) => (
           <div key={label} className="bg-white/[0.02] border border-white/[0.05] rounded-2xl p-3 text-center">
             <p className={`text-xl font-black ${color}`}>{value}</p>
@@ -678,7 +688,7 @@ const CandidatesTab: React.FC<{ token: string }> = ({ token }) => {
         <div className="relative flex-1">
           <Search size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
           <input
-            className="w-full bg-white/[0.03] border border-white/[0.07] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-700 focus:border-[#00FFC6]/40 focus:outline-none"
+            className="w-full bg-white/[0.03] border border-white/[0.07] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-700 focus:border-[#E5E5E5]/40 focus:outline-none"
             placeholder="Search by name, roll, branch..."
             value={search} onChange={e => setSearch(e.target.value)} />
         </div>
@@ -686,7 +696,7 @@ const CandidatesTab: React.FC<{ token: string }> = ({ token }) => {
           {(['all','pending','scored','selected','hold','rejected'] as const).map(f => (
             <button key={f} onClick={() => setFilter(f)}
               className={`px-3 py-2 rounded-xl text-xs font-bold border capitalize transition-all
-                ${filter === f ? 'bg-[#00FFC6]/10 border-[#00FFC6]/30 text-[#00FFC6]' : 'bg-white/[0.02] border-white/[0.06] text-gray-500 hover:text-gray-300'}`}>
+                ${filter === f ? 'bg-[#E5E5E5]/10 border-[#E5E5E5]/30 text-[#E5E5E5]' : 'bg-white/[0.02] border-white/[0.06] text-gray-500 hover:text-gray-300'}`}>
               {f}
             </button>
           ))}
@@ -698,7 +708,7 @@ const CandidatesTab: React.FC<{ token: string }> = ({ token }) => {
           <Loader2 size={18} className="animate-spin" /> Loading...
         </div>
       ) : err ? (
-        <div className="flex items-center justify-center py-20 gap-2 text-red-400">
+        <div className="flex items-center justify-center py-20 gap-2 text-white">
           <AlertCircle size={16} /> {err}
         </div>
       ) : visible.length === 0 ? (
@@ -830,7 +840,7 @@ const LeaderboardTab: React.FC<{ token: string }> = ({ token }) => {
         <div className="relative flex-1">
           <Search size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
           <input
-            className="w-full bg-white/[0.03] border border-white/[0.07] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-700 focus:border-[#00FFC6]/40 focus:outline-none"
+            className="w-full bg-white/[0.03] border border-white/[0.07] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-700 focus:border-[#E5E5E5]/40 focus:outline-none"
             placeholder="Search name, roll..."
             value={search} onChange={e => setSearch(e.target.value)} />
         </div>
@@ -838,7 +848,7 @@ const LeaderboardTab: React.FC<{ token: string }> = ({ token }) => {
           {(['all','selected','hold','rejected'] as const).map(f => (
             <button key={f} onClick={() => setStatusF(f)}
               className={`px-3 py-2 rounded-xl text-xs font-bold border capitalize transition-all
-                ${statusF === f ? 'bg-[#00FFC6]/10 border-[#00FFC6]/30 text-[#00FFC6]' : 'bg-white/[0.02] border-white/[0.06] text-gray-500 hover:text-gray-300'}`}>
+                ${statusF === f ? 'bg-[#E5E5E5]/10 border-[#E5E5E5]/30 text-[#E5E5E5]' : 'bg-white/[0.02] border-white/[0.06] text-gray-500 hover:text-gray-300'}`}>
               {f}
             </button>
           ))}
@@ -850,7 +860,7 @@ const LeaderboardTab: React.FC<{ token: string }> = ({ token }) => {
           <Loader2 size={18} className="animate-spin" /> Loading leaderboard...
         </div>
       ) : err ? (
-        <div className="flex items-center justify-center py-20 gap-2 text-red-400">
+        <div className="flex items-center justify-center py-20 gap-2 text-white">
           <AlertCircle size={16} /> {err}
         </div>
       ) : visible.length === 0 ? (
@@ -906,50 +916,57 @@ const LoginScreen: React.FC<{ onLogin: (token: string, judge: JudgeInfo) => void
   };
 
   return (
-    <div className="min-h-screen bg-[#030507] flex items-center justify-center px-4">
-      <div aria-hidden className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.02]"
-          style={{ backgroundImage: 'radial-gradient(#00FFC6 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#00FFC6]/6 blur-[180px]" />
+    <div className="min-h-screen bg-black flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Background effects */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-800/20 via-black to-black"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/5 rounded-full blur-[120px] pointer-events-none animate-pulse-slow"></div>
       </div>
 
-      <div className="relative w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#00FFC6]/10 border border-[#00FFC6]/20 mb-4">
-            <Star size={28} className="text-[#00FFC6]" />
+      <div className="w-full max-w-md relative z-10 animate-fade-in-up">
+        <div className="bg-[#0a0a0a]/80 backdrop-blur-xl border border-white/10 shadow-[0_0_40px_rgba(255,255,255,0.05)] rounded-2xl p-8 transform transition-all hover:border-white/20 duration-500">
+          <div className="flex flex-col items-center mb-8">
+            <div className="relative mb-6 group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-gray-400 via-white to-gray-400 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+              <img src={logo} alt="FLUX Logo" className="relative w-24 h-24 object-contain rounded-xl border border-white/10 bg-black p-2 transform transition-transform group-hover:scale-105 duration-500" />
+            </div>
+            <h1 className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-gray-300 via-white to-gray-300 tracking-wider">JUDGE PANEL</h1>
+            <p className="text-xs text-gray-500 tracking-[0.2em] uppercase mt-2 font-semibold">Team Access</p>
           </div>
-          <h1 className="text-2xl font-black text-white tracking-tight">Flux Judge Panel</h1>
-          <p className="text-sm text-gray-500 mt-1">Induction Interview 2025-26</p>
-        </div>
 
-        <div className="bg-white/[0.025] border border-white/[0.07] rounded-3xl p-8">
-          <p className="text-[10px] font-bold text-[#00FFC6] uppercase tracking-[0.15em] mb-6">Team Login</p>
-          <form onSubmit={submit} className="space-y-4">
-            <div className="space-y-1.5">
-              <label className="text-sm font-semibold text-gray-300">Email</label>
+          <form onSubmit={submit} className="space-y-5">
+            <div className="relative group">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-gray-600 to-gray-400 rounded-lg blur opacity-0 group-hover:opacity-20 transition duration-500"></div>
               <input type="email" required autoFocus
-                className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder-gray-700 focus:border-[#00FFC6]/50 focus:outline-none transition-all"
-                placeholder="your@email.com"
+                className="relative w-full bg-[#111] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-white/40 focus:ring-1 focus:ring-white/40 transition-all duration-300"
+                placeholder="Judge Email"
                 value={email} onChange={e => setEmail(e.target.value)} />
             </div>
-            <div className="space-y-1.5">
-              <label className="text-sm font-semibold text-gray-300">
-                Password
-              </label>
-              <input type="text" required
-                className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder-gray-700 focus:border-[#00FFC6]/50 focus:outline-none transition-all"
+
+            <div className="relative group">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-gray-600 to-gray-400 rounded-lg blur opacity-0 group-hover:opacity-20 transition duration-500"></div>
+              <input type="password" required
+                className="relative w-full bg-[#111] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-white/40 focus:ring-1 focus:ring-white/40 transition-all duration-300"
                 placeholder="Password"
                 value={password} onChange={e => setPassword(e.target.value)} />
             </div>
-            {err && <p className="text-xs text-red-400 flex items-center gap-1.5"><AlertCircle size={12} />{err}</p>}
+
+            {err && <p className="text-xs text-white flex items-center gap-1.5 animate-shake"><AlertCircle size={14} />{err}</p>}
+
             <button type="submit" disabled={loading}
-              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-[#00FFC6] hover:bg-[#00e5b3] disabled:bg-gray-800 disabled:text-gray-600 text-black font-bold text-sm transition-all mt-2">
-              {loading ? <Loader2 size={14} className="animate-spin" /> : <LogIn size={14} />}
-              {loading ? 'Signing in...' : 'Sign In'}
+              className="w-full relative group overflow-hidden rounded-lg p-[1px] mt-2"
+            >
+              <span className="absolute inset-0 bg-gradient-to-r from-gray-400 via-white to-gray-400 opacity-70 group-hover:opacity-100 transition-opacity duration-300"></span>
+              <div className="relative bg-black group-hover:bg-transparent transition-colors duration-300 rounded-lg px-4 py-3 flex items-center justify-center gap-2">
+                {loading ? <Loader2 size={16} className="animate-spin text-gray-300 group-hover:text-black transition-colors" /> : <LogIn size={16} className="text-gray-300 group-hover:text-black transition-colors" />}
+                <span className="text-sm font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-300 via-white to-gray-300 group-hover:text-black transition-colors duration-300 uppercase tracking-widest">
+                  {loading ? 'Authenticating...' : 'Sign In'}
+                </span>
+              </div>
             </button>
           </form>
-          <p className="text-[10px] text-gray-700 text-center mt-6">
-            Only registered second-year Flux team members can access this panel.
+          <p className="text-[10px] text-gray-600 text-center mt-6">
+            Only authorized Flux team members can access this panel.
           </p>
         </div>
       </div>
@@ -970,15 +987,15 @@ const Dashboard: React.FC<{ token: string; judge: JudgeInfo; onLogout: () => voi
     <div className="min-h-screen bg-[#030507] text-white">
       <div aria-hidden className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute inset-0 opacity-[0.012]"
-          style={{ backgroundImage: 'radial-gradient(#00FFC6 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
-        <div className="absolute -top-40 right-0 w-[500px] h-[500px] rounded-full bg-[#00FFC6]/4 blur-[160px]" />
+          style={{ backgroundImage: 'radial-gradient(#E5E5E5 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+        <div className="absolute -top-40 right-0 w-[500px] h-[500px] rounded-full bg-[#E5E5E5]/4 blur-[160px]" />
       </div>
 
       <div className="sticky top-0 z-30 bg-[#030507]/90 border-b border-white/[0.05] backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-[#00FFC6]/10 border border-[#00FFC6]/20 flex items-center justify-center">
-              <Star size={14} className="text-[#00FFC6]" />
+            <div className="w-8 h-8 rounded-xl bg-[#E5E5E5]/10 border border-[#E5E5E5]/20 flex items-center justify-center">
+              <Star size={14} className="text-[#E5E5E5]" />
             </div>
             <div>
               <p className="text-sm font-black text-white">Flux Judge Panel</p>
@@ -993,7 +1010,7 @@ const Dashboard: React.FC<{ token: string; judge: JudgeInfo; onLogout: () => voi
             ]).map(({ key, label, Icon }) => (
               <button key={key} onClick={() => setTab(key)}
                 className={`flex items-center gap-1.5 px-4 py-2 text-xs font-bold transition-all
-                  ${tab === key ? 'bg-[#00FFC6]/10 text-[#00FFC6]' : 'text-gray-500 hover:text-gray-300'}`}>
+                  ${tab === key ? 'bg-[#E5E5E5]/10 text-[#E5E5E5]' : 'text-gray-500 hover:text-gray-300'}`}>
                 <Icon size={12} />{label}
               </button>
             ))}
@@ -1005,7 +1022,7 @@ const Dashboard: React.FC<{ token: string; judge: JudgeInfo; onLogout: () => voi
               <p className="text-[10px] text-gray-600">{judge.email}</p>
             </div>
             <button onClick={onLogout}
-              className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-red-400 transition-colors px-3 py-2 rounded-xl hover:bg-red-500/5 border border-transparent hover:border-red-500/15">
+              className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-white transition-colors px-3 py-2 rounded-xl hover:bg-white/5 border border-transparent hover:border-white/15">
               <LogOut size={12} /> Logout
             </button>
           </div>

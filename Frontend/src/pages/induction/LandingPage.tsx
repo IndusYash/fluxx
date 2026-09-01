@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Zap, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import HeroSection from '../../components/sections/induction/HeroSection';
@@ -25,26 +25,29 @@ const LandingPage: React.FC = () => {
         </div>
 
         {/* CTA Section */}
-        <div className="relative z-10 px-6 md:px-12 max-w-5xl mx-auto mb-20 mt-16 md:mt-24">
+        <div className="relative z-10 px-6 md:px-12 max-w-5xl mx-auto mb-20 mt-16 md:mt-24 animate-fade-in-up">
           <div
-            className="relative rounded-3xl overflow-hidden border border-[#00FFC6]/20"
-            style={{ background: 'linear-gradient(135deg, #0a120e 0%, #0d1a12 50%, #080f0b 100%)' }}
+            className="card-outline relative rounded-3xl overflow-hidden border border-white/10 group hover:border-white/20 transition-all duration-500"
+            style={{ background: 'linear-gradient(135deg, rgba(10,10,10,0.9) 0%, rgba(15,15,15,0.95) 50%, rgba(5,5,5,0.9) 100%)' }}
           >
+            {/* Background effects */}
+            <div className="absolute inset-0 z-0">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-white/5 rounded-full blur-[100px] pointer-events-none animate-pulse-slow"></div>
+            </div>
+            
             {/* top stripe */}
-            <div className="h-0.5 bg-gradient-to-r from-transparent via-[#00FFC6]/70 to-transparent" />
-            {/* glow */}
-            <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-96 h-40 bg-[#00FFC6]/10 blur-[80px] pointer-events-none" />
+            <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent group-hover:animate-shimmer" />
 
             <div className="relative z-10 px-8 md:px-16 py-14 md:py-16 flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
               {/* left */}
               <div className="flex-1 text-center lg:text-left">
-                <div className="inline-flex items-center gap-2 bg-[#00FFC6]/10 border border-[#00FFC6]/20 rounded-full px-3 py-1 mb-5">
-                  <Zap size={11} className="text-[#00FFC6]" />
-                  <span className="text-[#00FFC6] text-[11px] font-semibold tracking-widest uppercase">Limited Seats</span>
+                <div className="inline-flex items-center gap-2 bg-white/5 border border-white/20 rounded-full px-3 py-1 mb-5">
+                  <Zap size={11} className="text-gray-300" />
+                  <span className="text-gray-300 text-[11px] font-semibold tracking-widest uppercase">Limited Seats</span>
                 </div>
-                <h3 className="text-3xl md:text-4xl font-black text-white mb-4 leading-tight">
+                <h3 className="text-3xl md:text-4xl font-black text-white mb-4 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-gray-300 via-white to-gray-400">
                   Ready to join the<br />
-                  <span className="text-[#00FFC6]">next generation</span>?
+                  <span className="text-white">next generation</span>?
                 </h3>
                 <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-md mx-auto lg:mx-0">
                   Become part of a community that values curiosity, creativity, and collaboration.
@@ -54,7 +57,7 @@ const LandingPage: React.FC = () => {
                 <div className="mt-6 flex flex-wrap gap-4 justify-center lg:justify-start">
                   {['Zero fee', 'Takes 5 mins', 'Open to all branches'].map(p => (
                     <div key={p} className="flex items-center gap-1.5 text-gray-400 text-xs">
-                      <CheckCircle2 size={13} className="text-[#00FFC6] shrink-0" />
+                      <CheckCircle2 size={13} className="text-gray-300 shrink-0" />
                       {p}
                     </div>
                   ))}
@@ -65,12 +68,17 @@ const LandingPage: React.FC = () => {
               <div className="flex flex-col items-center gap-3 shrink-0">
                 <button
                   onClick={onJoinClick}
-                  className="group flex items-center gap-3 bg-[#00FFC6] hover:bg-[#00e5b3] text-black font-bold px-10 py-4 rounded-2xl transition-all duration-200 hover:scale-[1.03] shadow-xl shadow-[#00FFC6]/25 text-base"
+                  className="w-full relative group overflow-hidden rounded-xl p-[1px]"
                 >
-                  Apply Now
-                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-200" />
+                  <span className="absolute inset-0 bg-gradient-to-r from-gray-400 via-white to-gray-400 opacity-70 group-hover:opacity-100 transition-opacity duration-300"></span>
+                  <div className="relative bg-black group-hover:bg-transparent transition-colors duration-300 rounded-xl px-10 py-4 flex items-center justify-center gap-3">
+                    <span className="text-base font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-300 via-white to-gray-300 group-hover:text-black transition-colors duration-300 tracking-wider">
+                      Apply Now
+                    </span>
+                    <ArrowRight size={18} className="text-gray-300 group-hover:text-black group-hover:translate-x-1 transition-all duration-300" />
+                  </div>
                 </button>
-                <p className="text-gray-700 text-[11px]">Induction 2026 · MMMUT</p>
+                <p className="text-gray-600 text-[11px] tracking-widest uppercase font-semibold">Induction 2026 · MMMUT</p>
               </div>
             </div>
           </div>

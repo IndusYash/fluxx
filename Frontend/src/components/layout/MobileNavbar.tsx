@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import logo from "@/assets/images/flux_logo.webp";
+import logo from "@/assets/images/flux-logo-silver.jpg";
 import "./Navbar.css"; // 👈 make sure this is imported
 
 const sections = [
@@ -11,7 +11,6 @@ const sections = [
   { id: "events", label: "Events", path: "/events" },
   { id: "gallery", label: "Gallery", path: "/gallery" },
   { id: "ideathon", label: "Ideathon", path: "/ideathon" },
-//  { id: "induction", label: "Induction", path: "/induction" },
   { id: "team", label: "Team", path: "/team" },
   { id: "contact", label: "Contact", path: "/contact" },
 ];
@@ -70,14 +69,28 @@ export default function MobileNavbar() {
   return (
     <>
       {/* Top Navbar */}
-          <nav className="fixed top-0 left-0 right-0 z-[9999] bg-card/80 backdrop-blur border-b border-border">
-        <div className="flex items-center justify-between h-16 px-4">
-          <img
-            src={logo}
-            alt="Flux Logo"
-            className="h-8 w-auto cursor-pointer"
+          <nav className="fixed top-0 left-0 right-0 z-[9999] bg-card/80 backdrop-blur">
+          <div
+            className="flex items-center justify-between h-16 px-4"
+            style={{ borderBottom: "0.5px solid rgba(255, 255, 255, 0.7)" }}
+          >
+          <div
+            className="flex items-center gap-1.5 h-12 cursor-pointer"
             onClick={() => handleLinkClick("home", "/")}
-          />
+          >
+            <div className="h-11 w-11 overflow-hidden rounded-lg bg-black/70 p-0.5">
+              <img
+                src={logo}
+                alt="Flux Logo"
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <span
+              className="text-primary text-[1.75rem] leading-none font-bold tracking-[0.04em]"
+            >
+              FLUX
+            </span>
+          </div>
 
           <button
             onClick={() => setIsMenuOpen((p) => !p)}

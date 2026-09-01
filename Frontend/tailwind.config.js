@@ -6,15 +6,17 @@ export default {
   theme: {
   	extend: {
   		fontFamily: {
-  			sans: [
-  				'Inter',
-  				'ui-sans-serif',
-  				'system-ui'
-  			],
+					sans: [
+						'Space Grotesk',
+						'sans-serif'
+					],
   			display: [
-  				'Sora',
-  				'Inter',
-  				'ui-sans-serif'
+						'Space Grotesk',
+						'sans-serif'
+  			],
+  			heading: [
+						'Space Grotesk',
+  				'sans-serif'
   			]
   		},
   		colors: {
@@ -74,7 +76,27 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+ 		keyframes: {
+ 			'fade-in-up': {
+ 				'0%': { opacity: '0', transform: 'translateY(20px)' },
+ 				'100%': { opacity: '1', transform: 'translateY(0)' },
+ 			},
+ 			shake: {
+ 				'0%, 100%': { transform: 'translateX(0)' },
+ 				'25%': { transform: 'translateX(-4px)' },
+ 				'75%': { transform: 'translateX(4px)' },
+ 			},
+ 			shimmer: {
+ 				'100%': { transform: 'translateX(100%)' },
+ 			}
+ 		},
+ 		animation: {
+ 			'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
+ 			'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+ 			shake: 'shake 0.4s ease-in-out',
+ 			shimmer: 'shimmer 2s infinite',
+ 		}
   	}
   },
   plugins: [require("tailwindcss-animate")]

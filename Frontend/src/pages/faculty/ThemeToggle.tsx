@@ -27,7 +27,7 @@ const ThemeToggle: React.FC = React.memo(() => {
             exit={{ opacity: 0, rotate: 90 }}
             transition={{ duration: 0.3 }}
           >
-            <Sun className="w-6 h-6 text-yellow-500" />
+            <Sun className="w-6 h-6 text-white" />
           </motion.div>
         ) : (
           <motion.div
@@ -37,7 +37,7 @@ const ThemeToggle: React.FC = React.memo(() => {
             exit={{ opacity: 0, rotate: -90 }}
             transition={{ duration: 0.3 }}
           >
-            <Moon className="w-6 h-6 text-blue-600" />
+            <Moon className="w-6 h-6 text-gray-300" />
           </motion.div>
         )}
       </AnimatePresence>

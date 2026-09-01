@@ -99,16 +99,16 @@ interface Member {
 
 // ─── Accent Colors ─────────────────────────────────────────────────────────────
 const C = {
-  admin:   '#a78bfa',   // soft violet
-  domain:  '#4ade80',   // FLUX green
-  dev:     '#6CFFF7',   // cyan
-  design:  '#f472b6',   // pink
-  photo:   '#fb923c',   // orange
-  algo:    '#facc15',   // amber-yellow
-  aiml:    '#818cf8',   // indigo
-  content: '#34d399',   // emerald
-  alumni:  '#f59e0b',   // gold
-  exec:    '#94a3b8',   // slate
+  admin:   '#E5E5E5',
+  domain:  '#E5E5E5',
+  dev:     '#E5E5E5',
+  design:  '#E5E5E5',
+  photo:   '#E5E5E5',
+  algo:    '#E5E5E5',
+  aiml:    '#E5E5E5',
+  content: '#E5E5E5',
+  alumni:  '#E5E5E5',
+  exec:    '#E5E5E5',
 };
 
 // ─── Animated Counter Hook ─────────────────────────────────────────────────────
@@ -148,12 +148,12 @@ const useCountUp = (end: number, duration = 1800) => {
 const FloatingOrbs: React.FC = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
     {[
-      { top: '5%', left: '8%', size: 400, color: '#00FFC6', delay: 0 },
-      { top: '40%', left: '82%', size: 300, color: '#a78bfa', delay: 2 },
-      { top: '65%', left: '12%', size: 250, color: '#f59e0b', delay: 4 },
-      { top: '20%', left: '55%', size: 220, color: '#f472b6', delay: 1 },
-      { top: '80%', left: '65%', size: 350, color: '#6CFFF7', delay: 3 },
-      { top: '50%', left: '40%', size: 180, color: '#4ade80', delay: 5 },
+      { top: '5%', left: '8%', size: 400, color: '#E5E5E5', delay: 0 },
+      { top: '40%', left: '82%', size: 300, color: '#FFFFFF', delay: 2 },
+      { top: '65%', left: '12%', size: 250, color: '#E5E5E5', delay: 4 },
+      { top: '20%', left: '55%', size: 220, color: '#FFFFFF', delay: 1 },
+      { top: '80%', left: '65%', size: 350, color: '#E5E5E5', delay: 3 },
+      { top: '50%', left: '40%', size: 180, color: '#FFFFFF', delay: 5 },
     ].map((orb, i) => (
       <motion.div
         key={i}
@@ -200,7 +200,7 @@ const FacultyCard: React.FC<{ m: Member; idx: number }> = ({ m, idx }) => {
   const src = !m.image || err
     ? `https://i.pravatar.cc/300?img=${(idx % 70) + 1}`
     : m.image;
-  const color = m.color || '#a78bfa';
+  const color = m.color || '#E5E5E5';
 
   return (
     <motion.div
@@ -253,7 +253,6 @@ const FacultyCard: React.FC<{ m: Member; idx: number }> = ({ m, idx }) => {
       {/* Name */}
       <h3
         className="text-white font-bold text-xl sm:text-2xl mb-2 tracking-wide group-hover:tracking-wider transition-all duration-500"
-        style={{ fontFamily: "'Playfair Display', serif" }}
       >
         {m.name}
       </h3>
@@ -324,7 +323,7 @@ const MemberCard: React.FC<{ m: Member; idx: number }> = ({ m, idx }) => {
         ref={cardRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className="group relative w-full aspect-[3/4] max-w-[280px] rounded-2xl overflow-hidden cursor-pointer will-change-transform"
+        className="card-outline group relative w-full aspect-[3/4] max-w-[280px] rounded-2xl overflow-hidden cursor-pointer will-change-transform"
         style={{
           border: '1px solid rgba(255,255,255,0.06)',
           boxShadow: '0 8px 40px rgba(0,0,0,0.4)',
@@ -349,7 +348,7 @@ const MemberCard: React.FC<{ m: Member; idx: number }> = ({ m, idx }) => {
         <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
         {/* Full overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#070B09] via-[#070B09]/75 to-[#070B09]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#020202] via-[#020202]/75 to-[#020202]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
         {/* Accent top edge glow */}
         <div
@@ -365,7 +364,7 @@ const MemberCard: React.FC<{ m: Member; idx: number }> = ({ m, idx }) => {
 
         {/* Always-visible name at bottom */}
         <div className="absolute bottom-0 left-0 right-0 p-5 z-10 group-hover:opacity-0 transition-opacity duration-300">
-          <h3 className="text-white font-bold text-lg tracking-wide line-clamp-1 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <h3 className="text-white font-bold text-lg tracking-wide line-clamp-1 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
             {m.name}
           </h3>
           <p className="text-[11px] font-semibold tracking-wider uppercase mt-0.5 drop-shadow-lg" style={{ color: `${color}cc` }}>
@@ -392,7 +391,7 @@ const MemberCard: React.FC<{ m: Member; idx: number }> = ({ m, idx }) => {
             </span>
           )}
 
-          <h3 className="text-white font-bold text-2xl mb-1 tracking-wide leading-tight line-clamp-1" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <h3 className="text-white font-bold text-2xl mb-1 tracking-wide leading-tight line-clamp-1">
             {m.name}
           </h3>
 
@@ -526,8 +525,8 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
   ];
 
   const facultyMembers: Member[] = [
-    { name: 'Dr. Shwet Ketu', role: 'Faculty Co-ordinator', branch: '', batch: '', email: '', linkedin: '', image: shwetSirImage, color: '#a78bfa' },
-    { name: 'Dr. Satvik Vats', role: 'Faculty Co-ordinator', branch: '', batch: '', email: '', linkedin: '', image: satvikSirImage, color: '#34d399' },
+      { name: 'Dr. Shwet Ketu', role: 'Faculty Co-ordinator', branch: '', batch: '', email: '', linkedin: '', image: shwetSirImage, color: '#E5E5E5' },
+      { name: 'Dr. Satvik Vats', role: 'Faculty Co-ordinator', branch: '', batch: '', email: '', linkedin: '', image: satvikSirImage, color: '#E5E5E5' },
   ];
 
   // Compute member counts
@@ -565,7 +564,7 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
           />
           {icon && <span style={{ color }} className="opacity-80">{icon}</span>}
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
             {title}
           </h2>
           {icon && <span style={{ color }} className="opacity-80">{icon}</span>}
@@ -583,10 +582,10 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
   );
 
   const navButtons = [
-    { id: 'alumni', label: 'Alumni', batch: "'26", color: '#f59e0b', icon: <GraduationCap size={14} /> },
-    { id: 'final', label: 'Final Year', batch: "'27", color: '#4ade80', icon: <Sparkles size={14} /> },
-    { id: 'prefinal', label: 'Pre-Final Year', batch: "'28", color: '#00FFC6', icon: null },
-    { id: 'sophomore', label: 'Sophomore Year', batch: "'29", color: '#f472b6', icon: null },
+    { id: 'alumni', label: 'Alumni', batch: "'26", color: '#E5E5E5', icon: <GraduationCap size={14} /> },
+    { id: 'final', label: 'Final Year', batch: "'27", color: '#E5E5E5', icon: <Sparkles size={14} /> },
+    { id: 'prefinal', label: 'Pre-Final Year', batch: "'28", color: '#E5E5E5', icon: null },
+    { id: 'sophomore', label: 'Sophomore Year', batch: "'29", color: '#E5E5E5', icon: null },
   ];
 
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
@@ -596,10 +595,10 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
   };
 
   const sections = [
-    { id: 'alumni', title: 'Alumni', batch: "'26", color: '#f59e0b', icon: <GraduationCap size={24} /> },
-    { id: 'final', title: 'Final Year', batch: "'27", color: '#4ade80', icon: <Sparkles size={24} /> },
-    { id: 'prefinal', title: 'Pre-Final Year', batch: "'28", color: '#00FFC6', icon: null },
-    { id: 'sophomore', title: 'Sophomore Year', batch: "'29", color: '#f472b6', icon: null },
+    { id: 'alumni', title: 'Alumni', batch: "'26", color: '#E5E5E5', icon: <GraduationCap size={24} /> },
+    { id: 'final', title: 'Final Year', batch: "'27", color: '#E5E5E5', icon: <Sparkles size={24} /> },
+    { id: 'prefinal', title: 'Pre-Final Year', batch: "'28", color: '#E5E5E5', icon: null },
+    { id: 'sophomore', title: 'Sophomore Year', batch: "'29", color: '#E5E5E5', icon: null },
   ];
 
   const visibleSections = activeFilter
@@ -607,7 +606,7 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
     : sections.filter(s => s.id !== 'alumni');
 
   return (
-    <div className="min-h-screen bg-[#070B09] relative overflow-hidden select-none pb-24 font-sans">
+    <div className="min-h-screen bg-[#020202] relative overflow-hidden select-none pb-24 ">
       {/* ── Shimmer keyframe (injected once) ─────────────────────────────────── */}
       <style>{`
         @keyframes shimmer {
@@ -640,9 +639,8 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="text-6xl sm:text-7xl lg:text-9xl font-bold text-white mb-6 tracking-tight"
-          style={{ fontFamily: "'Playfair Display', serif" }}
         >
-          Our Team<span className="text-[#00FFC6]">.</span>
+          Our Team<span className="text-[#E5E5E5]">.</span>
         </motion.h1>
 
         {/* Subtitle */}
@@ -650,8 +648,7 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.25 }}
-          className="text-gray-400/80 text-lg sm:text-xl italic max-w-2xl font-light mb-10"
-          style={{ fontFamily: "'Playfair Display', serif" }}
+          className="text-gray-400/80 text-lg sm:text-xl max-w-2xl font-light mb-10"
         >
           "Where innovation meets dedication — the minds shaping the future of tech at MMMUT."
         </motion.p>

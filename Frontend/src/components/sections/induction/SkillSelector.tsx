@@ -53,7 +53,7 @@ const SkillSelector: React.FC<SkillSelectorProps> = ({
         {selectedSkills.map((skill) => (
           <span
             key={skill}
-            className="bg-[#00FFC6] text-black px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2"
+            className="bg-[#E5E5E5] text-black px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2"
           >
             {skill}
             <button
@@ -77,7 +77,7 @@ const SkillSelector: React.FC<SkillSelectorProps> = ({
               onChange={(e) => setCustomSkill(e.target.value)}
               onFocus={() => setShowSuggestions(true)}
               onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-              className="w-full bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-[#00FFC6] focus:outline-none transition-colors duration-300"
+              className="w-full bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-[#E5E5E5] focus:outline-none transition-colors duration-300"
               placeholder="Add a skill..."
             />
             
@@ -104,7 +104,7 @@ const SkillSelector: React.FC<SkillSelectorProps> = ({
           
           <button
             type="submit"
-            className="bg-[#00FFC6] hover:bg-[#00e5b3] text-black px-4 py-2 rounded-lg transition-colors duration-300 flex items-center"
+            className="bg-[#E5E5E5] hover:bg-[#FFFFFF] text-black px-4 py-2 rounded-lg transition-colors duration-300 flex items-center"
           >
             <Plus size={16} />
           </button>
@@ -120,7 +120,7 @@ const SkillSelector: React.FC<SkillSelectorProps> = ({
               key={suggestion}
               type="button"
               onClick={() => addSkill(suggestion)}
-              className="bg-gray-800 hover:bg-[#00FFC6] hover:text-black text-gray-300 px-3 py-1 rounded-full text-sm transition-all duration-300 border border-gray-600 hover:border-[#00FFC6]"
+              className="bg-gray-800 hover:bg-[#E5E5E5] hover:text-black text-gray-300 px-3 py-1 rounded-full text-sm transition-all duration-300 border border-gray-600 hover:border-[#E5E5E5]"
             >
               {suggestion}
             </button>
@@ -128,7 +128,7 @@ const SkillSelector: React.FC<SkillSelectorProps> = ({
         </div>
       </div>
 
-      {error && <p className="text-red-400 text-sm mt-2">{error}</p>}
+      {error && <p className="text-white text-sm mt-2">{error}</p>}
     </div>
   );
 };

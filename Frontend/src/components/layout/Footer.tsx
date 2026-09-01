@@ -1,177 +1,202 @@
 import { FaWhatsapp, FaInstagram, FaLinkedin, FaMapMarkerAlt, FaEnvelope } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
-import SectionWrapper from "../SectionWrapper";
+import { motion } from "framer-motion";
+import logo from "@/assets/images/flux-logo-silver.jpg";
+
+const socialLinks = [
+  {
+    icon: SiGmail,
+    href: "mailto:flux@mmmut.ac.in",
+    label: "Gmail"
+  },
+  {
+    icon: FaWhatsapp,
+    href: "https://chat.whatsapp.com/F8O8hTu2aCZ6NKLeRVqJ0R?mode=ac_t",
+    label: "WhatsApp"
+  },
+  {
+    icon: FaInstagram,
+    href: "https://www.instagram.com/flux.mmmut?igsh=aHI5c3Z1dGZwOGI2",
+    label: "Instagram"
+  },
+  {
+    icon: FaLinkedin,
+    href: "https://www.linkedin.com/company/flux-mmm/",
+    label: "LinkedIn"
+  }
+];
+
+const quickLinks = [
+  { name: "Home", href: "/" },
+  { name: "Our Team", href: "/team" },
+  { name: "Events", href: "/events" },
+  { name: "Faculty", href: "/faculty" },
+  { name: "Contact", href: "/contact" }
+];
 
 export default function Footer() {
-  const socialLinks = [
-    {
-      icon: SiGmail,
-      href: "mailto:flux@mmmut.ac.in",
-      color: "hover:text-red-400",
-      label: "Gmail"
-    },
-    {
-      icon: FaWhatsapp,
-      href: "https://chat.whatsapp.com/F8O8hTu2aCZ6NKLeRVqJ0R?mode=ac_t",
-      color: "hover:text-green-400",
-      label: "WhatsApp"
-    },
-    {
-      icon: FaInstagram,
-      href: "https://www.instagram.com/flux.mmmut?igsh=aHI5c3Z1dGZwOGI2",
-      color: "hover:text-pink-400",
-      label: "Instagram"
-    },
-    {
-      icon: FaLinkedin,
-      href: "https://www.linkedin.com/company/flux-mmm/",
-      color: "hover:text-blue-400",
-      label: "LinkedIn"
-    }
-  ];
-
   return (
-    <SectionWrapper title="Get In Touch" background="bg-black">
-      <footer className="text-white pt-16 relative overflow-hidden bg-black">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }} />
-        </div>
+    <footer className="relative pt-20 pb-8 overflow-hidden bg-[#020202] text-white">
+      {/* Animated background grid */}
+      <div 
+        className="absolute inset-0 opacity-20 pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+        }}
+      />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Top Row: Brand, Quick Links, and Contact */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12 pb-16">
+      {/* Top gradient line */}
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent" />
+
+      {/* Gradient orbs */}
+      <motion.div 
+        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-20 pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%)",
+          filter: "blur(60px)"
+        }}
+        animate={{
+          x: [0, 100, 0],
+          y: [0, 50, 0],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 pb-16">
+          {/* Brand Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative"
+          >
+            <div className="flex items-center gap-4 mb-6">
+              <img 
+                src={logo}
+                alt="FLUX Logo"
+                className="h-10 w-auto object-contain"
+              />
+              <span className="text-[2.5rem] font-black text-white tracking-tight leading-none">
+                FLUX
+              </span>
+            </div>
+            <p className="text-gray-400 leading-relaxed text-sm mb-6 relative z-10">
+              Pioneering the next era of technology. A community of developers and tech enthusiasts building together.
+            </p>
             
-            {/* Brand Section */}
-            <div>
-              <div className="mb-8">
-                <h3 className="text-2xl sm:text-3xl font-bold mb-3 bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                  WebFlux
-                </h3>
-                <div className="w-12 h-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full mb-4 animate-pulse"></div>
-                <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
-                  A community of developers and tech enthusiasts building together
-                  and pushing innovation forward.
-                </p>
-              </div>
-              
-              {/* Social Media Section */}
-              <div className="space-y-4">
-                <h4 className="text-base sm:text-lg font-semibold text-emerald-400 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
-                  Connect With Us
-                </h4>
-                <div className="flex flex-wrap gap-3 sm:gap-4">
-                  {socialLinks.map((social, index) => (
-                    <a
-                      key={index}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`p-3 sm:p-3.5 rounded-full bg-gray-900/80 backdrop-blur-sm border border-gray-800 ${social.color} transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-400/30 group`}
-                      title={social.label}
-                    >
-                      <social.icon className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" />
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Links */}
-            <div>
-              <h3 className="text-base sm:text-lg font-semibold mb-6 text-emerald-400 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
-                Quick Links
-              </h3>
-              <ul className="space-y-3 sm:space-y-4">
-                {[
-                  { name: "Home", href: "/" },
-                  { name: "Our Team", href: "/team" },
-                  { name: "Events", href: "/events" },
-                  { name: "Faculty", href: "/faculty" },
-                  { name: "Contact", href: "/contact" }
-                ].map((link, index) => (
-                  <li key={index}>
-                    <a 
-                      href={link.href} 
-                      className="text-gray-300 hover:text-white transition-all duration-300 flex items-center group text-sm sm:text-base hover:translate-x-2"
-                    >
-                      <span className="w-2 h-2 bg-emerald-400 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:animate-pulse"></span>
-                      <span className="relative">
-                        {link.name}
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 transition-all duration-300 group-hover:w-full"></span>
-                      </span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Contact Section */}
-            <div>
-              <h3 className="text-base sm:text-lg font-semibold mb-6 text-emerald-400 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
-                Contact
-              </h3>
-              <div className="space-y-4 sm:space-y-5">
-                {/* Address Card */}
-                <div className="group">
-                  <div className="flex items-start gap-3 p-4 rounded-xl bg-gray-900/50 backdrop-blur-sm border border-gray-800 hover:border-emerald-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-400/10 hover:bg-gray-900/70">
-                    <div className="mt-1 flex-shrink-0">
-                      <FaMapMarkerAlt className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform duration-300" />
-                    </div>
-                    <div>
-                      <p className="text-sm sm:text-base text-white leading-relaxed font-medium mb-1">
-                        Flux, Center of Excellence
-                      </p>
-                      <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
-                        Madan Mohan Malaviya University of Technology
-                      </p>
-                      <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
-                        Gorakhpur, Uttar Pradesh 273010
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Email Card */}
-                <a 
-                  href="mailto:flux@mmmut.ac.in"
-                  className="flex items-center gap-3 p-4 rounded-xl bg-gray-900/50 backdrop-blur-sm border border-gray-800 hover:border-emerald-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-400/10 hover:bg-gray-900/70 group"
+            <div className="flex gap-3 relative z-10">
+              {socialLinks.map((social, index) => (
+                <motion.a
+                  key={index}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative p-3 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-white/30 transition-all duration-300 group"
+                  whileHover={{ scale: 1.1, y: -3 }}
+                  whileTap={{ scale: 0.9 }}
+                  title={social.label}
                 >
-                  <FaEnvelope className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform duration-300" />
-                  <span className="text-sm sm:text-base text-gray-300 group-hover:text-white transition-colors duration-300">
-                    flux@mmmut.ac.in
-                  </span>
-                </a>
-              </div>
+                  <motion.div
+                    className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                  <social.icon className="w-5 h-5 relative z-10" />
+                </motion.a>
+              ))}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Bottom Section */}
-          <div className="border-t border-gray-800 pt-6 sm:pt-8 pb-6 sm:pb-8">
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
-              <div className="text-gray-400 text-xs sm:text-sm text-center sm:text-left">
-                © {new Date().getFullYear()} WebFlux. All rights reserved.
-              </div>
-              
-              <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-xs sm:text-sm text-gray-400">
-                <span className="text-center">Built with ❤️ by WebFlux Team</span>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span>Active Community</span>
+          {/* Quick Links */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <h3 className="text-lg font-semibold mb-6 text-white flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+              Quick Links
+            </h3>
+            <ul className="space-y-3">
+              {quickLinks.map((link, index) => (
+                <li key={index}>
+                  <motion.a 
+                    href={link.href} 
+                    className="text-gray-400 hover:text-white transition-all duration-300 flex items-center group text-sm"
+                    whileHover={{ x: 5 }}
+                  >
+                    <span className="w-1.5 h-1.5 bg-white/0 group-hover:bg-white rounded-full mr-3 transition-all duration-300" />
+                    {link.name}
+                  </motion.a>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* Contact Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <h3 className="text-lg font-semibold mb-6 text-white flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+              Contact
+            </h3>
+            <div className="space-y-4">
+              <motion.div 
+                className="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-white/30 transition-all duration-300 group"
+                whileHover={{ scale: 1.02 }}
+              >
+                <FaMapMarkerAlt className="w-5 h-5 text-white mt-0.5 group-hover:scale-110 transition-transform" />
+                <div>
+                  <p className="text-sm text-white font-medium">FLUX, Center of Excellence</p>
+                  <p className="text-xs text-gray-400 mt-1">Madan Mohan Malaviya University of Technology</p>
+                  <p className="text-xs text-gray-400">Gorakhpur, Uttar Pradesh 273010</p>
                 </div>
-              </div>
+              </motion.div>
+              
+              <motion.a 
+                href="mailto:flux@mmmut.ac.in"
+                className="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-white/30 transition-all duration-300 group"
+                whileHover={{ scale: 1.02 }}
+              >
+                <FaEnvelope className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+                <span className="text-sm text-gray-300 group-hover:text-white transition-colors">
+                  flux@mmmut.ac.in
+                </span>
+              </motion.a>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Bottom Section */}
+        <div className="border-t border-white/10 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-gray-500 text-sm text-center md:text-left">
+              © {new Date().getFullYear()} FLUX. All rights reserved.
+            </p>
+            
+            <div className="flex items-center gap-2">
+              <motion.div 
+                className="w-2 h-2 bg-white rounded-full"
+                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+              <span className="text-sm text-gray-500">Active Community</span>
             </div>
           </div>
         </div>
-
-        {/* Gradient overlay at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-400/50 to-transparent"></div>
-      </footer>
-    </SectionWrapper>
+      </div>
+    </footer>
   );
 }

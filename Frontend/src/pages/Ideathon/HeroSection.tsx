@@ -1,6 +1,5 @@
-import Hyperspeed from "../../components/Hyperspeed";
-import { hyperspeedPresets } from "../../components/HyperSpeedPresets";
 import "./Ideathon.css";
+import CircuitTraceBackground from "../../components/ui/CircuitTraceBackground";
 
 const HeroSection = () => {
   return (
@@ -15,22 +14,7 @@ const HeroSection = () => {
         zIndex: 0,
       }}
     >
-     <div
-  className="hyperspeed-bg"
-  style={{
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    overflow: "hidden",
-    pointerEvents: "none",
-  }}
->
-
-
-        <Hyperspeed effectOptions={hyperspeedPresets.six} />
-      </div>
+      <CircuitTraceBackground />
     </section>
   );
 };

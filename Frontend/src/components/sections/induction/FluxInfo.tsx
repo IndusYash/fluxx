@@ -62,7 +62,7 @@ export const FluxInfo = () => {
       </div>
 
       {/* About FLUX */}
-      <Card className="bg-card/50 backdrop-blur-md border-flux-border">
+      <Card className="card-outline bg-card/50 backdrop-blur-md border-flux-border">
         <CardContent className="p-6">
           <h3 className="text-2xl font-semibold mb-4 flex items-center gap-2">
             <Target className="w-6 h-6 text-primary" />

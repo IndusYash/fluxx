@@ -1,11 +1,11 @@
 export const aboutPageData = {
   hero: {
-    description: 'A Research Club by MMMUT Gorakhpur fostering innovation, collaboration, and research-oriented mindset among students and faculty.',
+    description: 'FLUX is a research and innovation club at MMMUT Gorakhpur. We build technology, not just study it.',
   },
 
   whatIsFlux: {
     title: 'What is FLUX?',
-    description: 'FLUX acts as a catalyst for ideation, innovation, and interdisciplinary interaction in computing and emerging technologies. We foster innovation, collaboration, and a research-oriented mindset among students and faculty of the Department of Computer Science and Engineering.',
+    description: 'FLUX is a student-driven research and innovation club at the Department of Computer Science and Engineering, MMMUT Gorakhpur. We turn ideas into products, papers, and real-world impact through hands-on projects, hackathons, and industry collaboration.',
     features: [
       'Innovation Catalyst',
       'Interdisciplinary Platform',
@@ -25,22 +25,22 @@ export const aboutPageData = {
       {
         icon: '💡',
         title: 'Innovation',
-        description: 'Pushing the boundaries of what\'s possible through creative thinking and cutting-edge research.'
+        description: 'We build what others only imagine — from prototypes to production-ready systems.',
       },
       {
         icon: '🤝',
         title: 'Collaboration',
-        description: 'Working together across disciplines and with industry partners to achieve greater impact.'
+        description: 'Great work happens at intersections. We connect students, faculty, and industry to solve harder problems together.',
       },
       {
         icon: '🎯',
         title: 'Excellence',
-        description: 'Striving for the highest standards in research, education, and technological development.'
+        description: 'We ship clean code, publish rigorous research, and hold ourselves to production-grade standards.',
       },
       {
         icon: '🌍',
         title: 'Impact',
-        description: 'Creating meaningful change that benefits society through technology and innovation.'
+        description: 'Technology is a means, not an end. We measure success by the problems we actually solve.',
       }
     ]
   },
@@ -51,10 +51,10 @@ export const aboutPageData = {
       {
         icon: '🎓',
         title: 'For Students',
-        description: 'Empowering students with hands-on experience, research opportunities, and industry connections.',
+        description: 'Real experience before graduation — research, internships, and mentorship that actually prepare you.',
         benefits: [
           'Research publication opportunities',
-          'Industry internships and projects',
+          'Industry internships and live projects',
           'Technical skill development',
           'Leadership experience',
           'Networking with professionals'
@@ -63,7 +63,7 @@ export const aboutPageData = {
       {
         icon: '👨‍🏫',
         title: 'For Faculty',
-        description: 'Supporting faculty in their research endeavors and collaborative initiatives.',
+        description: 'Amplify your research through student teams, industry partnerships, and collaborative grants.',
         benefits: [
           'Collaborative research projects',
           'Industry partnerships',
@@ -75,7 +75,7 @@ export const aboutPageData = {
       {
         icon: '🏢',
         title: 'For Industry',
-        description: 'Connecting industry with fresh talent and innovative solutions to real-world problems.',
+        description: 'Access a pipeline of builders, not just graduates. Work with students on real problems before hiring.',
         benefits: [
           'Access to skilled graduates',
           'Collaborative R&D projects',
@@ -87,7 +87,7 @@ export const aboutPageData = {
       {
         icon: '🔬',
         title: 'For Research',
-        description: 'Advancing the frontiers of computer science and engineering through cutting-edge research.',
+        description: 'Advance the frontiers of computer science through publishable, reproducible, and deployable research.',
         benefits: [
           'Interdisciplinary research',
           'Publication opportunities',
@@ -102,31 +102,29 @@ export const aboutPageData = {
   whyFluxMatters: {
     title: 'Why FLUX Matters',
     points: [
-      'Bridge the gap between academic learning and industry requirements through practical projects and internships.',
-      'Provide students with research opportunities that can lead to publications and advanced career prospects.',
-      'Foster a culture of innovation and entrepreneurship within the academic environment.',
-      'Create lasting partnerships with industry leaders and research institutions for collaborative growth.',
-      'Develop technical and leadership skills that prepare students for future challenges in technology.',
-      'Contribute to the advancement of computer science and engineering through cutting-edge research and development.'
+      'Bridge the gap between classroom theory and industry practice through real projects and internships.',
+      'Give students research paths that lead to publications, patents, and stronger career outcomes.',
+      'Build a culture where innovation and entrepreneurship are normal, not exceptional.',
+      'Create lasting partnerships with industry and research institutions for sustained collaborative growth.',
+      'Develop technical depth and leadership skills that prepare students for real technology challenges.',
+      'Advance computer science and engineering through publishable research and working prototypes.'
     ]
   },
 
   mission: {
     title: 'Our Mission',
     missions: [
-      'To encourage a research-driven culture among students and faculty through collaborative projects and academic excellence.',
-      'To organize hackathons, conferences, paper presentations, and tech conclaves that showcase innovation and creativity.',
-      'To facilitate collaboration with industry experts, academic researchers, and startups for real-world impact.',
-      'To create opportunities for project incubation, interdisciplinary learning, and problem-solving initiatives.',
-      'To provide a platform for showcasing innovation through competitions and symposiums.',
-      'To create in-house and global project-based internship opportunities for hands-on learning and real-world experience.'
+      'Build a research-first culture among students and faculty through funded projects and high-quality publications.',
+      'Organize hackathons, conferences, paper presentations, and tech conclaves that set new standards.',
+      'Create structured collaboration with industry experts, researchers, and startups for measurable impact.',
+      'Launch project incubation, interdisciplinary learning, and problem-solving programs that produce results.',
+      'Provide platforms for showcasing innovation through competitions, demos, and industry showcases.',
+      'Create in-house and global internship opportunities tied to real product and research milestones.'
     ]
   },
 
   callToAction: {
     title: 'Ready to Join FLUX?',
-    description: 'Be part of a community that shapes the future of technology through innovation, collaboration, and impact.',
-    primaryButton: 'Join Our Team',
-    secondaryButton: 'Explore Events'
+    description: 'Stop consuming technology. Start building it. Join a community that ships.',
   }
 };

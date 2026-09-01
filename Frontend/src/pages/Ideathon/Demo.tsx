@@ -79,7 +79,7 @@ const ModernCountdownTimer = ({ timeLeft }) => {
   .countdown-number {
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 700;
-    background: linear-gradient(135deg, #E5FFFB 0%, #6CFFF7 100%);
+    background: linear-gradient(135deg, #E5FFFB 0%, #FFFFFF 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

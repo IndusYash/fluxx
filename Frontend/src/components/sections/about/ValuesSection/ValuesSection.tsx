@@ -1,10 +1,8 @@
 import React, { useRef } from 'react';
-import { useIntersectionObserver } from '../../../../hooks/useIntersectionObserver';
 import { ValuesSectionProps } from './ValuesSection.types';
-import ParticlesContainer from '../common/Particles';
 import { motion } from 'framer-motion';
 
-// Individual Value Card with optimized Framer Motion animations
+// Individual Value Card
 interface ValueCardProps {
   icon: React.ReactNode;
   title: string;
@@ -15,37 +13,35 @@ interface ValueCardProps {
 const ValueCard: React.FC<ValueCardProps> = ({ icon, title, description, index }) => {
   return (
     <motion.div
-      whileHover={{ 
-        y: -8, 
-        scale: 1.05,
-        boxShadow: "0 15px 30px rgba(34, 197, 94, 0.3)"
-      }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ type: "spring", stiffness: 400, damping: 25 }}
-      className="relative p-6 rounded-2xl bg-black/80 backdrop-blur-md border border-green-400/20 
-                 shadow-lg shadow-green-500/10 hover:border-green-400/40 transition-colors duration-300"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="relative p-8 rounded-3xl bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] 
+                 shadow-lg shadow-white/5 hover:border-white/20 transition-all duration-300 group overflow-hidden"
     >
-      <div className="flex justify-center mb-6">
-        <div className="p-4 bg-gray-800 rounded-full border border-gray-700 text-green-400 
-                        shadow-sm shadow-green-400/20">
-          {icon}
+      <div className="relative z-10 flex flex-col items-center">
+        <div className="flex justify-center mb-6">
+          <div className="p-5 bg-white/[0.06] rounded-2xl border border-white/[0.1] text-white 
+                          shadow-lg shadow-white/5 group-hover:border-white/20 transition-all duration-300">
+            <div className="relative">
+              {icon}
+            </div>
+          </div>
         </div>
+        <h3 className="text-xl md:text-2xl font-bold text-center mb-3 text-white tracking-tight">
+          {title}
+        </h3>
+        <p className="text-gray-400 text-center leading-relaxed text-sm md:text-base">
+          {description}
+        </p>
       </div>
-      <h3 className="text-2xl font-bold text-center mb-4 text-white">
-        {title}
-      </h3>
-      <p className="text-gray-400 text-center leading-relaxed">
-        {description}
-      </p>
     </motion.div>
   );
 };
 
 // Main ValuesSection Component
 const ValuesSection: React.FC<ValuesSectionProps> = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const isVisible = useIntersectionObserver(sectionRef, { threshold: 0.1, triggerOnce: true });
-
   const values = [
     {
       icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>,
@@ -69,115 +65,37 @@ const ValuesSection: React.FC<ValuesSectionProps> = () => {
     },
   ];
 
-  // Container animation variants for efficient staggering
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  // Individual card animation variants
-  const cardVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 40,
-      scale: 0.9
-    },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      scale: 1,
-      transition: { 
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94],
-      } 
-    },
-  };
-
-  // Header animation variants
-  const headerVariants = {
-    hidden: { opacity: 0, y: -30 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { 
-        duration: 0.8, 
-        ease: "easeOut" 
-      }
-    }
-  };
-
-  // Underline animation variants
-  const underlineVariants = {
-    hidden: { width: 0 },
-    visible: { 
-      width: "100%",
-      transition: { 
-        duration: 1,
-        ease: "easeOut",
-        delay: 0.5
-      }
-    },
-  };
-
   return (
-    <section ref={sectionRef} className="relative py-20 lg:py-32 bg-black text-white overflow-hidden">
-      <ParticlesContainer />
-      <div className="absolute inset-0 z-0 bg-grid-pattern opacity-10"></div>
-      
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate={isVisible ? "visible" : "hidden"}
-        className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8"
-      >
-        {/* Animated Header */}
+      <section className="relative py-20 lg:py-32 bg-[#020202] text-white overflow-hidden">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-20">
-          <motion.h2 
-            variants={headerVariants}
-            className="text-4xl md:text-6xl font-bold mb-4 text-white"
-          >
-            Our <span className="text-green-400">Core Values</span>
-          </motion.h2>
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-white tracking-tight">
+             Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-300 to-white">Core Values</span>
+          </h2>
           
-          <motion.p 
-            variants={headerVariants}
-            className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto"
-          >
+          <p className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed text-center">
             These principles guide our actions and define our community.
-          </motion.p>
+          </p>
           
-          {/* Animated underline */}
-          <div className="relative mt-6 mx-auto w-48 h-1 bg-gray-800 rounded-full">
-            <motion.div 
-              variants={underlineVariants}
-              className="absolute left-0 top-0 h-full rounded-full bg-green-400"
-            />
+          <div className="relative mt-8 mx-auto w-32 h-[2px] bg-white/10 rounded-full overflow-hidden">
+            <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-r from-white to-gray-400 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
           </div>
         </div>
 
-        {/* Staggered Cards Grid */}
-        <motion.div 
-          variants={containerVariants}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+        <div 
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
         >
           {values.map((value, index) => (
-            <motion.div key={index} variants={cardVariants}>
-              <ValueCard
-                icon={value.icon}
-                title={value.title}
-                description={value.description}
-                index={index}
-              />
-            </motion.div>
+            <ValueCard
+              key={index}
+              icon={value.icon}
+              title={value.title}
+              description={value.description}
+              index={index}
+            />
           ))}
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 };

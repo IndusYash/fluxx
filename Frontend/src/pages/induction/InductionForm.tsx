@@ -32,12 +32,24 @@ const cw = (t: string) => (t.trim() === '' ? 0 : t.trim().split(/\s+/).length);
 // Background
 const Bg: React.FC = () => (
   <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden">
-    <div className="absolute inset-0 bg-[#030507]" />
+    <div className="absolute inset-0 bg-[#020202]" />
     <div className="absolute inset-0 opacity-[0.02]"
-      style={{ backgroundImage: 'radial-gradient(#00FFC6 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
-    <div className="absolute -top-60 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-[#00FFC6]/5 blur-[180px]" />
-    <div className="absolute top-1/3 -right-32 w-[450px] h-[450px] rounded-full bg-indigo-600/4 blur-[140px]" />
-    <div className="absolute bottom-0 left-1/4 w-96 h-96 rounded-full bg-violet-700/4 blur-[120px]" />
+      style={{ backgroundImage: 'radial-gradient(#E5E5E5 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+    <motion.div 
+      className="absolute -top-60 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-white/5 blur-[180px]"
+      animate={{ x: [0, 100, 0], y: [0, 50, 0] }}
+      transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+    />
+    <motion.div 
+      className="absolute top-1/3 -right-32 w-[450px] h-[450px] rounded-full bg-white/3 blur-[140px]"
+      animate={{ x: [0, -50, 0], y: [0, -30, 0] }}
+      transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+    />
+    <motion.div 
+      className="absolute bottom-0 left-1/4 w-96 h-96 rounded-full bg-white/3 blur-[120px]"
+      animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
+      transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
+    />
   </div>
 );
 
@@ -48,7 +60,7 @@ const TopStepper: React.FC<{ current: number }> = ({ current }) => {
     <div className="w-full">
       <div className="relative flex items-center justify-between">
         <div className="absolute top-4 inset-x-0 h-px bg-white/6 z-0" />
-        <div className="absolute top-4 left-0 h-px bg-gradient-to-r from-[#00FFC6] to-[#00FFC6]/40 z-0 transition-all duration-700" style={{ width: pct + '%' }} />
+        <div className="absolute top-4 left-0 h-px bg-gradient-to-r from-[#E5E5E5] to-[#E5E5E5]/40 z-0 transition-all duration-700" style={{ width: pct + '%' }} />
         {STEPS.map((s) => {
           const Icon = s.icon;
           const done = current > s.id;
@@ -56,22 +68,22 @@ const TopStepper: React.FC<{ current: number }> = ({ current }) => {
           return (
             <div key={s.id} className="relative z-10 flex flex-col items-center gap-1.5">
               <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border-2 transition-all duration-300
-                ${done ? 'bg-[#00FFC6] border-[#00FFC6] shadow-lg shadow-[#00FFC6]/25'
-                  : active ? 'bg-[#030507] border-[#00FFC6] shadow-[0_0_12px_rgba(0,255,198,0.25)]'
-                  : 'bg-[#030507] border-white/10'}`}>
-                {done ? <Check size={10} strokeWidth={3} className="text-black" /> : <Icon size={10} className={active ? 'text-[#00FFC6]' : 'text-gray-700'} />}
+                ${done ? 'bg-[#E5E5E5] border-[#E5E5E5] shadow-lg shadow-white/25'
+                  : active ? 'bg-[#020202] border-[#E5E5E5] shadow-[0_0_12px_rgba(255,255,255,0.25)]'
+                  : 'bg-[#020202] border-white/10'}`}>
+                {done ? <Check size={10} strokeWidth={3} className="text-black" /> : <Icon size={10} className={active ? 'text-[#E5E5E5]' : 'text-gray-700'} />}
               </div>
               <span className={`hidden xl:block text-[9px] font-semibold whitespace-nowrap transition-colors
-                ${active ? 'text-[#00FFC6]' : done ? 'text-gray-500' : 'text-gray-700'}`}>{s.title}</span>
+                ${active ? 'text-[#E5E5E5]' : done ? 'text-gray-500' : 'text-gray-700'}`}>{s.title}</span>
             </div>
           );
         })}
       </div>
       <div className="mt-3 flex justify-between items-center">
-        <span className="xl:hidden text-xs font-bold text-[#00FFC6]">{current}. {STEPS[current-1].title}</span>
+        <span className="xl:hidden text-xs font-bold text-[#E5E5E5]">{current}. {STEPS[current-1].title}</span>
         <div className="ml-auto flex items-center gap-2">
           <div className="w-28 h-1 rounded-full bg-white/8 overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-[#00FFC6] to-[#00e5b3] rounded-full transition-all duration-700" style={{ width: pct + '%' }} />
+            <div className="h-full bg-gradient-to-r from-[#E5E5E5] to-[#FFFFFF] rounded-full transition-all duration-700" style={{ width: pct + '%' }} />
           </div>
           <span className="text-[10px] text-gray-600 w-8 text-right">{Math.round(pct)}%</span>
         </div>
@@ -87,7 +99,7 @@ const Field: React.FC<{ label: string; error?: string; required?: boolean; hint?
     <div className="flex justify-between items-baseline">
       <div className="flex items-baseline gap-2">
         <label className="text-sm font-semibold text-gray-200">
-          {label}{required && <span className="text-[#00FFC6] ml-0.5">*</span>}
+          {label}{required && <span className="text-[#E5E5E5] ml-0.5">*</span>}
         </label>
         {sub && <span className="text-[10px] text-gray-600">{sub}</span>}
       </div>
@@ -95,21 +107,21 @@ const Field: React.FC<{ label: string; error?: string; required?: boolean; hint?
     </div>
     {children}
     {error && (
-      <p className="text-[11px] text-red-400 flex items-center gap-1.5 animate-fi">
+      <p className="text-[11px] text-white flex items-center gap-1.5 animate-fi">
         <AlertCircle size={10} className="shrink-0" /> {error}
       </p>
     )}
   </div>
 );
 
-const inp  = 'w-full bg-white/[0.035] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder-gray-700 focus:border-[#00FFC6]/50 focus:bg-[#00FFC6]/[0.03] focus:outline-none transition-all duration-200 hover:border-white/14';
+const inp  = 'w-full bg-white/[0.035] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder-gray-700 focus:border-[#E5E5E5]/50 focus:bg-[#E5E5E5]/[0.03] focus:outline-none transition-all duration-200 hover:border-white/14';
 const sel  = inp + ' [&>option]:bg-[#07090e] [&>option]:text-white cursor-pointer';
 const iInp = inp + ' pl-10';
 
 const SectionHeader: React.FC<{ icon: React.FC<any>; title: string; sub: string }> = ({ icon: Icon, title, sub }) => (
   <div className="flex items-center gap-3 pb-4 border-b border-white/[0.05] mb-2">
-    <div className="w-11 h-11 rounded-2xl bg-[#00FFC6]/10 border border-[#00FFC6]/20 flex items-center justify-center shrink-0">
-      <Icon size={18} className="text-[#00FFC6]" />
+    <div className="w-11 h-11 rounded-2xl bg-[#E5E5E5]/10 border border-[#E5E5E5]/20 flex items-center justify-center shrink-0">
+      <Icon size={18} className="text-[#E5E5E5]" />
     </div>
     <div>
       <h2 className="text-[15px] font-black text-white tracking-tight">{title}</h2>
@@ -124,10 +136,10 @@ const PhotoUpload: React.FC<{ preview: string; file: File | null; onFile: (f: Fi
   <div className="flex flex-col items-center gap-3">
     <div className="relative group cursor-pointer" onClick={() => !preview && document.getElementById('imgup')?.click()}>
       <div className={`w-28 h-28 rounded-full border-2 overflow-hidden flex items-center justify-center transition-all duration-300
-        ${preview ? 'border-[#00FFC6]/60 shadow-lg shadow-[#00FFC6]/10' : 'border-dashed border-white/15 bg-white/[0.02] group-hover:border-[#00FFC6]/30'}`}>
+        ${preview ? 'border-[#E5E5E5]/60 shadow-lg shadow-[#E5E5E5]/10' : 'border-dashed border-white/15 bg-white/[0.02] group-hover:border-[#E5E5E5]/30'}`}>
         {preview ? <img src={preview} alt="Profile" className="w-full h-full object-cover" />
           : <div className="flex flex-col items-center gap-1.5">
-              <Camera size={22} className="text-gray-700 group-hover:text-[#00FFC6] transition-colors" />
+              <Camera size={22} className="text-gray-700 group-hover:text-[#E5E5E5] transition-colors" />
               <span className="text-[9px] text-gray-700 group-hover:text-gray-500">Upload</span>
             </div>}
       </div>
@@ -140,12 +152,12 @@ const PhotoUpload: React.FC<{ preview: string; file: File | null; onFile: (f: Fi
       )}
     </div>
     <input type="file" accept=".jpg,.jpeg,.png" className="hidden" id="imgup" onChange={e => onFile(e.target.files?.[0] || null)} />
-    <label htmlFor="imgup" className="flex items-center gap-1.5 cursor-pointer text-xs text-gray-500 hover:text-[#00FFC6] transition-colors py-1.5 px-3 rounded-lg hover:bg-[#00FFC6]/5 border border-transparent hover:border-[#00FFC6]/15">
+    <label htmlFor="imgup" className="flex items-center gap-1.5 cursor-pointer text-xs text-gray-500 hover:text-[#E5E5E5] transition-colors py-1.5 px-3 rounded-lg hover:bg-[#E5E5E5]/5 border border-transparent hover:border-[#E5E5E5]/15">
       <Upload size={11} /> {preview ? 'Change photo' : 'Choose photo'}
     </label>
     {file && <p className="text-[10px] text-gray-700">{file.name} · {(file.size/1024).toFixed(0)} KB</p>}
     <p className="text-[10px] text-gray-700">JPG/PNG · max 5 MB · optional</p>
-    {error && <p className="text-[11px] text-red-400">{error}</p>}
+    {error && <p className="text-[11px] text-white">{error}</p>}
   </div>
 );
 
@@ -338,21 +350,21 @@ const InductionForm: React.FC = () => {
       <Bg />
       <div className="relative z-10 max-w-sm w-full text-center">
         <div className="relative inline-flex mb-8">
-          <div className="w-32 h-32 rounded-full bg-[#00FFC6]/8 border border-[#00FFC6]/20 flex items-center justify-center">
-            <div className="w-20 h-20 rounded-full bg-[#00FFC6]/15 flex items-center justify-center">
-              <Check size={36} className="text-[#00FFC6]" strokeWidth={2.5} />
+          <div className="w-32 h-32 rounded-full bg-[#E5E5E5]/8 border border-[#E5E5E5]/20 flex items-center justify-center">
+            <div className="w-20 h-20 rounded-full bg-[#E5E5E5]/15 flex items-center justify-center">
+              <Check size={36} className="text-[#E5E5E5]" strokeWidth={2.5} />
             </div>
           </div>
-          <div className="absolute inset-0 rounded-full animate-ping bg-[#00FFC6]/4" />
+          <div className="absolute inset-0 rounded-full animate-ping bg-[#E5E5E5]/4" />
         </div>
-        <div className="inline-flex items-center gap-2 bg-[#00FFC6]/10 border border-[#00FFC6]/20 rounded-full px-3 py-1 text-[#00FFC6] text-[11px] font-bold tracking-widest uppercase mb-5">
+        <div className="inline-flex items-center gap-2 bg-[#E5E5E5]/10 border border-[#E5E5E5]/20 rounded-full px-3 py-1 text-[#E5E5E5] text-[11px] font-bold tracking-widest uppercase mb-5">
           <Sparkles size={10} /> Application Submitted
         </div>
         <h2 className="text-3xl font-black text-white mb-3">You're all set!</h2>
         <p className="text-gray-400 text-sm mb-1.5">Application received by <span className="text-white font-semibold">Flux</span>.</p>
-        <p className="text-gray-600 text-sm mb-8">We'll reach out to <span className="text-[#00FFC6]">{formData.email}</span>.</p>
+        <p className="text-gray-600 text-sm mb-8">We'll reach out to <span className="text-[#E5E5E5]">{formData.email}</span>.</p>
         <button onClick={resetForm}
-          className="inline-flex items-center gap-2 bg-[#00FFC6] hover:bg-[#00e5b3] text-black font-bold py-3 px-8 rounded-2xl transition-all duration-200 hover:scale-[1.03] shadow-lg shadow-[#00FFC6]/20 text-sm">
+          className="inline-flex items-center gap-2 bg-[#E5E5E5] hover:bg-[#FFFFFF] text-black font-bold py-3 px-8 rounded-2xl transition-all duration-200 hover:scale-[1.03] shadow-lg shadow-[#E5E5E5]/20 text-sm">
           Submit Another <ArrowRight size={15} />
         </button>
       </div>
@@ -368,11 +380,11 @@ const InductionForm: React.FC = () => {
 
         {/* Header */}
         <div className="text-center mb-12 px-4 sm:px-0">
-          <div className="inline-flex items-center gap-2 bg-[#00FFC6]/8 border border-[#00FFC6]/20 rounded-full px-4 py-1.5 text-[#00FFC6] text-[11px] font-bold tracking-[0.15em] uppercase mb-5">
+          <div className="inline-flex items-center gap-2 bg-[#E5E5E5]/8 border border-[#E5E5E5]/20 rounded-full px-4 py-1.5 text-[#E5E5E5] text-[11px] font-bold tracking-[0.15em] uppercase mb-5">
             <Zap size={10} /> Applications Open
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-black mb-3 tracking-tight leading-none">
-            Flux<span className="text-[#00FFC6]">.</span>
+            Flux<span className="text-[#E5E5E5]">.</span>
           </h1>
           <p className="text-gray-500 text-sm mb-6 max-w-sm mx-auto leading-relaxed">
             Induction 2026 — Join the community where future tech leaders are built.
@@ -385,9 +397,9 @@ const InductionForm: React.FC = () => {
         </div>
 
         {/* Form card */}
-        <div className="relative bg-white/[0.02] border-0 sm:border border-white/[0.07] rounded-none sm:rounded-3xl overflow-hidden shadow-2xl backdrop-blur-xl">
-          <div className="h-[1.5px] bg-gradient-to-r from-transparent via-[#00FFC6]/70 to-transparent" />
-          <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-[#00FFC6]/4 blur-[60px] pointer-events-none" />
+        <div className="card-outline relative bg-white/[0.02] border-0 sm:border border-white/[0.07] rounded-none sm:rounded-3xl overflow-hidden shadow-2xl backdrop-blur-xl">
+          <div className="h-[1.5px] bg-gradient-to-r from-transparent via-[#E5E5E5]/70 to-transparent" />
+          <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-[#E5E5E5]/4 blur-[60px] pointer-events-none" />
 
           <form onSubmit={handleSubmit} className="relative px-4 py-5 sm:p-6 md:p-10">
 
@@ -404,7 +416,7 @@ const InductionForm: React.FC = () => {
 
                 {/* Personal fields — full width grid */}
                 <div className="pt-2 border-t border-white/[0.05]">
-                  <p className="text-[11px] font-bold text-[#00FFC6] uppercase tracking-widest mb-4">Personal Information</p>
+                  <p className="text-[11px] font-bold text-[#E5E5E5] uppercase tracking-widest mb-4">Personal Information</p>
                   <div className="grid md:grid-cols-2 gap-5">
                     <Field label="Full Name" required error={errors.name}>
                       <div className="relative">
@@ -436,7 +448,7 @@ const InductionForm: React.FC = () => {
 
                 {/* Contact fields merged into Step 1 */}
                 <div className="pt-2 border-t border-white/[0.05]">
-                  <p className="text-[11px] font-bold text-[#00FFC6] uppercase tracking-widest mb-4">Contact & Social</p>
+                  <p className="text-[11px] font-bold text-[#E5E5E5] uppercase tracking-widest mb-4">Contact & Social</p>
                   <div className="grid md:grid-cols-2 gap-5">
                     <Field label="Email Address" required error={errors.email}>
                       <input className={inp} type="email" value={formData.email} onChange={e => set('email', e.target.value)} placeholder="you@example.com" />
@@ -532,8 +544,8 @@ const InductionForm: React.FC = () => {
                 </Field>
 
                 {/* Why Flux */}
-                <div className="bg-gradient-to-br from-[#00FFC6]/6 to-transparent border border-[#00FFC6]/12 rounded-2xl p-5 text-sm text-gray-500 leading-relaxed">
-                  <p className="text-[#00FFC6] font-bold text-[11px] uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+                <div className="bg-gradient-to-br from-[#E5E5E5]/6 to-transparent border border-[#E5E5E5]/12 rounded-2xl p-5 text-sm text-gray-500 leading-relaxed">
+                  <p className="text-[#E5E5E5] font-bold text-[11px] uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
                     <Sparkles size={10} /> Your moment to shine
                   </p>
                   Be specific. What projects do you want to build? What problems do you want to solve? Why is Flux the right community for you?
@@ -548,28 +560,28 @@ const InductionForm: React.FC = () => {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <p className="text-sm font-semibold text-gray-200 flex items-center gap-2">
-                      <Paperclip size={14} className="text-[#00FFC6]" /> Resume
+                      <Paperclip size={14} className="text-[#E5E5E5]" /> Resume
                       <span className="text-[10px] text-gray-600 font-normal">optional · PDF only · max 5 MB</span>
                     </p>
                     {formData.resumeFile && (
                       <button type="button"
                         onClick={() => { set('resumeFile', null); (document.getElementById('resumeup') as HTMLInputElement).value = ''; }}
-                        className="flex items-center gap-1 text-[11px] text-red-400 hover:text-red-300 transition-colors">
+                        className="flex items-center gap-1 text-[11px] text-white hover:text-gray-300 transition-colors">
                         <X size={11} /> Remove
                       </button>
                     )}
                   </div>
                   <input type="file" accept=".pdf" className="hidden" id="resumeup" onChange={e => handleResume(e.target.files?.[0] || null)} />
                   {formData.resumeFile ? (
-                    <div className="flex items-center gap-3 p-3.5 bg-[#00FFC6]/5 border border-[#00FFC6]/20 rounded-xl">
-                      <div className="w-9 h-9 rounded-lg bg-[#00FFC6]/10 border border-[#00FFC6]/20 flex items-center justify-center shrink-0">
-                        <FileText size={16} className="text-[#00FFC6]" />
+                    <div className="flex items-center gap-3 p-3.5 bg-[#E5E5E5]/5 border border-[#E5E5E5]/20 rounded-xl">
+                      <div className="w-9 h-9 rounded-lg bg-[#E5E5E5]/10 border border-[#E5E5E5]/20 flex items-center justify-center shrink-0">
+                        <FileText size={16} className="text-[#E5E5E5]" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm text-gray-300 font-semibold truncate">{formData.resumeFile.name}</p>
                         <p className="text-[10px] text-gray-600">{(formData.resumeFile.size / 1024).toFixed(0)} KB</p>
                       </div>
-                      <Check size={14} className="text-[#00FFC6] shrink-0" />
+                      <Check size={14} className="text-[#E5E5E5] shrink-0" />
                     </div>
                   ) : (
                     <label htmlFor="resumeup"
@@ -587,8 +599,8 @@ const InductionForm: React.FC = () => {
               <div className="space-y-5 animate-fi">
                 <SectionHeader icon={ShieldCheck} title="Review & Submit" sub="Take a final look before sending" />
 
-                <div className="bg-gradient-to-br from-[#00FFC6]/6 to-transparent border border-[#00FFC6]/12 rounded-2xl p-5 text-sm text-gray-400 leading-relaxed">
-                  <p className="text-[#00FFC6] font-bold text-[11px] uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+                <div className="bg-gradient-to-br from-[#E5E5E5]/6 to-transparent border border-[#E5E5E5]/12 rounded-2xl p-5 text-sm text-gray-400 leading-relaxed">
+                  <p className="text-[#E5E5E5] font-bold text-[11px] uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
                     <Sparkles size={10} /> Review Your Application
                   </p>
                   <p className="text-xs">Review all information carefully. Click "Edit" on any section to go back and fix it.</p>
@@ -596,7 +608,7 @@ const InductionForm: React.FC = () => {
 
                 {imagePreview && (
                   <div className="flex items-center gap-4 p-4 bg-white/[0.02] border border-white/[0.06] rounded-2xl">
-                    <img src={imagePreview} alt="" className="w-14 h-14 rounded-full object-cover border-2 border-[#00FFC6]/30" />
+                    <img src={imagePreview} alt="" className="w-14 h-14 rounded-full object-cover border-2 border-[#E5E5E5]/30" />
                     <div>
                       <p className="text-[10px] text-gray-600 uppercase tracking-wider mb-0.5">Profile Photo</p>
                       <p className="text-sm text-gray-300 font-semibold">{formData.imageFile?.name}</p>
@@ -607,9 +619,9 @@ const InductionForm: React.FC = () => {
                 {/* Personal & Contact block */}
                 <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4">
                   <div className="flex items-center justify-between mb-3">
-                    <p className="text-[10px] font-bold text-[#00FFC6] uppercase tracking-[0.12em]">Personal & Contact</p>
+                    <p className="text-[10px] font-bold text-[#E5E5E5] uppercase tracking-[0.12em]">Personal & Contact</p>
                     <button type="button" onClick={() => { setStep(1); scrollTop(); }}
-                      className="text-[10px] text-gray-500 hover:text-[#00FFC6] font-semibold uppercase tracking-wider transition-colors">Edit</button>
+                      className="text-[10px] text-gray-500 hover:text-[#E5E5E5] font-semibold uppercase tracking-wider transition-colors">Edit</button>
                   </div>
                   <div className="grid md:grid-cols-2 gap-x-6 gap-y-2.5">
                     {[
@@ -635,9 +647,9 @@ const InductionForm: React.FC = () => {
                 {/* About You block */}
                 <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4">
                   <div className="flex items-center justify-between mb-3">
-                    <p className="text-[10px] font-bold text-[#00FFC6] uppercase tracking-[0.12em]">About You</p>
+                    <p className="text-[10px] font-bold text-[#E5E5E5] uppercase tracking-[0.12em]">About You</p>
                     <button type="button" onClick={() => { setStep(2); scrollTop(); }}
-                      className="text-[10px] text-gray-500 hover:text-[#00FFC6] font-semibold uppercase tracking-wider transition-colors">Edit</button>
+                      className="text-[10px] text-gray-500 hover:text-[#E5E5E5] font-semibold uppercase tracking-wider transition-colors">Edit</button>
                   </div>
                   <div className="space-y-3">
                     {formData.prevSociety && (
@@ -690,18 +702,18 @@ const InductionForm: React.FC = () => {
                 </div>
 
                 {formData.resumeFile && (
-                  <div className="flex items-center gap-3 p-3.5 bg-[#00FFC6]/5 border border-[#00FFC6]/15 rounded-2xl">
-                    <Paperclip size={16} className="text-[#00FFC6] shrink-0" />
+                  <div className="flex items-center gap-3 p-3.5 bg-[#E5E5E5]/5 border border-[#E5E5E5]/15 rounded-2xl">
+                    <Paperclip size={16} className="text-[#E5E5E5] shrink-0" />
                     <div className="flex-1 min-w-0">
                       <p className="text-[10px] text-gray-500 uppercase tracking-wider">Resume</p>
                       <p className="text-sm text-gray-300 font-semibold truncate">{formData.resumeFile.name}</p>
                     </div>
-                    <Check size={13} className="text-[#00FFC6] shrink-0" />
+                    <Check size={13} className="text-[#E5E5E5] shrink-0" />
                   </div>
                 )}
 
-                <div className="flex items-start gap-3 bg-[#00FFC6]/5 border border-[#00FFC6]/15 rounded-2xl p-4">
-                  <Check size={14} className="text-[#00FFC6] shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3 bg-[#E5E5E5]/5 border border-[#E5E5E5]/15 rounded-2xl p-4">
+                  <Check size={14} className="text-[#E5E5E5] shrink-0 mt-0.5" />
                   <p className="text-xs text-gray-500 leading-relaxed">
                     By submitting, you confirm all information is accurate and agree to be contacted by the Flux team regarding your application.
                   </p>
@@ -719,19 +731,19 @@ const InductionForm: React.FC = () => {
               )}
               {step === 1 && (
                 <button type="button" onClick={goNext}
-                  className="flex items-center justify-center gap-2 flex-1 sm:flex-none sm:px-8 py-3 rounded-xl bg-[#00FFC6] hover:bg-[#00e5b3] text-black font-bold transition-all duration-200 text-sm hover:scale-[1.02] active:scale-[0.99] shadow-lg shadow-[#00FFC6]/15">
+                  className="flex items-center justify-center gap-2 flex-1 sm:flex-none sm:px-8 py-3 rounded-xl bg-[#E5E5E5] hover:bg-[#FFFFFF] text-black font-bold transition-all duration-200 text-sm hover:scale-[1.02] active:scale-[0.99] shadow-lg shadow-[#E5E5E5]/15">
                   Continue <ArrowRight size={14} />
                 </button>
               )}
               {step === 2 && (
                 <button type="submit"
-                  className="flex items-center justify-center gap-2 flex-1 sm:flex-none sm:px-8 py-3 rounded-xl bg-[#00FFC6] hover:bg-[#00e5b3] text-black font-bold transition-all duration-200 text-sm hover:scale-[1.02] active:scale-[0.99] shadow-lg shadow-[#00FFC6]/15">
+                  className="flex items-center justify-center gap-2 flex-1 sm:flex-none sm:px-8 py-3 rounded-xl bg-[#E5E5E5] hover:bg-[#FFFFFF] text-black font-bold transition-all duration-200 text-sm hover:scale-[1.02] active:scale-[0.99] shadow-lg shadow-[#E5E5E5]/15">
                   Review Application <ShieldCheck size={14} />
                 </button>
               )}
               {step === 3 && (
                 <button type="button" onClick={handleFinalSubmit} disabled={isSubmitting}
-                  className="flex items-center justify-center gap-2 flex-1 sm:flex-none sm:px-10 py-3 rounded-xl bg-[#00FFC6] hover:bg-[#00e5b3] disabled:bg-gray-800 disabled:text-gray-600 text-black font-bold transition-all duration-200 text-sm hover:scale-[1.02] disabled:scale-100 active:scale-[0.99] shadow-lg shadow-[#00FFC6]/15">
+                  className="flex items-center justify-center gap-2 flex-1 sm:flex-none sm:px-10 py-3 rounded-xl bg-[#E5E5E5] hover:bg-[#FFFFFF] disabled:bg-gray-800 disabled:text-gray-600 text-black font-bold transition-all duration-200 text-sm hover:scale-[1.02] disabled:scale-100 active:scale-[0.99] shadow-lg shadow-[#E5E5E5]/15">
                   {isSubmitting ? (
                     <><svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>

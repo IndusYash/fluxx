@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import HeroSection from '../../components/sections/events/HeroSection';
 import UpcomingEventsSection from '../../components/sections/events/UpcomingEvents';
-import Timeline from '../../components/sections/events/timeline'; // Changed to uppercase 'Timeline'
-import type { TimelineEvent, LatestEvent } from '../../components/sections/events/timeline';
+import Timeline from '../../components/sections/events/timeline';
+import type { TimelineEvent } from '../../components/sections/events/timeline';
 import xpert_talk from '/src/assets/images/xpert_talk.webp';
 import ideathoncomp from "/src/assets/images/ideathoncomp.webp";
 import orientation from '/src/assets/images/orientation_2.webp';
 import hackathon from '/src/assets/images/hackathon.webp';
 import expert from '/src/assets/images/expert.webp';
 import atalFdp from '/src/assets/images/atalFdp.webp';
-
-// import WhatWeDoSection from '../../components/sections/events/WhatWeDo';
+import conferenceImg from '/src/assets/images/conferenceImg.webp';
 
 const EventsPage: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -21,10 +20,10 @@ const EventsPage: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-
   const timelineEvents: TimelineEvent[] = [
     {
-      id: 1,      name: "ATAL Faculty Development Programme",
+      id: 1,
+      name: "ATAL Faculty Development Programme",
       imageUrl: atalFdp,
       date: "January 19-24, 2026",
       icon: "WEEK THREE",
@@ -55,83 +54,52 @@ const EventsPage: React.FC = () => {
         "The session with Er. Shivesh Sinha, Sr. Technical Program Manager at Intel USA, offered deep insights into the evolution of AI, emerging technological shifts and the rapidly transforming future shaped by intelligent systems.",
       attendees: 300,
     },
-        {
+    {
       id: 4,
-      name: "Responsible AI & Sustainability Workshop",
-      imageUrl: xpert_talk,
-      date: "October 10, 2025",
+      name: "Orientation",
+      imageUrl: orientation,
+      date: "Coming Soon",
       icon: "WEEK ONE",
+      phase: "Induction",
+      description:
+        "Join us for the Flux Orientation session to learn about our community, upcoming events, and how you can get involved. Perfect for new members who want to kickstart their journey with us.",
+      attendees: 200,
+    },
+    {
+      id: 5,
+      name: "ByteBrawl",
+      imageUrl: conferenceImg,
+      date: "Coming Soon",
+      icon: "WEEK TWO",
       phase: "Workshop",
       description:
-        "The expert session on Responsible AI by Prof. Dr. Dimitrios A. Karras was a great success, with 300+ participants gaining valuable insights and earning e-certificates for their participation.",
+        "Get ready for ByteBrawl — a high-energy coding showdown where creativity meets code. Build, experiment, and ship cool projects in a collaborative, vibe-driven environment. Lead by She Lead.",
       attendees: 300,
     },
-    // {
-    //   id: 4,
-    //   name: "Ideathon 2025",
-    //   imageUrl: hackathon,
-    //   date: "December 10-19, 2025",
-    //   icon: "WEEK TWO",
-    //   phase: "Upcoming: HACKATHON",
-    //   description:
-    //     "Ideathon, our flagship hackathon, brought together passionate innovators and problem-solvers to design real-world tech solutions through creativity, teamwork, and cutting-edge ideas.",
-    //   attendees: 300,
-    // },
- 
+    {
+      id: 6,
+      name: "She Lead",
+      imageUrl: conferenceImg,
+      date: "Coming Soon",
+      icon: "WEEK ONE",
+      phase: "Summit",
+      description:
+        "An empowering leadership summit designed to inspire and connect women in tech. Join us for insightful talks, hands-on workshops, and networking with industry leaders.",
+      attendees: 250,
+    },
   ];
 
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white font-sans overflow-hidden">
-      {/* Enhanced Animated Background Elements */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute -top-40 -right-40 w-80 h-80 bg-green-500/5 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.6, 0.3],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div
-          className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.4, 0.7, 0.4],
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1
-          }}
-        />
-        <motion.div
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/3 rounded-full blur-3xl"
-          animate={{
-            rotate: [0, 360],
-            scale: [1, 1.3, 1],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-        />
+    <div className="relative min-h-screen bg-[#020202] text-white overflow-x-hidden">
+      <div className="relative z-10">
+        {isLoaded && (
+          <>
+            <HeroSection />
+            <UpcomingEventsSection />
+            <Timeline events={timelineEvents} />
+          </>
+        )}
       </div>
-
-      {isLoaded && (
-        <>
-          <HeroSection />
-          {<UpcomingEventsSection />}
-          {/* <WhatWeDoSection /> */}
-          <Timeline events={timelineEvents} /> {/* Changed to uppercase 'Timeline' */}
-        </>
-      )}
     </div>
   );
 };

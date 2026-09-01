@@ -1,8 +1,8 @@
 /* src/components/Navbar.css */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
-.font-poppins {
-  font-family: 'Poppins', sans-serif;
+.font-nav {
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 .logo-text {
@@ -14,13 +14,12 @@
 }
 
 .nav-link:hover {
-  text-shadow: 0px 0px 8px rgba(16, 185, 129, 0.6);
+  text-shadow: 0px 0px 8px rgba(229, 229, 229, 0.6);
 }
 /* 🔥 Mobile menu active highlight */
 .mobile-nav-item.active {
-  color: #10b981; /* text-primary green */
+  color: #E5E5E5;
   font-weight: 700;
-  text-shadow: 0px 0px 8px rgba(16, 185, 129, 0.7);
-  transform: scale(1.05);
+  border-bottom: 0.5px solid #E5E5E5;
   transition: all 0.25s ease-in-out;
 }

@@ -19,11 +19,11 @@ const FDPDetailsPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white">
+    <div className="min-h-screen bg-[#020202] text-white">
       {/* Background Effects (faster, snappier) */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          className="absolute -top-40 -right-40 w-80 h-80 bg-green-500/10 rounded-full blur-3xl"
+          className="absolute -top-40 -right-40 w-80 h-80 bg-white/10 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.12, 1],
             opacity: [0.35, 0.7, 0.35],
@@ -36,7 +36,7 @@ const FDPDetailsPage: React.FC = () => {
           }}
         />
         <motion.div
-          className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"
+          className="absolute -bottom-40 -left-40 w-80 h-80 bg-white/10 rounded-full blur-3xl"
           animate={{
             scale: [1.12, 1, 1.12],
             opacity: [0.35, 0.7, 0.35],
@@ -49,7 +49,7 @@ const FDPDetailsPage: React.FC = () => {
           }}
         />
         <motion.div
-          className="absolute top-1/2 left-1/2 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"
+          className="absolute top-1/2 left-1/2 w-96 h-96 bg-white/5 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.18, 1],
             rotate: [0, 140, 280],
@@ -84,11 +84,11 @@ const FDPDetailsPage: React.FC = () => {
           className="mb-8 relative"
         >
           <motion.div
-            className="absolute -top-4 -left-4 w-24 h-24 bg-green-500/20 rounded-full blur-2xl"
+            className="absolute -top-4 -left-4 w-24 h-24 bg-white/20 rounded-full blur-2xl"
             animate={{ scale: [1, 1.12, 1], opacity: [0.6, 0.9, 0.6] }}
             transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
           />
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-400 via-emerald-300 to-teal-400 bg-clip-text text-transparent mb-4 relative">
+          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent mb-4 relative">
             ATAL Faculty Development Programme
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 font-semibold leading-relaxed">
@@ -104,7 +104,7 @@ const FDPDetailsPage: React.FC = () => {
           className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"
         >
           <motion.div
-            className="flex items-center gap-3 p-5 rounded-xl bg-gradient-to-br from-green-500/10 to-emerald-500/5 border border-green-500/20 hover:border-green-400/40 transition-all duration-150 cursor-pointer backdrop-blur-sm"
+            className="flex items-center gap-3 p-5 rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-white/40 transition-all duration-150 cursor-pointer backdrop-blur-sm"
             whileHover={{ scale: 1.06, y: -6 }}
             whileTap={{ scale: 0.98 }}
             transition={{ type: 'spring', stiffness: 420, damping: 26 }}
@@ -113,16 +113,16 @@ const FDPDetailsPage: React.FC = () => {
               whileHover={{ rotate: 360 }}
               transition={{ duration: 0.45, ease: 'linear' }}
             >
-              <Calendar className="w-7 h-7 text-green-400 flex-shrink-0" />
+              <Calendar className="w-7 h-7 text-white flex-shrink-0" />
             </motion.div>
             <div>
               <p className="text-xs text-gray-400 uppercase tracking-wide font-medium">Date</p>
-              <p className="text-green-300 font-bold text-lg">January 19-24, 2026</p>
+              <p className="text-white font-bold text-lg">January 19-24, 2026</p>
             </div>
           </motion.div>
 
           <motion.div
-            className="flex items-center gap-3 p-5 rounded-xl bg-gradient-to-br from-blue-500/10 to-cyan-500/5 border border-blue-500/20 hover:border-blue-400/40 transition-all duration-150 cursor-pointer backdrop-blur-sm"
+            className="flex items-center gap-3 p-5 rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-white/40 transition-all duration-150 cursor-pointer backdrop-blur-sm"
             whileHover={{ scale: 1.06, y: -6 }}
             whileTap={{ scale: 0.98 }}
             transition={{ type: 'spring', stiffness: 420, damping: 26 }}
@@ -131,11 +131,11 @@ const FDPDetailsPage: React.FC = () => {
               whileHover={{ rotate: 360 }}
               transition={{ duration: 0.35, ease: 'linear' }}
             >
-              <MapPin className="w-7 h-7 text-blue-400 flex-shrink-0" />
+              <MapPin className="w-7 h-7 text-white flex-shrink-0" />
             </motion.div>
             <div>
               <p className="text-xs text-gray-400 uppercase tracking-wide font-medium">Mode</p>
-              <p className="text-blue-300 font-bold text-lg">Online</p>
+              <p className="text-white font-bold text-lg">Online</p>
             </div>
           </motion.div>
         </motion.div>
@@ -148,42 +148,42 @@ const FDPDetailsPage: React.FC = () => {
           className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 p-6 rounded-2xl bg-gradient-to-br from-gray-800/80 to-gray-900/80 border border-gray-700/50 backdrop-blur-sm"
         >
           <motion.div
-            className="text-center p-4 rounded-lg bg-gradient-to-br from-orange-500/10 to-red-500/5 border border-orange-500/20"
+            className="text-center p-4 rounded-lg bg-gradient-to-br from-white/10 to-white/5 border border-white/20"
             whileHover={{ scale: 1.08 }}
             transition={{ duration: 0.22, type: 'spring', stiffness: 300, damping: 20 }}
           >
-            <Award className="w-8 h-8 text-orange-400 mx-auto mb-2" />
-            <p className="text-3xl font-bold text-orange-300">6</p>
+            <Award className="w-8 h-8 text-white mx-auto mb-2" />
+            <p className="text-3xl font-bold text-white">6</p>
             <p className="text-sm text-gray-400">Days Program</p>
           </motion.div>
 
           <motion.div
-            className="text-center p-4 rounded-lg bg-gradient-to-br from-cyan-500/10 to-blue-500/5 border border-cyan-500/20"
+            className="text-center p-4 rounded-lg bg-gradient-to-br from-white/10 to-white/5 border border-white/20"
             whileHover={{ scale: 1.08 }}
             transition={{ duration: 0.22, type: 'spring', stiffness: 300, damping: 20 }}
           >
-            <BookOpen className="w-8 h-8 text-cyan-400 mx-auto mb-2" />
-            <p className="text-3xl font-bold text-cyan-300">8</p>
+            <BookOpen className="w-8 h-8 text-white mx-auto mb-2" />
+            <p className="text-3xl font-bold text-white">8</p>
             <p className="text-sm text-gray-400">Key Topics</p>
           </motion.div>
 
           <motion.div
-            className="text-center p-4 rounded-lg bg-gradient-to-br from-pink-500/10 to-purple-500/5 border border-pink-500/20"
+            className="text-center p-4 rounded-lg bg-gradient-to-br from-white/10 to-white/5 border border-white/20"
             whileHover={{ scale: 1.08 }}
             transition={{ duration: 0.22, type: 'spring', stiffness: 300, damping: 20 }}
           >
-            <Target className="w-8 h-8 text-pink-400 mx-auto mb-2" />
-            <p className="text-3xl font-bold text-pink-300">5</p>
+            <Target className="w-8 h-8 text-white mx-auto mb-2" />
+            <p className="text-3xl font-bold text-white">5</p>
             <p className="text-sm text-gray-400">Objectives</p>
           </motion.div>
 
           <motion.div
-            className="text-center p-4 rounded-lg bg-gradient-to-br from-green-500/10 to-emerald-500/5 border border-green-500/20"
+            className="text-center p-4 rounded-lg bg-gradient-to-br from-white/10 to-white/5 border border-white/20"
             whileHover={{ scale: 1.08 }}
             transition={{ duration: 0.22, type: 'spring', stiffness: 300, damping: 20 }}
           >
-            <Sparkles className="w-8 h-8 text-green-400 mx-auto mb-2" />
-            <p className="text-3xl font-bold text-green-300">FREE</p>
+            <Sparkles className="w-8 h-8 text-white mx-auto mb-2" />
+            <p className="text-3xl font-bold text-white">FREE</p>
             <p className="text-sm text-gray-400">Registration</p>
           </motion.div>
         </motion.div>
@@ -195,12 +195,12 @@ const FDPDetailsPage: React.FC = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.14, duration: 0.32, ease: 'easeOut' }}
-            className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 rounded-2xl p-6 border border-green-500/20 hover:border-green-400/40 transition-all duration-150 hover:shadow-xl hover:shadow-green-500/10 backdrop-blur-sm group"
+            className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 rounded-2xl p-6 border border-white/20 hover:border-white/40 transition-all duration-150 hover:shadow-xl hover:shadow-white/10 backdrop-blur-sm group"
             whileHover={{ scale: 1.01 }}
           >
             <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
               <motion.span
-                className="w-1.5 h-8 bg-gradient-to-b from-green-400 to-emerald-600 rounded-full"
+                className="w-1.5 h-8 bg-gradient-to-b from-white to-gray-400 rounded-full"
                 whileHover={{ scaleY: 1.12 }}
                 transition={{ duration: 0.18 }}
               />
@@ -219,11 +219,11 @@ const FDPDetailsPage: React.FC = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 rounded-2xl p-6 border border-blue-500/20 hover:border-blue-400/40 transition-all duration-150 hover:shadow-xl hover:shadow-blue-500/10 backdrop-blur-sm"
+            className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 rounded-2xl p-6 border border-white/20 hover:border-white/40 transition-all duration-150 hover:shadow-xl hover:shadow-white/10 backdrop-blur-sm"
           >
             <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
               <motion.span
-                className="w-1.5 h-8 bg-gradient-to-b from-blue-400 to-cyan-600 rounded-full"
+                className="w-1.5 h-8 bg-gradient-to-b from-white to-gray-400 rounded-full"
                 whileHover={{ scaleY: 1.12 }}
                 transition={{ duration: 0.18 }}
               />
@@ -241,7 +241,7 @@ const FDPDetailsPage: React.FC = () => {
                 'Ethics, explainability, and responsible AI governance',
               ].map((topic, index) => (
                 <li key={index} className="flex items-start gap-3 text-gray-300 p-3 rounded-lg">
-                  <span className="text-blue-400 mt-1 text-xl font-bold">•</span>
+                  <span className="text-white mt-1 text-xl font-bold">•</span>
                   <span>{topic}</span>
                 </li>
               ))}
@@ -253,11 +253,11 @@ const FDPDetailsPage: React.FC = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 rounded-2xl p-6 border border-purple-500/20 hover:border-purple-400/40 transition-all duration-150 hover:shadow-xl hover:shadow-purple-500/10 backdrop-blur-sm"
+            className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 rounded-2xl p-6 border border-white/20 hover:border-white/40 transition-all duration-150 hover:shadow-xl hover:shadow-white/10 backdrop-blur-sm"
           >
             <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
               <motion.span
-                className="w-1.5 h-8 bg-gradient-to-b from-purple-400 to-pink-600 rounded-full"
+                className="w-1.5 h-8 bg-gradient-to-b from-white to-gray-400 rounded-full"
                 whileHover={{ scaleY: 1.12 }}
                 transition={{ duration: 0.18 }}
               />
@@ -272,7 +272,7 @@ const FDPDetailsPage: React.FC = () => {
                 'Recognize ethical and governance issues linked to interpretability',
               ].map((objective, index) => (
                 <li key={index} className="flex items-start gap-3 text-gray-300 p-3 rounded-lg">
-                  <span className="text-purple-400 mt-1 text-xl font-bold">✓</span>
+                  <span className="text-white mt-1 text-xl font-bold">✓</span>
                   <span className="text-base">{objective}</span>
                 </li>
               ))}
@@ -284,11 +284,11 @@ const FDPDetailsPage: React.FC = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 rounded-2xl p-6 border border-yellow-500/20 hover:border-yellow-400/40 transition-all duration-150 hover:shadow-xl hover:shadow-yellow-500/10 backdrop-blur-sm"
+            className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 rounded-2xl p-6 border border-white/20 hover:border-white/40 transition-all duration-150 hover:shadow-xl hover:shadow-white/10 backdrop-blur-sm"
           >
             <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
               <motion.span
-                className="w-1.5 h-8 bg-gradient-to-b from-yellow-400 to-orange-600 rounded-full"
+                className="w-1.5 h-8 bg-gradient-to-b from-white to-gray-400 rounded-full"
                 whileHover={{ scaleY: 1.12 }}
                 transition={{ duration: 0.18 }}
               />
@@ -306,11 +306,11 @@ const FDPDetailsPage: React.FC = () => {
                 { text: 'Selection is based on a first-come, first-served basis', highlight: false },
               ].map((item, index) => (
                 <li key={index} className="flex items-start gap-3 text-gray-300 p-3 rounded-lg">
-                  <span className="text-yellow-400 mt-1 text-xl font-bold">→</span>
+                  <span className="text-white mt-1 text-xl font-bold">→</span>
                   <span
                     className={`text-base ${
                       item.highlight
-                        ? 'font-bold text-yellow-300 bg-yellow-500/10 px-2 py-1 rounded'
+                        ? 'font-bold text-white bg-white/10 px-2 py-1 rounded'
                         : ''
                     }`}
                   >
@@ -329,7 +329,7 @@ const FDPDetailsPage: React.FC = () => {
             className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 rounded-2xl p-6 border border-gray-600/30 hover:border-gray-500/50 transition-all duration-300 backdrop-blur-sm"
           >
             <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-              <motion.span className="w-1.5 h-8 bg-gradient-to-b from-gray-400 to-gray-600 rounded-full" />
+              <motion.span className="w-1.5 h-8 bg-gradient-to-b from-white to-gray-400 rounded-full" />
               Registration Process
             </h3>
 
@@ -397,11 +397,11 @@ const FDPDetailsPage: React.FC = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.65, duration: 0.32, ease: 'easeOut' }}
-            className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 rounded-2xl p-6 border border-pink-500/20 hover:border-pink-400/40 transition-all duration-150 hover:shadow-xl hover:shadow-pink-500/10 backdrop-blur-sm"
+            className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 rounded-2xl p-6 border border-white/20 hover:border-white/40 transition-all duration-150 hover:shadow-xl hover:shadow-white/10 backdrop-blur-sm"
           >
             <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
               <motion.span
-                className="w-1.5 h-8 bg-gradient-to-b from-pink-400 to-rose-600 rounded-full"
+                className="w-1.5 h-8 bg-gradient-to-b from-white to-gray-400 rounded-full"
                 whileHover={{ scaleY: 1.12 }}
                 transition={{ duration: 0.18 }}
               />
@@ -433,7 +433,7 @@ const FDPDetailsPage: React.FC = () => {
               ].map((coord, index) => (
                 <motion.div
                   key={index}
-                  className="bg-gradient-to-br from-gray-900/80 to-gray-800/50 rounded-xl p-5 border border-pink-500/20 hover:border-pink-400/40 flex flex-col items-center text-center group cursor-pointer"
+                  className="bg-gradient-to-br from-gray-900/80 to-gray-800/50 rounded-xl p-5 border border-white/20 hover:border-white/40 flex flex-col items-center text-center group cursor-pointer"
                   whileHover={{ scale: 1.06, y: -6 }}
                   transition={{ type: 'spring', stiffness: 420, damping: 26 }}
                 >
@@ -444,16 +444,16 @@ const FDPDetailsPage: React.FC = () => {
                     <img
                       src={coord.img}
                       alt={coord.name}
-                      className="w-24 h-24 rounded-full object-cover border-4 border-pink-500/30 mb-4 shadow-lg shadow-pink-500/20 group-hover:border-pink-400/60"
+                      className="w-24 h-24 rounded-full object-cover border-4 border-white/30 mb-4 shadow-lg shadow-white/20 group-hover:border-white/60"
                     />
                   </motion.div>
-                  <p className="text-pink-400 font-bold mb-2 text-sm uppercase tracking-wider">
+                  <p className="text-white font-bold mb-2 text-sm uppercase tracking-wider">
                     {coord.role}
                   </p>
                   <p className="text-white font-bold text-lg mb-1">{coord.name}</p>
                   <p className="text-sm text-gray-400 mb-2">{coord.title}</p>
                   <motion.p
-                    className="text-xs text-pink-300/70 hover:text-pink-300 transition-colors px-3 py-1 bg-pink-500/10 rounded-full"
+                    className="text-xs text-white/70 hover:text-white transition-colors px-3 py-1 bg-white/10 rounded-full"
                     whileHover={{ scale: 1.05 }}
                   >
                     {coord.email}
@@ -468,11 +468,11 @@ const FDPDetailsPage: React.FC = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.72 }}
-            className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 rounded-2xl p-6 border border-indigo-500/20 hover:border-indigo-400/40 transition-all duration-150 hover:shadow-xl hover:shadow-indigo-500/10 backdrop-blur-sm"
+            className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 rounded-2xl p-6 border border-white/20 hover:border-white/40 transition-all duration-150 hover:shadow-xl hover:shadow-white/10 backdrop-blur-sm"
           >
             <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
               <motion.span
-                className="w-1.5 h-8 bg-gradient-to-b from-indigo-400 to-purple-600 rounded-full"
+                className="w-1.5 h-8 bg-gradient-to-b from-white to-gray-400 rounded-full"
                 whileHover={{ scaleY: 1.12 }}
                 transition={{ duration: 0.18 }}
               />
@@ -493,7 +493,7 @@ const FDPDetailsPage: React.FC = () => {
               ].map((organiser, index) => (
                 <motion.div
                   key={index}
-                  className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-500/5 border border-indigo-500/20 hover:border-indigo-400/40 transition-all duration-150 group cursor-pointer"
+                  className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-white/40 transition-all duration-150 group cursor-pointer"
                   whileHover={{ scale: 1.03, x: 5 }}
                   transition={{ duration: 0.3 }}
                 >
@@ -504,11 +504,11 @@ const FDPDetailsPage: React.FC = () => {
                     <img
                       src={organiser.img}
                       alt={organiser.name}
-                      className="w-20 h-20 rounded-full object-cover border-2 border-indigo-500/30 shadow-lg shadow-indigo-500/20 group-hover:border-indigo-400/60"
+                      className="w-20 h-20 rounded-full object-cover border-2 border-white/30 shadow-lg shadow-white/20 group-hover:border-white/60"
                     />
                   </motion.div>
                   <div>
-                    <p className="text-white font-bold text-lg mb-1 group-hover:text-indigo-300 transition-colors">
+                    <p className="text-white font-bold text-lg mb-1 group-hover:text-gray-200 transition-colors">
                       {organiser.name}
                     </p>
                     <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
@@ -531,7 +531,7 @@ const FDPDetailsPage: React.FC = () => {
               href="https://atalacademy.aicte.gov.in/signup"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white text-lg rounded-lg font-semibold shadow-lg border border-green-500/30 transition-all duration-300"
+              className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-white to-gray-300 hover:from-gray-200 hover:to-gray-400 text-black text-lg rounded-lg font-semibold shadow-lg border border-white/30 transition-all duration-300"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >

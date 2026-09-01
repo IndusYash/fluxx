@@ -77,8 +77,8 @@ const WhatWeDo: React.FC = () => {
           {/* Main Title with Icon - Reduced mobile margins */}
           <div className={`flex items-center gap-4 md:gap-5 mb-2 md:mb-4 lg:mb-6 ${isMobile ? 'justify-center' : ''}`}>
             <div className="relative shrink-0">
-              <Users className="text-[#00FFC6]" size={isMobile ? 24 : 32} />
-              <Sparkles className="absolute -top-1 -right-1 text-[#00e5b3] animate-pulse" size={10} />
+              <Users className="text-[#E5E5E5]" size={isMobile ? 24 : 32} />
+              <Sparkles className="absolute -top-1 -right-1 text-[#FFFFFF] animate-pulse" size={10} />
             </div>
             <h2 className={`font-bold bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent ${
               isMobile ? 'text-2xl sm:text-3xl' : 'text-4xl md:text-5xl lg:text-6xl'
@@ -100,15 +100,15 @@ const WhatWeDo: React.FC = () => {
             <div className={`mb-2 md:mb-6 lg:mb-8 ${
               isMobile ? 'flex flex-wrap justify-center gap-2 text-xs sm:text-sm' : 'space-y-4'
             }`}>
-              <div className="flex items-center space-x-1 md:space-x-3 text-[#00FFC6]">
+              <div className="flex items-center space-x-1 md:space-x-3 text-[#E5E5E5]">
                 <Target size={isMobile ? 14 : 20} />
                 <span className="font-semibold">Innovation Focused</span>
               </div>
-              <div className="flex items-center space-x-1 md:space-x-3 text-[#00FFC6]">
+              <div className="flex items-center space-x-1 md:space-x-3 text-[#E5E5E5]">
                 <Users size={isMobile ? 14 : 20} />
                 <span className="font-semibold">Community Driven</span>
               </div>
-              <div className="flex items-center space-x-1 md:space-x-3 text-[#00FFC6]">
+              <div className="flex items-center space-x-1 md:space-x-3 text-[#E5E5E5]">
                 <Zap size={isMobile ? 14 : 20} />
                 <span className="font-semibold">Cutting Edge</span>
               </div>
@@ -116,7 +116,7 @@ const WhatWeDo: React.FC = () => {
 
             {/* Decorative line - Smaller on mobile */}
             <div className={`flex ${isMobile ? 'justify-center' : 'justify-start'}`}>
-              <div className={`h-0.5 md:h-1 bg-gradient-to-r from-[#00FFC6] via-[#00e5b3] to-transparent rounded-full ${
+              <div className={`h-0.5 md:h-1 bg-gradient-to-r from-[#E5E5E5] via-[#FFFFFF] to-transparent rounded-full ${
                 isMobile ? 'w-16' : 'w-20 md:w-24 lg:w-32'
               }`}></div>
             </div>
@@ -142,16 +142,16 @@ const WhatWeDo: React.FC = () => {
             >
               {activitiesData.map((activity, index) => (
                 <Card key={index} customClass="shadow-2xl">
-                  <div className={`bg-gradient-to-br from-gray-900 via-gray-800 to-black h-full flex flex-col justify-between rounded-xl border border-gray-700/50 relative overflow-hidden ${
-                    isMobile ? 'p-3 sm:p-4' : 'p-4 lg:p-5'
-                  }`}>
+                   <div className={`card-outline bg-gradient-to-br from-gray-900 via-gray-800 to-black h-full flex flex-col justify-between rounded-xl border border-gray-700/50 relative overflow-hidden ${
+                     isMobile ? 'p-3 sm:p-4' : 'p-4 lg:p-5'
+                   }`}>
                     
                     {/* Background gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#00FFC6]/10 via-transparent to-[#00FFC6]/5 rounded-xl" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#E5E5E5]/10 via-transparent to-[#E5E5E5]/5 rounded-xl" />
                     
                     {/* Card number badge */}
                     <div className="flex items-center mb-3 md:mb-4 relative z-10">
-                      <div className={`bg-[#00FFC6] rounded-full flex items-center justify-center text-black font-bold shadow-lg shadow-[#00FFC6]/30 ${
+                      <div className={`bg-[#E5E5E5] rounded-full flex items-center justify-center text-black font-bold shadow-lg shadow-[#E5E5E5]/30 ${
                         isMobile ? 'w-6 h-6 text-xs' : 'w-8 h-8 text-xs'
                       }`}>
                         {index + 1}
@@ -160,7 +160,7 @@ const WhatWeDo: React.FC = () => {
 
                     {/* Card content */}
                     <div className="flex-grow relative z-10">
-                      <h3 className={`font-bold mb-2 leading-tight text-[#00FFC6] ${
+                      <h3 className={`font-bold mb-2 leading-tight text-[#E5E5E5] ${
                         isMobile ? 'text-sm sm:text-base' : 'text-base lg:text-lg'
                       }`}>
                         {activity.title}
@@ -175,16 +175,16 @@ const WhatWeDo: React.FC = () => {
 
                     {/* Card footer */}
                     <div className="mt-2 lg:mt-3 pt-2 relative z-10">
-                      <div className={`rounded-full bg-gradient-to-r from-[#00FFC6] to-transparent opacity-80 ${
+                      <div className={`rounded-full bg-gradient-to-r from-[#E5E5E5] to-transparent opacity-80 ${
                         isMobile ? 'h-0.5' : 'h-1'
                       }`} />
                     </div>
                     
                     {/* Decorative elements */}
-                    <div className={`absolute top-3 lg:top-4 right-3 lg:right-4 bg-[#00FFC6]/30 rounded-full animate-pulse ${
+                    <div className={`absolute top-3 lg:top-4 right-3 lg:right-4 bg-[#E5E5E5]/30 rounded-full animate-pulse ${
                       isMobile ? 'w-2 h-2' : 'w-3 h-3'
                     }`} />
-                    <div className={`absolute bottom-4 lg:bottom-6 right-4 lg:right-6 bg-[#00e5b3]/40 rounded-full ${
+                    <div className={`absolute bottom-4 lg:bottom-6 right-4 lg:right-6 bg-[#FFFFFF]/40 rounded-full ${
                       isMobile ? 'w-1.5 h-1.5' : 'w-2 h-2'
                     }`} />
                   </div>

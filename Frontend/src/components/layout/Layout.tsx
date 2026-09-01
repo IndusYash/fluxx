@@ -20,7 +20,7 @@ export default function Layout() {
   return (
     <>
       <Navbar />
-      <main className="pt-16 flex-1 bg-card/60">
+      <main className="pt-[4.5rem] flex-1 bg-[#020202]">
         <Outlet />
       </main>
       <Footer />

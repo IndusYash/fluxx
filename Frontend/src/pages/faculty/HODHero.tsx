@@ -64,7 +64,7 @@ const HODHero: React.FC<HODHeroProps> = React.memo(({ hod }) => {
 
   return (
     <motion.section
-      className="relative overflow-hidden rounded-2xl shadow-lg mb-12 border border-white/10 bg-white/5 dark:bg-white/5"
+      className="card-outline relative overflow-hidden rounded-2xl shadow-lg mb-12 border border-white/10 bg-white/5 dark:bg-white/5"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -75,7 +75,7 @@ const HODHero: React.FC<HODHeroProps> = React.memo(({ hod }) => {
           {/* Left Column - Content */}
           <motion.div className="space-y-6 lg:space-y-8">
             <motion.div variants={itemVariants} className="inline-block">
-              <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-blue-900/30 text-blue-300">
+              <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-white/10 text-white">
                 Head of Department
               </span>
             </motion.div>
@@ -91,7 +91,7 @@ const HODHero: React.FC<HODHeroProps> = React.memo(({ hod }) => {
               variants={itemVariants}
               className="flex items-center space-x-4"
             >
-              <div className="h-1 w-12 bg-blue-500 rounded-full" />
+              <div className="h-1 w-12 bg-white rounded-full" />
               <span className="text-lg font-medium text-gray-200">{hod.department}</span>
             </motion.div>
 
@@ -141,7 +141,7 @@ const HODHero: React.FC<HODHeroProps> = React.memo(({ hod }) => {
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                   aria-label={label}
                 >
-                  <Icon className="w-5 h-5 text-gray-200 hover:text-blue-400 transition-colors duration-200" />
+                  <Icon className="w-5 h-5 text-gray-200 hover:text-white transition-colors duration-200" />
                 </motion.a>
               ))}
             </motion.div>
