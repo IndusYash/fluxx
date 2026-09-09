@@ -345,7 +345,8 @@ const MemberCard: React.FC<{ m: Member; idx: number }> = ({ m, idx }) => {
         <img
           src={src}
           alt={m.name}
-          className={`absolute inset-0 w-full h-full object-cover ${m.imagePosition ?? 'object-center'} transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-110`}
+          className={`absolute inset-0 w-full h-full object-cover ${m.imagePosition ?? 'object-center'} transition-transform duration-700 group-hover:scale-110`}
+          style={{ transitionTimingFunction: "cubic-bezier(0.25, 0.46, 0.45, 0.94)" }}
           onError={() => setErr(true)}
         />
 
