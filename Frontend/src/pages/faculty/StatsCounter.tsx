@@ -1,9 +1,5 @@
 import React, { useRef } from "react";
-<<<<<<< HEAD
 import { motion, Variants } from "framer-motion";
-=======
-import { motion } from "framer-motion";
->>>>>>> 0b25148d61b455b30ea000d89d659446adf21882
 import { useCountAnimation } from "../../hooks/useCountAnimation";
 import { useIntersectionObserver } from "../../hooks/useIntersectionObserver";
 import { Users, Award, BookOpen, GraduationCap } from "lucide-react";
@@ -46,11 +42,7 @@ const StatsCounter: React.FC = React.memo(() => {
     },
   ];
 
-<<<<<<< HEAD
   const containerVariants: Variants = {
-=======
-  const containerVariants = {
->>>>>>> 0b25148d61b455b30ea000d89d659446adf21882
     hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,
@@ -63,11 +55,7 @@ const StatsCounter: React.FC = React.memo(() => {
     },
   };
 
-<<<<<<< HEAD
   const itemVariants: Variants = {
-=======
-  const itemVariants = {
->>>>>>> 0b25148d61b455b30ea000d89d659446adf21882
     hidden: { opacity: 0, y: 30, scale: 0.85 },
     visible: {
       opacity: 1,

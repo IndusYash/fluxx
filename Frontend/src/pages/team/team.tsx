@@ -83,14 +83,11 @@ import sakshiRanaImage from "../../assets/images/Sakshi rana.webp";
 import adityaYadavImage from "../../assets/images/Aditya yadav.webp";
 import rishirajImage from "../../assets/images/rishiraj.webp";
 import ritishaImage from "../../assets/images/ritisha.webp";
-<<<<<<< HEAD
 import utkarshImage from "../../assets/images/Utkarsh.png";
 import shrutiTripathiImage from "../../assets/images/struti.jpeg";
 import adityaShuklaImage from "../../assets/images/AdityaShukla.jpeg";
 import aditiVermaImage from "../faculty/Aditi.jpeg";
 import mahakSinghImage from "../../assets/images/Mahak.jpeg";
-=======
->>>>>>> 0b25148d61b455b30ea000d89d659446adf21882
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 interface Member {
@@ -517,33 +514,23 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
     // ── Batch 2029 (Sophomore Year) ──
     { name: 'Aashish Kumar', role: 'Executive Member', branch: 'CSE', batch: "'29", email: '2025021301@mmmut.ac.in', linkedin: 'https://www.linkedin.com/in/theaashishkumar/', image: aashishKumarImage, color: C.exec },
     { name: 'Aditya Gupta', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'guptaaditya002006@gmail.com', linkedin: 'https://www.linkedin.com/in/aditya-gupta-a734ba377/', image: adityaGuptaImage, color: C.exec },
-<<<<<<< HEAD
     { name: 'Aditya Shukla', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'aadityashukla2412@gmail.com', linkedin: 'https://www.linkedin.com/in/aditya-shukla-2412-sam', image: adityaShuklaImage, color: C.exec },
     { name: 'Aditi Verma', role: 'Executive Member', branch: 'IT', batch: "'29", email: 'aditiverma9945@gmail.com', linkedin: 'https://www.linkedin.com/in/aditi-verma-a5a541328', image: aditiVermaImage, color: C.exec },
-=======
->>>>>>> 0b25148d61b455b30ea000d89d659446adf21882
     { name: 'Anuradha Srivastava', role: 'Executive Member', branch: 'IT', batch: "'29", email: 'srivastavaanu7922@gmail.com', linkedin: 'https://www.linkedin.com/in/anuradha-srivastava-514465378', image: anuradhaSrivastavaImage, color: C.exec },
     { name: 'Arpita Mishra', role: 'Executive Member', branch: 'ME', batch: "'29", email: 'vaibhavarpita987@gmail.com', linkedin: 'https://www.linkedin.com/in/arpita-mishra-3051a8378', image: arpitaMishraImage, color: C.exec },
     { name: 'Deepak Shivhare', role: 'Executive Member', branch: 'IT', batch: "'29", email: 'dk23107575@gmail.com', linkedin: 'https://www.linkedin.com/in/deepak-shivhare-443333381', image: deepakShivhareImage, color: C.exec },
     { name: 'Himanshu Maurya', role: 'Executive Member', branch: 'IT', batch: "'29", email: 'hm3997353@gmail.com', linkedin: 'https://linkedin.com/in/himanshumaurya29', image: himanshuMauryaImage, color: C.exec },
     { name: 'Khushi Patel', role: 'Executive Member', branch: 'IT', batch: "'29", email: 'khushiipatel657@gmail.com', linkedin: 'https://www.linkedin.com/in/khushi-patel-160462378', image: khushiPatelImage, color: C.exec },
-<<<<<<< HEAD
     { name: 'Mahak Singh', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'mahaksinghofficial@gmail.com', linkedin: 'https://www.linkedin.com/in/mahak-singh-814858327', image: mahakSinghImage, color: C.exec },
-=======
->>>>>>> 0b25148d61b455b30ea000d89d659446adf21882
     { name: 'Piyush Kumar', role: 'Executive Member', branch: 'ECE', batch: "'29", email: 'pk1747968@gmail.com', linkedin: 'https://www.linkedin.com/in/piyush-kumar-b46306391', image: piyushKumarImage, color: C.exec },
     { name: 'Pradumna Manu', role: 'Executive Member', branch: 'BBA', batch: "'29", email: 'pradumanmanu@gmail.com', linkedin: 'https://www.linkedin.com/in/pradumna-manu-8595643b6', image: pradumnaManuImage, color: C.exec },
     { name: 'Rishiraj Kasaudhan', role: 'Executive Member', branch: 'BBA', batch: "'29", email: 'rishirajkasaudhan5705@gmail.com', linkedin: 'https://www.linkedin.com/in/rishi-raj-kasaudhan-6615343a8', image: rishirajImage, imagePosition: "object-top", color: C.exec },
     { name: 'Ritisha Raghuvanshi', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'ritisharaghuvanshi95@gmail.com', linkedin: 'https://www.linkedin.com/in/ritisha-raghuvanshi-3612a3379', image: ritishaImage, color: C.exec },
     { name: 'Sakshi Rana', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'sakshi9696rana@gmail.com', linkedin: 'https://www.linkedin.com/in/sakshi-rana-94554a377', image: sakshiRanaImage, color: C.exec },
     { name: 'Saumyjeet Kumar', role: 'Executive Member', branch: 'CSE', batch: "'29", email: '2025021256@mmmut.ac.in', linkedin: 'https://www.linkedin.com/in/saumyjeet-kumar-pandey-602a51362/', image: saumyjeetKumarImage, color: C.exec },
-<<<<<<< HEAD
     { name: 'Shruti Tripathi', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'shrutitripathi369@gmail.com', linkedin: 'https://www.linkedin.com/in/shruti-tripathi-20342132b', image: shrutiTripathiImage, color: C.exec },
     { name: 'Sundaram Dubey', role: 'Executive Member', branch: 'IT', batch: "'29", email: '2025071161@mmmut.ac.in', linkedin: 'https://www.linkedin.com/in/sundaram-dubey-a563a3378', image: sundaramDubeyImage, color: C.exec },
     { name: 'Utkarsh Shrivastava', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'rajatshrivastava036@gmail.com', linkedin: 'https://www.linkedin.com/in/utkarsh-shrivastava-a767b8435', image: utkarshImage, color: C.exec },
-=======
-    { name: 'Sundaram Dubey', role: 'Executive Member', branch: 'IT', batch: "'29", email: '2025071161@mmmut.ac.in', linkedin: 'https://www.linkedin.com/in/sundaram-dubey-a563a3378', image: sundaramDubeyImage, color: C.exec },
->>>>>>> 0b25148d61b455b30ea000d89d659446adf21882
     { name: 'Vinit Kumar', role: 'Executive Member', branch: 'IT', batch: "'29", email: '2025071166@mmmut.ac.in', linkedin: 'https://www.linkedin.com/in/vinitkumar491/', image: vinitKumarImage, color: C.exec },
   ];
 
