@@ -1,0 +1,124 @@
+/* Base breakpoint already working */
+.ideathon-scan-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 42%, #1a1a1a 0%, #050505 46%, #000 100%);
+}
+
+.ideathon-scan-grid {
+  position: absolute;
+  inset: -35% -20% 0;
+  opacity: 0.38;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+  background-size: 70px 70px;
+  transform: perspective(600px) rotateX(62deg) scale(1.6);
+  transform-origin: center bottom;
+}
+
+.ideathon-scan-beam {
+  position: absolute;
+  top: -15%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 24px 5px rgba(255, 255, 255, 0.28);
+}
+
+.ideathon-scan-glow {
+  position: absolute;
+  inset: 12% 20% 35%;
+  background: radial-gradient(ellipse, rgba(255, 255, 255, 0.14), transparent 68%);
+  filter: blur(30px);
+}
+
+.ideathon-scan-signal {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 14px 4px rgba(255, 255, 255, 0.75);
+}
+
+.ideathon-scan-signal-one { left: 28%; }
+.ideathon-scan-signal-two { left: 72%; opacity: 0.55; }
+.ideathon-scan-signal-three { left: 50%; opacity: 0.4; }
+
+.ideathon-horizon {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  top: 58%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  box-shadow: 0 0 35px 8px rgba(255, 255, 255, 0.14);
+}
+
+.ideathon-ring {
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  width: min(78vw, 1100px);
+  aspect-ratio: 2.8;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(-8deg) scale(0.7);
+}
+
+.ideathon-ring-two {
+  width: min(52vw, 720px);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.ideathon-light-streak {
+  position: absolute;
+  top: -30%;
+  left: 18%;
+  width: 1px;
+  height: 170%;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transform: rotate(28deg);
+}
+
+.ideathon-light-streak-two {
+  left: 78%;
+  opacity: 0.35;
+  transform: rotate(-28deg);
+}
+
+.ideathon-scan-sweep {
+  position: absolute;
+  inset: -60% -20%;
+  background: conic-gradient(from 12deg at 50% 50%, transparent 0deg, rgba(255, 255, 255, 0.06) 18deg, transparent 38deg);
+}
+
+.ideathon-coming-soon {
+  animation: ideathon-coming-soon-reveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes ideathon-coming-soon-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    filter: blur(8px);
+  }
+  60% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .hyperspeed-bg {
+    width: 220vw;
+    height: 160vh;
+  }
+}
