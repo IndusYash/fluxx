@@ -29,7 +29,7 @@ const upcomingEvents = [
     type: "Event",
     participants: "250+",
     description:
-      "An empowering leadership summit designed to inspire and connect women in tech. Join us for insightful talks, hands-on workshops, and networking with industry leaders.",
+      "An empowering leadership summit designed to inspire, mentor, and connect tech innovators and future leaders. Join us for insightful talks, hands-on workshops, and networking with industry leaders.",
   },
 ];
 

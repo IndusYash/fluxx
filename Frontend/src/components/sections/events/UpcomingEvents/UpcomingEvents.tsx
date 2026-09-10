@@ -60,7 +60,7 @@ const events: EventProps[] = [
     title: 'She Leads – Dr. Tessy Thomas Annual Conclave',
     date: '12 - 13 September',
     description:
-      "An empowering leadership and tech summit exclusively designed to inspire and connect women in technology. Join us for insightful talks, hands-on workshops, mentorship, and networking.",
+      "An empowering leadership and tech summit designed to inspire, mentor, and connect tech innovators and future leaders. Join us for insightful talks, hands-on workshops, mentorship, and networking.",
     imageUrl: sheLeadsBanner,
     isUpcoming: true,
     location: 'MMMUT Gorakhpur',

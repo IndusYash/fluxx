@@ -499,7 +499,7 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
                       year: successData.data?.year || year || '—',
                       ticketNumber: successData.ticketNumber || 'SHE-2026',
                       venue: 'Online',
-                      date: 'To be announced',
+                      date: '12 & 13 September',
                     }}
                   />
                 </div>

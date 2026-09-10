@@ -153,7 +153,7 @@ export const SheLeadsPrintablePass: React.FC<SheLeadsPrintablePassProps> = ({ da
     year = '2nd Year',
     ticketNumber = 'SHE-1116',
     venue = 'Online',
-    date = 'To be announced',
+    date = '12 & 13 September',
   } = data;
 
   // QR Code payload containing Name, Roll No, Branch, Sec, Year, and Pass Code

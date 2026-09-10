@@ -85,7 +85,7 @@ export async function submitSheLeadsRegistration(
     saveRegistrationLocally(result);
     return result;
   } catch (error: any) {
-    // If it's a backend business error (e.g. duplicate 409 or female 403), rethrow it so the user sees it
+    // If it's a backend business error (e.g. duplicate 409), rethrow it so the user sees it
     if (error.message && !error.message.includes('Failed to fetch') && !error.message.includes('NetworkError')) {
       throw error;
     }
