@@ -6,6 +6,7 @@ import dimitrios from '@/assets/images/dimitrios.webp';
 import ideathon from '@/assets/images/ideathon.webp';
 import orientation from '@/assets/images/orientation_2.webp';
 import conferenceImg from '@/assets/images/conferenceImg.webp';
+import sheLeadsBanner from '@/assets/images/she_leads_hero_banner.jpg';
 const RAW_API_BASE = (import.meta.env as any).VITE_API_BASE_URL ?? (import.meta.env as any).VITE_API_BASE ?? '/api';
 const API_BASE = (RAW_API_BASE || '/api').replace(/\/+$/, ''); // remove trailing slash
 
@@ -56,16 +57,16 @@ const events: EventProps[] = [
   },
   {
     id: 3,
-    title: 'She Lead',
-    date: 'Coming Soon',
+    title: 'She Leads',
+    date: 'Coming Soon (Registration Open)',
     description:
-      "An empowering leadership summit designed to inspire and connect women in tech. Join us for insightful talks, hands-on workshops, and networking with industry leaders.",
-    imageUrl: conferenceImg,
+      "An empowering leadership and tech summit exclusively designed to inspire and connect women in technology. Join us for insightful talks, hands-on workshops, mentorship, and networking.",
+    imageUrl: sheLeadsBanner,
     isUpcoming: true,
     location: 'MMMUT Gorakhpur',
-    attendees: 250,
+    attendees: 300,
     category: 'Innovation',
-    prize: '',
+    prize: 'Certificates & Swag',
     featured: true,
   }
 ];
@@ -278,6 +279,16 @@ const EventCard: React.FC<{ event: EventProps; index: number; showRegister?: boo
                 </button>
               )}
 
+              {event.title?.toLowerCase().includes('she lead') && (
+                <button
+                  onClick={() => navigate('/she-leads')}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-zinc-100 text-black rounded-full font-semibold shadow-md border border-rose-200/40 hover:scale-105 active:scale-95 transition-all duration-200 mt-1 w-fit"
+                >
+                  <span>Register for She Leads</span>
+                  <ArrowRight className="w-4 h-4 text-rose-500" />
+                </button>
+              )}
+
               {showRegister && (
                 <div className="pt-1">
                   {event.date === 'Coming Soon' ? (
@@ -358,7 +369,7 @@ const EventCard: React.FC<{ event: EventProps; index: number; showRegister?: boo
           {[...Array(4)].map((_, i) => (
             <motion.div
               key={i}
-               className="absolute w-1 h-1 bg-white/20 rounded-full"
+              className="absolute w-1 h-1 bg-white/20 rounded-full"
               style={{
                 left: `${25 + i * 20}%`,
                 top: `${30 + (i % 2) * 40}%`,

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Caveat:wght@600;700&family=Dancing+Script:wght@700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -271,3 +271,42 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* ── Print Styles for She Leads Pass ── */
+@media print {
+  html, body {
+    background: #000000 !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Completely remove from layout so NO extra pages are generated */
+  nav,
+  footer,
+  header,
+  .no-print {
+    display: none !important;
+  }
+
+  #she-leads-printable-pass {
+    display: block !important;
+    margin: 15px auto !important;
+    max-width: 480px !important;
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 8mm;
+  }
+}
+
+

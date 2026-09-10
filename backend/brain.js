@@ -16,6 +16,7 @@ import ideathonTeam from "./routes/ideathonTeam.js";
 import uploadRoutes from './routes/uploadRoutes.js';
 import applications from './routes/applications.js';
 import judgeAuthRoutes from './routes/judgeAuth.js';
+import sheLeadsRoutes from './routes/sheLeadsRoutes.js';
 
 const app = express();
 
@@ -26,6 +27,9 @@ app.use(express.json());
 const defaultAllowedOrigins = [
   "https://flux.org.in",
   "https://www.flux.org.in",
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "http://127.0.0.1:5173",
 ];
 
 const normalizeOrigin = (value = "") => value.trim().replace(/\/$/, "");
@@ -58,6 +62,7 @@ app.use("/api/ideathonTeam",ideathonTeam);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/applications", applications);
 app.use("/api/judge-auth", judgeAuthRoutes);
+app.use("/api/she-leads", sheLeadsRoutes);
 
 // simple health check endpoint used by many platforms (GET /healthz)
 app.get('/healthz', (req, res) => {
@@ -68,26 +73,28 @@ app.get('/ping', (req, res) => {
 });
 const start = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log("✅ CONNECTED TO DB");
-
-    const port = process.env.PORT || 4000;
-
-    app.listen(port, () => {
-      console.log(`🚀 Server running on port ${port}`);
-
-      // Self ping every 10 min (Render free tier sleep fix)
-      setInterval(() => {
-        fetch("https://flux-backend-1hmq.onrender.com/ping")
-          .then(() => console.log("🔁 Pinged self!"))
-          .catch(() => console.log("❌ Self ping failed."));
-      }, 1000 * 60 * 10);
-    });
-
+    if (process.env.MONGO_URI) {
+      await mongoose.connect(process.env.MONGO_URI);
+      console.log("✅ CONNECTED TO DB");
+    } else {
+      console.log("⚠️ No MONGO_URI specified; running server in local storage mode.");
+    }
   } catch (error) {
     console.error("❌ DB Connection Failed:", error);
   }
-};
 
+  const port = process.env.PORT || 4000;
+
+  app.listen(port, () => {
+    console.log(`🚀 Server running on port ${port}`);
+
+    // Self ping every 10 min (Render free tier sleep fix)
+    setInterval(() => {
+      fetch("https://flux-backend-1hmq.onrender.com/ping")
+        .then(() => console.log("🔁 Pinged self!"))
+        .catch(() => console.log("❌ Self ping failed."));
+    }, 1000 * 60 * 10);
+  });
+};
 
 start();

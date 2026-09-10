@@ -17,52 +17,52 @@ import priyaBbaImage from "../../assets/images/Priya Singh.jpg";
 
 // Administration
 import shivammishraImage from "../../assets/images/Shivam_Mishra.jpeg";
-import ysvImage         from "../../assets/images/ysv.webp";
-import Aviral           from "../../assets/images/Aviral.webp";
-import threeMImage      from "../../assets/images/3m.webp";
-import Shubham          from "../../assets/images/Shubham.webp";
-import jaiKumarImage    from "../../assets/images/JaiKumar.webp";
-import priyaSinghImage  from "../../assets/images/Priya.jpeg";
-import princeSahuImage  from "../../assets/images/Prince.jpeg";
-import sudeekshaImage   from "../../assets/images/Sudeeksha.jpeg";
+import ysvImage from "../../assets/images/ysv.webp";
+import Aviral from "../../assets/images/Aviral.webp";
+import threeMImage from "../../assets/images/3m.webp";
+import Shubham from "../../assets/images/Shubham.webp";
+import jaiKumarImage from "../../assets/images/JaiKumar.webp";
+import priyaSinghImage from "../../assets/images/Priya.jpeg";
+import princeSahuImage from "../../assets/images/Prince.jpeg";
+import sudeekshaImage from "../../assets/images/Sudeeksha.jpeg";
 
 // Development
-import aryanImage    from "../../assets/images/Aryan.webp";
-import Prad          from "../../assets/images/Pradyuman.webp";
+import aryanImage from "../../assets/images/Aryan.webp";
+import Prad from "../../assets/images/Pradyuman.webp";
 import atulKumarImage from "../../assets/images/Atul.jpeg";
-import rishiImage    from "../../assets/images/Rishi.jpeg";
+import rishiImage from "../../assets/images/Rishi.jpeg";
 
 // Design
-import Ananya             from "../../assets/images/Ananya.webp";
-import Tamanna            from "../../assets/images/Tamanna.webp";
+import Ananya from "../../assets/images/Ananya.webp";
+import Tamanna from "../../assets/images/Tamanna.webp";
 import abhigyanVardhanImage from "../../assets/images/AbhigyanVardhan.webp";
 import stutiTripathiImage from "../../assets/images/StutiTripathi .webp";
 
 // Photography & Video
-import Aman           from "../../assets/images/Aman Rawat.webp";
+import Aman from "../../assets/images/Aman Rawat.webp";
 import surajKumarImage from "../../assets/images/SurajKumar .webp";
 
 // Algorithms
-import ashishImage       from "../../assets/images/ashish.webp";
-import shivamsinghImage  from "../../assets/images/shivamsingh.webp";
+import ashishImage from "../../assets/images/ashish.webp";
+import shivamsinghImage from "../../assets/images/shivamsingh.webp";
 import devanshKumarImage from "../../assets/images/Devansh.jpeg";
 import prakharShuklaImage from "../../assets/images/PrakharShukla.webp";
-import rohanJaiswalImage  from "../../assets/images/RohanJaiswal .webp";
+import rohanJaiswalImage from "../../assets/images/RohanJaiswal .webp";
 import sameerChauhanImage from "../../assets/images/SameerSingh.webp";
 
 // AI & ML
-import RiyaImage            from "../../assets/images/Riya Verma.webp";
-import vmishraImage         from "../../assets/images/Vish.webp";
+import RiyaImage from "../../assets/images/Riya Verma.webp";
+import vmishraImage from "../../assets/images/Vish.webp";
 import anushkaChaudharyImage from "../../assets/images/AnushkaChaudhary .webp";
-import ayushSharmaImage     from "../../assets/images/AyushSharma.webp";
+import ayushSharmaImage from "../../assets/images/AyushSharma.webp";
 
 // Content & Social Media
-import Anushka            from "../../assets/images/Anuphoto - Anushka Singh.webp";
+import Anushka from "../../assets/images/Anuphoto - Anushka Singh.webp";
 import anshikaTripathiImage from "../../assets/images/AnshikaTripathi  .webp";
-import auchityaKumarImage  from "../../assets/images/AuchityaKumar.webp";
-import divejSinghImage     from "../../assets/images/DivejSingh.webp";
-import harshVermaImage     from "../../assets/images/HarshVerma.webp";
-import nikhilJaiswalImage  from "../../assets/images/NikhilJaiswal .webp";
+import auchityaKumarImage from "../../assets/images/AuchityaKumar.webp";
+import divejSinghImage from "../../assets/images/DivejSingh.webp";
+import harshVermaImage from "../../assets/images/HarshVerma.webp";
+import nikhilJaiswalImage from "../../assets/images/NikhilJaiswal .webp";
 
 // Freshmen
 import sundaramDubeyImage from "../../assets/images/Sundaram Dubey.webp";
@@ -99,16 +99,16 @@ interface Member {
 
 // ─── Accent Colors ─────────────────────────────────────────────────────────────
 const C = {
-  admin:   '#E5E5E5',
-  domain:  '#E5E5E5',
-  dev:     '#E5E5E5',
-  design:  '#E5E5E5',
-  photo:   '#E5E5E5',
-  algo:    '#E5E5E5',
-  aiml:    '#E5E5E5',
+  admin: '#E5E5E5',
+  domain: '#E5E5E5',
+  dev: '#E5E5E5',
+  design: '#E5E5E5',
+  photo: '#E5E5E5',
+  algo: '#E5E5E5',
+  aiml: '#E5E5E5',
   content: '#E5E5E5',
-  alumni:  '#E5E5E5',
-  exec:    '#E5E5E5',
+  alumni: '#E5E5E5',
+  exec: '#E5E5E5',
 };
 
 // ─── Animated Counter Hook ─────────────────────────────────────────────────────
@@ -525,8 +525,8 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
   ];
 
   const facultyMembers: Member[] = [
-      { name: 'Dr. Shwet Ketu', role: 'Faculty Co-ordinator', branch: '', batch: '', email: '', linkedin: '', image: shwetSirImage, color: '#E5E5E5' },
-      { name: 'Dr. Satvik Vats', role: 'Faculty Co-ordinator', branch: '', batch: '', email: '', linkedin: '', image: satvikSirImage, color: '#E5E5E5' },
+    { name: 'Dr. Shwet Ketu', role: 'Faculty Co-ordinator', branch: '', batch: '', email: '', linkedin: '', image: shwetSirImage, color: '#E5E5E5' },
+    { name: 'Dr. Satvik Vats', role: 'Faculty Co-ordinator', branch: '', batch: '', email: '', linkedin: '', image: satvikSirImage, color: '#E5E5E5' },
   ];
 
   // Compute member counts
@@ -733,11 +733,10 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
                 transition={{ duration: 0.4 }}
               >
                 <SectionHeader title={sec.title} color={sec.color} id={sec.id} icon={sec.icon} />
-                <div className={`grid gap-6 sm:gap-8 xl:gap-10 place-items-center mb-20 ${
-                  sec.id === 'alumni'
+                <div className={`grid gap-6 sm:gap-8 xl:gap-10 place-items-center mb-20 ${sec.id === 'alumni'
                     ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-5xl mx-auto'
                     : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
-                }`}>
+                  }`}>
                   {members.map((m, i) => (
                     <MemberCard key={m.name} m={m} idx={i} />
                   ))}

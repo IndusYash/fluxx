@@ -1,0 +1,53 @@
+[
+  {
+    "_id": "LOCAL-1788801802623",
+    "name": "gvhdbn",
+    "rollNo": "8520",
+    "branch": "Information Technology (IT)",
+    "section": "A",
+    "year": "1st Year",
+    "email": "hfdbj@gmail.com",
+    "phone": "8520741096",
+    "gender": "Female",
+    "interests": [
+      "Full Stack Web Development"
+    ],
+    "experienceLevel": "Intermediate",
+    "registrationSource": "web-form",
+    "createdAt": "2026-09-07T17:23:22.623Z"
+  },
+  {
+    "_id": "LOCAL-1788801761513",
+    "name": "ABC",
+    "rollNo": "2025071101",
+    "branch": "Information Technology (IT)",
+    "section": "B",
+    "year": "2nd Year",
+    "email": "a@gmail.com",
+    "phone": "8766871891",
+    "gender": "Female",
+    "interests": [
+      "Full Stack Web Development"
+    ],
+    "experienceLevel": "Beginner",
+    "registrationSource": "web-form",
+    "createdAt": "2026-09-07T17:22:41.513Z"
+  },
+  {
+    "_id": "LOCAL-1788799051799",
+    "name": "Aaradhya Verma",
+    "rollNo": "2024011099",
+    "branch": "Computer Science & Engineering (CSE)",
+    "section": "A",
+    "year": "1st Year",
+    "email": "aaradhya@mmmut.ac.in",
+    "phone": "9876543210",
+    "gender": "Female",
+    "interests": [
+      "Artificial Intelligence & ML"
+    ],
+    "experienceLevel": "Beginner",
+    "registrationSource": "web-form",
+    "createdAt": "2026-09-07T16:37:31.799Z"
+  }
+]

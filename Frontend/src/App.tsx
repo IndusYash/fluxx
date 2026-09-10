@@ -19,6 +19,7 @@ import FDPDetailsPage from "@/components/sections/events/UpcomingEvents/fdp";
 import IdeathonPage from "@/pages/Ideathon/Ideathon";
 import GalleryPage from "@/pages/gallery/GalleryPage";
 import JudgePanel from "@/pages/judge/JudgePanel";
+import SheLeadsPage from "@/pages/sheLeads/SheLeadsPage";
 
 import { Toaster } from "@/components/ui/toaster";
 
@@ -76,6 +77,8 @@ export default function App() {
             <Route path="/gallery" element={<GalleryPage isMobile={isMobile} />} />
             <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
             <Route path="/ideathon" element={<IdeathonPage />} />
+            <Route path="/she-leads" element={<SheLeadsPage isMobile={isMobile} />} />
+            <Route path="/sheleads" element={<SheLeadsPage isMobile={isMobile} />} />
             <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />
           </Route>
         </Routes>
