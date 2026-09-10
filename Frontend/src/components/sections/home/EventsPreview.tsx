@@ -24,7 +24,7 @@ const upcomingEvents = [
   },
   {
     id: 3,
-    title: "She Leads - Tessy Thomas",
+    title: "She Leads – Dr. Tessy Thomas Annual Conclave",
     date: "12 - 13 September",
     type: "Event",
     participants: "250+",

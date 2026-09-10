@@ -66,7 +66,7 @@ export const printSheLeadsPass = () => {
       <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>She Leads - Tessy Thomas 2026 - Participant Pass</title>
+        <title>She Leads – Dr. Tessy Thomas Annual Conclave - Participant Pass</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@700&family=Space+Grotesk:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -246,12 +246,12 @@ export const SheLeadsPrintablePass: React.FC<SheLeadsPrintablePassProps> = ({ da
             style={{ fontFamily: "'Caveat', 'Dancing Script', cursive" }}
           >
             <span className="block text-sm sm:text-base font-bold">More</span>
-            <span className="block text-sm sm:text-base font-bold -mt-1">Women</span>
+            <span className="block text-sm sm:text-base font-bold -mt-1">Leaders</span>
             <span className="block text-sm sm:text-base font-bold -mt-1">Brighter</span>
             <span className="block text-sm sm:text-base font-bold -mt-1">Tomorrows</span>
           </div>
 
-          {/* Big Title: She Leads - Tessy Thomas */}
+          {/* Big Title: She Leads – Dr. Tessy Thomas Annual Conclave */}
           <div className="text-4xl sm:text-5xl font-black tracking-tight leading-none">
             <span className="text-white drop-shadow-[0_2px_12px_rgba(255,255,255,0.4)]">
               SHE{' '}
@@ -402,9 +402,9 @@ export const SheLeadsPrintablePass: React.FC<SheLeadsPrintablePassProps> = ({ da
                   Scan for Verification
                 </div>
 
-                {/* Female Category Verified Badge */}
+                {/* Category Verified Badge */}
                 <div className="mt-2 w-full py-1.5 px-2 rounded-xl bg-gradient-to-r from-[#ff4579] to-[#f43f5e] text-black font-black text-[10px] sm:text-[11px] leading-tight text-center shadow-md">
-                  Female Category<br />
+                  Participant<br />
                   Verified ✓
                 </div>
               </div>

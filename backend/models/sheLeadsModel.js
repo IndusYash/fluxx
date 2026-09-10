@@ -51,11 +51,8 @@ const sheLeadsSchema = new mongoose.Schema(
     gender: {
       type: String,
       required: [true, 'Gender is required'],
-      enum: {
-        values: ['Female', 'female'],
-        message: 'She Leads registration is exclusively open for female candidates',
-      },
-      default: 'Female',
+      trim: true,
+      default: 'Prefer not to say',
     },
     ticketNumber: {
       type: String,

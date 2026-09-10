@@ -6,7 +6,7 @@ export interface SheLeadsRegistrationPayload {
   year: string;
   email: string;
   phone: string;
-  gender: 'Female';
+  gender: string;
   interests?: string[];
   experienceLevel?: string;
   registrationSource?: 'web-form' | 'home-popup';
@@ -45,11 +45,6 @@ const OFFLINE_STORAGE_KEY = 'flux_sheleads_offline_registrations';
 export async function submitSheLeadsRegistration(
   payload: SheLeadsRegistrationPayload
 ): Promise<SheLeadsRegistrationResult> {
-  // 1. Strict client-side check
-  if (payload.gender !== 'Female') {
-    throw new Error('Registration for She Leads - Tessy Thomas is open exclusively to female students.');
-  }
-
   const apiBase = getApiBase();
   const endpoint = `${apiBase}/api/she-leads/register`;
 
@@ -96,7 +91,7 @@ export async function submitSheLeadsRegistration(
     }
 
     // If server is unreachable (offline/no network), gracefully cache locally so work is not lost
-    console.warn('Backend currently unreachable, saving She Leads - Tessy Thomas registration locally:', error);
+    console.warn('Backend currently unreachable, saving She Leads – Dr. Tessy Thomas Annual Conclave registration locally:', error);
 
     const fallbackResult: SheLeadsRegistrationResult = {
       success: true,

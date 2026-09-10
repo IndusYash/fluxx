@@ -79,7 +79,7 @@ const EventsPage: React.FC = () => {
     },
     {
       id: 6,
-      name: "She Leads - Tessy Thomas",
+      name: "She Leads – Dr. Tessy Thomas Annual Conclave",
       imageUrl: sheLeadsBanner,
       date: "12 - 13 September",
       icon: "WEEK ONE",

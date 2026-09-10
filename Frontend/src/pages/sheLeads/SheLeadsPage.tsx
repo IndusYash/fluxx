@@ -82,12 +82,12 @@ const TIMELINE = [
 
 const FAQS = [
   {
-    q: 'Who is eligible to register for She Leads - Tessy Thomas?',
-    a: 'She Leads - Tessy Thomas is exclusively open to all female students currently enrolled at MMMUT Gorakhpur across any academic branch and any year of study (B.Tech, MCA, M.Tech, etc.).',
+    q: 'Who is eligible to register for She Leads – Dr. Tessy Thomas Annual Conclave?',
+    a: 'She Leads – Dr. Tessy Thomas Annual Conclave is open to all students currently enrolled at MMMUT Gorakhpur across any academic branch and any year of study (B.Tech, MCA, M.Tech, etc.).',
   },
   {
     q: 'Is there any registration fee?',
-    a: 'No! Registration and entry for She Leads - Tessy Thomas are 100% free of cost, proudly organized by FLUX to foster gender diversity and women leadership in computing.',
+    a: 'No! Registration and entry for She Leads – Dr. Tessy Thomas Annual Conclave are 100% free of cost, proudly organized by FLUX to foster diversity and leadership in computing.',
   },
   {
     q: 'Do I need prior programming experience to participate?',
@@ -116,7 +116,7 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
   const [phone, setPhone] = useState('');
   const [selectedInterests, setSelectedInterests] = useState<string[]>([DOMAIN_OPTIONS[0]]);
   const [experienceLevel, setExperienceLevel] = useState('Beginner');
-  const [isFemaleConfirmed, setIsFemaleConfirmed] = useState(true);
+  const [isParticipationConfirmed, setIsParticipationConfirmed] = useState(true);
 
   // Submission states
   const [loading, setLoading] = useState(false);
@@ -170,8 +170,8 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
       setErrorMessage('Please enter a valid 10-digit mobile number.');
       return false;
     }
-    if (!isFemaleConfirmed) {
-      setErrorMessage('Registration is exclusively restricted to female candidates.');
+    if (!isParticipationConfirmed) {
+      setErrorMessage('Please confirm your participation eligibility.');
       return false;
     }
     setErrorMessage('');
@@ -194,7 +194,7 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
         year,
         email: email.trim().toLowerCase(),
         phone: phone.trim().replace(/[^0-9]/g, ''),
-        gender: 'Female',
+        gender: 'Not Specified',
         interests: selectedInterests,
         experienceLevel,
         registrationSource: 'web-form',
@@ -251,7 +251,7 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-60" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-400" />
             </span>
-            <span className="tracking-wide">WOMEN IN TECH & LEADERSHIP SUMMIT • FLUX MMMUT</span>
+            <span className="tracking-wide">TECHNOLOGY & LEADERSHIP SUMMIT • FLUX MMMUT</span>
           </motion.div>
 
           {/* Main Title */}
@@ -262,7 +262,7 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
             className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight mb-6"
           >
             <span className="bg-gradient-to-r from-white via-rose-100 to-gray-300 bg-clip-text text-transparent">
-              She Leads - Tessy Thomas
+              She Leads – Dr. Tessy Thomas Annual Conclave
             </span>
             <span className="block text-2xl sm:text-3xl lg:text-4xl font-extrabold mt-3 bg-gradient-to-r from-zinc-100 via-rose-200 to-zinc-400 bg-clip-text text-transparent">
               Innovate • Inspire • Empower
@@ -276,7 +276,7 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-gray-300 text-base sm:text-xl max-w-3xl mx-auto font-light leading-relaxed mb-10"
           >
-            A dedicated summit by <span className="text-white font-semibold">FLUX</span> created to celebrate, mentor, and accelerate female tech innovators, programmers, designers, and future leaders at MMMUT Gorakhpur.
+            A dedicated summit by <span className="text-white font-semibold">FLUX</span> created to celebrate, mentor, and accelerate tech innovators, programmers, designers, and future leaders at MMMUT Gorakhpur.
           </motion.p>
 
           {/* Key Facts Pill Grid */}
@@ -291,7 +291,7 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
                 <Heart className="w-4 h-4 fill-current text-rose-400" />
                 <span className="text-xs font-semibold uppercase tracking-wider">Eligibility</span>
               </div>
-              <div className="text-sm sm:text-base font-bold text-white">Female Students Only</div>
+              <div className="text-sm sm:text-base font-bold text-white">All Students</div>
               <div className="text-[11px] text-gray-400">MMMUT (All Branches)</div>
             </div>
 
@@ -335,7 +335,7 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
               className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white hover:bg-zinc-100 text-black font-semibold text-base shadow-xl shadow-black/40 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-3 border border-rose-200/40"
             >
               <Sparkles className="w-5 h-5 text-rose-500" />
-              <span>Register For She Leads - Tessy Thomas</span>
+              <span>Register For She Leads – Dr. Tessy Thomas Annual Conclave</span>
               <ArrowRight className="w-5 h-5 text-rose-500" />
             </button>
 
@@ -359,7 +359,7 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
           >
             <img
               src={bannerImg}
-              alt="She Leads - Tessy Thomas Summit Visual"
+              alt="She Leads – Dr. Tessy Thomas Annual Conclave Summit Visual"
               className="w-full h-auto block group-hover:scale-[1.01] transition-transform duration-700"
             />
             <div className="absolute inset-x-0 bottom-0 pt-16 pb-6 px-6 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 pointer-events-none">
@@ -373,7 +373,7 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
               </div>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-black/60 backdrop-blur-md border border-white/15 text-xs text-rose-300 font-medium pointer-events-auto">
                 <Heart className="w-4 h-4 fill-current text-rose-400" />
-                <span>Exclusively for Female Engineers & Innovators</span>
+                <span>Open To All Engineers & Innovators</span>
               </div>
             </div>
           </motion.div>
@@ -386,7 +386,7 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
               WHAT TO EXPECT
             </span>
             <h2 className="text-3xl sm:text-5xl font-extrabold text-white mt-2">
-              Four Pillars of She Leads - Tessy Thomas
+              Four Pillars of She Leads – Dr. Tessy Thomas Annual Conclave
             </h2>
             <div className="w-16 h-0.5 bg-gradient-to-r from-rose-500 to-purple-500 mx-auto mt-4 rounded-full" />
           </div>
@@ -457,13 +457,13 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
           <div className="text-center mb-12 no-print">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-500/10 text-rose-300 border border-rose-500/25 text-xs font-semibold mb-3">
               <Heart className="w-3.5 h-3.5 fill-current text-rose-400" />
-              RESTRICTED ENTRY • FEMALE STUDENTS ONLY
+              OPEN ENTRY • ALL STUDENTS WELCOME
             </div>
             <h2 className="text-4xl sm:text-5xl font-black text-white">
               Claim Your Free Pass
             </h2>
             <p className="text-gray-300 text-sm sm:text-base mt-2 max-w-md mx-auto font-light">
-              Fill in your university credentials to confirm your registration for She Leads - Tessy Thomas 2026.
+              Fill in your university credentials to confirm your registration for She Leads – Dr. Tessy Thomas Annual Conclave.
             </p>
           </div>
 
@@ -484,11 +484,11 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
                 <div className="no-print">
                   <h3 className="text-3xl font-black text-white">You're Registered!</h3>
                   <p className="text-gray-300 text-sm mt-1 max-w-md mx-auto">
-                    We look forward to seeing you at She Leads - Tessy Thomas! Your registration pass has been generated.
+                    We look forward to seeing you at She Leads – Dr. Tessy Thomas Annual Conclave! Your registration pass has been generated.
                   </p>
                 </div>
 
-                {/* Official She Leads - Tessy Thomas Printable Pass */}
+                {/* Official She Leads – Dr. Tessy Thomas Annual Conclave Printable Pass */}
                 <div className="py-2 flex justify-center">
                   <SheLeadsPrintablePass
                     data={{
@@ -782,22 +782,22 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
                     </div>
                   </div>
 
-                  {/* Section 4: Strict Female Eligibility Declaration */}
+                  {/* Section 4: Participant Eligibility Declaration */}
                   <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-rose-500/20">
                     <label className="flex items-start gap-3 cursor-pointer">
                       <input
                         type="checkbox"
-                        checked={isFemaleConfirmed}
-                        onChange={(e) => setIsFemaleConfirmed(e.target.checked)}
+                        checked={isParticipationConfirmed}
+                        onChange={(e) => setIsParticipationConfirmed(e.target.checked)}
                         className="mt-1 w-4 h-4 rounded text-rose-500 focus:ring-rose-400/20 border-white/20 bg-white/10 cursor-pointer"
                       />
                       <div className="text-xs">
                         <span className="font-bold text-zinc-200 flex items-center gap-1.5 text-sm">
                           <ShieldCheck className="w-4 h-4 text-rose-400" />
-                          Female Participant Eligibility Verification (Mandatory)
+                          Participant Eligibility Verification (Mandatory)
                         </span>
                         <p className="text-gray-300 text-xs mt-1 leading-relaxed">
-                          I hereby declare that I am a female student of MMMUT Gorakhpur. I acknowledge that She Leads - Tessy Thomas is an affirmative initiative exclusively intended for women in STEM to promote female representation and leadership in computing.
+                          I hereby declare that I am a student of MMMUT Gorakhpur. I acknowledge that She Leads – Dr. Tessy Thomas Annual Conclave is an affirmative initiative to promote representation and leadership in computing, open to all students.
                         </p>
                       </div>
                     </label>
@@ -807,8 +807,8 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
                   <div className="pt-2">
                     <button
                       type="submit"
-                      disabled={loading || !isFemaleConfirmed}
-                      className={`w-full py-4 rounded-2xl font-bold text-base flex items-center justify-center gap-3 shadow-xl transition-all duration-300 ${loading || !isFemaleConfirmed
+                      disabled={loading || !isParticipationConfirmed}
+                      className={`w-full py-4 rounded-2xl font-bold text-base flex items-center justify-center gap-3 shadow-xl transition-all duration-300 ${loading || !isParticipationConfirmed
                         ? 'bg-gray-800 text-gray-500 cursor-not-allowed border border-white/5'
                         : 'bg-white hover:bg-zinc-100 text-black shadow-lg shadow-black/40 hover:scale-[1.01] border border-rose-200/40'
                         }`}

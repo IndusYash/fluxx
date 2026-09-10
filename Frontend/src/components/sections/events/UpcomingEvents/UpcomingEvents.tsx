@@ -57,7 +57,7 @@ const events: EventProps[] = [
   },
   {
     id: 3,
-    title: 'She Leads - Tessy Thomas',
+    title: 'She Leads – Dr. Tessy Thomas Annual Conclave',
     date: '12 - 13 September',
     description:
       "An empowering leadership and tech summit exclusively designed to inspire and connect women in technology. Join us for insightful talks, hands-on workshops, mentorship, and networking.",
@@ -284,7 +284,7 @@ const EventCard: React.FC<{ event: EventProps; index: number; showRegister?: boo
                   onClick={() => navigate('/she-leads')}
                   className="inline-flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-zinc-100 text-black rounded-full font-semibold shadow-md border border-rose-200/40 hover:scale-105 active:scale-95 transition-all duration-200 mt-1 w-fit"
                 >
-                  <span>Register for She Leads - Tessy Thomas</span>
+                  <span>Register for She Leads – Dr. Tessy Thomas Annual Conclave</span>
                   <ArrowRight className="w-4 h-4 text-rose-500" />
                 </button>
               )}
