@@ -16,7 +16,10 @@ import ideathonTeam from "./routes/ideathonTeam.js";
 import uploadRoutes from './routes/uploadRoutes.js';
 import applications from './routes/applications.js';
 import judgeAuthRoutes from './routes/judgeAuth.js';
+<<<<<<< HEAD
 import sheLeadsRoutes from './routes/sheLeadsRoutes.js';
+=======
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
 
 const app = express();
 
@@ -27,9 +30,12 @@ app.use(express.json());
 const defaultAllowedOrigins = [
   "https://flux.org.in",
   "https://www.flux.org.in",
+<<<<<<< HEAD
   "http://localhost:5173",
   "http://localhost:3000",
   "http://127.0.0.1:5173",
+=======
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
 ];
 
 const normalizeOrigin = (value = "") => value.trim().replace(/\/$/, "");
@@ -62,7 +68,10 @@ app.use("/api/ideathonTeam",ideathonTeam);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/applications", applications);
 app.use("/api/judge-auth", judgeAuthRoutes);
+<<<<<<< HEAD
 app.use("/api/she-leads", sheLeadsRoutes);
+=======
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
 
 // simple health check endpoint used by many platforms (GET /healthz)
 app.get('/healthz', (req, res) => {
@@ -73,6 +82,7 @@ app.get('/ping', (req, res) => {
 });
 const start = async () => {
   try {
+<<<<<<< HEAD
     if (process.env.MONGO_URI) {
       await mongoose.connect(process.env.MONGO_URI);
       console.log("✅ CONNECTED TO DB");
@@ -97,4 +107,28 @@ const start = async () => {
   });
 };
 
+=======
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("✅ CONNECTED TO DB");
+
+    const port = process.env.PORT || 4000;
+
+    app.listen(port, () => {
+      console.log(`🚀 Server running on port ${port}`);
+
+      // Self ping every 10 min (Render free tier sleep fix)
+      setInterval(() => {
+        fetch("https://flux-backend-1hmq.onrender.com/ping")
+          .then(() => console.log("🔁 Pinged self!"))
+          .catch(() => console.log("❌ Self ping failed."));
+      }, 1000 * 60 * 10);
+    });
+
+  } catch (error) {
+    console.error("❌ DB Connection Failed:", error);
+  }
+};
+
+
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
 start();

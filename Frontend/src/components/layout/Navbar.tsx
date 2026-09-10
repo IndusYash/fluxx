@@ -16,7 +16,10 @@ const Navbar: React.FC = () => {
     { name: "Events", path: "/events" },
     { name: "Gallery", path: "/gallery" },
     { name: "Ideathon", path: "/ideathon" },
+<<<<<<< HEAD
     { name: "She Leads", path: "/she-leads", isSpecial: true },
+=======
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
     { name: "Contact", path: "/contact" },
   ];
 
@@ -45,15 +48,26 @@ const Navbar: React.FC = () => {
               onClick={() => setIsOpen(false)}
               className="flex items-center gap-3 flex-none relative group z-10"
             >
+<<<<<<< HEAD
               <motion.div
                 className="relative bg-black/70 backdrop-blur-md rounded-lg overflow-hidden flex items-center justify-center"
                 style={{
                   width: "44px",
+=======
+              <motion.div 
+                className="relative bg-black/70 backdrop-blur-md rounded-lg overflow-hidden flex items-center justify-center"
+                style={{ 
+                  width: "44px", 
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
                   height: "44px",
                 }}
                 whileHover={{ scale: 1.05 }}
               >
+<<<<<<< HEAD
                 <img
+=======
+                <img 
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
                   src={logo}
                   alt="FLUX Logo"
                   className="w-full h-full object-contain p-1"
@@ -67,9 +81,15 @@ const Navbar: React.FC = () => {
             </Link>
 
             {/* Navigation - Right Side */}
+<<<<<<< HEAD
             <div
               className="hidden md:flex items-center gap-8"
               style={{
+=======
+            <div 
+              className="hidden md:flex items-center gap-8"
+              style={{ 
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
                 background: "transparent",
               }}
             >
@@ -85,20 +105,32 @@ const Navbar: React.FC = () => {
                   >
                     <Link
                       to={link.path}
+<<<<<<< HEAD
                       className={`relative z-10 inline-flex items-center gap-1.5 px-1 py-2 border-b transition-all duration-300 text-sm font-semibold tracking-wider uppercase ${isActive
                           ? (link.isSpecial ? "text-rose-300 border-rose-400" : "text-white border-white")
                           : (link.isSpecial ? "text-rose-200/80 hover:text-white border-transparent hover:border-rose-400/50" : "text-white border-transparent hover:border-white/60")
                         }`}
+=======
+                      className={`relative z-10 inline-block px-1 py-2 border-b transition-all duration-300 text-sm font-semibold tracking-wider uppercase ${
+                        isActive
+                          ? "text-white border-white"
+                          : "text-white border-transparent hover:border-white/60"
+                      }`}
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
                       style={{
                         borderBottomWidth: "0.5px",
                       }}
                     >
+<<<<<<< HEAD
                       <span>{link.name}</span>
                       {link.isSpecial && (
                         <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-rose-500/15 border border-rose-500/30 text-rose-300 font-semibold leading-none tracking-normal">
                           SPECIAL
                         </span>
                       )}
+=======
+                      {link.name}
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
                     </Link>
                   </motion.div>
                 );
@@ -146,10 +178,18 @@ const Navbar: React.FC = () => {
                     <Link
                       to={link.path}
                       onClick={() => setIsOpen(false)}
+<<<<<<< HEAD
                       className={`text-base font-bold tracking-wider uppercase px-1 py-3 border-b transition-all duration-300 ${isActive
                           ? "text-white border-white"
                           : "text-white border-transparent hover:border-white/60"
                         }`}
+=======
+                      className={`text-base font-bold tracking-wider uppercase px-1 py-3 border-b transition-all duration-300 ${
+                        isActive
+                          ? "text-white border-white"
+                          : "text-white border-transparent hover:border-white/60"
+                      }`}
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
                       style={{ borderBottomWidth: "0.5px" }}
                     >
                       {link.name}

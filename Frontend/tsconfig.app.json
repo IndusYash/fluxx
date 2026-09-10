@@ -8,6 +8,10 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+<<<<<<< HEAD
+=======
+    "forceConsistentCasingInFileNames": true,
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
 
     /* Bundler mode */
     "moduleResolution": "node",

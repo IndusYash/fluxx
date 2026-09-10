@@ -1,6 +1,12 @@
 import React from "react";
 import FacultyCard from "./FacultyCard";
+<<<<<<< HEAD
 import { underGuidance, facultyCoordinators } from "./facultyData";
+=======
+import StatsCounter from "./StatsCounter";
+import { underGuidance, facultyCoordinators } from "./facultyData";
+import { BookOpen, Award, Users, Trophy } from "lucide-react";
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
 
 const FacultyPage: React.FC = () => {
   return (
@@ -23,6 +29,35 @@ const FacultyPage: React.FC = () => {
         <p className="text-gray-400 text-lg sm:text-xl max-w-2xl font-light mb-10">
           "Leading with excellence, inspiring with vision, and shaping the future of tech at MMMUT."
         </p>
+<<<<<<< HEAD
+=======
+
+        {/* ── Quick Stats Badges ──────────────────────────────────────────── */}
+        <div className="flex flex-wrap justify-center gap-4">
+          {[
+            { icon: <BookOpen size={20} />, value: "150+", label: "Publications" },
+            { icon: <Award size={20} />, value: "25+", label: "Patents" },
+            { icon: <Users size={20} />, value: "10+", label: "Mentors" },
+            { icon: <Trophy size={20} />, value: "8+", label: "Awards" },
+          ].map((badge) => (
+            <div
+              key={badge.label}
+              className="flex items-center gap-3 px-5 py-3 rounded-2xl border border-white/15 bg-white/[0.03] backdrop-blur-sm"
+            >
+              <span className="text-white/50">{badge.icon}</span>
+              <div className="flex flex-col">
+                <span className="text-white font-bold text-base leading-tight">{badge.value}</span>
+                <span className="text-white/40 text-[10px] uppercase tracking-widest font-semibold">{badge.label}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Stats Section ─────────────────────────────────────────────────── */}
+      <section className="relative z-10 px-4 md:px-8 max-w-7xl mx-auto">
+        <StatsCounter />
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
       </section>
 
       {/* ── Under Guidance Section ─────────────────────────────────────────── */}

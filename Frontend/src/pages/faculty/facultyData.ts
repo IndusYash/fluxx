@@ -140,6 +140,10 @@ export const facultyData: FacultyMember[] = [
   //   review: "12",
   //   booksPublished: "8+",
   // },
+<<<<<<< HEAD
+=======
+
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
   // ⭐ Dr. Satvik Vats
   {
     id: 4,
@@ -188,6 +192,10 @@ export const facultyData: FacultyMember[] = [
     review: "10"
   },
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
   // // ⭐ Dr. Shantanu Shahi
   // {
   //   id: 6,

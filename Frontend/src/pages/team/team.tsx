@@ -17,6 +17,7 @@ import priyaBbaImage from "../../assets/images/Priya Singh.jpg";
 
 // Administration
 import shivammishraImage from "../../assets/images/Shivam_Mishra.jpeg";
+<<<<<<< HEAD
 import ysvImage from "../../assets/images/ysv.webp";
 import Aviral from "../../assets/images/Aviral.webp";
 import threeMImage from "../../assets/images/3m.webp";
@@ -35,10 +36,31 @@ import rishiImage from "../../assets/images/Rishi.jpeg";
 // Design
 import Ananya from "../../assets/images/Ananya.webp";
 import Tamanna from "../../assets/images/Tamanna.webp";
+=======
+import ysvImage         from "../../assets/images/ysv.webp";
+import Aviral           from "../../assets/images/Aviral.webp";
+import threeMImage      from "../../assets/images/3m.webp";
+import Shubham          from "../../assets/images/Shubham.webp";
+import jaiKumarImage    from "../../assets/images/JaiKumar.webp";
+import priyaSinghImage  from "../../assets/images/Priya.jpeg";
+import princeSahuImage  from "../../assets/images/Prince.jpeg";
+import sudeekshaImage   from "../../assets/images/Sudeeksha.jpeg";
+
+// Development
+import aryanImage    from "../../assets/images/Aryan.webp";
+import Prad          from "../../assets/images/Pradyuman.webp";
+import atulKumarImage from "../../assets/images/Atul.jpeg";
+import rishiImage    from "../../assets/images/Rishi.jpeg";
+
+// Design
+import Ananya             from "../../assets/images/Ananya.webp";
+import Tamanna            from "../../assets/images/Tamanna.webp";
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
 import abhigyanVardhanImage from "../../assets/images/AbhigyanVardhan.webp";
 import stutiTripathiImage from "../../assets/images/StutiTripathi .webp";
 
 // Photography & Video
+<<<<<<< HEAD
 import Aman from "../../assets/images/Aman Rawat.webp";
 import surajKumarImage from "../../assets/images/SurajKumar .webp";
 
@@ -63,6 +85,32 @@ import auchityaKumarImage from "../../assets/images/AuchityaKumar.webp";
 import divejSinghImage from "../../assets/images/DivejSingh.webp";
 import harshVermaImage from "../../assets/images/HarshVerma.webp";
 import nikhilJaiswalImage from "../../assets/images/NikhilJaiswal .webp";
+=======
+import Aman           from "../../assets/images/Aman Rawat.webp";
+import surajKumarImage from "../../assets/images/SurajKumar .webp";
+
+// Algorithms
+import ashishImage       from "../../assets/images/ashish.webp";
+import shivamsinghImage  from "../../assets/images/shivamsingh.webp";
+import devanshKumarImage from "../../assets/images/Devansh.jpeg";
+import prakharShuklaImage from "../../assets/images/PrakharShukla.webp";
+import rohanJaiswalImage  from "../../assets/images/RohanJaiswal .webp";
+import sameerChauhanImage from "../../assets/images/SameerSingh.webp";
+
+// AI & ML
+import RiyaImage            from "../../assets/images/Riya Verma.webp";
+import vmishraImage         from "../../assets/images/Vish.webp";
+import anushkaChaudharyImage from "../../assets/images/AnushkaChaudhary .webp";
+import ayushSharmaImage     from "../../assets/images/AyushSharma.webp";
+
+// Content & Social Media
+import Anushka            from "../../assets/images/Anuphoto - Anushka Singh.webp";
+import anshikaTripathiImage from "../../assets/images/AnshikaTripathi  .webp";
+import auchityaKumarImage  from "../../assets/images/AuchityaKumar.webp";
+import divejSinghImage     from "../../assets/images/DivejSingh.webp";
+import harshVermaImage     from "../../assets/images/HarshVerma.webp";
+import nikhilJaiswalImage  from "../../assets/images/NikhilJaiswal .webp";
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
 
 // Freshmen
 import sundaramDubeyImage from "../../assets/images/Sundaram Dubey.webp";
@@ -83,6 +131,14 @@ import sakshiRanaImage from "../../assets/images/Sakshi rana.webp";
 import adityaYadavImage from "../../assets/images/Aditya yadav.webp";
 import rishirajImage from "../../assets/images/rishiraj.webp";
 import ritishaImage from "../../assets/images/ritisha.webp";
+<<<<<<< HEAD
+=======
+import utkarshImage from "../../assets/images/Utkarsh.png";
+import shrutiTripathiImage from "../../assets/images/struti.jpeg";
+import adityaShuklaImage from "../../assets/images/AdityaShukla.jpeg";
+import aditiVermaImage from "../faculty/Aditi.jpeg";
+import mahakSinghImage from "../../assets/images/Mahak.jpeg";
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 interface Member {
@@ -99,6 +155,7 @@ interface Member {
 
 // ─── Accent Colors ─────────────────────────────────────────────────────────────
 const C = {
+<<<<<<< HEAD
   admin: '#E5E5E5',
   domain: '#E5E5E5',
   dev: '#E5E5E5',
@@ -109,6 +166,18 @@ const C = {
   content: '#E5E5E5',
   alumni: '#E5E5E5',
   exec: '#E5E5E5',
+=======
+  admin:   '#E5E5E5',
+  domain:  '#E5E5E5',
+  dev:     '#E5E5E5',
+  design:  '#E5E5E5',
+  photo:   '#E5E5E5',
+  algo:    '#E5E5E5',
+  aiml:    '#E5E5E5',
+  content: '#E5E5E5',
+  alumni:  '#E5E5E5',
+  exec:    '#E5E5E5',
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
 };
 
 // ─── Animated Counter Hook ─────────────────────────────────────────────────────
@@ -340,7 +409,12 @@ const MemberCard: React.FC<{ m: Member; idx: number }> = ({ m, idx }) => {
         <img
           src={src}
           alt={m.name}
+<<<<<<< HEAD
           className={`absolute inset-0 w-full h-full object-cover ${m.imagePosition ?? 'object-center'} transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-110`}
+=======
+          className={`absolute inset-0 w-full h-full object-cover ${m.imagePosition ?? 'object-center'} transition-transform duration-700 group-hover:scale-110`}
+          style={{ transitionTimingFunction: "cubic-bezier(0.25, 0.46, 0.45, 0.94)" }}
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
           onError={() => setErr(true)}
         />
 
@@ -509,24 +583,44 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
     // ── Batch 2029 (Sophomore Year) ──
     { name: 'Aashish Kumar', role: 'Executive Member', branch: 'CSE', batch: "'29", email: '2025021301@mmmut.ac.in', linkedin: 'https://www.linkedin.com/in/theaashishkumar/', image: aashishKumarImage, color: C.exec },
     { name: 'Aditya Gupta', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'guptaaditya002006@gmail.com', linkedin: 'https://www.linkedin.com/in/aditya-gupta-a734ba377/', image: adityaGuptaImage, color: C.exec },
+<<<<<<< HEAD
+=======
+    { name: 'Aditya Shukla', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'aadityashukla2412@gmail.com', linkedin: 'https://www.linkedin.com/in/aditya-shukla-2412-sam', image: adityaShuklaImage, color: C.exec },
+    { name: 'Aditi Verma', role: 'Executive Member', branch: 'IT', batch: "'29", email: 'aditiverma9945@gmail.com', linkedin: 'https://www.linkedin.com/in/aditi-verma-a5a541328', image: aditiVermaImage, color: C.exec },
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
     { name: 'Anuradha Srivastava', role: 'Executive Member', branch: 'IT', batch: "'29", email: 'srivastavaanu7922@gmail.com', linkedin: 'https://www.linkedin.com/in/anuradha-srivastava-514465378', image: anuradhaSrivastavaImage, color: C.exec },
     { name: 'Arpita Mishra', role: 'Executive Member', branch: 'ME', batch: "'29", email: 'vaibhavarpita987@gmail.com', linkedin: 'https://www.linkedin.com/in/arpita-mishra-3051a8378', image: arpitaMishraImage, color: C.exec },
     { name: 'Deepak Shivhare', role: 'Executive Member', branch: 'IT', batch: "'29", email: 'dk23107575@gmail.com', linkedin: 'https://www.linkedin.com/in/deepak-shivhare-443333381', image: deepakShivhareImage, color: C.exec },
     { name: 'Himanshu Maurya', role: 'Executive Member', branch: 'IT', batch: "'29", email: 'hm3997353@gmail.com', linkedin: 'https://linkedin.com/in/himanshumaurya29', image: himanshuMauryaImage, color: C.exec },
     { name: 'Khushi Patel', role: 'Executive Member', branch: 'IT', batch: "'29", email: 'khushiipatel657@gmail.com', linkedin: 'https://www.linkedin.com/in/khushi-patel-160462378', image: khushiPatelImage, color: C.exec },
+<<<<<<< HEAD
+=======
+    { name: 'Mahak Singh', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'mahaksinghofficial@gmail.com', linkedin: 'https://www.linkedin.com/in/mahak-singh-814858327', image: mahakSinghImage, color: C.exec },
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
     { name: 'Piyush Kumar', role: 'Executive Member', branch: 'ECE', batch: "'29", email: 'pk1747968@gmail.com', linkedin: 'https://www.linkedin.com/in/piyush-kumar-b46306391', image: piyushKumarImage, color: C.exec },
     { name: 'Pradumna Manu', role: 'Executive Member', branch: 'BBA', batch: "'29", email: 'pradumanmanu@gmail.com', linkedin: 'https://www.linkedin.com/in/pradumna-manu-8595643b6', image: pradumnaManuImage, color: C.exec },
     { name: 'Rishiraj Kasaudhan', role: 'Executive Member', branch: 'BBA', batch: "'29", email: 'rishirajkasaudhan5705@gmail.com', linkedin: 'https://www.linkedin.com/in/rishi-raj-kasaudhan-6615343a8', image: rishirajImage, imagePosition: "object-top", color: C.exec },
     { name: 'Ritisha Raghuvanshi', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'ritisharaghuvanshi95@gmail.com', linkedin: 'https://www.linkedin.com/in/ritisha-raghuvanshi-3612a3379', image: ritishaImage, color: C.exec },
     { name: 'Sakshi Rana', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'sakshi9696rana@gmail.com', linkedin: 'https://www.linkedin.com/in/sakshi-rana-94554a377', image: sakshiRanaImage, color: C.exec },
     { name: 'Saumyjeet Kumar', role: 'Executive Member', branch: 'CSE', batch: "'29", email: '2025021256@mmmut.ac.in', linkedin: 'https://www.linkedin.com/in/saumyjeet-kumar-pandey-602a51362/', image: saumyjeetKumarImage, color: C.exec },
+<<<<<<< HEAD
     { name: 'Sundaram Dubey', role: 'Executive Member', branch: 'IT', batch: "'29", email: '2025071161@mmmut.ac.in', linkedin: 'https://www.linkedin.com/in/sundaram-dubey-a563a3378', image: sundaramDubeyImage, color: C.exec },
+=======
+    { name: 'Shruti Tripathi', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'shrutitripathi369@gmail.com', linkedin: 'https://www.linkedin.com/in/shruti-tripathi-20342132b', image: shrutiTripathiImage, color: C.exec },
+    { name: 'Sundaram Dubey', role: 'Executive Member', branch: 'IT', batch: "'29", email: '2025071161@mmmut.ac.in', linkedin: 'https://www.linkedin.com/in/sundaram-dubey-a563a3378', image: sundaramDubeyImage, color: C.exec },
+    { name: 'Utkarsh Shrivastava', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'rajatshrivastava036@gmail.com', linkedin: 'https://www.linkedin.com/in/utkarsh-shrivastava-a767b8435', image: utkarshImage, color: C.exec },
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
     { name: 'Vinit Kumar', role: 'Executive Member', branch: 'IT', batch: "'29", email: '2025071166@mmmut.ac.in', linkedin: 'https://www.linkedin.com/in/vinitkumar491/', image: vinitKumarImage, color: C.exec },
   ];
 
   const facultyMembers: Member[] = [
+<<<<<<< HEAD
     { name: 'Dr. Shwet Ketu', role: 'Faculty Co-ordinator', branch: '', batch: '', email: '', linkedin: '', image: shwetSirImage, color: '#E5E5E5' },
     { name: 'Dr. Satvik Vats', role: 'Faculty Co-ordinator', branch: '', batch: '', email: '', linkedin: '', image: satvikSirImage, color: '#E5E5E5' },
+=======
+      { name: 'Dr. Shwet Ketu', role: 'Faculty Co-ordinator', branch: '', batch: '', email: '', linkedin: '', image: shwetSirImage, color: '#E5E5E5' },
+      { name: 'Dr. Satvik Vats', role: 'Faculty Co-ordinator', branch: '', batch: '', email: '', linkedin: '', image: satvikSirImage, color: '#E5E5E5' },
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
   ];
 
   // Compute member counts
@@ -733,10 +827,18 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
                 transition={{ duration: 0.4 }}
               >
                 <SectionHeader title={sec.title} color={sec.color} id={sec.id} icon={sec.icon} />
+<<<<<<< HEAD
                 <div className={`grid gap-6 sm:gap-8 xl:gap-10 place-items-center mb-20 ${sec.id === 'alumni'
                     ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-5xl mx-auto'
                     : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
                   }`}>
+=======
+                <div className={`grid gap-6 sm:gap-8 xl:gap-10 place-items-center mb-20 ${
+                  sec.id === 'alumni'
+                    ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-5xl mx-auto'
+                    : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+                }`}>
+>>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
                   {members.map((m, i) => (
                     <MemberCard key={m.name} m={m} idx={i} />
                   ))}
