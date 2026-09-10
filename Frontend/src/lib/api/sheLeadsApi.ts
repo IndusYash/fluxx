@@ -7,6 +7,7 @@ export interface SheLeadsRegistrationPayload {
   email: string;
   phone: string;
   gender: string;
+  slot?: string;
   interests?: string[];
   experienceLevel?: string;
   registrationSource?: 'web-form' | 'home-popup';
@@ -26,6 +27,7 @@ export interface SheLeadsRegistrationResult {
     year: string;
     email: string;
     phone: string;
+    slot?: string;
     createdAt?: string;
   };
 }
@@ -78,6 +80,7 @@ export async function submitSheLeadsRegistration(
         year: payload.year,
         email: payload.email,
         phone: payload.phone,
+        slot: payload.slot || 'Slot 1 (02:00 PM – 03:00 PM)',
         createdAt: new Date().toISOString(),
       },
     };
@@ -107,6 +110,7 @@ export async function submitSheLeadsRegistration(
         year: payload.year,
         email: payload.email,
         phone: payload.phone,
+        slot: payload.slot || 'Slot 1 (02:00 PM – 03:00 PM)',
         createdAt: new Date().toISOString(),
       },
     };

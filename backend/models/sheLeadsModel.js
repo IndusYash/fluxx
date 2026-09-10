@@ -58,6 +58,11 @@ const sheLeadsSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    slot: {
+      type: String,
+      trim: true,
+      default: 'Slot 1 (02:00 PM – 03:00 PM)',
+    },
     interests: {
       type: [String],
       default: [],

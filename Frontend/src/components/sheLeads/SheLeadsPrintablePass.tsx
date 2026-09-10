@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Users, Lightbulb } from 'lucide-react';
+import { Calendar, Users, Lightbulb, Clock } from 'lucide-react';
 import buildingImg from '@/assets/images/mmmut_building_pass.jpg';
 import fluxLogoSilver from '@/assets/images/flux-logo-silver.jpg';
 
@@ -12,6 +12,7 @@ export interface SheLeadsPassData {
   ticketNumber: string;
   venue?: string;
   date?: string;
+  slot?: string;
 }
 
 interface SheLeadsPrintablePassProps {
@@ -154,10 +155,11 @@ export const SheLeadsPrintablePass: React.FC<SheLeadsPrintablePassProps> = ({ da
     ticketNumber = 'SHE-1116',
     venue = 'Online',
     date = '12 & 13 September',
+    slot = '2:00 PM & 3:00 PM (Both Days)',
   } = data;
 
   // QR Code payload containing Name, Roll No, Branch, Sec, Year, and Pass Code
-  const qrData = `Name: ${name}\nRoll No: ${rollNo}\nBranch: ${branch}\nSec: ${section}\nYear: ${year}\nCode: ${ticketNumber}`;
+  const qrData = `Name: ${name}\nRoll No: ${rollNo}\nBranch: ${branch}\nSec: ${section}\nYear: ${year}\nDate: ${date}\nSlots: 2:00 PM & 3:00 PM\nCode: ${ticketNumber}`;
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(
     qrData
   )}&color=000000&bgcolor=ffffff&qzone=1&margin=0`;
@@ -355,23 +357,35 @@ export const SheLeadsPrintablePass: React.FC<SheLeadsPrintablePassProps> = ({ da
 
                 <div className="h-px bg-white/10 w-full" />
 
-                {/* Venue & Date */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
-                  <div>
-                    <div className="text-[8px] font-bold uppercase tracking-wider text-gray-400">
-                      VENUE
+                {/* Venue, Date & Slot */}
+                <div className="space-y-1.5 text-[11px]">
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <div className="text-[8px] font-bold uppercase tracking-wider text-gray-400">
+                        VENUE
+                      </div>
+                      <div className="text-[11px] font-semibold text-white mt-0.5 truncate">
+                        {venue}
+                      </div>
                     </div>
-                    <div className="text-[11px] font-semibold text-white mt-0.5 truncate">
-                      {venue}
+                    <div>
+                      <div className="text-[8px] font-bold uppercase tracking-wider text-gray-400">
+                        DATE
+                      </div>
+                      <div className="text-[11px] font-semibold text-white mt-0.5 flex items-center gap-1">
+                        <Calendar className="w-3 h-3 text-rose-400 flex-shrink-0" />
+                        <span className="truncate">{date}</span>
+                      </div>
                     </div>
                   </div>
+
                   <div>
                     <div className="text-[8px] font-bold uppercase tracking-wider text-gray-400">
-                      DATE
+                      SLOTS (BOTH DAYS)
                     </div>
-                    <div className="text-[11px] font-semibold text-white mt-0.5 flex items-center gap-1">
-                      <Calendar className="w-3 h-3 text-rose-400 flex-shrink-0" />
-                      <span className="truncate">{date}</span>
+                    <div className="text-[11px] font-bold text-rose-300 mt-0.5 flex items-center gap-1">
+                      <Clock className="w-3 h-3 text-rose-400 flex-shrink-0" />
+                      <span className="truncate">2:00 PM & 3:00 PM</span>
                     </div>
                   </div>
                 </div>

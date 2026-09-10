@@ -4,7 +4,7 @@ import {
   Sparkles, Heart, CheckCircle2, AlertCircle, ArrowRight,
   User, Mail, Phone, Hash, BookOpen, Layers, ShieldCheck,
   Calendar, MapPin, Award, Terminal, Code2, Users, Rocket,
-  Lightbulb, ChevronDown, Check, Download, Share2, Compass
+  Lightbulb, ChevronDown, Check, Download, Share2, Compass, Clock
 } from 'lucide-react';
 import bannerImg from '@/assets/images/she_leads_hero_banner.jpg';
 import { submitSheLeadsRegistration, getLatestSheLeadsPass, clearLatestSheLeadsPass } from '@/lib/api/sheLeadsApi';
@@ -72,15 +72,25 @@ const HIGHLIGHTS = [
 ];
 
 const TIMELINE = [
-  { time: '10:00 AM', title: 'Inauguration & Welcome', desc: 'Opening address by FLUX faculty mentors and society coordinators.' },
-  { time: '10:45 AM', title: 'Keynote: Women Shaping the Tech Horizon', desc: 'Inspiring keynote talk followed by interactive Q&A.' },
-  { time: '12:00 PM', title: 'Hands-On Tech Masterclass', desc: 'Guided live coding and design sprint for all skill levels.' },
-  { time: '02:00 PM', title: 'Panel: Breaking Glass Ceilings', desc: 'Candid conversation on campus placements, open source, and leadership.' },
-  { time: '03:30 PM', title: 'Idea Pitch & Project Showcase', desc: 'Flash presentations and recognition of creative solutions.' },
-  { time: '04:30 PM', title: 'Felicitation & Certificate Distribution', desc: 'Award ceremony and closing networking session.' },
+  {
+    slotBadge: 'SLOT 1',
+    time: '02:00 PM',
+    title: 'Slot 1 (2:00 PM)',
+    desc: 'Available on both days: 12 & 13 September.',
+  },
+  {
+    slotBadge: 'SLOT 2',
+    time: '03:00 PM',
+    title: 'Slot 2 (3:00 PM)',
+    desc: 'Available on both days: 12 & 13 September.',
+  },
 ];
 
 const FAQS = [
+  {
+    q: 'What are the event timings and slots?',
+    a: 'She Leads is conducted in 2 slots on both days (12 & 13 September): Slot 1 starting at 2:00 PM and Slot 2 starting at 3:00 PM.',
+  },
   {
     q: 'Who is eligible to register for She Leads – Dr. Tessy Thomas Annual Conclave?',
     a: 'She Leads – Dr. Tessy Thomas Annual Conclave is open to all students currently enrolled at MMMUT Gorakhpur across any academic branch and any year of study (B.Tech, MCA, M.Tech, etc.).',
@@ -96,10 +106,6 @@ const FAQS = [
   {
     q: 'Will participants receive a certificate?',
     a: 'Yes, every registered attendee who participates in the summit will receive an official Certificate of Participation from FLUX, MMMUT.',
-  },
-  {
-    q: 'What should I bring along on the day of the event?',
-    a: 'Please carry your valid University Student ID Card. If you wish to follow along with the hands-on coding workshop, we encourage bringing your laptop.',
   },
 ];
 
@@ -309,8 +315,8 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
                 <Calendar className="w-4 h-4 text-pink-400" />
                 <span className="text-xs font-semibold uppercase tracking-wider">Schedule</span>
               </div>
-              <div className="text-sm sm:text-base font-bold text-white">Full-Day Summit</div>
-              <div className="text-[11px] text-gray-400">12 - 13 September</div>
+              <div className="text-sm sm:text-base font-bold text-white">2:00 PM & 3:00 PM</div>
+              <div className="text-[11px] text-gray-400">12 - 13 September (2 Slots)</div>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md">
@@ -421,31 +427,41 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
         <section className="py-16 sm:py-24 px-4 sm:px-6 max-w-5xl mx-auto no-print">
           <div className="text-center mb-14">
             <span className="text-purple-300 text-xs sm:text-sm font-semibold tracking-[0.3em] uppercase">
-              AGENDA PREVIEW
+              EVENT TIMINGS
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white mt-2">
-              A Day of Impact & Learning
+              Event Slots (12 & 13 September)
             </h2>
+            <p className="text-gray-300 text-sm sm:text-base mt-2 max-w-lg mx-auto font-light">
+              The conclave is scheduled in 2 slots on both days (12 & 13 September):
+            </p>
           </div>
 
-          <div className="space-y-4">
-            {TIMELINE.map((slot, index) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {TIMELINE.map((slotItem, index) => (
               <motion.div
-                key={slot.time}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                key={slotItem.time}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.08 }}
-                className="p-5 sm:p-6 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 transition-colors flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="p-6 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 transition-colors flex flex-col justify-between gap-4"
               >
-                <div className="flex items-center gap-4">
-                  <div className="px-3.5 py-1.5 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-300 font-mono text-xs font-semibold tracking-wider whitespace-nowrap">
-                    {slot.time}
-                  </div>
+                <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h4 className="text-base sm:text-lg font-bold text-white">{slot.title}</h4>
-                    <p className="text-gray-400 text-xs sm:text-sm font-light mt-0.5">{slot.desc}</p>
+                    <span className="px-2.5 py-1 rounded-full bg-rose-500/20 border border-rose-400/30 text-rose-200 text-xs font-bold tracking-wider uppercase inline-block mb-2">
+                      {slotItem.slotBadge}
+                    </span>
+                    <h4 className="text-xl font-bold text-white">{slotItem.title}</h4>
+                    <p className="text-gray-400 text-xs sm:text-sm font-light mt-1">{slotItem.desc}</p>
                   </div>
+                  <div className="px-3.5 py-1.5 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-300 font-mono text-sm font-semibold tracking-wider whitespace-nowrap">
+                    {slotItem.time}
+                  </div>
+                </div>
+                <div className="pt-3 border-t border-white/5 flex items-center justify-between text-xs text-gray-400">
+                  <span>Both Days (12 & 13 Sept)</span>
+                  <span className="text-rose-400 font-medium">Online Mode</span>
                 </div>
               </motion.div>
             ))}
@@ -500,6 +516,7 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
                       ticketNumber: successData.ticketNumber || 'SHE-2026',
                       venue: 'Online',
                       date: '12 & 13 September',
+                      slot: '2:00 PM & 3:00 PM (Both Days)',
                     }}
                   />
                 </div>
