@@ -47,7 +47,7 @@ export async function submitSheLeadsRegistration(
 ): Promise<SheLeadsRegistrationResult> {
   // 1. Strict client-side check
   if (payload.gender !== 'Female') {
-    throw new Error('Registration for She Leads is open exclusively to female students.');
+    throw new Error('Registration for She Leads - Tessy Thomas is open exclusively to female students.');
   }
 
   const apiBase = getApiBase();
@@ -96,7 +96,7 @@ export async function submitSheLeadsRegistration(
     }
 
     // If server is unreachable (offline/no network), gracefully cache locally so work is not lost
-    console.warn('Backend currently unreachable, saving She Leads registration locally:', error);
+    console.warn('Backend currently unreachable, saving She Leads - Tessy Thomas registration locally:', error);
 
     const fallbackResult: SheLeadsRegistrationResult = {
       success: true,

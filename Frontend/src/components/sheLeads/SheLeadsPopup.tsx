@@ -7,7 +7,8 @@ import {
   Calendar, MapPin, Award
 } from 'lucide-react';
 import bannerImg from '@/assets/images/she_leads_hero_banner.jpg';
-import { submitSheLeadsRegistration, SheLeadsRegistrationResult } from '@/lib/api/sheLeadsApi';
+import { submitSheLeadsRegistration } from '@/lib/api/sheLeadsApi';
+import type { SheLeadsRegistrationResult } from '@/lib/api/sheLeadsApi';
 
 interface SheLeadsPopupProps {
   forceOpen?: boolean;
@@ -109,7 +110,7 @@ export const SheLeadsPopup: React.FC<SheLeadsPopupProps> = ({ forceOpen, onClose
       return false;
     }
     if (!genderVerified) {
-      setErrorMessage('She Leads registration is strictly reserved for female candidates.');
+      setErrorMessage('She Leads - Tessy Thomas registration is strictly reserved for female candidates.');
       return false;
     }
     setErrorMessage('');
@@ -154,7 +155,7 @@ export const SheLeadsPopup: React.FC<SheLeadsPopupProps> = ({ forceOpen, onClose
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 15, scale: 0.95 }}
             transition={{ duration: 0.3 }}
-            className="absolute bottom-24 right-4 sm:bottom-28 sm:right-8 md:bottom-32 md:right-10 z-30 select-none pointer-events-auto"
+            className="absolute bottom-10 right-4 sm:bottom-28 sm:right-8 md:bottom-32 md:right-10 z-30 select-none pointer-events-auto"
           >
             <button
               onClick={handleReopen}
@@ -212,7 +213,7 @@ export const SheLeadsPopup: React.FC<SheLeadsPopupProps> = ({ forceOpen, onClose
               <div className="relative h-44 sm:h-52 w-full overflow-hidden rounded-t-3xl">
                 <img
                   src={bannerImg}
-                  alt="She Leads Summit"
+                  alt="She Leads - Tessy Thomas Summit"
                   className="w-full h-full object-cover object-center scale-105 hover:scale-100 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0b0b0f] via-[#0b0b0f]/60 to-transparent" />
@@ -231,7 +232,7 @@ export const SheLeadsPopup: React.FC<SheLeadsPopupProps> = ({ forceOpen, onClose
                 {/* Title on Banner */}
                 <div className="absolute bottom-3 left-5 right-5">
                   <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-white flex items-center gap-2">
-                    She Leads
+                    She Leads - Tessy Thomas
                     <span className="text-xs px-2 py-0.5 rounded-md bg-rose-500/25 border border-rose-400/30 text-rose-200 uppercase font-bold tracking-wider">
                       2026
                     </span>
@@ -258,7 +259,7 @@ export const SheLeadsPopup: React.FC<SheLeadsPopupProps> = ({ forceOpen, onClose
                     <div>
                       <h4 className="text-2xl font-bold text-white">Registration Confirmed!</h4>
                       <p className="text-gray-300 text-sm mt-1 max-w-sm mx-auto">
-                        Welcome to She Leads! Your registration has been recorded successfully.
+                        Welcome to She Leads - Tessy Thomas! Your registration has been recorded successfully.
                       </p>
                     </div>
 
@@ -299,7 +300,7 @@ export const SheLeadsPopup: React.FC<SheLeadsPopupProps> = ({ forceOpen, onClose
                         }}
                         className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-white hover:bg-zinc-100 text-black text-sm font-semibold flex items-center justify-center gap-2 transition-all shadow-md border border-rose-200/40"
                       >
-                        <span>View She Leads Page</span>
+                        <span>View She Leads - Tessy Thomas Page</span>
                         <ArrowRight className="w-4 h-4 text-rose-500" />
                       </button>
                     </div>
@@ -467,7 +468,7 @@ export const SheLeadsPopup: React.FC<SheLeadsPopupProps> = ({ forceOpen, onClose
                             Female Participant Verification (Mandatory)
                           </span>
                           <p className="text-gray-400 text-[11px] mt-0.5 leading-relaxed">
-                            I confirm that I am a female student of MMMUT. She Leads is organized exclusively to uplift and empower women in technology and engineering.
+                            I confirm that I am a female student of MMMUT. She Leads - Tessy Thomas is organized exclusively to uplift and empower women in technology and engineering.
                           </p>
                         </div>
                       </label>

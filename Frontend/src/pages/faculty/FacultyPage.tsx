@@ -1,12 +1,8 @@
 import React from "react";
 import FacultyCard from "./FacultyCard";
-<<<<<<< HEAD
-import { underGuidance, facultyCoordinators } from "./facultyData";
-=======
 import StatsCounter from "./StatsCounter";
 import { underGuidance, facultyCoordinators } from "./facultyData";
 import { BookOpen, Award, Users, Trophy } from "lucide-react";
->>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
 
 const FacultyPage: React.FC = () => {
   return (
@@ -29,8 +25,6 @@ const FacultyPage: React.FC = () => {
         <p className="text-gray-400 text-lg sm:text-xl max-w-2xl font-light mb-10">
           "Leading with excellence, inspiring with vision, and shaping the future of tech at MMMUT."
         </p>
-<<<<<<< HEAD
-=======
 
         {/* ── Quick Stats Badges ──────────────────────────────────────────── */}
         <div className="flex flex-wrap justify-center gap-4">
@@ -57,7 +51,6 @@ const FacultyPage: React.FC = () => {
       {/* ── Stats Section ─────────────────────────────────────────────────── */}
       <section className="relative z-10 px-4 md:px-8 max-w-7xl mx-auto">
         <StatsCounter />
->>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
       </section>
 
       {/* ── Under Guidance Section ─────────────────────────────────────────── */}

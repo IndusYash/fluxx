@@ -66,7 +66,7 @@ export const printSheLeadsPass = () => {
       <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>She Leads 2026 - Participant Pass</title>
+        <title>She Leads - Tessy Thomas 2026 - Participant Pass</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@700&family=Space+Grotesk:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -251,7 +251,7 @@ export const SheLeadsPrintablePass: React.FC<SheLeadsPrintablePassProps> = ({ da
             <span className="block text-sm sm:text-base font-bold -mt-1">Tomorrows</span>
           </div>
 
-          {/* Big Title: SHE LEADS */}
+          {/* Big Title: She Leads - Tessy Thomas */}
           <div className="text-4xl sm:text-5xl font-black tracking-tight leading-none">
             <span className="text-white drop-shadow-[0_2px_12px_rgba(255,255,255,0.4)]">
               SHE{' '}

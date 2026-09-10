@@ -1,10 +1,10 @@
-import React, { useState, useMemo } from 'react';
+﻿import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Mail, Linkedin, Users, Award, GraduationCap, Sparkles, ChevronDown
 } from 'lucide-react';
 
-// ─── Image Imports ─────────────────────────────────────────────────────────────
+// ΓöÇΓöÇΓöÇ Image Imports ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 
 // Faculty
 import shwetSirImage from "../../assets/images/shwetSir.webp";
@@ -17,52 +17,52 @@ import priyaBbaImage from "../../assets/images/Priya Singh.jpg";
 
 // Administration
 import shivammishraImage from "../../assets/images/Shivam_Mishra.jpeg";
-import ysvImage from "../../assets/images/ysv.webp";
-import Aviral from "../../assets/images/Aviral.webp";
-import threeMImage from "../../assets/images/3m.webp";
-import Shubham from "../../assets/images/Shubham.webp";
-import jaiKumarImage from "../../assets/images/JaiKumar.webp";
-import priyaSinghImage from "../../assets/images/Priya.jpeg";
-import princeSahuImage from "../../assets/images/Prince.jpeg";
-import sudeekshaImage from "../../assets/images/Sudeeksha.jpeg";
+import ysvImage         from "../../assets/images/ysv.webp";
+import Aviral           from "../../assets/images/Aviral.webp";
+import threeMImage      from "../../assets/images/3m.webp";
+import Shubham          from "../../assets/images/Shubham.webp";
+import jaiKumarImage    from "../../assets/images/JaiKumar.webp";
+import priyaSinghImage  from "../../assets/images/Priya.jpeg";
+import princeSahuImage  from "../../assets/images/Prince.jpeg";
+import sudeekshaImage   from "../../assets/images/Sudeeksha.jpeg";
 
 // Development
-import aryanImage from "../../assets/images/Aryan.webp";
-import Prad from "../../assets/images/Pradyuman.webp";
+import aryanImage    from "../../assets/images/Aryan.webp";
+import Prad          from "../../assets/images/Pradyuman.webp";
 import atulKumarImage from "../../assets/images/Atul.jpeg";
-import rishiImage from "../../assets/images/Rishi.jpeg";
+import rishiImage    from "../../assets/images/Rishi.jpeg";
 
 // Design
-import Ananya from "../../assets/images/Ananya.webp";
-import Tamanna from "../../assets/images/Tamanna.webp";
+import Ananya             from "../../assets/images/Ananya.webp";
+import Tamanna            from "../../assets/images/Tamanna.webp";
 import abhigyanVardhanImage from "../../assets/images/AbhigyanVardhan.webp";
 import stutiTripathiImage from "../../assets/images/StutiTripathi .webp";
 
 // Photography & Video
-import Aman from "../../assets/images/Aman Rawat.webp";
+import Aman           from "../../assets/images/Aman Rawat.webp";
 import surajKumarImage from "../../assets/images/SurajKumar .webp";
 
 // Algorithms
-import ashishImage from "../../assets/images/ashish.webp";
-import shivamsinghImage from "../../assets/images/shivamsingh.webp";
+import ashishImage       from "../../assets/images/ashish.webp";
+import shivamsinghImage  from "../../assets/images/shivamsingh.webp";
 import devanshKumarImage from "../../assets/images/Devansh.jpeg";
 import prakharShuklaImage from "../../assets/images/PrakharShukla.webp";
-import rohanJaiswalImage from "../../assets/images/RohanJaiswal .webp";
+import rohanJaiswalImage  from "../../assets/images/RohanJaiswal .webp";
 import sameerChauhanImage from "../../assets/images/SameerSingh.webp";
 
 // AI & ML
-import RiyaImage from "../../assets/images/Riya Verma.webp";
-import vmishraImage from "../../assets/images/Vish.webp";
+import RiyaImage            from "../../assets/images/Riya Verma.webp";
+import vmishraImage         from "../../assets/images/Vish.webp";
 import anushkaChaudharyImage from "../../assets/images/AnushkaChaudhary .webp";
-import ayushSharmaImage from "../../assets/images/AyushSharma.webp";
+import ayushSharmaImage     from "../../assets/images/AyushSharma.webp";
 
 // Content & Social Media
-import Anushka from "../../assets/images/Anuphoto - Anushka Singh.webp";
+import Anushka            from "../../assets/images/Anuphoto - Anushka Singh.webp";
 import anshikaTripathiImage from "../../assets/images/AnshikaTripathi  .webp";
-import auchityaKumarImage from "../../assets/images/AuchityaKumar.webp";
-import divejSinghImage from "../../assets/images/DivejSingh.webp";
-import harshVermaImage from "../../assets/images/HarshVerma.webp";
-import nikhilJaiswalImage from "../../assets/images/NikhilJaiswal .webp";
+import auchityaKumarImage  from "../../assets/images/AuchityaKumar.webp";
+import divejSinghImage     from "../../assets/images/DivejSingh.webp";
+import harshVermaImage     from "../../assets/images/HarshVerma.webp";
+import nikhilJaiswalImage  from "../../assets/images/NikhilJaiswal .webp";
 
 // Freshmen
 import sundaramDubeyImage from "../../assets/images/Sundaram Dubey.webp";
@@ -89,7 +89,7 @@ import adityaShuklaImage from "../../assets/images/AdityaShukla.jpeg";
 import aditiVermaImage from "../faculty/Aditi.jpeg";
 import mahakSinghImage from "../../assets/images/Mahak.jpeg";
 
-// ─── Types ─────────────────────────────────────────────────────────────────────
+// ΓöÇΓöÇΓöÇ Types ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 interface Member {
   name: string;
   role: string;
@@ -102,21 +102,21 @@ interface Member {
   color?: string;
 }
 
-// ─── Accent Colors ─────────────────────────────────────────────────────────────
+// ΓöÇΓöÇΓöÇ Accent Colors ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 const C = {
-  admin: '#E5E5E5',
-  domain: '#E5E5E5',
-  dev: '#E5E5E5',
-  design: '#E5E5E5',
-  photo: '#E5E5E5',
-  algo: '#E5E5E5',
-  aiml: '#E5E5E5',
+  admin:   '#E5E5E5',
+  domain:  '#E5E5E5',
+  dev:     '#E5E5E5',
+  design:  '#E5E5E5',
+  photo:   '#E5E5E5',
+  algo:    '#E5E5E5',
+  aiml:    '#E5E5E5',
   content: '#E5E5E5',
-  alumni: '#E5E5E5',
-  exec: '#E5E5E5',
+  alumni:  '#E5E5E5',
+  exec:    '#E5E5E5',
 };
 
-// ─── Animated Counter Hook ─────────────────────────────────────────────────────
+// ΓöÇΓöÇΓöÇ Animated Counter Hook ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 const useCountUp = (end: number, duration = 1800) => {
   const [count, setCount] = React.useState(0);
   const [hasStarted, setHasStarted] = React.useState(false);
@@ -149,7 +149,7 @@ const useCountUp = (end: number, duration = 1800) => {
   return { count, ref };
 };
 
-// ─── Floating Orb Background ──────────────────────────────────────────────────
+// ΓöÇΓöÇΓöÇ Floating Orb Background ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 const FloatingOrbs: React.FC = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
     {[
@@ -199,7 +199,7 @@ const FloatingOrbs: React.FC = () => (
   </div>
 );
 
-// ─── Faculty Card ──────────────────────────────────────────────────────────────
+// ΓöÇΓöÇΓöÇ Faculty Card ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 const FacultyCard: React.FC<{ m: Member; idx: number }> = ({ m, idx }) => {
   const [err, setErr] = useState(false);
   const src = !m.image || err
@@ -285,7 +285,7 @@ const FacultyCard: React.FC<{ m: Member; idx: number }> = ({ m, idx }) => {
   );
 };
 
-// ─── MemberCard with 3D Tilt ───────────────────────────────────────────────────
+// ΓöÇΓöÇΓöÇ MemberCard with 3D Tilt ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 const MemberCard: React.FC<{ m: Member; idx: number }> = ({ m, idx }) => {
   const [err, setErr] = useState(false);
   const cardRef = React.useRef<HTMLDivElement>(null);
@@ -345,7 +345,8 @@ const MemberCard: React.FC<{ m: Member; idx: number }> = ({ m, idx }) => {
         <img
           src={src}
           alt={m.name}
-          className={`absolute inset-0 w-full h-full object-cover ${m.imagePosition ?? 'object-center'} transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-110`}
+          className={`absolute inset-0 w-full h-full object-cover ${m.imagePosition ?? 'object-center'} transition-transform duration-700 group-hover:scale-110`}
+          style={{ transitionTimingFunction: "cubic-bezier(0.25, 0.46, 0.45, 0.94)" }}
           onError={() => setErr(true)}
         />
 
@@ -463,16 +464,16 @@ const MemberCard: React.FC<{ m: Member; idx: number }> = ({ m, idx }) => {
   );
 };
 
-// ─── Main Component ────────────────────────────────────────────────────────────
+// ΓöÇΓöÇΓöÇ Main Component ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 const Team: React.FC<{ isMobile?: boolean }> = () => {
 
   const allMembers: Member[] = [
-    // ── Alumni ──
+    // ΓöÇΓöÇ Alumni ΓöÇΓöÇ
     { name: 'Shivam Rai', role: 'President 2025-26', branch: 'CSE', batch: "'26", email: 'president@flux.edu', linkedin: 'https://www.linkedin.com/in/shivam-rai-a64b84298/', image: presidentImage, color: C.alumni },
     { name: 'Anant Mishra', role: "BBA'26", branch: '', batch: "'26", email: '', linkedin: '', image: anantImage, color: C.alumni },
     { name: 'Priya', role: "BBA'26", branch: '', batch: "'26", email: '', linkedin: '', image: priyaBbaImage, color: C.alumni },
 
-    // ── Batch 2027 (Final Year) ──
+    // ΓöÇΓöÇ Batch 2027 (Final Year) ΓöÇΓöÇ
     { name: 'Shivam Mishra', role: 'President', branch: 'CSE', batch: "'27", email: 'shivammishra01329@gmail.com', linkedin: 'https://www.linkedin.com/in/shiv9918', image: shivammishraImage, color: C.admin },
     { name: 'Yashasvi Sharma', role: 'Vice President', branch: 'CSE', batch: "'27", email: 'yashasvisharma650@gmail.com', linkedin: 'https://www.linkedin.com/in/yashasvi-sharma-688245294', image: ysvImage, color: C.admin },
     { name: 'Aviral Omar', role: 'Head of Operations', branch: 'ChE', batch: "'27", email: 'aviralmaster@gmail.com', linkedin: 'https://www.linkedin.com/in/aviral-omar-763878294', image: Aviral, color: C.admin },
@@ -489,7 +490,7 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
     { name: 'Vishesh Mishra', role: 'AI & ML Head', branch: 'CSE', batch: "'27", email: 'mishravishesh1403@gmail.com', linkedin: 'https://www.linkedin.com/in/vishesh-mishra-372784218/', image: vmishraImage, color: C.aiml },
     { name: 'Anushka Singh', role: 'Content & Social Media Head', branch: 'CSE', batch: "'27", email: 'anuskajiya@gmail.com', linkedin: 'https://www.linkedin.com/in/anushkasingh-a18a25318/', image: Anushka, color: C.content },
 
-    // ── Batch 2028 (Pre-Final Year) ──
+    // ΓöÇΓöÇ Batch 2028 (Pre-Final Year) ΓöÇΓöÇ
     { name: 'Jai Kumar Singh', role: 'Joint Secretary', branch: 'CSE', batch: "'28", email: 'jaikumarsingh1920@gmail.com', linkedin: 'https://www.linkedin.com/in/jai-kumar-singh-9b3152319', image: jaiKumarImage, color: C.admin },
     { name: 'Priya Singh', role: 'Joint Secretary', branch: 'CSE', batch: "'28", email: 'singhshruti4131@gmail.com', linkedin: 'https://www.linkedin.com/in/priya-singh-393bb82b7', image: priyaSinghImage, color: C.admin },
     { name: 'Prince Sahu', role: 'Operations Coordinator', branch: 'CSE', batch: "'28", email: 'sahuprinceguru@gmail.com', linkedin: 'https://linkedin.com/in/prince-sahu-552382326/', image: princeSahuImage, color: C.admin },
@@ -511,20 +512,22 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
     { name: 'Anshika Tripathi', role: 'Content & Social Media Lead', branch: 'BBA', batch: "'28", email: 'anshikaatripathiii@gmail.com', linkedin: 'https://www.linkedin.com/in/anshika-tripathi-421a26265', image: anshikaTripathiImage, color: C.content },
     { name: 'Auchitya Kumar Shukla', role: 'Content & Social Media Lead', branch: 'BBA', batch: "'28", email: 'auchityashukla16@gmail.com', linkedin: 'https://www.linkedin.com/in/auchitya-shukla-b6ab252b4', image: auchityaKumarImage, color: C.content },
 
-    // ── Batch 2029 (Sophomore Year) ──
+    // ΓöÇΓöÇ Batch 2029 (Sophomore Year) ΓöÇΓöÇ
     { name: 'Aashish Kumar', role: 'Executive Member', branch: 'CSE', batch: "'29", email: '2025021301@mmmut.ac.in', linkedin: 'https://www.linkedin.com/in/theaashishkumar/', image: aashishKumarImage, color: C.exec },
-    { name: 'Aditi Verma', role: 'Executive Member', branch: 'IT', batch: "'29", email: 'aditiverma9945@gmail.com', linkedin: 'https://www.linkedin.com/in/aditi-verma-a5a541328', image: aditiVermaImage, color: C.exec },
     { name: 'Aditya Gupta', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'guptaaditya002006@gmail.com', linkedin: 'https://www.linkedin.com/in/aditya-gupta-a734ba377/', image: adityaGuptaImage, color: C.exec },
     { name: 'Aditya Shukla', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'aadityashukla2412@gmail.com', linkedin: 'https://www.linkedin.com/in/aditya-shukla-2412-sam', image: adityaShuklaImage, color: C.exec },
+    { name: 'Aditi Verma', role: 'Executive Member', branch: 'IT', batch: "'29", email: 'aditiverma9945@gmail.com', linkedin: 'https://www.linkedin.com/in/aditi-verma-a5a541328', image: aditiVermaImage, color: C.exec },
     { name: 'Anuradha Srivastava', role: 'Executive Member', branch: 'IT', batch: "'29", email: 'srivastavaanu7922@gmail.com', linkedin: 'https://www.linkedin.com/in/anuradha-srivastava-514465378', image: anuradhaSrivastavaImage, color: C.exec },
     { name: 'Arpita Mishra', role: 'Executive Member', branch: 'ME', batch: "'29", email: 'vaibhavarpita987@gmail.com', linkedin: 'https://www.linkedin.com/in/arpita-mishra-3051a8378', image: arpitaMishraImage, color: C.exec },
     { name: 'Deepak Shivhare', role: 'Executive Member', branch: 'IT', batch: "'29", email: 'dk23107575@gmail.com', linkedin: 'https://www.linkedin.com/in/deepak-shivhare-443333381', image: deepakShivhareImage, color: C.exec },
     { name: 'Himanshu Maurya', role: 'Executive Member', branch: 'IT', batch: "'29", email: 'hm3997353@gmail.com', linkedin: 'https://linkedin.com/in/himanshumaurya29', image: himanshuMauryaImage, color: C.exec },
     { name: 'Khushi Patel', role: 'Executive Member', branch: 'IT', batch: "'29", email: 'khushiipatel657@gmail.com', linkedin: 'https://www.linkedin.com/in/khushi-patel-160462378', image: khushiPatelImage, color: C.exec },
     { name: 'Mahak Singh', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'mahaksinghofficial@gmail.com', linkedin: 'https://www.linkedin.com/in/mahak-singh-814858327', image: mahakSinghImage, color: C.exec },
+    { name: 'Piyush Kumar', role: 'Executive Member', branch: 'ECE', batch: "'29", email: 'pk1747968@gmail.com', linkedin: 'https://www.linkedin.com/in/piyush-kumar-b46306391', image: piyushKumarImage, color: C.exec },
     { name: 'Pradumna Manu', role: 'Executive Member', branch: 'BBA', batch: "'29", email: 'pradumanmanu@gmail.com', linkedin: 'https://www.linkedin.com/in/pradumna-manu-8595643b6', image: pradumnaManuImage, color: C.exec },
     { name: 'Rishiraj Kasaudhan', role: 'Executive Member', branch: 'BBA', batch: "'29", email: 'rishirajkasaudhan5705@gmail.com', linkedin: 'https://www.linkedin.com/in/rishi-raj-kasaudhan-6615343a8', image: rishirajImage, imagePosition: "object-top", color: C.exec },
     { name: 'Ritisha Raghuvanshi', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'ritisharaghuvanshi95@gmail.com', linkedin: 'https://www.linkedin.com/in/ritisha-raghuvanshi-3612a3379', image: ritishaImage, color: C.exec },
+    { name: 'Sakshi Rana', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'sakshi9696rana@gmail.com', linkedin: 'https://www.linkedin.com/in/sakshi-rana-94554a377', image: sakshiRanaImage, color: C.exec },
     { name: 'Saumyjeet Kumar', role: 'Executive Member', branch: 'CSE', batch: "'29", email: '2025021256@mmmut.ac.in', linkedin: 'https://www.linkedin.com/in/saumyjeet-kumar-pandey-602a51362/', image: saumyjeetKumarImage, color: C.exec },
     { name: 'Shruti Tripathi', role: 'Executive Member', branch: 'CSE', batch: "'29", email: 'shrutitripathi369@gmail.com', linkedin: 'https://www.linkedin.com/in/shruti-tripathi-20342132b', image: shrutiTripathiImage, color: C.exec },
     { name: 'Sundaram Dubey', role: 'Executive Member', branch: 'IT', batch: "'29", email: '2025071161@mmmut.ac.in', linkedin: 'https://www.linkedin.com/in/sundaram-dubey-a563a3378', image: sundaramDubeyImage, color: C.exec },
@@ -533,8 +536,8 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
   ];
 
   const facultyMembers: Member[] = [
-    { name: 'Dr. Shwet Ketu', role: 'Faculty Co-ordinator', branch: '', batch: '', email: '', linkedin: '', image: shwetSirImage, color: '#E5E5E5' },
-    { name: 'Dr. Satvik Vats', role: 'Faculty Co-ordinator', branch: '', batch: '', email: '', linkedin: '', image: satvikSirImage, color: '#E5E5E5' },
+      { name: 'Dr. Shwet Ketu', role: 'Faculty Co-ordinator', branch: '', batch: '', email: '', linkedin: '', image: shwetSirImage, color: '#E5E5E5' },
+      { name: 'Dr. Satvik Vats', role: 'Faculty Co-ordinator', branch: '', batch: '', email: '', linkedin: '', image: satvikSirImage, color: '#E5E5E5' },
   ];
 
   // Compute member counts
@@ -615,7 +618,7 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
 
   return (
     <div className="min-h-screen bg-[#020202] relative overflow-hidden select-none pb-24 ">
-      {/* ── Shimmer keyframe (injected once) ─────────────────────────────────── */}
+      {/* ΓöÇΓöÇ Shimmer keyframe (injected once) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */}
       <style>{`
         @keyframes shimmer {
           0% { background-position: 200% 0; }
@@ -623,10 +626,10 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
         }
       `}</style>
 
-      {/* ── Background ───────────────────────────────────────────────────────── */}
+      {/* ΓöÇΓöÇ Background ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */}
       <FloatingOrbs />
 
-      {/* ── Header Area ─────────────────────────────────────────────────────── */}
+      {/* ΓöÇΓöÇ Header Area ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */}
       <section className="pt-32 pb-8 px-4 sm:px-6 relative z-10 text-center flex flex-col items-center">
 
         {/* Top Overline */}
@@ -658,14 +661,14 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
           transition={{ duration: 0.9, delay: 0.25 }}
           className="text-gray-400/80 text-lg sm:text-xl max-w-2xl font-light mb-10"
         >
-          "Where innovation meets dedication — the minds shaping the future of tech at MMMUT."
+          "Where innovation meets dedication ΓÇö the minds shaping the future of tech at MMMUT."
         </motion.p>
 
 
       </section>
 
 
-      {/* ── Sticky Filter Bar ─────────────────────────────────────────────────── */}
+      {/* ΓöÇΓöÇ Sticky Filter Bar ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */}
       <section className="sticky top-0 z-30 px-4 py-4 mb-10">
         <div className="flex flex-wrap justify-center gap-3 sm:gap-4 max-w-4xl mx-auto">
           {navButtons.map(btn => {
@@ -727,7 +730,7 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
         </AnimatePresence>
       </section>
 
-      {/* ── Members ───────────────────────────────────────────────────────────── */}
+      {/* ΓöÇΓöÇ Members ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */}
       <section className="px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl mx-auto">
         <AnimatePresence mode="wait">
           {visibleSections.map(sec => {
@@ -741,10 +744,11 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
                 transition={{ duration: 0.4 }}
               >
                 <SectionHeader title={sec.title} color={sec.color} id={sec.id} icon={sec.icon} />
-                <div className={`grid gap-6 sm:gap-8 xl:gap-10 place-items-center mb-20 ${sec.id === 'alumni'
+                <div className={`grid gap-6 sm:gap-8 xl:gap-10 place-items-center mb-20 ${
+                  sec.id === 'alumni'
                     ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-5xl mx-auto'
                     : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
-                  }`}>
+                }`}>
                   {members.map((m, i) => (
                     <MemberCard key={m.name} m={m} idx={i} />
                   ))}

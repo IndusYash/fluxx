@@ -1,21 +1,20 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
+
     "module": "ESNext",
     "skipLibCheck": true,
-<<<<<<< HEAD
-=======
     "forceConsistentCasingInFileNames": true,
->>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
 
     /* Bundler mode */
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -27,15 +26,16 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    "noUncheckedSideEffectImports": true,
 
-    /* Path Alias Configuration */
-    "baseUrl": ".",
+    /* Path Alias */
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
+
+    /* Types */
     "types": ["node", "vite/client"]
   },
+
   "include": ["src"]
 }

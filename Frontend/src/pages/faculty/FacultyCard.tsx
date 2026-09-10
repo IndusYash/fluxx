@@ -1,6 +1,6 @@
 import React from "react";
 import { Mail, Linkedin, Globe } from "lucide-react";
-import { FacultyMember } from "./facultyData";
+import type { FacultyMember } from "./facultyData";
 
 interface FacultyCardProps {
   faculty: FacultyMember;

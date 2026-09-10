@@ -7,7 +7,8 @@ import {
   Lightbulb, ChevronDown, Check, Download, Share2, Compass
 } from 'lucide-react';
 import bannerImg from '@/assets/images/she_leads_hero_banner.jpg';
-import { submitSheLeadsRegistration, SheLeadsRegistrationResult, getLatestSheLeadsPass, clearLatestSheLeadsPass } from '@/lib/api/sheLeadsApi';
+import { submitSheLeadsRegistration, getLatestSheLeadsPass, clearLatestSheLeadsPass } from '@/lib/api/sheLeadsApi';
+import type { SheLeadsRegistrationResult } from '@/lib/api/sheLeadsApi';
 import SheLeadsPrintablePass, { printSheLeadsPass } from '@/components/sheLeads/SheLeadsPrintablePass';
 
 interface SheLeadsPageProps {
@@ -81,12 +82,12 @@ const TIMELINE = [
 
 const FAQS = [
   {
-    q: 'Who is eligible to register for She Leads?',
-    a: 'She Leads is exclusively open to all female students currently enrolled at MMMUT Gorakhpur across any academic branch and any year of study (B.Tech, MCA, M.Tech, etc.).',
+    q: 'Who is eligible to register for She Leads - Tessy Thomas?',
+    a: 'She Leads - Tessy Thomas is exclusively open to all female students currently enrolled at MMMUT Gorakhpur across any academic branch and any year of study (B.Tech, MCA, M.Tech, etc.).',
   },
   {
     q: 'Is there any registration fee?',
-    a: 'No! Registration and entry for She Leads are 100% free of cost, proudly organized by FLUX to foster gender diversity and women leadership in computing.',
+    a: 'No! Registration and entry for She Leads - Tessy Thomas are 100% free of cost, proudly organized by FLUX to foster gender diversity and women leadership in computing.',
   },
   {
     q: 'Do I need prior programming experience to participate?',
@@ -261,7 +262,7 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
             className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight mb-6"
           >
             <span className="bg-gradient-to-r from-white via-rose-100 to-gray-300 bg-clip-text text-transparent">
-              She Leads
+              She Leads - Tessy Thomas
             </span>
             <span className="block text-2xl sm:text-3xl lg:text-4xl font-extrabold mt-3 bg-gradient-to-r from-zinc-100 via-rose-200 to-zinc-400 bg-clip-text text-transparent">
               Innovate • Inspire • Empower
@@ -309,7 +310,7 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
                 <span className="text-xs font-semibold uppercase tracking-wider">Schedule</span>
               </div>
               <div className="text-sm sm:text-base font-bold text-white">Full-Day Summit</div>
-              <div className="text-[11px] text-gray-400">Date Announced Soon</div>
+              <div className="text-[11px] text-gray-400">12 - 13 September</div>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md">
@@ -334,7 +335,7 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
               className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white hover:bg-zinc-100 text-black font-semibold text-base shadow-xl shadow-black/40 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-3 border border-rose-200/40"
             >
               <Sparkles className="w-5 h-5 text-rose-500" />
-              <span>Register For She Leads</span>
+              <span>Register For She Leads - Tessy Thomas</span>
               <ArrowRight className="w-5 h-5 text-rose-500" />
             </button>
 
@@ -358,7 +359,7 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
           >
             <img
               src={bannerImg}
-              alt="She Leads Summit Visual"
+              alt="She Leads - Tessy Thomas Summit Visual"
               className="w-full h-auto block group-hover:scale-[1.01] transition-transform duration-700"
             />
             <div className="absolute inset-x-0 bottom-0 pt-16 pb-6 px-6 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 pointer-events-none">
@@ -385,7 +386,7 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
               WHAT TO EXPECT
             </span>
             <h2 className="text-3xl sm:text-5xl font-extrabold text-white mt-2">
-              Four Pillars of She Leads
+              Four Pillars of She Leads - Tessy Thomas
             </h2>
             <div className="w-16 h-0.5 bg-gradient-to-r from-rose-500 to-purple-500 mx-auto mt-4 rounded-full" />
           </div>
@@ -462,7 +463,7 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
               Claim Your Free Pass
             </h2>
             <p className="text-gray-300 text-sm sm:text-base mt-2 max-w-md mx-auto font-light">
-              Fill in your university credentials to confirm your registration for She Leads 2026.
+              Fill in your university credentials to confirm your registration for She Leads - Tessy Thomas 2026.
             </p>
           </div>
 
@@ -483,11 +484,11 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
                 <div className="no-print">
                   <h3 className="text-3xl font-black text-white">You're Registered!</h3>
                   <p className="text-gray-300 text-sm mt-1 max-w-md mx-auto">
-                    We look forward to seeing you at She Leads! Your registration pass has been generated.
+                    We look forward to seeing you at She Leads - Tessy Thomas! Your registration pass has been generated.
                   </p>
                 </div>
 
-                {/* Official She Leads Printable Pass */}
+                {/* Official She Leads - Tessy Thomas Printable Pass */}
                 <div className="py-2 flex justify-center">
                   <SheLeadsPrintablePass
                     data={{
@@ -796,7 +797,7 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
                           Female Participant Eligibility Verification (Mandatory)
                         </span>
                         <p className="text-gray-300 text-xs mt-1 leading-relaxed">
-                          I hereby declare that I am a female student of MMMUT Gorakhpur. I acknowledge that She Leads is an affirmative initiative exclusively intended for women in STEM to promote female representation and leadership in computing.
+                          I hereby declare that I am a female student of MMMUT Gorakhpur. I acknowledge that She Leads - Tessy Thomas is an affirmative initiative exclusively intended for women in STEM to promote female representation and leadership in computing.
                         </p>
                       </div>
                     </label>

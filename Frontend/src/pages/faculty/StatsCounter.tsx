@@ -1,13 +1,5 @@
 import React, { useRef } from "react";
-<<<<<<< HEAD
-<<<<<<< HEAD
 import { motion } from "framer-motion";
-=======
-import { motion, Variants } from "framer-motion";
->>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
-=======
-import { motion } from "framer-motion";
->>>>>>> 8242fd9 (Save local changes)
 import { useCountAnimation } from "../../hooks/useCountAnimation";
 import { useIntersectionObserver } from "../../hooks/useIntersectionObserver";
 import { Users, Award, BookOpen, GraduationCap } from "lucide-react";
@@ -50,15 +42,7 @@ const StatsCounter: React.FC = React.memo(() => {
     },
   ];
 
-<<<<<<< HEAD
-<<<<<<< HEAD
   const containerVariants = {
-=======
-  const containerVariants: Variants = {
->>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
-=======
-  const containerVariants = {
->>>>>>> 8242fd9 (Save local changes)
     hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,
@@ -71,15 +55,7 @@ const StatsCounter: React.FC = React.memo(() => {
     },
   };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
   const itemVariants = {
-=======
-  const itemVariants: Variants = {
->>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
-=======
-  const itemVariants = {
->>>>>>> 8242fd9 (Save local changes)
     hidden: { opacity: 0, y: 30, scale: 0.85 },
     visible: {
       opacity: 1,
@@ -87,7 +63,7 @@ const StatsCounter: React.FC = React.memo(() => {
       scale: 1,
       transition: {
         duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: [0.25, 0.46, 0.45, 0.94] as const,
       },
     },
   };
@@ -105,7 +81,7 @@ const StatsCounter: React.FC = React.memo(() => {
         return (
           <motion.div
             key={stat.label}
-            variants={itemVariants}
+            variants={itemVariants} 
             className="group relative text-center"
           >
             {/* Glass morphism card */}

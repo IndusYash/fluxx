@@ -24,8 +24,8 @@ const upcomingEvents = [
   },
   {
     id: 3,
-    title: "She Lead",
-    date: "Coming Soon",
+    title: "She Leads - Tessy Thomas",
+    date: "12 - 13 September",
     type: "Event",
     participants: "250+",
     description:

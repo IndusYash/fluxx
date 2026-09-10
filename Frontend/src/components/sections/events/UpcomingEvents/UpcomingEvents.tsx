@@ -6,10 +6,7 @@ import dimitrios from '@/assets/images/dimitrios.webp';
 import ideathon from '@/assets/images/ideathon.webp';
 import orientation from '@/assets/images/orientation_2.webp';
 import conferenceImg from '@/assets/images/conferenceImg.webp';
-<<<<<<< HEAD
 import sheLeadsBanner from '@/assets/images/she_leads_hero_banner.jpg';
-=======
->>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
 const RAW_API_BASE = (import.meta.env as any).VITE_API_BASE_URL ?? (import.meta.env as any).VITE_API_BASE ?? '/api';
 const API_BASE = (RAW_API_BASE || '/api').replace(/\/+$/, ''); // remove trailing slash
 
@@ -60,9 +57,8 @@ const events: EventProps[] = [
   },
   {
     id: 3,
-<<<<<<< HEAD
-    title: 'She Leads',
-    date: 'Coming Soon (Registration Open)',
+    title: 'She Leads - Tessy Thomas',
+    date: '12 - 13 September',
     description:
       "An empowering leadership and tech summit exclusively designed to inspire and connect women in technology. Join us for insightful talks, hands-on workshops, mentorship, and networking.",
     imageUrl: sheLeadsBanner,
@@ -71,18 +67,6 @@ const events: EventProps[] = [
     attendees: 300,
     category: 'Innovation',
     prize: 'Certificates & Swag',
-=======
-    title: 'She Lead',
-    date: 'Coming Soon',
-    description:
-      "An empowering leadership summit designed to inspire and connect women in tech. Join us for insightful talks, hands-on workshops, and networking with industry leaders.",
-    imageUrl: conferenceImg,
-    isUpcoming: true,
-    location: 'MMMUT Gorakhpur',
-    attendees: 250,
-    category: 'Innovation',
-    prize: '',
->>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
     featured: true,
   }
 ];
@@ -295,19 +279,16 @@ const EventCard: React.FC<{ event: EventProps; index: number; showRegister?: boo
                 </button>
               )}
 
-<<<<<<< HEAD
               {event.title?.toLowerCase().includes('she lead') && (
                 <button
                   onClick={() => navigate('/she-leads')}
                   className="inline-flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-zinc-100 text-black rounded-full font-semibold shadow-md border border-rose-200/40 hover:scale-105 active:scale-95 transition-all duration-200 mt-1 w-fit"
                 >
-                  <span>Register for She Leads</span>
+                  <span>Register for She Leads - Tessy Thomas</span>
                   <ArrowRight className="w-4 h-4 text-rose-500" />
                 </button>
               )}
 
-=======
->>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
               {showRegister && (
                 <div className="pt-1">
                   {event.date === 'Coming Soon' ? (
@@ -388,11 +369,7 @@ const EventCard: React.FC<{ event: EventProps; index: number; showRegister?: boo
           {[...Array(4)].map((_, i) => (
             <motion.div
               key={i}
-<<<<<<< HEAD
               className="absolute w-1 h-1 bg-white/20 rounded-full"
-=======
-               className="absolute w-1 h-1 bg-white/20 rounded-full"
->>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
               style={{
                 left: `${25 + i * 20}%`,
                 top: `${30 + (i % 2) * 40}%`,

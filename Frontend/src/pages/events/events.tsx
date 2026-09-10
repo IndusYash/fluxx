@@ -11,6 +11,7 @@ import hackathon from '/src/assets/images/hackathon.webp';
 import expert from '/src/assets/images/expert.webp';
 import atalFdp from '/src/assets/images/atalFdp.webp';
 import conferenceImg from '/src/assets/images/conferenceImg.webp';
+import sheLeadsBanner from '/src/assets/images/she_leads_hero_banner.jpg';
 
 const EventsPage: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -78,9 +79,9 @@ const EventsPage: React.FC = () => {
     },
     {
       id: 6,
-      name: "She Lead",
-      imageUrl: conferenceImg,
-      date: "Coming Soon",
+      name: "She Leads - Tessy Thomas",
+      imageUrl: sheLeadsBanner,
+      date: "12 - 13 September",
       icon: "WEEK ONE",
       phase: "Summit",
       description:

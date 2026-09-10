@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { ValuesSectionProps } from './ValuesSection.types';
+import type { ValuesSectionProps } from './ValuesSection.types';
 import { motion } from 'framer-motion';
 
 // Individual Value Card

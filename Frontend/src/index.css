@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Caveat:wght@600;700&family=Dancing+Script:wght@700&display=swap');
-=======
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
->>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
 
 @tailwind base;
 @tailwind components;
@@ -275,7 +271,6 @@ body {
     @apply bg-background text-foreground;
   }
 }
-<<<<<<< HEAD
 
 /* ── Print Styles for She Leads Pass ── */
 @media print {
@@ -315,5 +310,3 @@ body {
 }
 
 
-=======
->>>>>>> cbd65cf59d845635320295e3f0f9cf723444567d
