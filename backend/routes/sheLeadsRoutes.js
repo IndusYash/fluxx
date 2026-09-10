@@ -33,14 +33,6 @@ router.post('/register', async (req, res) => {
       });
     }
 
-    // 2. Strict Female-only restriction
-    const normalizedGender = String(gender || '').trim().toLowerCase();
-    if (normalizedGender !== 'female') {
-      return res.status(403).json({
-        error: 'She Leads is an initiative exclusively curated for female students of MMMUT. Registration is only open for female candidates.',
-      });
-    }
-
     // 3. Format sanitization
     const sanitizedEmail = String(email).trim().toLowerCase();
     const sanitizedRollNo = String(rollNo).trim().toUpperCase();
