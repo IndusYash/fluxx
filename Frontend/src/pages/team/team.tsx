@@ -19,7 +19,7 @@ import priyaBbaImage from "../../assets/images/Priya Singh.jpg";
 import shivammishraImage from "../../assets/images/Shivam_Mishra.jpeg";
 import ysvImage from "../../assets/images/ysv.webp";
 import Aviral from "../../assets/images/Aviral.webp";
-import threeMImage from "../../assets/images/3m.webp";
+
 import Shubham from "../../assets/images/Shubham.webp";
 import jaiKumarImage from "../../assets/images/JaiKumar.webp";
 import priyaSinghImage from "../../assets/images/Priya.jpeg";
@@ -33,7 +33,6 @@ import atulKumarImage from "../../assets/images/Atul.jpeg";
 import rishiImage from "../../assets/images/Rishi.jpeg";
 
 // Design
-import Ananya from "../../assets/images/Ananya.webp";
 import Tamanna from "../../assets/images/Tamanna.webp";
 import abhigyanVardhanImage from "../../assets/images/AbhigyanVardhan.webp";
 import stutiTripathiImage from "../../assets/images/StutiTripathi .webp";
@@ -99,6 +98,7 @@ interface Member {
   linkedin: string;
   image: string;
   imagePosition?: string;
+  imageScale?: number;
   color?: string;
 }
 
@@ -346,6 +346,7 @@ const MemberCard: React.FC<{ m: Member; idx: number }> = ({ m, idx }) => {
           src={src}
           alt={m.name}
           className={`absolute inset-0 w-full h-full object-cover ${m.imagePosition ?? 'object-center'} transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-110`}
+          style={m.imageScale ? { transform: `scale(${m.imageScale})` } : undefined}
           onError={() => setErr(true)}
         />
 
@@ -476,11 +477,11 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
     { name: 'Shivam Mishra', role: 'President', branch: 'CSE', batch: "'27", email: 'shivammishra01329@gmail.com', linkedin: 'https://www.linkedin.com/in/shiv9918', image: shivammishraImage, color: C.admin },
     { name: 'Yashasvi Sharma', role: 'Vice President', branch: 'CSE', batch: "'27", email: 'yashasvisharma650@gmail.com', linkedin: 'https://www.linkedin.com/in/yashasvi-sharma-688245294', image: ysvImage, color: C.admin },
     { name: 'Aviral Omar', role: 'Head of Operations', branch: 'ChE', batch: "'27", email: 'aviralmaster@gmail.com', linkedin: 'https://www.linkedin.com/in/aviral-omar-763878294', image: Aviral, color: C.admin },
-    { name: 'Yashvardhan Ojha', role: 'Additional Coordinator', branch: 'CSE', batch: "'27", email: '2023021270@mmmut.ac.in', linkedin: 'https://www.linkedin.com/in/yashvardhann/', image: threeMImage, color: C.admin },
+    { name: 'Yashvardhan Ojha', role: 'Additional Coordinator', branch: 'CSE', batch: "'27", email: '2023021270@mmmut.ac.in', linkedin: 'https://www.linkedin.com/in/yashvardhann/', image: 'https://res.cloudinary.com/doch9ibf6/image/upload/v1790343661/WhatsApp_Image_2026-08-16_at_4.38.40_PM_vjptjt.jpg', imageScale: 1.2, color: C.admin },
     { name: 'Shubham Rai', role: 'Treasurer', branch: 'CSE', batch: "'27", email: 'kuvar2003@gmail.com', linkedin: 'https://www.linkedin.com/in/shubham-rai-866b2b294/', image: Shubham, color: C.admin },
     { name: 'Aryan S. Shandilya', role: 'Development Head', branch: 'CSE', batch: "'27", email: 'aryanacc28@gmail.com', linkedin: 'https://www.linkedin.com/in/aryan-s-shandilya', image: aryanImage, color: C.dev },
     { name: 'Pradyumn Agrahari', role: 'Development Head', branch: 'CSE', batch: "'27", email: 'pradyumnagrahari111@gmail.com', linkedin: 'https://www.linkedin.com/in/pradyumn-a-09b209277', image: Prad, color: C.dev },
-    { name: 'Ananya', role: 'Design Head', branch: 'CE', batch: "'27", email: 'ananyar0912@gmail.com', linkedin: 'https://www.linkedin.com/in/ananya-in-tech', image: Ananya, color: C.design },
+
     { name: 'Tamanna Sharma', role: 'Design Head', branch: 'EE', batch: "'27", email: 'tamanna.sharma9929knp@gmail.com', linkedin: 'https://www.linkedin.com/in/tamanna-sharma-b3290a294/', image: Tamanna, color: C.design },
     { name: 'Aman Kumar Rawat', role: 'Photography & Video Head', branch: 'ME', batch: "'27", email: 'amankrawat.ds@gmail.com', linkedin: 'https://www.linkedin.com/in/amankrrawat/', image: Aman, color: C.photo },
     { name: 'Ashish Kumar Yadav', role: 'Algorithms Head', branch: 'CSE', batch: "'27", email: 'kumaryadavashish390@gmail.com', linkedin: 'https://in.linkedin.com/in/ashish-yadav-040730225', image: ashishImage, color: C.algo },
