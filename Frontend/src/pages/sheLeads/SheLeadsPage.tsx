@@ -1,13 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Sparkles, Heart, CheckCircle2, AlertCircle, ArrowRight,
-  User, Mail, Phone, Hash, BookOpen, Layers, ShieldCheck,
-  Calendar, MapPin, Award, Terminal, Code2, Users, Rocket,
-  Lightbulb, ChevronDown, Check, Download, Share2, Compass, Clock
+  Sparkles, Heart, CheckCircle2, ArrowRight, Lock,
+  Calendar, MapPin, Award, Code2, Users,
+  Lightbulb, ChevronDown, Download
 } from 'lucide-react';
 import bannerImg from '@/assets/images/she_leads_hero_banner.jpg';
-import { submitSheLeadsRegistration, getLatestSheLeadsPass, clearLatestSheLeadsPass } from '@/lib/api/sheLeadsApi';
+import { getLatestSheLeadsPass } from '@/lib/api/sheLeadsApi';
 import type { SheLeadsRegistrationResult } from '@/lib/api/sheLeadsApi';
 import SheLeadsPrintablePass, { printSheLeadsPass } from '@/components/sheLeads/SheLeadsPrintablePass';
 
@@ -111,29 +110,13 @@ const FAQS = [
 
 export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
   const formRef = useRef<HTMLDivElement>(null);
-
-  // Form states
-  const [name, setName] = useState('');
-  const [rollNo, setRollNo] = useState('');
-  const [branch, setBranch] = useState(BRANCHES[0]);
-  const [section, setSection] = useState('A');
-  const [year, setYear] = useState('1st Year');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([DOMAIN_OPTIONS[0]]);
-  const [experienceLevel, setExperienceLevel] = useState('Beginner');
-  const [isParticipationConfirmed, setIsParticipationConfirmed] = useState(true);
-
-  // Submission states
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
   const [successData, setSuccessData] = useState<SheLeadsRegistrationResult | null>(null);
   const [savedPass, setSavedPass] = useState<SheLeadsRegistrationResult | null>(null);
 
   // Active FAQ accordion state
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
 
-  // Keep saved pass in memory if user wishes to view it, but keep the registration form open by default
+  // Load saved pass from localStorage if available
   useEffect(() => {
     const existingPass = getLatestSheLeadsPass();
     if (existingPass) {
@@ -143,88 +126,6 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
 
   const scrollToForm = () => {
     formRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const toggleInterest = (domain: string) => {
-    if (selectedInterests.includes(domain)) {
-      setSelectedInterests(selectedInterests.filter((d) => d !== domain));
-    } else {
-      setSelectedInterests([...selectedInterests, domain]);
-    }
-  };
-
-  const validateForm = () => {
-    if (!name.trim()) {
-      setErrorMessage('Please enter your full name.');
-      return false;
-    }
-    if (!rollNo.trim()) {
-      setErrorMessage('Please enter your university roll number.');
-      return false;
-    }
-    if (!section.trim()) {
-      setErrorMessage('Please enter your section.');
-      return false;
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email.trim())) {
-      setErrorMessage('Please enter a valid email address.');
-      return false;
-    }
-    const cleanPhone = phone.trim().replace(/[^0-9]/g, '');
-    if (cleanPhone.length < 10) {
-      setErrorMessage('Please enter a valid 10-digit mobile number.');
-      return false;
-    }
-    if (!isParticipationConfirmed) {
-      setErrorMessage('Please confirm your participation eligibility.');
-      return false;
-    }
-    setErrorMessage('');
-    return true;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-
-    setLoading(true);
-    setErrorMessage('');
-
-    try {
-      const res = await submitSheLeadsRegistration({
-        name: name.trim(),
-        rollNo: rollNo.trim().toUpperCase(),
-        branch,
-        section: section.trim().toUpperCase(),
-        year,
-        email: email.trim().toLowerCase(),
-        phone: phone.trim().replace(/[^0-9]/g, ''),
-        gender: 'Not Specified',
-        interests: selectedInterests,
-        experienceLevel,
-        registrationSource: 'web-form',
-      });
-
-      setSuccessData(res);
-      setSavedPass(res);
-    } catch (err: any) {
-      setErrorMessage(err.message || 'Registration failed. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleRegisterAnother = () => {
-    clearLatestSheLeadsPass();
-    setSavedPass(null);
-    setSuccessData(null);
-    setName('');
-    setRollNo('');
-    setSection('A');
-    setEmail('');
-    setPhone('');
-    setErrorMessage('');
   };
 
   return (
@@ -338,16 +239,16 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
           >
             <button
               onClick={scrollToForm}
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white hover:bg-zinc-100 text-black font-semibold text-base shadow-xl shadow-black/40 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-3 border border-rose-200/40"
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white/10 hover:bg-white/15 text-rose-200 border border-rose-500/30 font-semibold text-base shadow-xl shadow-black/40 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer"
             >
-              <Sparkles className="w-5 h-5 text-rose-500" />
-              <span>Register For She Leads – Dr. Tessy Thomas Annual Conclave</span>
-              <ArrowRight className="w-5 h-5 text-rose-500" />
+              <Lock className="w-5 h-5 text-rose-400" />
+              <span>Registrations Closed</span>
+              <ArrowRight className="w-5 h-5 text-rose-400" />
             </button>
 
             <a
               href="#pillars"
-              className="w-full sm:w-auto px-7 py-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/15 text-gray-200 hover:text-white font-medium text-base transition-all duration-300"
+              className="w-full sm:w-auto px-7 py-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/15 text-gray-200 hover:text-white font-medium text-base transition-all duration-300 flex items-center justify-center"
             >
               Explore Summit Pillars
             </a>
@@ -468,18 +369,18 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
           </div>
         </section>
 
-        {/* ── Registration Form Section ───────────────────────────── */}
+        {/* ── Registration Section (Closed) ───────────────────────────── */}
         <section ref={formRef} id="register" className="py-16 sm:py-24 px-4 sm:px-6 max-w-4xl mx-auto">
           <div className="text-center mb-12 no-print">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-500/10 text-rose-300 border border-rose-500/25 text-xs font-semibold mb-3">
-              <Heart className="w-3.5 h-3.5 fill-current text-rose-400" />
-              OPEN ENTRY • ALL STUDENTS WELCOME
+              <Lock className="w-3.5 h-3.5 text-rose-400" />
+              REGISTRATIONS CLOSED
             </div>
             <h2 className="text-4xl sm:text-5xl font-black text-white">
-              Claim Your Free Pass
+              Registrations Closed
             </h2>
             <p className="text-gray-300 text-sm sm:text-base mt-2 max-w-md mx-auto font-light">
-              Fill in your university credentials to confirm your registration for She Leads – Dr. Tessy Thomas Annual Conclave.
+              Registrations for She Leads – Dr. Tessy Thomas Annual Conclave are now officially closed.
             </p>
           </div>
 
@@ -498,9 +399,9 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
                 </div>
 
                 <div className="no-print">
-                  <h3 className="text-3xl font-black text-white">You're Registered!</h3>
+                  <h3 className="text-3xl font-black text-white">Registration Pass</h3>
                   <p className="text-gray-300 text-sm mt-1 max-w-md mx-auto">
-                    We look forward to seeing you at She Leads – Dr. Tessy Thomas Annual Conclave! Your registration pass has been generated.
+                    Here is your confirmed pass for She Leads – Dr. Tessy Thomas Annual Conclave.
                   </p>
                 </div>
 
@@ -535,316 +436,53 @@ export const SheLeadsPage: React.FC<SheLeadsPageProps> = () => {
                     onClick={() => setSuccessData(null)}
                     className="px-5 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-gray-300 text-sm font-medium transition-all cursor-pointer"
                   >
-                    Back to Form
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleRegisterAnother}
-                    className="px-5 py-3 rounded-xl bg-white hover:bg-zinc-100 text-black text-sm font-semibold transition-all border border-rose-200/40 cursor-pointer"
-                  >
-                    Register Another Participant
+                    Back
                   </button>
                 </div>
               </div>
             ) : (
-              /* ── Registration Form ── */
-              <>
+              /* ── Registrations Closed Card ── */
+              <div className="text-center py-8 space-y-6">
+                <div className="w-16 h-16 rounded-full bg-rose-500/15 border border-rose-500/30 text-rose-300 mx-auto flex items-center justify-center">
+                  <Lock className="w-8 h-8 text-rose-400" />
+                </div>
+
+                <div className="space-y-2 max-w-lg mx-auto">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white">
+                    Registrations Are Closed
+                  </h3>
+                  <p className="text-gray-300 text-sm sm:text-base leading-relaxed font-light">
+                    We are no longer accepting new registrations for the She Leads – Dr. Tessy Thomas Annual Conclave. Thank you to everyone who registered!
+                  </p>
+                </div>
+
                 {savedPass && (
-                  <div className="mb-6 p-4 rounded-2xl bg-white/[0.04] border border-rose-500/25 flex flex-col sm:flex-row items-center justify-between gap-3 backdrop-blur-md">
-                    <div className="flex items-center gap-3">
+                  <div className="mt-6 p-4 rounded-2xl bg-white/[0.04] border border-rose-500/25 max-w-md mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 backdrop-blur-md">
+                    <div className="flex items-center gap-3 text-left">
                       <CheckCircle2 className="w-5 h-5 text-rose-400 flex-shrink-0" />
                       <div className="text-xs sm:text-sm text-gray-300">
                         You have a previously generated pass for <span className="text-white font-semibold">{savedPass.data?.name}</span> ({savedPass.ticketNumber}).
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => setSuccessData(savedPass)}
-                        className="px-3.5 py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 border border-rose-400/30 text-xs font-semibold transition-all"
-                      >
-                        View Pass
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          clearLatestSheLeadsPass();
-                          setSavedPass(null);
-                        }}
-                        className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white text-xs transition-all"
-                      >
-                        Dismiss
-                      </button>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setSuccessData(savedPass)}
+                      className="px-3.5 py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 border border-rose-400/30 text-xs font-semibold transition-all whitespace-nowrap cursor-pointer"
+                    >
+                      View Pass
+                    </button>
                   </div>
                 )}
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Error Banner */}
-                  {errorMessage && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-300 text-sm flex items-start gap-3"
-                    >
-                      <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5 text-red-400" />
-                      <span>{errorMessage}</span>
-                    </motion.div>
-                  )}
-
-                  {/* Section 1: Personal Credentials */}
-                  <div>
-                    <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                      <User className="w-4 h-4 text-rose-400" />
-                      <span>Personal & University Details</span>
-                    </h3>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {/* Full Name */}
-                      <div className="md:col-span-2">
-                        <label className="block text-xs font-medium text-gray-300 mb-1.5">
-                          Full Name <span className="text-rose-400">*</span>
-                        </label>
-                        <div className="relative">
-                          <User className="w-4 h-4 text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                          <input
-                            type="text"
-                            required
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder="e.g. Anushka Sharma"
-                            className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-rose-400/50 focus:ring-1 focus:ring-rose-400/20 transition-all"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Roll Number */}
-                      <div>
-                        <label className="block text-xs font-medium text-gray-300 mb-1.5">
-                          University Roll Number <span className="text-rose-400">*</span>
-                        </label>
-                        <div className="relative">
-                          <Hash className="w-4 h-4 text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                          <input
-                            type="text"
-                            required
-                            value={rollNo}
-                            onChange={(e) => setRollNo(e.target.value)}
-                            placeholder="e.g. 2024021045"
-                            className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-rose-400/50 focus:ring-1 focus:ring-rose-400/20 transition-all"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Section */}
-                      <div>
-                        <label className="block text-xs font-medium text-gray-300 mb-1.5">
-                          Section (Sec) <span className="text-rose-400">*</span>
-                        </label>
-                        <div className="relative">
-                          <Layers className="w-4 h-4 text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                          <input
-                            type="text"
-                            required
-                            value={section}
-                            onChange={(e) => setSection(e.target.value)}
-                            placeholder="e.g. A, B, C, CSE-1"
-                            className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-rose-400/50 focus:ring-1 focus:ring-rose-400/20 transition-all"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Branch */}
-                      <div>
-                        <label className="block text-xs font-medium text-gray-300 mb-1.5">
-                          Branch <span className="text-rose-400">*</span>
-                        </label>
-                        <div className="relative">
-                          <BookOpen className="w-4 h-4 text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-                          <select
-                            value={branch}
-                            onChange={(e) => setBranch(e.target.value)}
-                            className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#14141c] border border-white/10 text-white text-sm focus:outline-none focus:border-rose-400/50 focus:ring-1 focus:ring-rose-400/20 transition-all"
-                          >
-                            {BRANCHES.map((b) => (
-                              <option key={b} value={b}>
-                                {b}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
-
-                      {/* Year */}
-                      <div>
-                        <label className="block text-xs font-medium text-gray-300 mb-1.5">
-                          Year of Study <span className="text-rose-400">*</span>
-                        </label>
-                        <div className="relative">
-                          <Calendar className="w-4 h-4 text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-                          <select
-                            value={year}
-                            onChange={(e) => setYear(e.target.value)}
-                            className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#14141c] border border-white/10 text-white text-sm focus:outline-none focus:border-rose-400/50 focus:ring-1 focus:ring-rose-400/20 transition-all"
-                          >
-                            {YEARS.map((y) => (
-                              <option key={y} value={y}>
-                                {y}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Section 2: Contact Information */}
-                  <div>
-                    <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                      <Mail className="w-4 h-4 text-rose-400" />
-                      <span>Contact Information</span>
-                    </h3>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {/* Email */}
-                      <div>
-                        <label className="block text-xs font-medium text-gray-300 mb-1.5">
-                          Email Address <span className="text-rose-400">*</span>
-                        </label>
-                        <div className="relative">
-                          <Mail className="w-4 h-4 text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                          <input
-                            type="email"
-                            required
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="e.g. yourname@mmmut.ac.in"
-                            className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-rose-400/50 focus:ring-1 focus:ring-rose-400/20 transition-all"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Mobile No */}
-                      <div>
-                        <label className="block text-xs font-medium text-gray-300 mb-1.5">
-                          Mobile Number <span className="text-rose-400">*</span>
-                        </label>
-                        <div className="relative">
-                          <Phone className="w-4 h-4 text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                          <input
-                            type="tel"
-                            required
-                            maxLength={10}
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value.replace(/[^0-9]/g, ''))}
-                            placeholder="10-digit number"
-                            className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-rose-400/50 focus:ring-1 focus:ring-rose-400/20 transition-all"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Section 3: Tech Interests & Experience Level */}
-                  <div>
-                    <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                      <Compass className="w-4 h-4 text-purple-400" />
-                      <span>Areas of Interest & Experience (Optional)</span>
-                    </h3>
-
-                    <div className="mb-4">
-                      <span className="text-xs text-gray-400 block mb-2">
-                        Select domains you are curious about or currently learning:
-                      </span>
-                      <div className="flex flex-wrap gap-2">
-                        {DOMAIN_OPTIONS.map((domain) => {
-                          const isSelected = selectedInterests.includes(domain);
-                          return (
-                            <button
-                              type="button"
-                              key={domain}
-                              onClick={() => toggleInterest(domain)}
-                              className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 flex items-center gap-1.5 ${isSelected
-                                ? 'bg-rose-500/20 text-rose-200 border border-rose-400/40 shadow-sm'
-                                : 'bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300'
-                                }`}
-                            >
-                              {isSelected && <Check className="w-3 h-3" />}
-                              <span>{domain}</span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-medium text-gray-300 mb-1.5">
-                        Your Technical Comfort Level
-                      </label>
-                      <div className="grid grid-cols-3 gap-2">
-                        {['Beginner', 'Intermediate', 'Advanced'].map((lvl) => (
-                          <button
-                            type="button"
-                            key={lvl}
-                            onClick={() => setExperienceLevel(lvl)}
-                            className={`py-2 px-3 rounded-xl text-xs font-medium border text-center transition-all ${experienceLevel === lvl
-                              ? 'bg-purple-600/30 border-purple-500 text-purple-200'
-                              : 'bg-white/5 border-white/10 text-gray-400 hover:text-gray-200'
-                              }`}
-                          >
-                            {lvl}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Section 4: Participant Eligibility Declaration */}
-                  <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-rose-500/20">
-                    <label className="flex items-start gap-3 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={isParticipationConfirmed}
-                        onChange={(e) => setIsParticipationConfirmed(e.target.checked)}
-                        className="mt-1 w-4 h-4 rounded text-rose-500 focus:ring-rose-400/20 border-white/20 bg-white/10 cursor-pointer"
-                      />
-                      <div className="text-xs">
-                        <span className="font-bold text-zinc-200 flex items-center gap-1.5 text-sm">
-                          <ShieldCheck className="w-4 h-4 text-rose-400" />
-                          Participant Eligibility Verification (Mandatory)
-                        </span>
-                        <p className="text-gray-300 text-xs mt-1 leading-relaxed">
-                          I hereby declare that I am a student of MMMUT Gorakhpur. I acknowledge that She Leads – Dr. Tessy Thomas Annual Conclave is an affirmative initiative to promote representation and leadership in computing, open to all students.
-                        </p>
-                      </div>
-                    </label>
-                  </div>
-
-                  {/* Submit Action */}
-                  <div className="pt-2">
-                    <button
-                      type="submit"
-                      disabled={loading || !isParticipationConfirmed}
-                      className={`w-full py-4 rounded-2xl font-bold text-base flex items-center justify-center gap-3 shadow-xl transition-all duration-300 ${loading || !isParticipationConfirmed
-                        ? 'bg-gray-800 text-gray-500 cursor-not-allowed border border-white/5'
-                        : 'bg-white hover:bg-zinc-100 text-black shadow-lg shadow-black/40 hover:scale-[1.01] border border-rose-200/40'
-                        }`}
-                    >
-                      {loading ? (
-                        <div className="w-5 h-5 border-2 border-zinc-400 border-t-black rounded-full animate-spin" />
-                      ) : (
-                        <>
-                          <Sparkles className="w-5 h-5 text-rose-500" />
-                          <span>Submit Registration & Get Pass</span>
-                        </>
-                      )}
-                    </button>
-                    <p className="text-center text-[11px] text-gray-500 mt-3">
-                      By submitting, your details will be registered with the FLUX computing society event desk.
-                    </p>
-                  </div>
-                </form>
-              </>
+                <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
+                  <a
+                    href="#pillars"
+                    className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white text-sm font-semibold transition-all"
+                  >
+                    Explore Summit Highlights
+                  </a>
+                </div>
+              </div>
             )}
           </motion.div>
         </section>

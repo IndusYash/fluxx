@@ -8,7 +8,13 @@ const router = express.Router();
 const isDbConnected = () => mongoose.connection && mongoose.connection.readyState === 1;
 
 // POST /api/she-leads/register - Submit She Leads Registration directly to MongoDB
-router.post('/register', async (req, res) => {
+router.post('/register', async (_req, res) => {
+  return res.status(403).json({
+    error: 'Registrations for She Leads – Dr. Tessy Thomas Annual Conclave are now closed.',
+  });
+});
+
+/* router.post('/register-disabled', async (req, res) => {
   try {
     const {
       name,
@@ -110,9 +116,9 @@ router.post('/register', async (req, res) => {
       });
     }
 
-    return res.status(500).json({ error: 'Server error while processing registration.' });
   }
 });
+*/
 
 // GET /api/she-leads/registrations - List all registrations from MongoDB
 router.get('/registrations', async (req, res) => {

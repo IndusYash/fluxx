@@ -284,7 +284,7 @@ const EventCard: React.FC<{ event: EventProps; index: number; showRegister?: boo
                   onClick={() => navigate('/she-leads')}
                   className="inline-flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-zinc-100 text-black rounded-full font-semibold shadow-md border border-rose-200/40 hover:scale-105 active:scale-95 transition-all duration-200 mt-1 w-fit"
                 >
-                  <span>Register for She Leads – Dr. Tessy Thomas Annual Conclave</span>
+                  <span>View Details</span>
                   <ArrowRight className="w-4 h-4 text-rose-500" />
                 </button>
               )}

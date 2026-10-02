@@ -12,7 +12,6 @@ const sections = [
   { id: "events", label: "Events", path: "/events" },
   { id: "gallery", label: "Gallery", path: "/gallery" },
   { id: "ideathon", label: "Ideathon", path: "/ideathon" },
-  { id: "she-leads", label: "She Leads - Tessy Thomas", path: "/she-leads" },
   { id: "contact", label: "Contact", path: "/contact" },
 ];
 
@@ -118,11 +117,6 @@ export default function MobileNavbar() {
                   }`}
               >
                 <span>{label}</span>
-                {id === "she-leads" && (
-                  <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-semibold border border-rose-500/30 leading-none">
-                    SPECIAL
-                  </span>
-                )}
               </button>
             </li>
           ))}
