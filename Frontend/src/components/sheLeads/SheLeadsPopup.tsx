@@ -25,15 +25,15 @@ const SheLeadsPopup: React.FC<SheLeadsPopupProps> = ({ isMobile }) => {
       >
         <button
           onClick={handleNavigate}
-          aria-label='Open She Leads – Dr. Tessy Thomas Annual Conclave Registration'
-          className='group relative flex/items-center gap-3 px-5 py-3 rounded-full bg-[#0d0d12]/90 hover:bg-[#15131c] text-gray-200 hover:text-white text-xs sm:text-sm font-medium border border-white/20 hover:border-rose-400/40 shadow-xl shadow-black/50 hover:shadow-rose-950/30 backdrop-blur-xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]'
+          aria-label='Open She Leads Registration'
+          className='group relative flex items-center gap-3 px-5 py-3 rounded-full bg-[#0d0d12]/90 hover:bg-[#15131c] text-gray-200 hover:text-white text-xs sm:text-sm font-medium border border-white/20 hover:border-rose-400/40 shadow-xl shadow-black/50 hover:shadow-rose-950/30 backdrop-blur-xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]'
         >
           <span className='relative flex h-2 w-2'>
             <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-60' />
             <span className='relative inline-flex rounded-full h-2 w-2 bg-rose-400' />
           </span>
 
-          <span className='tracking-wide text-gray-100 font-semibold'>She Leads – Dr. Tessy Thomas Annual Conclave</span>
+          <span className='tracking-wide text-gray-100 font-semibold'>She Leads</span>
 
           <span className='inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-white/10 text-gray-300 border border-white/10 group-hover:bg-rose-500/20 group-hover:border-rose-500/30 group-hover:text-rose-200 transition-all'>
             Register Here

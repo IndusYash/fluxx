@@ -10,7 +10,7 @@ const isDbConnected = () => mongoose.connection && mongoose.connection.readyStat
 // POST /api/she-leads/register - Submit She Leads Registration directly to MongoDB
 router.post('/register', async (_req, res) => {
   return res.status(403).json({
-    error: 'Registrations for She Leads – Dr. Tessy Thomas Annual Conclave are now closed.',
+    error: 'Registrations for She Leads are now closed.',
   });
 });
 

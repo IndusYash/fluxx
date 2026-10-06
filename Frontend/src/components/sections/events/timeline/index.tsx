@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Calendar, Users, Lightbulb, Code2, Atom, Mic2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Calendar, Users, Lightbulb, Code2, Atom, Mic2, ArrowRight, Sparkles } from 'lucide-react';
 
 interface TimelineEvent {
   id: number;
@@ -37,6 +38,7 @@ const iconMap: Record<string, React.ElementType> = {
   'WEEK TWO': Code2,
   'WEEK THREE': Atom,
   'Summit': Mic2,
+  'Orientation': Lightbulb,
 };
 
 /* ── Shared Event Card ── */
@@ -44,17 +46,31 @@ const EventCard: React.FC<{
   event: TimelineEvent;
   align: 'left' | 'right';
 }> = ({ event, align }) => {
+  const navigate = useNavigate();
   const [hovered, setHovered] = useState(false);
+  const isSheLeads = event.name.toLowerCase().includes('she lead');
+  const isIdeathon = event.name.toLowerCase().includes('ideathon');
+
+  const handleCardClick = () => {
+    if (isSheLeads) {
+      navigate('/she-leads');
+    } else if (isIdeathon) {
+      navigate('/ideathon');
+    }
+  };
 
   return (
     <motion.div
+      onClick={handleCardClick}
       whileHover={{ scale: 1.02, y: -4 }}
       transition={{ type: 'spring', stiffness: 260, damping: 18 }}
-      className="card-outline relative cursor-pointer w-full rounded-xl overflow-hidden
+      className={`card-outline relative cursor-pointer w-full rounded-xl overflow-hidden
                  bg-gradient-to-br from-gray-800/60 to-gray-900/80
-                 border border-gray-700/50 hover:border-white/30
-                 shadow-lg hover:shadow-[0_8px_30px_rgba(255,255,255,0.08)]
-                 transition-colors duration-300"
+                 border transition-colors duration-300 shadow-lg hover:shadow-[0_8px_30px_rgba(255,255,255,0.08)] ${
+                   isSheLeads
+                     ? 'border-rose-500/30 hover:border-rose-400/60'
+                     : 'border-gray-700/50 hover:border-white/30'
+                 }`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -67,7 +83,7 @@ const EventCard: React.FC<{
         transition={{ duration: 0.4 }}
       />
 
-      {/* Content – always visible, no absolute positioning */}
+      {/* Content – always visible */}
       <div className="p-5">
         <h3 className={`text-xl md:text-2xl font-bold text-white mb-2 ${align === 'left' ? 'md:text-right' : 'text-left'}`}>
           {event.name}
@@ -77,11 +93,37 @@ const EventCard: React.FC<{
           {event.description}
         </p>
 
-        <div className={`flex flex-wrap items-center gap-4 text-sm text-gray-400 ${align === 'left' ? 'md:justify-end' : 'justify-start'}`}>
+        <div className={`flex flex-wrap items-center justify-between gap-4 mt-4 pt-3 border-t border-white/10 text-sm text-gray-400 ${align === 'left' ? 'md:flex-row-reverse' : ''}`}>
           <div className="flex items-center gap-1.5">
             <Users className="w-4 h-4 text-white/70" />
             <span>{event.attendees} attended</span>
           </div>
+
+          {isSheLeads && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate('/she-leads');
+              }}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white font-semibold text-xs transition-all shadow-md shadow-rose-950/40 hover:scale-105 active:scale-95 cursor-pointer"
+            >
+              <span>Explore She Leads</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          )}
+
+          {isIdeathon && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate('/ideathon');
+              }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 font-semibold text-xs transition-all hover:scale-105 active:scale-95 cursor-pointer"
+            >
+              <span>View Ideathon</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
       </div>
     </motion.div>

@@ -6,30 +6,21 @@ import { Calendar, Users, ArrowRight, Mic2 } from "lucide-react";
 const upcomingEvents = [
   {
     id: 1,
-    title: "Orientation",
-    date: "Coming Soon",
-    type: "Event",
-    participants: "200+",
-    description:
-      "Join us for the Flux Orientation session to learn about our community, upcoming events, and how you can get involved. Perfect for new members who want to kickstart their journey with us.",
-  },
-  {
-    id: 2,
     title: "ByteBrawl",
     date: "Coming Soon",
-    type: "Event",
+    type: "Coding Showdown",
     participants: "300+",
     description:
       "Get ready for ByteBrawl — a high-energy coding showdown where creativity meets code. Build, experiment, and ship cool projects in a collaborative, vibe-driven environment.",
   },
   {
-    id: 3,
-    title: "She Leads – Dr. Tessy Thomas Annual Conclave",
-    date: "12 - 13 September",
-    type: "Event",
-    participants: "250+",
+    id: 2,
+    title: "Ideathon 2026",
+    date: "Coming Soon",
+    type: "Hackathon",
+    participants: "500+",
     description:
-      "An empowering leadership summit designed to inspire, mentor, and connect tech innovators and future leaders. Join us for insightful talks, hands-on workshops, and networking with industry leaders.",
+      "The flagship annual innovation marathon of FLUX. Brainstorm bold ideas, pitch game-changing solutions, and collaborate with passionate builders and problem solvers.",
   },
 ];
 
@@ -56,12 +47,12 @@ export default function EventsPreview() {
           </p>
         </div>
 
-        {/* Events Grid */}
-        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-16">
+        {/* Events Grid - 2 columns to perfectly fill width */}
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 max-w-5xl mx-auto mb-16">
           {upcomingEvents.map((event, index) => (
             <div
               key={event.id}
-              className="card-outline group p-6 rounded-2xl bg-white/5 transition-all duration-300 hover:bg-white/10 hover:shadow-[0_8px_0_rgba(255,255,255,0.12)] w-full"
+              className="card-outline group p-6 sm:p-8 rounded-2xl bg-white/5 transition-all duration-300 hover:bg-white/10 hover:shadow-[0_8px_0_rgba(255,255,255,0.12)] w-full flex flex-col justify-between"
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center">

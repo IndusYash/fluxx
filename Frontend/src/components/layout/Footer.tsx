@@ -30,6 +30,8 @@ const quickLinks = [
   { name: "Home", href: "/" },
   { name: "Our Team", href: "/team" },
   { name: "Events", href: "/events" },
+  { name: "She Leads", href: "/she-leads" },
+  { name: "Ideathon", href: "/ideathon" },
   { name: "Faculty", href: "/faculty" },
   { name: "Contact", href: "/contact" }
 ];

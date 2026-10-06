@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Calendar, MapPin, Users, ArrowRight, Award, Mic2 } from 'lucide-react';
-import dimitrios from '@/assets/images/dimitrios.webp';
 import ideathon from '@/assets/images/ideathon.webp';
-import orientation from '@/assets/images/orientation_2.webp';
 import conferenceImg from '@/assets/images/conferenceImg.webp';
-import sheLeadsBanner from '@/assets/images/she_leads_hero_banner.jpg';
 const RAW_API_BASE = (import.meta.env as any).VITE_API_BASE_URL ?? (import.meta.env as any).VITE_API_BASE ?? '/api';
 const API_BASE = (RAW_API_BASE || '/api').replace(/\/+$/, ''); // remove trailing slash
 
@@ -29,20 +26,6 @@ export interface EventProps {
 const events: EventProps[] = [
   {
     id: 1,
-    title: 'Orientation',
-    date: 'Coming Soon',
-    description:
-      "Join us for the Flux Orientation session to learn about our community, upcoming events, and how you can get involved. Perfect for new members who want to kickstart their journey with us.",
-    imageUrl: orientation,
-    isUpcoming: true,
-    location: 'MMMUT Gorakhpur',
-    attendees: 200,
-    category: 'Tech',
-    prize: '',
-    featured: false,
-  },
-  {
-    id: 2,
     title: 'ByteBrawl',
     date: 'Coming Soon',
     description:
@@ -51,24 +34,24 @@ const events: EventProps[] = [
     isUpcoming: true,
     location: 'MMMUT Gorakhpur',
     attendees: 300,
-    category: 'Innovation',
-    prize: '',
+    category: 'Tech',
+    prize: 'Exciting Goodies & Prizes',
     featured: true,
   },
   {
-    id: 3,
-    title: 'She Leads – Dr. Tessy Thomas Annual Conclave',
-    date: '12 - 13 September',
+    id: 2,
+    title: 'Ideathon 2026',
+    date: 'Coming Soon',
     description:
-      "An empowering leadership and tech summit designed to inspire, mentor, and connect tech innovators and future leaders. Join us for insightful talks, hands-on workshops, mentorship, and networking.",
-    imageUrl: sheLeadsBanner,
+      "The flagship annual innovation marathon of FLUX. Brainstorm bold ideas, pitch game-changing solutions, and collaborate with passionate builders and problem solvers.",
+    imageUrl: ideathon,
     isUpcoming: true,
     location: 'MMMUT Gorakhpur',
-    attendees: 300,
+    attendees: 500,
     category: 'Innovation',
-    prize: 'Certificates & Swag',
+    prize: 'Cash Prizes & Certificates',
     featured: true,
-  }
+  },
 ];
 
 const EventCard: React.FC<{ event: EventProps; index: number; showRegister?: boolean }> = ({ event, index, showRegister }) => {
