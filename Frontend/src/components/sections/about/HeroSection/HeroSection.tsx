@@ -5,16 +5,10 @@ import ParticleText from './ParticleText';
 
 const HeroSection: React.FC<HeroSectionProps> = ({ description }) => {
   return (
-    <section className="relative w-full min-h-screen overflow-hidden bg-black flex items-center justify-center pt-[calc(var(--nav-h)+24px)] pb-[calc(var(--ticker-h)+24px)]">
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 gap-2 sm:gap-3 w-full max-w-6xl">
+    <section className="relative w-full h-[100svh] min-h-[100svh] overflow-hidden bg-black flex items-center justify-center pt-[var(--nav-h)] pb-[var(--ticker-h)]">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 gap-2.5 sm:gap-3.5 w-full max-w-6xl -translate-y-12 sm:-translate-y-16 lg:-translate-y-20">
         <div className="relative w-full flex-shrink-0 flex items-center justify-center min-h-[220px]">
-          {/* Solid high-contrast crisp text fallback underneath */}
-          <h1
-            className="absolute inset-0 flex items-center justify-center font-sans font-black text-[clamp(3.5rem,13vw,9rem)] uppercase tracking-tight text-white/35 pointer-events-none select-none"
-            aria-hidden="true"
-          >
-            Welcome To FLUX
-          </h1>
+          <h1 className="sr-only">Welcome To FLUX</h1>
           <ParticleText
             text="Welcome To FLUX"
             particleSize={3.4}

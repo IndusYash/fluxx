@@ -9,6 +9,7 @@ import FloatingPlane, {
   photos,
 } from "@/components/3d/FloatingPlane";
 import { liquidController } from "./liquidController";
+import { resetThemeToDark } from "@/hooks/useLightSectionObserver";
 
 export default function LegacySection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -108,6 +109,8 @@ export default function LegacySection() {
 
     return () => {
       ctx.revert();
+      liquidController.forceState(0);
+      resetThemeToDark();
     };
   }, []);
 

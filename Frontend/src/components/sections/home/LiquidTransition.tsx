@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { LiquidShaderRenderer } from "./LiquidShader";
 import { liquidController } from "./liquidController";
+import { resetThemeToDark } from "@/hooks/useLightSectionObserver";
 
 export default function LiquidTransition() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -124,6 +125,8 @@ export default function LiquidTransition() {
     return () => {
       window.removeEventListener("resize", onResize);
       tl.kill();
+      liquidController.forceState(0);
+      resetThemeToDark();
       liquidController.unregister(renderer);
       renderer.dispose();
     };
