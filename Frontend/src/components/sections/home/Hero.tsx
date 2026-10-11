@@ -4,6 +4,8 @@ import gsap from "gsap";
 import Marquee from "@/components/ui/Marquee";
 import Container from "@/components/layout/Container";
 
+import { introManager } from "@/lib/introState";
+
 export default function Hero() {
   const navigate = useNavigate();
   const heroRef = useRef<HTMLDivElement>(null);
@@ -28,105 +30,38 @@ export default function Hero() {
   const mRolesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const allElements = [
-        line1Ref.current,
-        line2Ref.current,
-        line3Ref.current,
-        descRef.current,
-        buttonsRef.current,
-        canvasWrapperRef.current,
-        rolesRef.current,
-        joinChipRef.current,
-        mLine1Ref.current,
-        mLine2Ref.current,
-        mLine3Ref.current,
-        mDescRef.current,
-        mButtonsRef.current,
-        mCanvasRef.current,
-        mRolesRef.current,
-      ].filter(Boolean);
+    const allElements = [
+      line1Ref.current,
+      line2Ref.current,
+      line3Ref.current,
+      descRef.current,
+      buttonsRef.current,
+      canvasWrapperRef.current,
+      rolesRef.current,
+      joinChipRef.current,
+      mLine1Ref.current,
+      mLine2Ref.current,
+      mLine3Ref.current,
+      mDescRef.current,
+      mButtonsRef.current,
+      mCanvasRef.current,
+      mRolesRef.current,
+    ].filter(Boolean);
 
-      const resolveFinalState = () => {
-        gsap.set(allElements, { clearProps: "transform,opacity" });
-      };
+    const resolveFinalState = () => {
+      gsap.set(allElements, { clearProps: "transform,opacity" });
+    };
 
-      const tl = gsap.timeline({
-        defaults: { ease: "power3.out" },
-        onComplete: resolveFinalState,
+    if (!introManager.isSeenInSession()) {
+      const unsub = introManager.subscribe((st) => {
+        if (st === "done") {
+          resolveFinalState();
+        }
       });
+      return unsub;
+    }
 
-      // Desktop masked slide-up for headline
-      if (line1Ref.current && line2Ref.current && line3Ref.current) {
-        tl.fromTo(
-          [line1Ref.current, line2Ref.current, line3Ref.current],
-          { y: "110%", opacity: 0 },
-          { y: "0%", opacity: 1, duration: 1.0, stagger: 0.15 },
-          0.1
-        );
-      }
-
-      // Mobile masked slide-up for headline
-      if (mLine1Ref.current && mLine2Ref.current && mLine3Ref.current) {
-        tl.fromTo(
-          [mLine1Ref.current, mLine2Ref.current, mLine3Ref.current],
-          { y: "110%", opacity: 0 },
-          { y: "0%", opacity: 1, duration: 1.0, stagger: 0.15 },
-          0.1
-        );
-      }
-
-      // 3D Canvas fade in
-      if (canvasWrapperRef.current) {
-        tl.fromTo(
-          canvasWrapperRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 1.2, ease: "power2.inOut" },
-          0.3
-        );
-      }
-      if (mCanvasRef.current) {
-        tl.fromTo(
-          mCanvasRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 1.2, ease: "power2.inOut" },
-          0.3
-        );
-      }
-
-      // Main description paragraphs fade in
-      if (descRef.current) {
-        tl.fromTo(descRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, 0.6);
-      }
-      if (mDescRef.current) {
-        tl.fromTo(mDescRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, 0.6);
-      }
-
-      // Buttons fade in
-      if (buttonsRef.current) {
-        tl.fromTo(buttonsRef.current, { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, 0.75);
-      }
-      if (mButtonsRef.current) {
-        tl.fromTo(mButtonsRef.current, { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, 0.75);
-      }
-
-      // Roles & chip subtle vertical entrance
-      if (rolesRef.current) {
-        tl.fromTo(rolesRef.current, { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.75 }, 0.7);
-      }
-      if (joinChipRef.current) {
-        tl.fromTo(joinChipRef.current, { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.75 }, 0.8);
-      }
-      if (mRolesRef.current) {
-        tl.fromTo(mRolesRef.current, { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.75 }, 0.8);
-      }
-
-      // Fallback timer: guarantee clean resolve even if tab was throttled
-      const fallbackTimer = setTimeout(resolveFinalState, 2600);
-      return () => clearTimeout(fallbackTimer);
-    }, heroRef);
-
-    return () => ctx.revert();
+    resolveFinalState();
   }, []);
 
   const paragraphStyle = "text-[clamp(16px,1.15vw,20px)] leading-[1.6] max-w-[52ch] text-white/65 font-light";
@@ -143,25 +78,24 @@ export default function Hero() {
     >
       {/* ─────────────────────────────────────────────────────────────
           1. GIANT OVERSIZED BACKGROUND MARQUEE TEXT
-          Reaction to scroll velocity, clearly visible stroke + fill,
-          gradient mask protecting text legibility on left
       ───────────────────────────────────────────────────────────── */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[1] overflow-hidden">
+      <div className="hero-marquee-wrapper absolute inset-0 flex items-center justify-center pointer-events-none z-[1] overflow-hidden">
         <Marquee text="WHERE IDEAS MEET IMPACT" outlined={true} speed={1.1} isHero={true} />
       </div>
 
       {/* ─────────────────────────────────────────────────────────────
           2. PERSISTENT 3D CHROME LOGO DESKTOP ANCHOR (Desktop: lg:block)
-          Positioned in the right column, z-[2]
-          Background silver radial glow behind the anchor
       ───────────────────────────────────────────────────────────── */}
       <div
         ref={canvasWrapperRef}
         className="hidden lg:block absolute inset-0 pointer-events-none z-[2] overflow-visible"
       >
-        {/* Soft silver radial glow on the right side */}
+        {/* Soft silver radial glow on the right side (hardware accelerated gradient without blur) */}
         <div
-          className="absolute right-[10%] top-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-white/[0.06] blur-[120px] pointer-events-none"
+          className="absolute right-[10%] top-1/2 -translate-y-1/2 w-96 h-96 rounded-full pointer-events-none"
+          style={{
+            background: "radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 45%, transparent 70%)",
+          }}
           aria-hidden="true"
         />
         {/* Persistent 3D Logo Anchor: right side, centered vertically, clearance from text */}
@@ -191,17 +125,17 @@ export default function Hero() {
                 className="hero-headline hero-gap-headline font-sans font-light tracking-[-0.035em] leading-[1.01] text-white"
               >
                 <span className="block overflow-hidden py-0.5">
-                  <span ref={line1Ref} className="block will-change-transform whitespace-nowrap">
+                  <span ref={line1Ref} className="reveal-line-inner block will-change-transform whitespace-nowrap">
                     The Innovation Core
                   </span>
                 </span>
                 <span className="block overflow-hidden py-0.5">
-                  <span ref={line2Ref} className="block will-change-transform whitespace-nowrap">
+                  <span ref={line2Ref} className="reveal-line-inner block will-change-transform whitespace-nowrap">
                     Where Ideas
                   </span>
                 </span>
                 <span className="block overflow-hidden py-0.5">
-                  <span ref={line3Ref} className="block will-change-transform whitespace-nowrap">
+                  <span ref={line3Ref} className="reveal-line-inner block will-change-transform whitespace-nowrap">
                     Meet{" "}
                     <span className="text-[#f0f0f0] font-normal drop-shadow-[0_0_24px_rgba(255,255,255,0.45)]">
                       Impact.
@@ -213,7 +147,7 @@ export default function Hero() {
               {/* Main paragraph: exact same style as bio, 32px gap below */}
               <p
                 ref={descRef}
-                className={`hero-paragraph-shared hero-gap-desc ${paragraphStyle}`}
+                className={`hero-fade-item hero-paragraph-shared hero-gap-desc ${paragraphStyle}`}
               >
                 Empowering students to interact, innovate, and engineer real-world impact.
                 Source-first tech conclaves, research mentorship, hackathons, and breakthrough
@@ -223,7 +157,7 @@ export default function Hero() {
               {/* Buttons: min-height 52px, gap 16px */}
               <div
                 ref={buttonsRef}
-                className="flex items-center gap-4"
+                className="hero-fade-item flex items-center gap-4"
               >
                 <button
                   onClick={() => navigate("/about")}
@@ -251,7 +185,7 @@ export default function Hero() {
                 {/* Role List vertical stack with 10px gap */}
                 <div
                   ref={rolesRef}
-                  className="flex flex-col items-end gap-[10px] text-[12px] xl:text-[13px] font-mono tracking-[0.12em] text-white/80"
+                  className="hero-fade-item flex flex-col items-end gap-[10px] text-[12px] xl:text-[13px] font-mono tracking-[0.12em] text-white/80"
                 >
                   <div className="flex items-center gap-2.5">
                     <span className="w-1.5 h-1.5 bg-white/60 inline-block flex-shrink-0" />
@@ -268,7 +202,7 @@ export default function Hero() {
                 </div>
 
                 {/* Only "Join Us ↗" pill button, 16px gap below role list, at least 24px above ticker */}
-                <div ref={joinChipRef} className="mt-4 pointer-events-auto">
+                <div ref={joinChipRef} className="hero-fade-item mt-4 pointer-events-auto">
                   <button
                     onClick={() => navigate("/team")}
                     className="group inline-flex items-center justify-center px-4 py-2 rounded-full border border-white/20 bg-black/70 hover:bg-white hover:text-black text-white backdrop-blur-md text-xs font-mono tracking-wider transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)] cursor-pointer"

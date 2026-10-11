@@ -53,17 +53,17 @@ export default function ScrollTextSection() {
       ref={sectionRef}
       className="relative w-full h-screen bg-[#060606] overflow-hidden flex items-center justify-center select-none safe-fullscreen"
     >
-      {/* Subtle radial background depth */}
+      {/* Subtle radial background depth (hardware accelerated gradient without expensive blur filter) */}
       <div
-        className="absolute w-[600px] h-[600px] rounded-full bg-white/[0.03] blur-[140px] pointer-events-none"
+        className="absolute w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.04)_0%,transparent_70%)] pointer-events-none"
         aria-hidden="true"
       />
 
       {/* Persistent Logo Anchor: safely positioned on the right side, at least 60px away from text */}
       <div
         data-logo-anchor="statement"
-        data-logo-scale="0.60"
-        data-logo-opacity="0.38"
+        data-logo-scale="0.70"
+        data-logo-opacity="0.95"
         className="hidden md:block absolute right-[6%] xl:right-[9%] top-1/2 -translate-y-1/2 w-[280px] h-[280px] pointer-events-none z-[1]"
       />
 

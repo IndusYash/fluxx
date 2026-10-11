@@ -1,57 +1,57 @@
 import { useEffect, useState } from "react";
+import { isLiquidCoveringY } from "@/components/sections/home/LiquidShader";
 
-export function useLightSectionObserver() {
-  const [isNavbarLight, setIsNavbarLight] = useState(false);
-  const [isTickerLight, setIsTickerLight] = useState(false);
+interface ThemeListener {
+  (navLight: boolean, tickerLight: boolean): void;
+}
 
-  useEffect(() => {
-    const checkIntersection = () => {
-      const lightElements = document.querySelectorAll('[data-theme="light"]');
-      if (lightElements.length === 0) {
-        setIsNavbarLight(false);
-        setIsTickerLight(false);
-        return;
-      }
+const listeners = new Set<ThemeListener>();
+let currentNavLight = false;
+let currentTickerLight = false;
 
-      const navH = 72;
-      const tickerH = 40;
-      const windowH = window.innerHeight;
+export function setLiquidProgress(progress: number) {
+  const windowH = typeof window !== "undefined" ? window.innerHeight : 1080;
+  const navYNorm = 36 / windowH; // center of ~72px navbar
+  const tickerYNorm = (windowH - 20) / windowH; // center of ~40px ticker
 
-      let navLight = false;
-      let tickerLight = false;
+  const nextNavLight = isLiquidCoveringY(progress, navYNorm);
+  const nextTickerLight = isLiquidCoveringY(progress, tickerYNorm);
 
-      lightElements.forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        // Check if light section is under top navbar
-        if (rect.top <= navH && rect.bottom >= 0) {
-          navLight = true;
-        }
-        // Check if light section is under bottom ticker
-        if (rect.bottom >= windowH - tickerH && rect.top <= windowH) {
-          tickerLight = true;
-        }
-      });
+  if (nextNavLight !== currentNavLight || nextTickerLight !== currentTickerLight) {
+    currentNavLight = nextNavLight;
+    currentTickerLight = nextTickerLight;
 
-      setIsNavbarLight(navLight);
-      setIsTickerLight(tickerLight);
-
-      if (navLight) {
+    if (typeof document !== "undefined") {
+      if (nextNavLight) {
         document.documentElement.classList.add("theme-light-active");
+        document.documentElement.setAttribute("data-nav-theme", "light");
       } else {
         document.documentElement.classList.remove("theme-light-active");
+        document.documentElement.setAttribute("data-nav-theme", "dark");
       }
-    };
+    }
 
-    window.addEventListener("scroll", checkIntersection, { passive: true });
-    window.addEventListener("resize", checkIntersection, { passive: true });
-    window.addEventListener("theme-change", checkIntersection);
-    checkIntersection();
+    listeners.forEach((fn) => fn(nextNavLight, nextTickerLight));
+  }
+}
+
+export function useLightSectionObserver() {
+  const [isNavbarLight, setIsNavbarLight] = useState(currentNavLight);
+  const [isTickerLight, setIsTickerLight] = useState(currentTickerLight);
+
+  useEffect(() => {
+    const listener: ThemeListener = (navLight, tickerLight) => {
+      setIsNavbarLight(navLight);
+      setIsTickerLight(tickerLight);
+    };
+    listeners.add(listener);
+
+    // Initial sync
+    setIsNavbarLight(currentNavLight);
+    setIsTickerLight(currentTickerLight);
 
     return () => {
-      window.removeEventListener("scroll", checkIntersection);
-      window.removeEventListener("resize", checkIntersection);
-      window.removeEventListener("theme-change", checkIntersection);
-      document.documentElement.classList.remove("theme-light-active");
+      listeners.delete(listener);
     };
   }, []);
 

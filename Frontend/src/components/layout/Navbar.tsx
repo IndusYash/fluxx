@@ -59,12 +59,12 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Pointer-events-none top gradient overlay behind navbar */}
+      {/* Pointer-events-none top gradient overlay behind navbar (neutral dark scrim in dark theme, no scrim in light theme) */}
       <div
-        className={`pointer-events-none fixed top-0 inset-x-0 h-24 z-[89] transition-opacity duration-300 ${
+        className={`pointer-events-none fixed top-0 inset-x-0 h-24 z-[89] transition-opacity duration-150 ${
           isNavbarLight
-            ? "bg-gradient-to-b from-white/90 via-white/40 to-transparent"
-            : "bg-gradient-to-b from-black/85 via-black/40 to-transparent"
+            ? "opacity-0"
+            : "bg-gradient-to-b from-black/85 via-black/40 to-transparent opacity-100"
         }`}
         aria-hidden="true"
       />
@@ -74,27 +74,27 @@ export default function Navbar() {
       >
         <Container className="flex items-center justify-between pt-[clamp(14px,2vh,24px)]">
           
-          {/* Left Column: Logo Chip (Small rounded dark square) */}
+          {/* Left Column: Logo Chip (Small rounded square) */}
           <div className="flex-1 flex justify-start">
             <Link
               to="/"
               className="pointer-events-auto flex items-center gap-3 group"
               onClick={() => setMobileOpen(false)}
             >
-              <div className={`w-[48px] h-[48px] sm:w-[52px] sm:h-[52px] rounded-xl border flex items-center justify-center p-2.5 transition-all shadow-lg ${
+              <div className={`w-[48px] h-[48px] sm:w-[52px] sm:h-[52px] rounded-xl border flex items-center justify-center p-2.5 transition-all duration-150 shadow-lg ${
                 isNavbarLight
-                  ? "bg-white/90 border-black/15 group-hover:border-black/40 text-black backdrop-blur-xl"
+                  ? "bg-white/95 border-black/20 group-hover:border-black/50 text-black shadow-black/5"
                   : "bg-[#111111]/80 backdrop-blur-xl border-white/10 group-hover:border-white/30 text-white"
               }`}>
                 <img
                   src="/logo.svg"
                   alt="FLUX Mark"
-                  className={`w-full h-full object-contain transition-all ${
-                    isNavbarLight ? "filter invert brightness-0" : "filter invert-0"
+                  className={`w-full h-full object-contain transition-all duration-150 ${
+                    isNavbarLight ? "brightness-0" : ""
                   }`}
                 />
               </div>
-              <span className={`font-mono text-sm tracking-[0.2em] font-bold transition-colors ${
+              <span className={`font-mono text-sm tracking-[0.2em] font-bold transition-colors duration-150 ${
                 isNavbarLight ? "text-black" : "text-white"
               }`}>
                 FLUX
@@ -103,7 +103,7 @@ export default function Navbar() {
           </div>
 
           {/* Center Column: Floating Pill Navigation (height 52px) */}
-          <nav className={`pointer-events-auto hidden md:flex items-center gap-1.5 h-[52px] rounded-full px-5 shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex-none border transition-colors ${
+          <nav className={`pointer-events-auto hidden md:flex items-center gap-1.5 h-[52px] rounded-full px-5 shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex-none border transition-colors duration-150 ${
             isNavbarLight
               ? "bg-white/90 backdrop-blur-xl border-black/15 text-black"
               : "bg-[#111111]/80 backdrop-blur-xl border-white/10 text-white"

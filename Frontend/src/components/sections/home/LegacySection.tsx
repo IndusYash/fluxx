@@ -8,15 +8,17 @@ import FloatingPlane, {
   computePos,
   photos,
 } from "@/components/3d/FloatingPlane";
+import { liquidController } from "./liquidController";
 
 export default function LegacySection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const wordRef = useRef<HTMLHeadingElement>(null);
   const planeRef = useRef<FloatingPlaneHandle>(null);
   const stRef = useRef<ScrollTrigger | null>(null);
+  const barRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const activeIdxRef = useRef(0);
 
   const [activeIdx, setActiveIdx] = useState(0);
-  const [posValue, setPosValue] = useState(0);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -24,29 +26,67 @@ export default function LegacySection() {
 
     const ctx = gsap.context(() => {
       // 1. Pinned ScrollTrigger for the entire Legacy Section:
-      // Pins the section to scrub through all 4 archive photos before moving to the next section
+      // First ~18% (~65vh scroll, 60-70% of 1 viewport): Liquid overlay drains (1 -> 0),
+      // revealing About content directly underneath with zero empty black screen!
+      // Remaining 82%: 3D card reel and interactive archive cards advance smoothly.
       const st = ScrollTrigger.create({
         trigger: section,
         start: "top top",
-        end: "+=260%",
+        end: "+=300%",
         pin: true,
         pinSpacing: true,
-        scrub: 0.8,
+        anticipatePin: 1,
+        fastScrollEnd: true,
+        invalidateOnRefresh: true,
+        scrub: 0.7,
         onUpdate: (self) => {
           const p = self.progress;
-          // Update the 3D card reel
-          planeRef.current?.updateProgress(p);
+
+          // Liquid exit drain: drains (1 -> 0) over the first ~18% of this pinned section (~65vh of scroll)
+          if (p < 0.18) {
+            const drainNorm = p / 0.18; // 0 -> 1
+            const liquidP = 1.0 - drainNorm; // 1 -> 0
+            liquidController.setProgress(liquidP);
+          } else {
+            liquidController.setProgress(0.0);
+          }
+
+          // Card progression starts as soon as drain completes (0.18 -> 1.0)
+          const cardP = Math.min(1.0, Math.max(0.0, (p - 0.18) / 0.82));
+          planeRef.current?.updateProgress(cardP);
 
           // Update active step for interactive tabs
-          const calculatedPos = computePos(p);
-          setPosValue(calculatedPos);
+          const calculatedPos = computePos(cardP);
           const step = Math.min(3, Math.max(0, Math.round(calculatedPos)));
-          setActiveIdx(step);
+
+          // Mutate bar widths directly for 60fps without React re-render
+          for (let i = 0; i < 4; i++) {
+            const bar = barRefs.current[i];
+            if (bar) {
+              let pct = 0;
+              if (calculatedPos >= i + 1) pct = 100;
+              else if (calculatedPos > i) pct = Math.round((calculatedPos - i) * 100);
+              bar.style.width = `${pct}%`;
+            }
+          }
+
+          // Only trigger React state change when discrete index changes
+          if (step !== activeIdxRef.current) {
+            activeIdxRef.current = step;
+            setActiveIdx(step);
+          }
+        },
+        onLeave: () => {
+          liquidController.forceState(0);
+        },
+        onLeaveBack: () => {
+          // Returning back into Stats: restore solid white screen
+          liquidController.forceState(1);
         },
       });
       stRef.current = st;
 
-      // 2. Parallax float on the huge script word
+      // 2. Parallax float on the huge script word (transform only)
       if (wordRef.current) {
         gsap.fromTo(
           wordRef.current,
@@ -66,16 +106,7 @@ export default function LegacySection() {
       }
     }, section);
 
-    // Refresh triggers and notify Lenis
-    const refreshTimer = setTimeout(() => {
-      ScrollTrigger.refresh();
-      if ((window as any).__lenis) {
-        (window as any).__lenis.resize();
-      }
-    }, 250);
-
     return () => {
-      clearTimeout(refreshTimer);
       ctx.revert();
     };
   }, []);
@@ -83,9 +114,8 @@ export default function LegacySection() {
   const handleJumpTo = (idx: number) => {
     const st = stRef.current;
     if (!st) return;
-    // Map idx to scrub progress:
-    // idx 0 -> 0.04, idx 1 -> 0.38, idx 2 -> 0.71, idx 3 -> 0.96
-    const targetP = idx === 0 ? 0.04 : idx === 1 ? 0.38 : idx === 2 ? 0.71 : 0.96;
+    const targetNorm = idx === 0 ? 0.02 : idx === 1 ? 0.35 : idx === 2 ? 0.68 : 0.96;
+    const targetP = 0.18 + targetNorm * 0.82;
     const targetScroll = st.start + targetP * (st.end - st.start);
 
     if ((window as any).__lenis) {
@@ -93,12 +123,6 @@ export default function LegacySection() {
     } else {
       window.scrollTo({ top: targetScroll, behavior: "smooth" });
     }
-  };
-
-  const getBarProgress = (idx: number) => {
-    if (posValue < idx) return 0;
-    if (posValue >= idx + 1) return 100;
-    return Math.round((posValue - idx) * 100);
   };
 
   return (
@@ -110,7 +134,7 @@ export default function LegacySection() {
       {/* 1. Behind: Construction Lines drawn on scroll */}
       <ConstructionLines />
 
-      {/* Persistent Logo Anchor: parked subtly in the upper area */}
+      {/* Persistent Logo Anchor */}
       <div
         data-logo-anchor="about"
         data-logo-scale="0.38"
@@ -118,7 +142,7 @@ export default function LegacySection() {
         className="hidden lg:block absolute top-24 left-[var(--gutter)] w-[140px] h-[140px] pointer-events-none z-[1]"
       />
 
-      {/* 2. Huge Script Word centered on black (15% opacity range) */}
+      {/* 2. Huge Script Word centered on black */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden">
         <h2
           ref={wordRef}
@@ -138,7 +162,7 @@ export default function LegacySection() {
           {/* Left Column: Narrative, Mission Badges & Interactive Archive Step Cards */}
           <div className="lg:col-span-7 flex flex-col justify-center text-left">
             <span className="inline-block self-start font-mono text-[9px] sm:text-xs tracking-[0.35em] text-white/60 uppercase mb-2 sm:mb-3 px-2 sm:px-3 py-0.5 sm:py-1 border border-white/10 bg-black/60 backdrop-blur-sm rounded-sm">
-              // OUR ORIGIN & FOUNDATIONS
+              // OUR ORIGIN &amp; FOUNDATIONS
             </span>
 
             <h3 className="font-sans font-medium text-lg sm:text-3xl lg:text-[2.5rem] text-white tracking-tight leading-snug mb-2 sm:mb-3">
@@ -161,7 +185,7 @@ export default function LegacySection() {
                 <button
                   key={idx}
                   onClick={() => handleJumpTo(idx)}
-                  className={`group relative text-left p-2.5 sm:p-3 rounded-lg border transition-all duration-300 ${
+                  className={`group relative text-left p-2.5 sm:p-3 rounded-lg border transition-all duration-300 cursor-pointer ${
                     activeIdx === idx
                       ? "bg-white/10 border-white/40 text-white shadow-[0_0_24px_rgba(255,255,255,0.08)] scale-[1.01]"
                       : "bg-white/[0.02] border-white/10 text-white/40 hover:border-white/20 hover:text-white/70"
@@ -173,21 +197,25 @@ export default function LegacySection() {
                     </span>
                     <span
                       className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-                        activeIdx === idx ? "bg-white ring-2 ring-white/40" : "bg-white/20"
+                        activeIdx === idx ? "bg-white scale-125" : "bg-white/20"
                       }`}
                     />
                   </div>
-                  <div className="font-sans font-medium text-xs sm:text-sm tracking-tight truncate">
+                  <h4 className="font-sans font-bold text-xs sm:text-sm tracking-wide text-white mb-0.5">
                     {item.title}
-                  </div>
-                  <div className="text-[10px] font-mono text-white/50 tracking-wider truncate mt-0.5">
-                    {item.label.split("//")[0]?.trim()}
-                  </div>
-                  {/* Real-time scrub progress bar */}
-                  <div className="mt-2 h-[2px] w-full bg-white/10 rounded-full overflow-hidden">
+                  </h4>
+                  <p className="font-sans text-[10px] sm:text-[11px] text-neutral-400 line-clamp-1 font-light">
+                    {item.desc}
+                  </p>
+
+                  {/* Progress bar inside card mutated directly via ref */}
+                  <div className="mt-2 w-full h-[2px] bg-white/10 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-white transition-all duration-100 ease-out"
-                      style={{ width: `${getBarProgress(idx)}%` }}
+                      ref={(el) => {
+                        barRefs.current[idx] = el;
+                      }}
+                      className="h-full bg-white transition-none"
+                      style={{ width: `${idx === 0 ? 100 : 0}%` }}
                     />
                   </div>
                 </button>
@@ -195,8 +223,8 @@ export default function LegacySection() {
             </div>
           </div>
 
-          {/* Right Column: 3D FloatingPlane image reel */}
-          <div className="lg:col-span-5 w-full flex items-center justify-center lg:justify-end">
+          {/* Right Column: 3D Card Reel */}
+          <div className="lg:col-span-5 flex items-center justify-center relative w-full h-[36vh] sm:h-[46vh] lg:h-[58vh]">
             <FloatingPlane ref={planeRef} />
           </div>
         </div>

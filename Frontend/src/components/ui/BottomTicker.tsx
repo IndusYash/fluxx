@@ -8,7 +8,7 @@ export default function BottomTicker() {
   return (
     <footer
       aria-label="Status Ticker"
-      className={`fixed bottom-0 inset-x-0 z-[80] pointer-events-none select-none h-[var(--ticker-h)] px-[var(--gutter)] flex items-center justify-between text-[11px] tracking-[0.28em] font-mono uppercase transition-colors duration-300 ${
+      className={`fixed bottom-0 inset-x-0 z-[80] pointer-events-none select-none h-[var(--ticker-h)] px-[var(--gutter)] flex items-center justify-between text-[11px] tracking-[0.28em] font-mono uppercase transition-colors duration-150 ${
         isTickerLight
           ? "bg-white/90 backdrop-blur-md border-t border-black/15 text-black"
           : "bg-black/75 backdrop-blur-md border-t border-white/10 text-white"
@@ -34,7 +34,7 @@ export default function BottomTicker() {
           <React.Fragment key={index}>
             <span className={`${isTickerLight ? "text-black/40" : "text-white/40"} font-light text-xs`}>✕</span>
             <span
-              className={`font-medium tracking-[0.32em] transition-colors duration-200 ${
+              className={`font-medium tracking-[0.32em] transition-colors duration-150 ${
                 isTickerLight ? "text-black hover:text-black/70" : "text-white/90 hover:text-white"
               }`}
             >

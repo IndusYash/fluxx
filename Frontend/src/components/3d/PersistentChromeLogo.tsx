@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { introManager } from "@/lib/introState";
 
 interface PersistentChromeLogoProps {
   isMobile?: boolean;
@@ -184,6 +185,40 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
     const logoCenter = new THREE.Vector3();
     logoBox.getCenter(logoCenter);
     logoInnerGroup.position.set(-logoCenter.x, -logoCenter.y, -logoCenter.z);
+
+    // Save assembled rest transforms for each block cube
+    const originalTransforms: { x: number; y: number; z: number; rx: number; ry: number; rz: number }[] = [];
+    logoInnerGroup.children.forEach((c) => {
+      originalTransforms.push({
+        x: c.position.x,
+        y: c.position.y,
+        z: c.position.z,
+        rx: c.rotation.x,
+        ry: c.rotation.y,
+        rz: c.rotation.z,
+      });
+    });
+
+    const isIntroPending = !introManager.isSeenInSession() && !prefersReducedMotion;
+    if (isIntroPending) {
+      // Scatter blocks off-screen left and right with depth and random rotation
+      logoInnerGroup.children.forEach((c, idx) => {
+        const sign = idx % 2 === 0 ? -1 : 1;
+        const xOffset = sign * (14 + idx * 2.2);
+        const yOffset = ((idx % 3) - 1) * 4.2;
+        const zOffset = 3.5 + (idx % 3) * 1.8;
+        c.position.set(c.position.x + xOffset, c.position.y + yOffset, zOffset);
+        c.rotation.set(
+          (Math.random() - 0.5) * 4.0,
+          (Math.random() - 0.5) * 6.0,
+          (Math.random() - 0.5) * 3.0
+        );
+      });
+      logoOuterGroup.position.set(0, 0, 0);
+      logoOuterGroup.scale.set(1.15, 1.15, 1.15);
+      chromeMaterial.opacity = 0;
+      logoOuterGroup.visible = false;
+    }
 
     logoOuterGroup.add(logoInnerGroup);
     scene.add(logoOuterGroup);
@@ -446,7 +481,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
 
       return {
         hero: { x: heroPos.x, y: heroPos.y, scale: heroScale, opacity: 1.0 },
-        statement: { x: stmtPos.x, y: stmtPos.y, scale: 0.60, opacity: 0.38 },
+        statement: { x: stmtPos.x, y: stmtPos.y, scale: 0.70, opacity: 0.95 },
         stats: { x: 0, y: 0, scale: 0.45, opacity: 0.0 },
         about: { x: aboutPos.x, y: aboutPos.y, scale: 0.38, opacity: 0.26 },
         events: { x: eventsPos.x, y: eventsPos.y, scale: 0.26, opacity: 0.15 },
@@ -459,19 +494,142 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
     let targets = computeAllTargets();
 
     // ─────────────────────────────────────────────────────────────
-    // 7. CURRENT ANIMATION STATE PROXY
+    // 7. CURRENT ANIMATION STATE PROXY & INTRO HOOKS
     // ─────────────────────────────────────────────────────────────
     const currentLogoState = {
-      x: targets.hero.x,
-      y: targets.hero.y,
-      scale: targets.hero.scale,
-      opacity: targets.hero.opacity,
+      x: isIntroPending ? 0 : targets.hero.x,
+      y: isIntroPending ? 0 : targets.hero.y,
+      scale: isIntroPending ? 1.15 : targets.hero.scale,
+      opacity: isIntroPending ? 0.0 : targets.hero.opacity,
     };
 
     // The animated mesh proxy
     logoGroup.position.set(currentLogoState.x, currentLogoState.y, 0);
     logoGroup.scale.set(currentLogoState.scale, currentLogoState.scale, currentLogoState.scale);
     chromeMaterial.opacity = currentLogoState.opacity;
+
+    // Register Intro Orchestration Hooks
+    introManager.registerHooks({
+      onAssemble: (tl: gsap.core.Timeline, startTime: number) => {
+        logoGroup.position.set(0, 0, 0);
+        logoGroup.scale.set(1.15, 1.15, 1.15);
+        chromeMaterial.opacity = 1.0;
+        currentLogoState.x = 0;
+        currentLogoState.y = 0;
+        currentLogoState.scale = 1.15;
+        currentLogoState.opacity = 1.0;
+        lerpPos.x = 0;
+        lerpPos.y = 0;
+        lerpPos.scale = 1.15;
+        lerpPos.opacity = 1.0;
+        logoGroup.visible = true;
+
+        logoInnerGroup.children.forEach((c, idx) => {
+          const orig = originalTransforms[idx];
+          if (!orig) return;
+          tl.to(
+            c.position,
+            {
+              x: orig.x,
+              y: orig.y,
+              z: orig.z,
+              duration: 1.25,
+              ease: "power3.out",
+            },
+            startTime + idx * 0.04
+          );
+          tl.to(
+            c.rotation,
+            {
+              x: orig.rx,
+              y: orig.ry,
+              z: orig.rz,
+              duration: 1.25,
+              ease: "power3.out",
+            },
+            startTime + idx * 0.04
+          );
+        });
+      },
+
+      shakeCamera: () => {
+        const shakeTl = gsap.timeline();
+        shakeTl
+          .to(camera.position, { x: 0.12, y: -0.09, duration: 0.05, ease: "power1.inOut" })
+          .to(camera.position, { x: -0.10, y: 0.08, duration: 0.05, ease: "power1.inOut" })
+          .to(camera.position, { x: 0.06, y: -0.05, duration: 0.05, ease: "power1.inOut" })
+          .to(camera.position, { x: 0, y: 0, z: 8.8, duration: 0.08, ease: "power2.out" });
+      },
+
+      onGlideToHero: (tl: gsap.core.Timeline, startTime: number) => {
+        targets = computeAllTargets();
+        tl.to(
+          logoGroup.position,
+          {
+            x: targets.hero.x,
+            y: targets.hero.y,
+            z: 0,
+            duration: 1.4,
+            ease: "power3.inOut",
+            onUpdate: () => {
+              currentLogoState.x = logoGroup.position.x;
+              currentLogoState.y = logoGroup.position.y;
+              lerpPos.x = logoGroup.position.x;
+              lerpPos.y = logoGroup.position.y;
+            },
+          },
+          startTime
+        );
+        tl.to(
+          logoGroup.scale,
+          {
+            x: targets.hero.scale,
+            y: targets.hero.scale,
+            z: targets.hero.scale,
+            duration: 1.4,
+            ease: "power3.inOut",
+            onUpdate: () => {
+              currentLogoState.scale = logoGroup.scale.x;
+              lerpPos.scale = logoGroup.scale.x;
+            },
+            onComplete: () => {
+              currentLogoState.x = targets.hero.x;
+              currentLogoState.y = targets.hero.y;
+              currentLogoState.scale = targets.hero.scale;
+              currentLogoState.opacity = targets.hero.opacity;
+              lerpPos.x = targets.hero.x;
+              lerpPos.y = targets.hero.y;
+              lerpPos.scale = targets.hero.scale;
+              lerpPos.opacity = targets.hero.opacity;
+            },
+          },
+          startTime
+        );
+      },
+
+      snapToHero: () => {
+        targets = computeAllTargets();
+        logoInnerGroup.children.forEach((c, idx) => {
+          const orig = originalTransforms[idx];
+          if (orig) {
+            c.position.set(orig.x, orig.y, orig.z);
+            c.rotation.set(orig.rx, orig.ry, orig.rz);
+          }
+        });
+        logoGroup.position.set(targets.hero.x, targets.hero.y, 0);
+        logoGroup.scale.set(targets.hero.scale, targets.hero.scale, targets.hero.scale);
+        currentLogoState.x = targets.hero.x;
+        currentLogoState.y = targets.hero.y;
+        currentLogoState.scale = targets.hero.scale;
+        currentLogoState.opacity = targets.hero.opacity;
+        lerpPos.x = targets.hero.x;
+        lerpPos.y = targets.hero.y;
+        lerpPos.scale = targets.hero.scale;
+        lerpPos.opacity = targets.hero.opacity;
+        chromeMaterial.opacity = targets.hero.opacity;
+        logoGroup.visible = true;
+      },
+    });
 
     // ─────────────────────────────────────────────────────────────
     // 8. GSAP SCROLLTRIGGER TIMELINE JOURNEY
@@ -543,11 +701,12 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
 
         // 3. Leave Faculty -> Fade out
         const t3 = ScrollTrigger.create({
-          trigger: "#achievement-scene-section",
+          trigger: "#achievement-scene-wrapper",
           start: "top 95%",
           end: "top 60%",
           scrub: 0.5,
           onUpdate: (self) => {
+            if (!self.isActive) return;
             const p = self.progress;
             currentLogoState.opacity = gsap.utils.interpolate(1.0, 0.0, p);
           },
@@ -564,7 +723,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
 
         // 3b. Strictly keep logo invisible throughout Achievements & Objectives
         const t3b = ScrollTrigger.create({
-          trigger: "#achievement-scene-section",
+          trigger: "#achievement-scene-wrapper",
           start: "top 60%",
           endTrigger: "#footer-showcase-section",
           end: "top 85%",
@@ -639,6 +798,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
         end: "top top",
         scrub: 0.8,
         onUpdate: (self) => {
+          if (!self.isActive) return;
           const p = self.progress;
           currentLogoState.x = gsap.utils.interpolate(targets.hero.x, targets.statement.x, p);
           currentLogoState.y = gsap.utils.interpolate(targets.hero.y, targets.statement.y, p);
@@ -648,6 +808,34 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       });
       triggers.push(st1);
 
+      // Stage 1b: Statement Pin Hold (firmly locks logo on right while ScrollTextSection is pinned)
+      const st1b = ScrollTrigger.create({
+        trigger: "#scroll-text-section",
+        start: "top top",
+        end: "+=120%",
+        onEnter: () => {
+          currentLogoState.x = targets.statement.x;
+          currentLogoState.y = targets.statement.y;
+          currentLogoState.scale = targets.statement.scale;
+          currentLogoState.opacity = targets.statement.opacity;
+        },
+        onEnterBack: () => {
+          currentLogoState.x = targets.statement.x;
+          currentLogoState.y = targets.statement.y;
+          currentLogoState.scale = targets.statement.scale;
+          currentLogoState.opacity = targets.statement.opacity;
+        },
+        onUpdate: (self) => {
+          if (self.isActive) {
+            currentLogoState.x = targets.statement.x;
+            currentLogoState.y = targets.statement.y;
+            currentLogoState.scale = targets.statement.scale;
+            currentLogoState.opacity = targets.statement.opacity;
+          }
+        },
+      });
+      triggers.push(st1b);
+
       // Stage 2: Statement -> Stats (Fade out)
       const st2 = ScrollTrigger.create({
         trigger: "#liquid-transition-section",
@@ -655,6 +843,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
         end: "top 70%",
         scrub: 0.6,
         onUpdate: (self) => {
+          if (!self.isActive) return;
           const p = self.progress;
           currentLogoState.opacity = gsap.utils.interpolate(targets.statement.opacity, 0.0, p);
         },
@@ -668,6 +857,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
         end: "top 35%",
         scrub: 0.8,
         onUpdate: (self) => {
+          if (!self.isActive) return;
           const p = self.progress;
           currentLogoState.x = targets.about.x;
           currentLogoState.y = targets.about.y;
@@ -684,6 +874,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
         end: "top 25%",
         scrub: 0.8,
         onUpdate: (self) => {
+          if (!self.isActive) return;
           const p = self.progress;
           currentLogoState.x = gsap.utils.interpolate(targets.about.x, targets.events.x, p);
           currentLogoState.y = gsap.utils.interpolate(targets.about.y, targets.events.y, p);
@@ -700,6 +891,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
         end: "top 20%",
         scrub: 0.8,
         onUpdate: (self) => {
+          if (!self.isActive) return;
           const p = self.progress;
           const easeP = gsap.parseEase("power2.out")(p);
           currentLogoState.x = gsap.utils.interpolate(targets.events.x, targets.faculty.x, easeP);
@@ -733,11 +925,12 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
 
       // Stage 5: Faculty -> Achievements (Fade out cleanly as Achievements approaches)
       const st5 = ScrollTrigger.create({
-        trigger: "#achievement-scene-section",
+        trigger: "#achievement-scene-wrapper",
         start: "top 95%",
         end: "top 60%",
         scrub: 0.5,
         onUpdate: (self) => {
+          if (!self.isActive) return;
           const p = self.progress;
           currentLogoState.opacity = gsap.utils.interpolate(targets.faculty.opacity, 0.0, p);
         },
@@ -754,7 +947,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
 
       // Stage 5b: Strictly keep logo invisible throughout Achievements & Objectives until Footer Showcase
       const st5b = ScrollTrigger.create({
-        trigger: "#achievement-scene-section",
+        trigger: "#achievement-scene-wrapper",
         start: "top 60%",
         endTrigger: "#footer-showcase-section",
         end: "top 85%",
@@ -784,6 +977,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
           logoGroup.visible = true;
         },
         onUpdate: (self) => {
+          if (!self.isActive) return;
           const p = self.progress;
           currentLogoState.x = targets.footer.x;
           currentLogoState.y = targets.footer.y;
@@ -805,6 +999,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
         end: "top 95%",
         scrub: 0.2,
         onUpdate: (self) => {
+          if (!self.isActive) return;
           const p = self.progress;
           currentLogoState.opacity = gsap.utils.interpolate(targets.footer.opacity, 0.0, p);
           currentLogoState.y = targets.footer.y + p * 2.5;
@@ -818,13 +1013,15 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       });
       triggers.push(st7);
 
-      // Sync active trigger state to currentLogoState on init
-      ScrollTrigger.refresh();
-      triggers.forEach((t) => {
-        if (t.isActive && t.vars.onUpdate) {
-          t.vars.onUpdate(t);
-        }
-      });
+      // Sync active trigger state to currentLogoState on init only when intro is done
+      if (introManager.isDone()) {
+        ScrollTrigger.refresh();
+        triggers.forEach((t) => {
+          if (t.isActive && t.vars.onUpdate) {
+            t.vars.onUpdate(t);
+          }
+        });
+      }
     };
 
     // Recompute on ScrollTrigger.refresh()
@@ -833,8 +1030,19 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
     };
     ScrollTrigger.addEventListener("refresh", handleScrollTriggerRefresh);
 
+    // Subscribe to intro manager so triggers are initialized cleanly once intro completes
+    const unsubscribeIntro = introManager.subscribe((state) => {
+      if (state === "done") {
+        initScrollTriggers();
+      }
+    });
+
     // Small timeout to allow layout to settle before calculating bounding rects
-    const initTimer = setTimeout(initScrollTriggers, 120);
+    const initTimer = setTimeout(() => {
+      if (introManager.isDone()) {
+        initScrollTriggers();
+      }
+    }, 120);
 
     // ─────────────────────────────────────────────────────────────
     // 9. MOUSE TILT & SCROLL VELOCITY SPIN
@@ -1001,6 +1209,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
     return () => {
       clearTimeout(initTimer);
       cancelAnimationFrame(animId);
+      unsubscribeIntro();
       triggers.forEach((t) => t.kill());
       ScrollTrigger.removeEventListener("refresh", handleScrollTriggerRefresh);
       window.removeEventListener("resize", handleResize);
@@ -1025,7 +1234,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 pointer-events-none z-[2] overflow-visible w-full h-full"
+      className="fixed inset-0 pointer-events-none z-[15] overflow-visible w-full h-full"
       aria-hidden="true"
     />
   );

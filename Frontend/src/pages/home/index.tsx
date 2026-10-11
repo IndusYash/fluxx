@@ -1,7 +1,7 @@
 import React from "react";
+import FluxIntro from "@/components/intro/FluxIntro";
 import PersistentChromeLogo from "@/components/3d/PersistentChromeLogo";
 import Hero from "@/components/sections/home/Hero";
-import PinnedSection from "@/components/sections/home/PinnedSection";
 import ScrollTextSection from "@/components/sections/home/ScrollTextSection";
 import LiquidTransition from "@/components/sections/home/LiquidTransition";
 import LegacySection from "@/components/sections/home/LegacySection";
@@ -15,6 +15,9 @@ import FooterShowcase from "@/components/sections/home/FooterShowcase";
 export default function HomePage({ isMobile: _isMobile }: { isMobile?: boolean }) {
   return (
     <div className="bg-[#060606] text-white overflow-x-clip relative min-h-screen">
+      {/* Intro Experience (Monochrome, FBM noise dissolve, logo assemble & hero reveal) */}
+      <FluxIntro />
+
       {/* Global Persistent 3D Chrome Logo: single fixed viewport canvas traveling across the whole page */}
       <PersistentChromeLogo isMobile={_isMobile} />
 
@@ -40,7 +43,9 @@ export default function HomePage({ isMobile: _isMobile }: { isMobile?: boolean }
       <BeamSection />
 
       {/* 8. Achievements 3D Scene with Low-Poly Terrain, Upright Panels & Camera Glide */}
-      <AchievementScene />
+      <div id="achievement-scene-wrapper" className="relative">
+        <AchievementScene />
+      </div>
 
       {/* 9. Core Showcase */}
       <div className="bg-[#060606]">
