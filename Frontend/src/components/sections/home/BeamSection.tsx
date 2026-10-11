@@ -107,41 +107,41 @@ export default function BeamSection() {
               scale: 1,
             });
           } else {
-            // Middle card starts higher (slides down), left starts lower (slides up), right starts lower (slides up)
-            const middleStartOffset = isMobile ? -40 : -90;
-            const leftStartOffset = 60;
-            const rightStartOffset = 30;
+            // Middle card starts significantly higher in the upper zone, then glides down to its position on scroll
+            const middleStartOffset = isMobile ? -50 : -180;
+            const leftStartOffset = isMobile ? 15 : 30;
+            const rightStartOffset = isMobile ? 10 : 20;
 
             const tl = gsap.timeline({
               scrollTrigger: {
-                trigger: cardsContainerRef.current,
-                start: "top 85%",
-                end: "center 45%",
-                scrub: true,
+                trigger: sectionRef.current,
+                start: "top top",
+                end: "+=550",
+                scrub: 0.8,
                 invalidateOnRefresh: true,
               },
             });
 
-            // Middle card: slides down, opacity 0.6 -> 1, scale 1.03 -> 1
+            // Middle card: starts elevated in the upper area, then smoothly descends into aligned position on scroll
             tl.fromTo(
               middleCard,
-              { y: middleStartOffset, opacity: 0.6, scale: 1.03 },
+              { y: middleStartOffset, opacity: 0.95, scale: 1.02 },
               { y: 0, opacity: 1, scale: 1, ease: "power2.out" },
               0
             );
 
-            // Left card: slides up, opacity 0.6 -> 1
+            // Left card: slides up smoothly to meet baseline
             tl.fromTo(
               leftCard,
-              { y: leftStartOffset, opacity: 0.6 },
+              { y: leftStartOffset, opacity: 0.85 },
               { y: 0, opacity: 1, ease: "power2.out" },
               0
             );
 
-            // Right card: slides up, opacity 0.6 -> 1
+            // Right card: slides up smoothly to meet baseline
             tl.fromTo(
               rightCard,
-              { y: rightStartOffset, opacity: 0.6 },
+              { y: rightStartOffset, opacity: 0.85 },
               { y: 0, opacity: 1, ease: "power2.out" },
               0
             );

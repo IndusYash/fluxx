@@ -422,9 +422,9 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
         }
       }
 
-      // Middle card can start raised by 90px (40px on mobile)
-      const middleCardOffset = isMob ? 40 : 90;
-      const maxScreenYBottom = Math.min(headingSecTop, cardsSecTop - middleCardOffset) - 48;
+      // Middle card can start raised by 180px (50px on mobile)
+      const middleCardOffset = isMob ? 50 : 180;
+      const maxScreenYBottom = Math.min(headingSecTop, cardsSecTop - middleCardOffset) - 36;
 
       // Place target center in the safe upper vertical zone
       const targetScreenCenterY = (minScreenYTop + maxScreenYBottom) / 2;
