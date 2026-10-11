@@ -8,6 +8,10 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== "undefined") {
+  (window as any).ScrollTrigger = ScrollTrigger;
+  (window as any).gsap = gsap;
+}
 
 import HomePage from "@/pages/home";
 import AboutPage from "@/pages/about/AboutPage";
@@ -35,8 +39,16 @@ export default function App() {
       wheelMultiplier: 1,
     });
 
+    (window as any).__lenis = lenis;
+
     // Synchronize Lenis scroll with GSAP ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);
+
+    // When ScrollTrigger recalculates pin spacers/offsets, notify Lenis of new page height
+    const onSTRefresh = () => {
+      lenis.resize();
+    };
+    ScrollTrigger.addEventListener("refresh", onSTRefresh);
 
     // Sync GSAP ticker with Lenis requestAnimationFrame
     const updateLenis = (time: number) => {
@@ -45,11 +57,43 @@ export default function App() {
     gsap.ticker.add(updateLenis);
     gsap.ticker.lagSmoothing(0);
 
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    // Recompute page height when DOM content or images change
+    const resizeObserver = new ResizeObserver(() => {
+      lenis.resize();
+      ScrollTrigger.refresh();
+    });
+    if (document.body) {
+      resizeObserver.observe(document.body);
+    }
+
+    // Refresh after fonts are ready
+    if (document.fonts) {
+      document.fonts.ready.then(() => {
+        lenis.resize();
+        ScrollTrigger.refresh();
+      });
+    }
+
+    // Refresh after window load
+    const onLoad = () => {
+      lenis.resize();
+      ScrollTrigger.refresh();
+    };
+    window.addEventListener("load", onLoad);
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      lenis.resize();
+      ScrollTrigger.refresh();
+    };
     window.addEventListener("resize", handleResize);
     
     return () => {
+      delete (window as any).__lenis;
+      resizeObserver.disconnect();
+      window.removeEventListener("load", onLoad);
       window.removeEventListener("resize", handleResize);
+      ScrollTrigger.removeEventListener("refresh", onSTRefresh);
       gsap.ticker.remove(updateLenis);
       lenis.destroy();
     };

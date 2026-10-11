@@ -1,418 +1,402 @@
-"use client";
-
-import { motion } from "framer-motion";
+import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, Sparkles, Zap, Target } from "lucide-react";
-import { useEffect, useState, useRef, useMemo } from "react";
-
-// --- Magnetic Button Component ---
-const MagneticButton = ({ children, onClick, className }: any) => {
-  const ref = useRef<HTMLButtonElement>(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-
-  const handleMouse = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { clientX, clientY } = e;
-    const { height, width, left, top } = ref.current!.getBoundingClientRect();
-    const middleX = clientX - (left + width / 2);
-    const middleY = clientY - (top + height / 2);
-    setPosition({ x: middleX * 0.3, y: middleY * 0.3 });
-  };
-
-  const reset = () => {
-    setPosition({ x: 0, y: 0 });
-  };
-
-  return (
-    <motion.button
-      ref={ref}
-      onMouseMove={handleMouse}
-      onMouseLeave={reset}
-      onClick={onClick}
-      animate={{ x: position.x, y: position.y }}
-      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
-      className={className}
-    >
-      {children}
-    </motion.button>
-  );
-};
-
-// --- Typing Effect Component ---
-const TypingEffect = ({ words, className }: { words: string[], className?: string }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const wordsRef = useRef(words);
-  wordsRef.current = words;
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex(prev => (prev + 1) % wordsRef.current.length);
-    }, 2500);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Find the longest word to use as the "spacer" for height
-  const longestIndex = words.reduce((maxI, w, i, arr) => w.length > arr[maxI].length ? i : maxI, 0);
-
-  return (
-    <span className={`${className} relative inline-block`}>
-      {/* Invisible spacer word to reserve height/width */}
-      <span className="invisible">{words[longestIndex]}</span>
-      {words.map((word, index) => (
-        <span
-          key={index}
-          className="absolute left-0 top-0 whitespace-nowrap transition-all duration-700 ease-in-out"
-          style={{
-            opacity: index === currentIndex ? 1 : 0,
-            transform: index === currentIndex ? 'translateY(0) scale(1)' : 'translateY(12px) scale(0.95)',
-            filter: index === currentIndex ? 'blur(0)' : 'blur(2px)',
-          }}
-        >
-          {word}
-        </span>
-      ))}
-    </span>
-  );
-};
-
-// --- FLUX Animated Text Component ---
-const FluxAnimatedText = () => {
-  const [visibleLetters, setVisibleLetters] = useState<Set<number>>(new Set());
-  const titleText = useMemo(() => "FLUX".split(""), []);
-  
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setVisibleLetters(prev => {
-        const next = new Set(prev);
-        const nextIndex = titleText.findIndex((_, i) => !next.has(i));
-        if (nextIndex !== -1) {
-          next.add(nextIndex);
-        }
-        return next;
-      });
-    }, 400);
-    
-    return () => clearInterval(interval);
-  }, [titleText]);
-  
-  return (
-    <motion.h1 
-      className="flex text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-none mb-6"
-    >
-
-      {titleText.map((char, i) => {
-        const isVisible = visibleLetters.has(i);
-        return (
-          <motion.span
-            key={i}
-            initial={{ opacity: 0, y: 60, rotateX: -90, scale: 0.8 }}
-            animate={{ 
-              opacity: isVisible ? 1 : 0,
-              y: isVisible ? 0 : 60,
-              rotateX: isVisible ? 0 : -90,
-              scale: isVisible ? 1 : 0.8,
-            }}
-            transition={{ 
-              duration: 1,
-              ease: "easeOut"
-            }}
-            className="inline-block relative"
-            style={{
-              background: "linear-gradient(135deg, #ffffff 0%, #e5e5e5 50%, #ffffff 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              filter: "drop-shadow(0 0 30px rgba(255,255,255,0.5))",
-            }}
-          >
-            {char}
-          </motion.span>
-        );
-      })}
-    </motion.h1>
-  );
-};
-
-// --- FLUX Animated Boxes Component ---
-const FluxAnimatedBoxes = () => {
-  const [glowingBoxes, setGlowingBoxes] = useState<Set<string>>(new Set());
-  const [phase, setPhase] = useState<"waiting" | "glowing" | "full" | "disappearing">("waiting");
-  
-  const gridSize = 5;
-  
-  const targetBoxes = [
-    [0, 0], [0, 2], [0, 3], [0, 4],
-    [1, 1],
-    [2, 0], [2, 3], [2, 4],
-    [3, 2],
-    [4, 0], [4, 1]
-  ];
-  
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setGlowingBoxes(prev => {
-        const next = new Set(prev);
-        
-        if (phase === "waiting") {
-          setPhase("glowing");
-          return next;
-        } else if (phase === "glowing") {
-          const offBoxes = targetBoxes.filter(([r, c]) => !next.has(`${r},${c}`));
-          if (offBoxes.length > 0) {
-            const [r, c] = offBoxes[Math.floor(Math.random() * offBoxes.length)];
-            next.add(`${r},${c}`);
-          } else {
-            setPhase("full");
-          }
-          return next;
-        } else if (phase === "full") {
-          setPhase("disappearing");
-          return next;
-        } else if (phase === "disappearing") {
-          const onBoxes = targetBoxes.filter(([r, c]) => next.has(`${r},${c}`));
-          if (onBoxes.length > 0) {
-            const [r, c] = onBoxes[Math.floor(Math.random() * onBoxes.length)];
-            next.delete(`${r},${c}`);
-          } else {
-            setPhase("waiting");
-          }
-          return next;
-        }
-        
-        return next;
-      });
-    }, phase === "glowing" || phase === "disappearing" ? 500 : 1500);
-    
-    return () => clearInterval(interval);
-  }, [phase]);
-  
-  const isGlowing = (row: number, col: number) => glowingBoxes.has(`${row},${col}`);
-  
-  return (
-    <div className="relative flex items-center justify-center">
-      <div className="grid grid-cols-5 gap-0">
-        {Array.from({ length: gridSize }).map((_, row) => 
-          Array.from({ length: gridSize }).map((_, col) => {
-            const glowing = isGlowing(row, col);
-            return (
-              <motion.div
-                key={`${row}-${col}`}
-                className="relative"
-                animate={{ 
-                  opacity: glowing ? 1 : 0.08,
-                  scale: glowing ? 1 : 0.85,
-                }}
-                transition={{
-                  duration: 0.15,
-                  ease: "easeOut"
-                }}
-              >
-                <motion.div
-                  className="card-outline w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 relative"
-                  animate={{
-                    backgroundColor: glowing 
-                      ? ["#ffffff", "#e5e5e5", "#ffffff"]
-                      : "rgba(255,255,255,0.02)",
-                    boxShadow: glowing 
-                      ? [
-                          "0 0 20px rgba(255,255,255,0.6), 0 0 40px rgba(255,255,255,0.3)",
-                          "0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,255,255,0.4)",
-                          "0 0 20px rgba(255,255,255,0.6), 0 0 40px rgba(255,255,255,0.3)"
-                        ]
-                      : "0 0 0px rgba(255,255,255,0)",
-                  }}
-                  transition={{
-                    duration: glowing ? 1.5 : 0.3,
-                    repeat: glowing ? Infinity : 0,
-                    ease: "easeInOut",
-                  }}
-                  style={{
-                    border: glowing ? "1px solid rgba(255,255,255,0.9)" : "1px solid rgba(255,255,255,0.02)",
-                  }}
-                />
-              </motion.div>
-            );
-          })
-        )}
-      </div>
-      
-      {/* Glow effect behind boxes */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        animate={{
-          opacity: glowingBoxes.size > 0 ? [0.4, 0.7, 0.4] : 0,
-        }}
-        transition={{
-          duration: 3,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-        style={{
-          background: "radial-gradient(circle, rgba(255,255,255,0.25) 0%, transparent 70%)",
-          filter: "blur(50px)",
-        }}
-      />
-    </div>
-  );
-};
-
-// --- Main Hero Component ---
-import Galaxy from "@/components/ui/Galaxy/Galaxy";
+import gsap from "gsap";
+import Marquee from "@/components/ui/Marquee";
+import Container from "@/components/layout/Container";
 
 export default function Hero() {
   const navigate = useNavigate();
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  // Desktop refs
+  const line1Ref = useRef<HTMLSpanElement>(null);
+  const line2Ref = useRef<HTMLSpanElement>(null);
+  const line3Ref = useRef<HTMLSpanElement>(null);
+  const descRef = useRef<HTMLParagraphElement>(null);
+  const buttonsRef = useRef<HTMLDivElement>(null);
+  const canvasWrapperRef = useRef<HTMLDivElement>(null);
+  const rolesRef = useRef<HTMLDivElement>(null);
+  const joinChipRef = useRef<HTMLDivElement>(null);
+
+  // Mobile refs
+  const mLine1Ref = useRef<HTMLSpanElement>(null);
+  const mLine2Ref = useRef<HTMLSpanElement>(null);
+  const mLine3Ref = useRef<HTMLSpanElement>(null);
+  const mDescRef = useRef<HTMLParagraphElement>(null);
+  const mButtonsRef = useRef<HTMLDivElement>(null);
+  const mCanvasRef = useRef<HTMLDivElement>(null);
+  const mRolesRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const allElements = [
+        line1Ref.current,
+        line2Ref.current,
+        line3Ref.current,
+        descRef.current,
+        buttonsRef.current,
+        canvasWrapperRef.current,
+        rolesRef.current,
+        joinChipRef.current,
+        mLine1Ref.current,
+        mLine2Ref.current,
+        mLine3Ref.current,
+        mDescRef.current,
+        mButtonsRef.current,
+        mCanvasRef.current,
+        mRolesRef.current,
+      ].filter(Boolean);
+
+      const resolveFinalState = () => {
+        gsap.set(allElements, { clearProps: "transform,opacity" });
+      };
+
+      const tl = gsap.timeline({
+        defaults: { ease: "power3.out" },
+        onComplete: resolveFinalState,
+      });
+
+      // Desktop masked slide-up for headline
+      if (line1Ref.current && line2Ref.current && line3Ref.current) {
+        tl.fromTo(
+          [line1Ref.current, line2Ref.current, line3Ref.current],
+          { y: "110%", opacity: 0 },
+          { y: "0%", opacity: 1, duration: 1.0, stagger: 0.15 },
+          0.1
+        );
+      }
+
+      // Mobile masked slide-up for headline
+      if (mLine1Ref.current && mLine2Ref.current && mLine3Ref.current) {
+        tl.fromTo(
+          [mLine1Ref.current, mLine2Ref.current, mLine3Ref.current],
+          { y: "110%", opacity: 0 },
+          { y: "0%", opacity: 1, duration: 1.0, stagger: 0.15 },
+          0.1
+        );
+      }
+
+      // 3D Canvas fade in
+      if (canvasWrapperRef.current) {
+        tl.fromTo(
+          canvasWrapperRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 1.2, ease: "power2.inOut" },
+          0.3
+        );
+      }
+      if (mCanvasRef.current) {
+        tl.fromTo(
+          mCanvasRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 1.2, ease: "power2.inOut" },
+          0.3
+        );
+      }
+
+      // Main description paragraphs fade in
+      if (descRef.current) {
+        tl.fromTo(descRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, 0.6);
+      }
+      if (mDescRef.current) {
+        tl.fromTo(mDescRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, 0.6);
+      }
+
+      // Buttons fade in
+      if (buttonsRef.current) {
+        tl.fromTo(buttonsRef.current, { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, 0.75);
+      }
+      if (mButtonsRef.current) {
+        tl.fromTo(mButtonsRef.current, { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, 0.75);
+      }
+
+      // Roles & chip subtle vertical entrance
+      if (rolesRef.current) {
+        tl.fromTo(rolesRef.current, { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.75 }, 0.7);
+      }
+      if (joinChipRef.current) {
+        tl.fromTo(joinChipRef.current, { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.75 }, 0.8);
+      }
+      if (mRolesRef.current) {
+        tl.fromTo(mRolesRef.current, { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.75 }, 0.8);
+      }
+
+      // Fallback timer: guarantee clean resolve even if tab was throttled
+      const fallbackTimer = setTimeout(resolveFinalState, 2600);
+      return () => clearTimeout(fallbackTimer);
+    }, heroRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  const paragraphStyle = "text-[clamp(16px,1.15vw,20px)] leading-[1.6] max-w-[52ch] text-white/65 font-light";
 
   return (
-    <section 
-      className="relative h-[100svh] w-full flex items-center justify-center overflow-hidden bg-black"
+    <section
+      id="hero-section"
+      ref={heroRef}
+      className="hero-section-wrapper relative w-full h-[100svh] min-h-[100svh] bg-[#060606] overflow-hidden select-none flex flex-col justify-center"
+      style={{
+        paddingTop: "calc(clamp(14px, 2vh, 24px) + 52px + 40px)",
+        paddingBottom: "calc(var(--ticker-h) + 32px)",
+      }}
     >
-      {/* Galaxy Background */}
-      <div className="absolute inset-0 z-0">
-        <Galaxy 
-          mouseRepulsion={true}
-          mouseInteraction={true}
-          density={1}
-          glowIntensity={0.3}
-          saturation={0}
-          hueShift={140}
-          twinkleIntensity={0.3}
-          rotationSpeed={0.1}
-          repulsionStrength={2}
-          autoCenterRepulsion={0}
-          starSpeed={0.5}
-          speed={1}
+      {/* ─────────────────────────────────────────────────────────────
+          1. GIANT OVERSIZED BACKGROUND MARQUEE TEXT
+          Reaction to scroll velocity, clearly visible stroke + fill,
+          gradient mask protecting text legibility on left
+      ───────────────────────────────────────────────────────────── */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[1] overflow-hidden">
+        <Marquee text="WHERE IDEAS MEET IMPACT" outlined={true} speed={1.1} isHero={true} />
+      </div>
+
+      {/* ─────────────────────────────────────────────────────────────
+          2. PERSISTENT 3D CHROME LOGO DESKTOP ANCHOR (Desktop: lg:block)
+          Positioned in the right column, z-[2]
+          Background silver radial glow behind the anchor
+      ───────────────────────────────────────────────────────────── */}
+      <div
+        ref={canvasWrapperRef}
+        className="hidden lg:block absolute inset-0 pointer-events-none z-[2] overflow-visible"
+      >
+        {/* Soft silver radial glow on the right side */}
+        <div
+          className="absolute right-[10%] top-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-white/[0.06] blur-[120px] pointer-events-none"
+          aria-hidden="true"
+        />
+        {/* Persistent 3D Logo Anchor: right side, centered vertically, clearance from text */}
+        <div
+          data-logo-anchor="hero"
+          data-logo-scale="1.0"
+          data-logo-opacity="1.0"
+          className="absolute right-[8%] xl:right-[11%] top-1/2 -translate-y-1/2 w-[380px] h-[380px] pointer-events-none"
         />
       </div>
-      {/* Dark overlay to ensure text readability */}
-      <div
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.55) 48%, rgba(0,0,0,0.35) 100%), linear-gradient(0deg, rgba(0,0,0,0.75) 0%, transparent 55%)",
-        }}
-      />
 
-      {/* Animated grid overlay */}
-      <div 
-        className="absolute inset-0 z-0 opacity-[0.08] pointer-events-none"
-        style={{
-          backgroundImage: "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
+      {/* ─────────────────────────────────────────────────────────────
+          3. DESKTOP HERO (lg:flex - 1024px and up)
+          12-column grid inside shared Container
+          Left text block spans cols 1-8 (headline & description)
+          Right column spans cols 9-12 (Role list & Join Us chip)
+      ───────────────────────────────────────────────────────────── */}
+      <div className="hidden lg:flex w-full h-full items-center relative z-10 pointer-events-auto">
+        <Container className="w-full h-full flex items-center">
+          <div className="grid grid-cols-12 gap-8 items-center w-full h-full">
+            
+            {/* Columns 1-8: Left Text Block (flex column with justify-center for auto-adjustment) */}
+            <div className="col-span-8 flex flex-col justify-center text-left h-full">
+              
+              {/* Headline: enlarged and impactful */}
+              <h1
+                className="hero-headline hero-gap-headline font-sans font-light tracking-[-0.035em] leading-[1.01] text-white"
+              >
+                <span className="block overflow-hidden py-0.5">
+                  <span ref={line1Ref} className="block will-change-transform whitespace-nowrap">
+                    The Innovation Core
+                  </span>
+                </span>
+                <span className="block overflow-hidden py-0.5">
+                  <span ref={line2Ref} className="block will-change-transform whitespace-nowrap">
+                    Where Ideas
+                  </span>
+                </span>
+                <span className="block overflow-hidden py-0.5">
+                  <span ref={line3Ref} className="block will-change-transform whitespace-nowrap">
+                    Meet{" "}
+                    <span className="text-[#f0f0f0] font-normal drop-shadow-[0_0_24px_rgba(255,255,255,0.45)]">
+                      Impact.
+                    </span>
+                  </span>
+                </span>
+              </h1>
 
-      {/* Floating particles */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-white rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              opacity: [0, 0.8, 0],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
+              {/* Main paragraph: exact same style as bio, 32px gap below */}
+              <p
+                ref={descRef}
+                className={`hero-paragraph-shared hero-gap-desc ${paragraphStyle}`}
+              >
+                Empowering students to interact, innovate, and engineer real-world impact.
+                Source-first tech conclaves, research mentorship, hackathons, and breakthrough
+                student projects built directly into the university ecosystem.
+              </p>
+
+              {/* Buttons: min-height 52px, gap 16px */}
+              <div
+                ref={buttonsRef}
+                className="flex items-center gap-4"
+              >
+                <button
+                  onClick={() => navigate("/about")}
+                  className="hero-btn group inline-flex items-center justify-center gap-3 px-7 border border-white/25 hover:border-white text-white text-xs sm:text-sm font-medium tracking-wide uppercase bg-transparent hover:bg-white/[0.04] transition-all duration-200 rounded-none cursor-pointer"
+                >
+                  <span className="w-1.5 h-1.5 bg-white inline-block flex-shrink-0 transition-transform group-hover:scale-125" />
+                  <span>Read Docs</span>
+                </button>
+
+                <button
+                  onClick={() => navigate("/events")}
+                  className="hero-btn group inline-flex items-center justify-center gap-3 px-7 bg-white hover:bg-[#e6e6e6] text-black text-xs sm:text-sm font-semibold tracking-wide uppercase border border-white transition-all duration-200 rounded-none cursor-pointer shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+                >
+                  <span className="w-1.5 h-1.5 bg-black inline-block flex-shrink-0 transition-transform group-hover:scale-125" />
+                  <span>Browse All Events</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Columns 9-12: Empty center space so 3D logo shines through, Bottom-Right Role Stack & Join Us Chip */}
+            <div className="col-span-4 flex flex-col justify-end items-end self-stretch py-2 h-full pointer-events-none overflow-visible">
+              
+              {/* Bottom-Right Role List & Join Us Chip */}
+              <div className="flex flex-col items-end text-right select-none pointer-events-auto">
+                {/* Role List vertical stack with 10px gap */}
+                <div
+                  ref={rolesRef}
+                  className="flex flex-col items-end gap-[10px] text-[12px] xl:text-[13px] font-mono tracking-[0.12em] text-white/80"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-1.5 h-1.5 bg-white/60 inline-block flex-shrink-0" />
+                    <span>TECH CONCLAVES</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-1.5 h-1.5 bg-white/60 inline-block flex-shrink-0" />
+                    <span>HACKATHONS</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-1.5 h-1.5 bg-white/60 inline-block flex-shrink-0" />
+                    <span>RESEARCH MENTORSHIP</span>
+                  </div>
+                </div>
+
+                {/* Only "Join Us ↗" pill button, 16px gap below role list, at least 24px above ticker */}
+                <div ref={joinChipRef} className="mt-4 pointer-events-auto">
+                  <button
+                    onClick={() => navigate("/team")}
+                    className="group inline-flex items-center justify-center px-4 py-2 rounded-full border border-white/20 bg-black/70 hover:bg-white hover:text-black text-white backdrop-blur-md text-xs font-mono tracking-wider transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)] cursor-pointer"
+                  >
+                    <span className="font-medium">Join Us ↗</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </Container>
       </div>
 
-      {/* Main Content - Split Layout */}
-      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16 lg:gap-20 h-full">
-        
-        {/* Left Section - FLUX Text */}
-        <div
-          className="flex-1 flex flex-col items-center md:items-start text-center md:text-left gap-6"
-        >
-          {/* FLUX Title */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <FluxAnimatedText />
-          </motion.div>
+      {/* ─────────────────────────────────────────────────────────────
+          3. TABLET & MOBILE HERO (lg:hidden - below 1024px)
+          Stacked vertically: Bio -> Headline -> Paragraph -> Buttons ->
+          3D Logo (~40vh centered) -> Role List (inline wrap row) -> Join Chip
+      ───────────────────────────────────────────────────────────── */}
+      <div className="lg:hidden flex flex-col w-full relative z-10 py-4">
+        <Container className="max-w-xl text-center flex flex-col items-center">
+          
+          {/* Headline clamped to 3 lines */}
+          <h1 className="font-sans font-light tracking-[-0.035em] text-[clamp(2.35rem,7.5vw,3.75rem)] leading-[1.04] text-white text-center mb-6">
+            <span className="block overflow-hidden py-0.5">
+              <span ref={mLine1Ref} className="block will-change-transform whitespace-nowrap">
+                The Innovation Core
+              </span>
+            </span>
+            <span className="block overflow-hidden py-0.5">
+              <span ref={mLine2Ref} className="block will-change-transform whitespace-nowrap">
+                Where Ideas
+              </span>
+            </span>
+            <span className="block overflow-hidden py-0.5">
+              <span ref={mLine3Ref} className="block will-change-transform whitespace-nowrap">
+                Meet{" "}
+                <span className="text-[#f0f0f0] font-normal drop-shadow-[0_0_24px_rgba(255,255,255,0.45)]">
+                  Impact.
+                </span>
+              </span>
+            </span>
+          </h1>
 
-          {/* Description */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.8 }}
-            className="max-w-xl"
+          {/* Main description paragraph: shared paragraphStyle */}
+          <p
+            ref={mDescRef}
+            className={`${paragraphStyle} text-center mb-6`}
           >
-            <p className="text-base sm:text-lg md:text-xl text-gray-400 font-light leading-relaxed">
-              Pioneering the next era of <span className="text-white font-medium">technology</span> — where developers, innovators, and tech enthusiasts shape tomorrow's digital landscape.
-            </p>
-          </motion.div>
+            Empowering students to interact, innovate, and engineer real-world impact.
+            Source-first tech conclaves, research mentorship, hackathons, and breakthrough
+            student projects built directly into the university ecosystem.
+          </p>
 
-          {/* INNOVATE INTERACT IMPACT Tags with Typing Effect */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 2.0 }}
-            className="w-full flex justify-center md:justify-start"
-          >
-            <TypingEffect 
-              words={["INNOVATE", "INTERACT", "IMPACT"]}
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-wider text-white"
-            />
-          </motion.div>
-
-          {/* Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 2.6, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row gap-3 items-center md:items-start relative z-30 mt-2"
+          {/* Buttons: min-height 52px */}
+          <div
+            ref={mButtonsRef}
+            className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto justify-center mb-6"
           >
             <button
-              onClick={() => navigate("/contact")}
-              className="relative group overflow-hidden rounded-2xl p-[1px]"
+              onClick={() => navigate("/about")}
+              className="w-full sm:w-auto group inline-flex items-center justify-center gap-2.5 min-h-[52px] px-6 py-3.5 border border-white/25 hover:border-white text-white text-xs font-medium tracking-wide uppercase bg-transparent hover:bg-white/[0.04] transition-all duration-200 rounded-none cursor-pointer"
             >
-              <span className="absolute inset-0 bg-gradient-to-r from-gray-400 via-white to-gray-400 opacity-70 group-hover:opacity-100 transition-opacity duration-300"></span>
-              <div className="relative bg-black group-hover:bg-transparent transition-colors duration-300 rounded-2xl px-8 py-3.5 flex items-center justify-center gap-2">
-                <span className="text-sm font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-300 via-white to-gray-300 group-hover:text-black transition-colors duration-300 tracking-wider uppercase">
-                  Contact Us
-                </span>
-                <motion.span
-                  animate={{ x: [0, 4, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                  className="text-gray-300 group-hover:text-black transition-colors duration-300"
-                >
-                  <ArrowRight size={16} />
-                </motion.span>
-              </div>
+              <span className="w-1.5 h-1.5 bg-white inline-block flex-shrink-0" />
+              <span>Read Docs</span>
             </button>
-            
+
             <button
               onClick={() => navigate("/events")}
-              className="flex items-center gap-2 border border-white/15 hover:border-white/40 text-gray-300 hover:text-white px-8 py-3.5 rounded-2xl text-sm font-medium transition-all duration-200 bg-white/[0.03] hover:bg-white/[0.06]"
+              className="w-full sm:w-auto group inline-flex items-center justify-center gap-2.5 min-h-[52px] px-6 py-3.5 bg-white hover:bg-[#e6e6e6] text-black text-xs font-semibold tracking-wide uppercase border border-white transition-all duration-200 rounded-none cursor-pointer"
             >
-              Explore Events
+              <span className="w-1.5 h-1.5 bg-black inline-block flex-shrink-0" />
+              <span>Browse All Events</span>
             </button>
-          </motion.div>
-        </div>
+          </div>
 
-        {/* Right Section - Animated FLUX Logo Boxes */}
-        <motion.div
-          initial={{ opacity: 0, x: 50, scale: 0.8 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.8, ease: "easeOut" }}
-          className="flex-1 flex items-center justify-center hidden md:flex"
-        >
-          <FluxAnimatedBoxes />
-        </motion.div>
+          {/* Persistent 3D Logo Anchor at ~36vh centered */}
+          <div
+            ref={mCanvasRef}
+            className="relative w-full h-[36vh] min-h-[220px] max-h-[340px] flex items-center justify-center my-3 overflow-visible"
+          >
+            <div
+              className="absolute inset-0 m-auto w-60 h-60 rounded-full bg-white/[0.06] blur-[70px] pointer-events-none"
+              aria-hidden="true"
+            />
+            <div
+              data-logo-anchor="hero"
+              data-logo-scale="0.75"
+              data-logo-opacity="1.0"
+              className="w-[260px] h-[260px] mx-auto pointer-events-none"
+            />
+          </div>
+
+          {/* Role list as one inline wrap row */}
+          <div
+            ref={mRolesRef}
+            className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] sm:text-xs font-mono tracking-[0.14em] text-white/80 my-3"
+          >
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-white/60 inline-block flex-shrink-0" />
+              <span>TECH CONCLAVES</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-white/60 inline-block flex-shrink-0" />
+              <span>HACKATHONS</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-white/60 inline-block flex-shrink-0" />
+              <span>RESEARCH MENTORSHIP</span>
+            </div>
+          </div>
+
+          {/* Only "Join Us ↗" pill button */}
+          <div className="flex justify-center mt-3 pointer-events-auto">
+            <button
+              onClick={() => navigate("/team")}
+              className="group inline-flex items-center justify-center px-4 py-2 rounded-full border border-white/20 bg-black/70 hover:bg-white hover:text-black text-white backdrop-blur-md text-xs font-mono tracking-wider transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)] cursor-pointer"
+            >
+              <span className="font-medium">Join Us ↗</span>
+            </button>
+          </div>
+
+        </Container>
       </div>
 
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent pointer-events-none z-10" />
+      {/* Subtle bottom fade to seamlessly blend into subsequent sections */}
+      <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-[#060606] to-transparent pointer-events-none z-[5]" />
     </section>
   );
 }

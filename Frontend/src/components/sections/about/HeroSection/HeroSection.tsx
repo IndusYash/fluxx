@@ -5,27 +5,34 @@ import ParticleText from './ParticleText';
 
 const HeroSection: React.FC<HeroSectionProps> = ({ description }) => {
   return (
-    <section className="relative w-full h-screen overflow-hidden bg-black">
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 gap-2 sm:gap-3">
-        <div className="w-full flex-shrink-0">
+    <section className="relative w-full min-h-screen overflow-hidden bg-black flex items-center justify-center pt-[calc(var(--nav-h)+24px)] pb-[calc(var(--ticker-h)+24px)]">
+      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 gap-2 sm:gap-3 w-full max-w-6xl">
+        <div className="relative w-full flex-shrink-0 flex items-center justify-center min-h-[220px]">
+          {/* Solid high-contrast crisp text fallback underneath */}
+          <h1
+            className="absolute inset-0 flex items-center justify-center font-sans font-black text-[clamp(3.5rem,13vw,9rem)] uppercase tracking-tight text-white/35 pointer-events-none select-none"
+            aria-hidden="true"
+          >
+            Welcome To FLUX
+          </h1>
           <ParticleText
             text="Welcome To FLUX"
-            particleSize={2.2}
-            density={4}
+            particleSize={3.4}
+            density={5}
             color="#ffffff"
-            highlightColor="#9ca3af"
-            scatter={190}
-            gatherDuration={1600}
-            stagger={420}
-            pointerRepel={42}
-            repelRadius={120}
-            idleDrift={0.8}
+            highlightColor="#ffffff"
+            scatter={150}
+            gatherDuration={1400}
+            stagger={300}
+            pointerRepel={45}
+            repelRadius={130}
+            idleDrift={0.6}
             trigger="mount"
             fontSize="clamp(3.5rem, 13vw, 9rem)"
-            fontWeight={800}
+            fontWeight={900}
             fontFamily="inherit"
-            glow
-            style={{ width: '100%', height: 220, background: '#000000' }}
+            glow={true}
+            style={{ width: '100%', height: 220, background: 'transparent' }}
           />
         </div>
 
