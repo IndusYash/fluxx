@@ -1006,15 +1006,43 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
           const p = self.progress;
           currentLogoState.opacity = gsap.utils.interpolate(targets.statement.opacity, 0.0, p);
         },
+        onLeave: () => {
+          currentLogoState.opacity = 0.0;
+        },
+        onEnterBack: () => {
+          currentLogoState.opacity = 0.0;
+        },
       });
       triggers.push(st2);
 
+      // Stage 2b: Stats Section Hold (strictly 0 opacity while in Stats section)
+      const stStatsHold = ScrollTrigger.create({
+        trigger: "#liquid-transition-section",
+        start: "top 70%",
+        endTrigger: "#legacy-section",
+        end: "top top",
+        onEnter: () => {
+          currentLogoState.opacity = 0.0;
+        },
+        onEnterBack: () => {
+          currentLogoState.opacity = 0.0;
+        },
+        onUpdate: () => {
+          currentLogoState.opacity = 0.0;
+        },
+      });
+      triggers.push(stStatsHold);
+
       // Stage 3: Stats -> About (Corner parked)
+      // Must stay strictly hidden/faded over the white stats section and only fade in once About covers the screen
       const st3 = ScrollTrigger.create({
         trigger: "#legacy-section",
-        start: "top 85%",
-        end: "top 35%",
+        start: "top top",
+        end: "+=40%",
         scrub: 0.8,
+        onLeaveBack: () => {
+          currentLogoState.opacity = 0.0;
+        },
         onUpdate: (self) => {
           if (!self.isActive) return;
           const p = self.progress;

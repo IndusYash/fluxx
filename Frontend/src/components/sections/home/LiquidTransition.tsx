@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { LiquidShaderRenderer } from "./LiquidShader";
 import { liquidController } from "./liquidController";
-import { resetThemeToDark } from "@/hooks/useLightSectionObserver";
+import { resetThemeToDark, setCoverProgress } from "@/hooks/useLightSectionObserver";
 
 export default function LiquidTransition() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -28,7 +28,7 @@ export default function LiquidTransition() {
     };
     window.addEventListener("resize", onResize);
 
-    // Scroll progress object
+    // Scroll progress object for counting up stats
     const scrollObj = {
       fillProgress: 0,
       countEvents: 0,
@@ -37,16 +37,18 @@ export default function LiquidTransition() {
       countProjects: 0,
     };
 
-    // 2. GSAP ScrollTrigger timeline pinned at top top
-    // Entry range (0.0 to 0.40, ~48vh): fill (0 -> 1)
-    // Hold range (0.40 to 1.0): hold at 1 while stats are visible
+    // 2. GSAP ScrollTrigger timeline pinned at top top with pinSpacing: false
+    // Total distance: 215% (~215vh of scroll)
+    // - Entry fill range: 0.0 to 0.21 (~45vh): liquid fills (0 -> 1), stats fade in and count up
+    // - Hold range: 0.21 to 0.465 (~55vh): hold readable stats on solid white
+    // - Cover range: 0.465 to 1.0 (~115vh): Stats section stays fixed at top: 0 while About rises over it
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: container,
         start: "top top",
-        end: "+=120%",
+        end: "+=215%",
         pin: true,
-        pinSpacing: true,
+        pinSpacing: false,
         anticipatePin: 1,
         fastScrollEnd: true,
         invalidateOnRefresh: true,
@@ -54,10 +56,10 @@ export default function LiquidTransition() {
         onUpdate: (self) => {
           const p = self.progress;
 
-          // Fill (0 -> 1) over first 40% of pinned distance; hold at 1 afterwards
+          // Liquid Fill: 0.0 -> 0.21 (~45vh of scroll)
           let currentLiquidP = 0;
-          if (p <= 0.40) {
-            currentLiquidP = p / 0.40;
+          if (p <= 0.21) {
+            currentLiquidP = p / 0.21;
           } else {
             currentLiquidP = 1.0;
           }
@@ -65,62 +67,98 @@ export default function LiquidTransition() {
           scrollObj.fillProgress = currentLiquidP;
           liquidController.setProgress(currentLiquidP);
 
+          // Direct count calculation: finish counting by p = 0.21, hold steady at full target values afterwards
+          let countE = 25;
+          let countM = 500;
+          let countH = 12;
+          let countP = 18;
+
+          if (p < 0.21) {
+            const t = p / 0.21;
+            // power2.out ease: 1 - (1 - t)^2
+            const easeT = 1 - (1 - t) * (1 - t);
+            countE = Math.round(25 * easeT);
+            countM = Math.round(500 * easeT);
+            countH = Math.round(12 * easeT);
+            countP = Math.round(18 * easeT);
+          }
+
           // Zero-rerender DOM mutations directly into stat elements
           if (eventsNumRef.current) {
-            eventsNumRef.current.textContent = `${Math.round(scrollObj.countEvents)}+`;
+            eventsNumRef.current.textContent = `${countE}+`;
           }
           if (membersNumRef.current) {
-            membersNumRef.current.textContent = `${Math.round(scrollObj.countMembers)}+`;
+            membersNumRef.current.textContent = `${countM}+`;
           }
           if (hackathonsNumRef.current) {
-            hackathonsNumRef.current.textContent = `${Math.round(scrollObj.countHackathons)}+`;
+            hackathonsNumRef.current.textContent = `${countH}+`;
           }
           if (projectsNumRef.current) {
-            projectsNumRef.current.textContent = `${Math.round(scrollObj.countProjects)}+`;
+            projectsNumRef.current.textContent = `${countP}+`;
+          }
+
+          // Stats container fade in during liquid fill (0.10 to 0.21)
+          if (statsContainerRef.current) {
+            if (p < 0.10) {
+              statsContainerRef.current.style.opacity = "0";
+              statsContainerRef.current.style.transform = "scale(1) translateY(24px)";
+            } else if (p < 0.21) {
+              const fadeInNorm = (p - 0.10) / 0.11;
+              statsContainerRef.current.style.opacity = `${fadeInNorm}`;
+              statsContainerRef.current.style.transform = `scale(1) translateY(${24 * (1 - fadeInNorm)}px)`;
+            } else {
+              statsContainerRef.current.style.opacity = "1";
+            }
+          }
+
+          // Hold range: 0.21 to 0.465 (~55vh, ~half a viewport of scroll)
+          // Solid white, static readable numbers, scale 1, translateY 0, brightness 1
+          if (p >= 0.21 && p <= 0.465) {
+            if (statsContainerRef.current) {
+              statsContainerRef.current.style.transform = "scale(1) translateY(0vh)";
+              statsContainerRef.current.style.filter = "brightness(1)";
+            }
+            if (canvasRef.current) {
+              canvasRef.current.style.filter = "brightness(1)";
+            }
+            setCoverProgress(0.0);
+          }
+
+          // Cover range: 0.465 to 1.0 (~115vh of scroll)
+          // Stats section stays pinned at top: 0 while About rises from below and covers it
+          // Stats reacts: scale 1 -> 0.96, translateY 0 -> -4vh, brightness 1 -> 0.75
+          if (p > 0.465) {
+            const c = Math.min(1.0, Math.max(0.0, (p - 0.465) / (1.0 - 0.465)));
+            const scale = 1.0 - 0.04 * c;
+            const transY = -4.0 * c;
+            const brightness = 1.0 - 0.25 * c;
+
+            if (statsContainerRef.current) {
+              statsContainerRef.current.style.transform = `scale(${scale}) translateY(${transY}vh)`;
+              statsContainerRef.current.style.filter = `brightness(${brightness})`;
+            }
+            if (canvasRef.current) {
+              canvasRef.current.style.filter = `brightness(${brightness})`;
+            }
+
+            // Sync theme: edge passes ticker (~0.02) and navbar (~0.97)
+            setCoverProgress(c);
           }
         },
         onLeave: () => {
-          // Keep solid white when transitioning into LegacySection drain
           liquidController.forceState(1);
+          setCoverProgress(1.0);
         },
         onLeaveBack: () => {
-          // Returning back up into ScrollTextSection: strictly zero white pixels & hide overlay
           liquidController.forceState(0);
+          setCoverProgress(0.0);
+          resetThemeToDark();
         },
         onEnterBack: () => {
           liquidController.forceState(1);
         },
       },
     });
-
-    // Stats counter count-up while screen is solid white (0.38 to 0.82)
-    tl.to(
-      scrollObj,
-      {
-        countEvents: 25,
-        countMembers: 500,
-        countHackathons: 12,
-        countProjects: 18,
-        duration: 0.44,
-        ease: "power2.out",
-      },
-      0.38
-    );
-
-    // Fade in and out stats container
-    if (statsContainerRef.current) {
-      tl.fromTo(
-        statsContainerRef.current,
-        { opacity: 0, y: 32 },
-        { opacity: 1, y: 0, duration: 0.18, ease: "power2.out" },
-        0.35
-      );
-      tl.to(
-        statsContainerRef.current,
-        { opacity: 0, y: -24, duration: 0.12, ease: "power2.in" },
-        0.88
-      );
-    }
 
     return () => {
       window.removeEventListener("resize", onResize);

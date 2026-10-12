@@ -30,6 +30,9 @@ export default function HomePage({ isMobile: _isMobile }: { isMobile?: boolean }
       {/* 3. Liquid Fill Wave Transition -> White Screen Stats Count-Up */}
       <LiquidTransition />
 
+      {/* Spacer for Stats Hold duration before About cover rises */}
+      <div id="stats-hold-spacer" className="h-[115vh] pointer-events-none" aria-hidden="true" />
+
       {/* 4. Legacy Section with Construction Lines & Floating 3D Image Card */}
       <LegacySection />
 

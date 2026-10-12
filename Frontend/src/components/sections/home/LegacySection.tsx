@@ -8,11 +8,12 @@ import FloatingPlane, {
   computePos,
   photos,
 } from "@/components/3d/FloatingPlane";
-import { liquidController } from "./liquidController";
 import { resetThemeToDark } from "@/hooks/useLightSectionObserver";
+import { WavyCoverApron } from "./wavyCoverPath";
 
 export default function LegacySection() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const wavyApronRef = useRef<HTMLDivElement>(null);
   const wordRef = useRef<HTMLHeadingElement>(null);
   const planeRef = useRef<FloatingPlaneHandle>(null);
   const stRef = useRef<ScrollTrigger | null>(null);
@@ -25,11 +26,34 @@ export default function LegacySection() {
     const section = sectionRef.current;
     if (!section) return;
 
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion && wavyApronRef.current) {
+      wavyApronRef.current.style.display = "none";
+    }
+
     const ctx = gsap.context(() => {
+      // 0. Rising Wavy Apron Drip Growth:
+      // As About ascends to cover Stats (start: top bottom, end: top top), drips grow (scaleY 0.7 -> 1.15)
+      if (!prefersReducedMotion) {
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top bottom",
+          end: "top top",
+          scrub: true,
+          onUpdate: (self) => {
+            const c = self.progress;
+            if (wavyApronRef.current) {
+              wavyApronRef.current.style.transform = `scaleY(${0.7 + 0.45 * c})`;
+            }
+          },
+        });
+      }
+
       // 1. Pinned ScrollTrigger for the entire Legacy Section:
-      // First ~18% (~65vh scroll, 60-70% of 1 viewport): Liquid overlay drains (1 -> 0),
-      // revealing About content directly underneath with zero empty black screen!
-      // Remaining 82%: 3D card reel and interactive archive cards advance smoothly.
+      // 3D card reel and interactive archive cards advance smoothly across the full pinned duration.
       const st = ScrollTrigger.create({
         trigger: section,
         start: "top top",
@@ -43,21 +67,11 @@ export default function LegacySection() {
         onUpdate: (self) => {
           const p = self.progress;
 
-          // Liquid exit drain: drains (1 -> 0) over the first ~18% of this pinned section (~65vh of scroll)
-          if (p < 0.18) {
-            const drainNorm = p / 0.18; // 0 -> 1
-            const liquidP = 1.0 - drainNorm; // 1 -> 0
-            liquidController.setProgress(liquidP);
-          } else {
-            liquidController.setProgress(0.0);
-          }
-
-          // Card progression starts as soon as drain completes (0.18 -> 1.0)
-          const cardP = Math.min(1.0, Math.max(0.0, (p - 0.18) / 0.82));
-          planeRef.current?.updateProgress(cardP);
+          // Card progression advances across the full pinned section
+          planeRef.current?.updateProgress(p);
 
           // Update active step for interactive tabs
-          const calculatedPos = computePos(cardP);
+          const calculatedPos = computePos(p);
           const step = Math.min(3, Math.max(0, Math.round(calculatedPos)));
 
           // Mutate bar widths directly for 60fps without React re-render
@@ -78,11 +92,10 @@ export default function LegacySection() {
           }
         },
         onLeave: () => {
-          liquidController.forceState(0);
+          resetThemeToDark();
         },
         onLeaveBack: () => {
-          // Returning back into Stats: restore solid white screen
-          liquidController.forceState(1);
+          // Handled by cover transition reversal
         },
       });
       stRef.current = st;
@@ -109,7 +122,6 @@ export default function LegacySection() {
 
     return () => {
       ctx.revert();
-      liquidController.forceState(0);
       resetThemeToDark();
     };
   }, []);
@@ -118,8 +130,7 @@ export default function LegacySection() {
     const st = stRef.current;
     if (!st) return;
     const targetNorm = idx === 0 ? 0.02 : idx === 1 ? 0.35 : idx === 2 ? 0.68 : 0.96;
-    const targetP = 0.18 + targetNorm * 0.82;
-    const targetScroll = st.start + targetP * (st.end - st.start);
+    const targetScroll = st.start + targetNorm * (st.end - st.start);
 
     if ((window as any).__lenis) {
       (window as any).__lenis.scrollTo(targetScroll, { duration: 0.8 });
@@ -132,8 +143,11 @@ export default function LegacySection() {
     <section
       id="legacy-section"
       ref={sectionRef}
-      className="relative w-full h-[100svh] min-h-[100svh] bg-[#060606] overflow-hidden flex items-center justify-center select-none pt-[calc(var(--nav-h)+16px)] pb-[calc(var(--ticker-h)+24px)] safe-section-py"
+      className="relative z-[35] w-full h-[100svh] min-h-[100svh] bg-[#060606] overflow-visible flex items-center justify-center select-none pt-[calc(var(--nav-h)+16px)] pb-[calc(var(--ticker-h)+24px)] safe-section-py"
     >
+      {/* Soft Wavy Mask Top Apron with Seeded Noise Waves & Rounded Drips */}
+      <WavyCoverApron apronRef={wavyApronRef} />
+
       {/* 1. Behind: Construction Lines drawn on scroll */}
       <ConstructionLines />
 

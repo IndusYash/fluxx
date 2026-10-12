@@ -9,10 +9,14 @@ interface ThemeListener {
 const listeners = new Set<ThemeListener>();
 let currentNavLight = false;
 let currentTickerLight = false;
+let lastLiquidProgress = 0;
+let currentCoverProgress = 0;
 
 export function resetThemeToDark() {
   currentNavLight = false;
   currentTickerLight = false;
+  lastLiquidProgress = 0;
+  currentCoverProgress = 0;
 
   if (typeof document !== "undefined") {
     document.documentElement.classList.remove("theme-light-active");
@@ -23,20 +27,7 @@ export function resetThemeToDark() {
   listeners.forEach((fn) => fn(false, false));
 }
 
-export function setLiquidProgress(progress: number) {
-  // If not on home page ("/"), never activate light theme!
-  if (typeof window !== "undefined" && window.location.pathname !== "/") {
-    resetThemeToDark();
-    return;
-  }
-
-  const windowH = typeof window !== "undefined" ? window.innerHeight : 1080;
-  const navYNorm = 36 / windowH; // center of ~72px navbar
-  const tickerYNorm = (windowH - 20) / windowH; // center of ~40px ticker
-
-  const nextNavLight = isLiquidCoveringY(progress, navYNorm);
-  const nextTickerLight = isLiquidCoveringY(progress, tickerYNorm);
-
+function updateThemeState(nextNavLight: boolean, nextTickerLight: boolean) {
   if (nextNavLight !== currentNavLight || nextTickerLight !== currentTickerLight) {
     currentNavLight = nextNavLight;
     currentTickerLight = nextTickerLight;
@@ -59,6 +50,71 @@ export function setLiquidProgress(progress: number) {
 
     listeners.forEach((fn) => fn(nextNavLight, nextTickerLight));
   }
+}
+
+export function setLiquidProgress(progress: number) {
+  // If not on home page ("/"), never activate light theme!
+  if (typeof window !== "undefined" && window.location.pathname !== "/") {
+    resetThemeToDark();
+    return;
+  }
+
+  lastLiquidProgress = progress;
+
+  // If a cover is active, let setCoverProgress drive the theme
+  if (currentCoverProgress > 0.001) {
+    setCoverProgress(currentCoverProgress);
+    return;
+  }
+
+  const windowH = typeof window !== "undefined" ? window.innerHeight : 1080;
+  const navYNorm = 36 / windowH; // center of ~72px navbar (~0.033)
+  const tickerYNorm = (windowH - 20) / windowH; // center of ~40px ticker (~0.981)
+
+  const nextNavLight = isLiquidCoveringY(progress, navYNorm);
+  const nextTickerLight = isLiquidCoveringY(progress, tickerYNorm);
+
+  updateThemeState(nextNavLight, nextTickerLight);
+}
+
+/**
+ * Sync theme during Stats -> About rising cover transition.
+ * coverProgress: 0.0 (Stats fully visible) to 1.0 (About fully covers screen).
+ * The dark wavy edge ascends from screen bottom (y = windowH) to screen top (y = 0).
+ */
+export function setCoverProgress(coverProgress: number) {
+  if (typeof window !== "undefined" && window.location.pathname !== "/") {
+    resetThemeToDark();
+    return;
+  }
+
+  currentCoverProgress = Math.min(1.0, Math.max(0.0, coverProgress));
+
+  if (currentCoverProgress >= 0.999) {
+    updateThemeState(false, false);
+    return;
+  }
+
+  const windowH = typeof window !== "undefined" ? window.innerHeight : 1080;
+
+  // Exact wavy edge position on screen (Legacy top minus apron wave baseline ~60px)
+  let edgeY = (1.0 - currentCoverProgress) * 1.15 * windowH - 60;
+  if (typeof document !== "undefined") {
+    const legacy = document.getElementById("legacy-section");
+    if (legacy) {
+      edgeY = legacy.getBoundingClientRect().top - 60;
+    }
+  }
+
+  // Ticker center is ~20px from bottom (windowH - 20).
+  // Ticker is light while edge is below it, switches to dark once edge passes it.
+  const nextTickerLight = edgeY > (windowH - 20);
+
+  // Navbar center is ~36px from top.
+  // Navbar is light while edge is below it, switches to dark once edge passes it.
+  const nextNavLight = edgeY > 36;
+
+  updateThemeState(nextNavLight, nextTickerLight);
 }
 
 export function useLightSectionObserver() {
