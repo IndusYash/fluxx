@@ -26,11 +26,24 @@ import JudgePanel from "@/pages/judge/JudgePanel";
 import SheLeadsPage from "@/pages/sheLeads/SheLeadsPage";
 
 import { Toaster } from "@/components/ui/toaster";
+import { introManager } from "@/lib/introState";
 
 export default function App() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
+    const isHome = typeof window !== "undefined" && window.location.pathname === "/";
+    if (isHome && !introManager.isDone()) {
+      if (typeof history !== "undefined" && "scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+      }
+      window.scrollTo(0, 0);
+    } else {
+      if (typeof history !== "undefined" && "scrollRestoration" in history) {
+        history.scrollRestoration = "auto";
+      }
+    }
+
     // Initialize Lenis smooth scrolling
     const lenis = new Lenis({
       duration: 1.2,
@@ -40,6 +53,12 @@ export default function App() {
     });
 
     (window as any).__lenis = lenis;
+
+    // If intro has not completed on homepage, keep Lenis stopped at scroll 0 until intro reveals
+    if (isHome && !introManager.isDone()) {
+      lenis.stop();
+      lenis.scrollTo(0, { immediate: true });
+    }
 
     // Synchronize Lenis scroll with GSAP ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);

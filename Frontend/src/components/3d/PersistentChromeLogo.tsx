@@ -3,6 +3,12 @@ import * as THREE from "three";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { introManager } from "@/lib/introState";
+import {
+  buildLogoInnerGroup,
+  LOGO_UNIT_SIZE,
+  LOGO_BLOCK_TABLE,
+  getLogoBlockLayout,
+} from "./logoConfig";
 
 interface PersistentChromeLogoProps {
   isMobile?: boolean;
@@ -19,6 +25,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
     let width = window.innerWidth;
     let height = window.innerHeight;
     let isMobile = propIsMobile !== undefined ? propIsMobile : width < 768;
+    let isQaFrontOnMode = false;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -28,11 +35,14 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
     camera.position.set(0, 0, 8.8);
+    camera.updateMatrixWorld(true);
+    camera.updateProjectionMatrix();
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true,
       powerPreference: "high-performance",
+      preserveDrawingBuffer: true,
     });
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     renderer.setPixelRatio(dpr);
@@ -40,6 +50,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
     renderer.setClearColor(0x000000, 0);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.25;
+    renderer.domElement.id = "persistent-chrome-logo-canvas";
     renderer.domElement.style.overflow = "visible";
     renderer.domElement.style.pointerEvents = "none";
     renderer.domElement.style.position = "absolute";
@@ -112,79 +123,21 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       envMapIntensity: 2.8,
       transparent: true,
       opacity: 1.0,
+      emissive: new THREE.Color(0xffffff),
+      emissiveIntensity: 0.0,
     });
 
     // ─────────────────────────────────────────────────────────────
     // 4. BEVELED 5X5 FLUX LOGO MODEL WITH CENTERED ROTATION PIVOT
     // ─────────────────────────────────────────────────────────────
     const logoOuterGroup = new THREE.Group(); // Handles world position, scale, and rotation
-    const logoInnerGroup = new THREE.Group(); // Holds block meshes, centered precisely at (0,0,0)
+    const u = LOGO_UNIT_SIZE;
+    const { logoInnerGroup } = buildLogoInnerGroup(u, chromeMaterial);
 
-    const createBeveledBlock = (
-      w: number,
-      h: number,
-      x: number,
-      y: number,
-      bevelR: number = 0.05
-    ) => {
-      const shape = new THREE.Shape();
-      const hw = w / 2;
-      const hh = h / 2;
-      const r = Math.min(bevelR, hw * 0.4, hh * 0.4);
-
-      shape.moveTo(-hw + r, -hh);
-      shape.lineTo(hw - r, -hh);
-      shape.quadraticCurveTo(hw, -hh, hw, -hh + r);
-      shape.lineTo(hw, hh - r);
-      shape.quadraticCurveTo(hw, hh, hw - r, hh);
-      shape.lineTo(-hw + r, hh);
-      shape.quadraticCurveTo(-hw, hh, -hw, hh - r);
-      shape.lineTo(-hw, -hh + r);
-      shape.quadraticCurveTo(-hw, -hh, -hw + r, -hh);
-
-      const extrudeSettings: THREE.ExtrudeGeometryOptions = {
-        depth: 0.52,
-        bevelEnabled: true,
-        bevelSegments: 5,
-        steps: 1,
-        bevelSize: 0.045,
-        bevelThickness: 0.055,
-      };
-
-      const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-      geometry.center();
-
-      const mesh = new THREE.Mesh(geometry, chromeMaterial);
-      mesh.position.set(x, y, 0);
-      mesh.castShadow = true;
-      mesh.receiveShadow = true;
-      return mesh;
-    };
-
-    const u = 0.64;
-
-    // Row 2 (top)
-    logoInnerGroup.add(createBeveledBlock(u * 0.96, u * 0.96, -u * 1.5, u * 1.5));
-    logoInnerGroup.add(createBeveledBlock(u * 2.85, u * 0.96, u * 0.6, u * 1.5));
-
-    // Row 1
-    logoInnerGroup.add(createBeveledBlock(u * 0.96, u * 0.96, -u * 0.5, u * 0.5));
-
-    // Row 0 (middle crossbar)
-    logoInnerGroup.add(createBeveledBlock(u * 0.96, u * 0.96, -u * 1.5, -u * 0.5));
-    logoInnerGroup.add(createBeveledBlock(u * 1.9, u * 0.96, u * 0.95, -u * 0.5));
-
-    // Row -1
-    logoInnerGroup.add(createBeveledBlock(u * 0.96, u * 0.96, u * 0.5, -u * 1.5));
-
-    // Row -2 (bottom foot)
-    logoInnerGroup.add(createBeveledBlock(u * 1.9, u * 0.96, -u * 1.05, -u * 2.0));
-
-    // Center the logo model geometry: Box3 center placed at (0,0,0)
-    const logoBox = new THREE.Box3().setFromObject(logoInnerGroup);
-    const logoCenter = new THREE.Vector3();
-    logoBox.getCenter(logoCenter);
-    logoInnerGroup.position.set(-logoCenter.x, -logoCenter.y, -logoCenter.z);
+    const logoInnerBox = new THREE.Box3().setFromObject(logoInnerGroup);
+    const logoInnerSize = new THREE.Vector3();
+    logoInnerBox.getSize(logoInnerSize);
+    const modelWorldHeight = logoInnerSize.y;
 
     // Save assembled rest transforms for each block cube
     const originalTransforms: { x: number; y: number; z: number; rx: number; ry: number; rz: number }[] = [];
@@ -198,6 +151,16 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
         rz: c.rotation.z,
       });
     });
+
+    const applyAssembledBlocks = () => {
+      logoInnerGroup.children.forEach((c, idx) => {
+        const orig = originalTransforms[idx];
+        if (orig) {
+          c.position.set(orig.x, orig.y, orig.z);
+          c.rotation.set(orig.rx, orig.ry, orig.rz);
+        }
+      });
+    };
 
     const isIntroPending = !introManager.isSeenInSession() && !prefersReducedMotion;
     if (isIntroPending) {
@@ -216,6 +179,13 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       });
       logoOuterGroup.position.set(0, 0, 0);
       logoOuterGroup.scale.set(1.15, 1.15, 1.15);
+      chromeMaterial.opacity = 0;
+      logoOuterGroup.visible = false;
+    } else {
+      applyAssembledBlocks();
+      logoOuterGroup.position.set(0, 0, 0);
+      logoOuterGroup.rotation.set(0, 0, 0);
+      logoOuterGroup.scale.set(1.0, 1.0, 1.0);
       chromeMaterial.opacity = 0;
       logoOuterGroup.visible = false;
     }
@@ -259,6 +229,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
 
     // Convert 2D screen coordinate to 3D world coordinate on a target Z-plane (default z=0)
     const screenToWorldOnZ = (screenX: number, screenY: number, targetZ: number = 0): THREE.Vector3 => {
+      camera.updateMatrixWorld(true);
       const ndcX = (screenX / window.innerWidth) * 2 - 1;
       const ndcY = -(screenY / window.innerHeight) * 2 + 1;
       const rayTarget = new THREE.Vector3(ndcX, ndcY, 0.5).unproject(camera);
@@ -269,6 +240,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
 
     // Convert 3D world coordinate to 2D screen coordinates
     const worldToScreen = (worldPos: THREE.Vector3): { x: number; y: number } => {
+      camera.updateMatrixWorld(true);
       const v = worldPos.clone().project(camera);
       return {
         x: (v.x * 0.5 + 0.5) * window.innerWidth,
@@ -434,7 +406,6 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       const availableHeight = Math.max(160, maxScreenYBottom - minScreenYTop);
       const vH = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z * 2;
       const pxPerWorldUnit = height / vH;
-      const modelWorldHeight = 2.944; // full unscaled height of 5x5 beveled logo model
       const safeLogoHeightPx = availableHeight * 0.74; // generous clearance margin (top and bottom)
       const calculatedScale = safeLogoHeightPx / (modelWorldHeight * pxPerWorldUnit);
       const facultyScale = Math.min(isMob ? 0.55 : 0.68, Math.max(0.35, calculatedScale));
@@ -447,17 +418,54 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       };
     };
 
+    const getLiveHeroTarget = (isMob: boolean): LogoAnchorTarget => {
+      camera.updateMatrixWorld(true);
+      const anchorEl = document.querySelector('[data-logo-anchor="hero"]') as HTMLElement | null;
+      const heroScale = isMob ? 0.72 : width >= 1600 ? 1.05 : width >= 1280 ? 0.98 : 0.92;
+
+      if (anchorEl) {
+        const rect = anchorEl.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+          const heroSection = document.querySelector("#hero-section");
+          const heroTop = heroSection ? heroSection.getBoundingClientRect().top : 0;
+          const screenCenterX = rect.left + rect.width / 2;
+          const screenCenterY = (rect.top - heroTop) + rect.height / 2;
+          const worldVec = screenToWorldOnZ(screenCenterX, screenCenterY, 0);
+          return {
+            x: isMob ? 0 : worldVec.x,
+            y: worldVec.y,
+            scale: heroScale,
+            opacity: 1.0,
+          };
+        }
+      }
+
+      const fallbackNormX = isMob ? 0.5 : width >= 1600 ? 0.79 : 0.76;
+      const fallbackNormY = 0.5;
+      const worldVec = screenToWorldOnZ(fallbackNormX * width, fallbackNormY * height, 0);
+      return {
+        x: isMob ? 0 : worldVec.x,
+        y: worldVec.y,
+        scale: heroScale,
+        opacity: 1.0,
+      };
+    };
+
+    const computeHeroTarget = (isMob: boolean): LogoAnchorTarget => {
+      return getLiveHeroTarget(isMob);
+    };
+
     const computeAllTargets = (): Record<AnchorStage, LogoAnchorTarget> => {
       const mob = window.innerWidth < 768;
+      const heroTarget = computeHeroTarget(mob);
       const facultyTarget = computeFacultyAnchorTarget(mob);
 
       if (mob) {
         // Mobile Simplified Anchors: Hero, Faculty, Footer only
-        const heroPos = calculateAnchorWorldPos('[data-logo-anchor="hero"]', 0.5, 0.46);
         const footerPos = calculateAnchorWorldPos('[data-logo-anchor="footer"]', 0.5, 0.20);
 
         return {
-          hero: { x: 0, y: heroPos.y, scale: 0.72, opacity: 1.0 },
+          hero: heroTarget,
           statement: { x: 0, y: 0, scale: 0.5, opacity: 0.0 },
           stats: { x: 0, y: 0, scale: 0.5, opacity: 0.0 },
           about: { x: 0, y: 0, scale: 0.5, opacity: 0.0 },
@@ -469,18 +477,15 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       }
 
       // Desktop / Tablet Anchors
-      const heroFallbackNormX = width >= 1600 ? 0.75 : width >= 1280 ? 0.76 : 0.74;
-      const heroPos = calculateAnchorWorldPos('[data-logo-anchor="hero"]', heroFallbackNormX, 0.48);
       const stmtPos = calculateAnchorWorldPos('[data-logo-anchor="statement"]', 0.86, 0.50);
       const aboutPos = calculateAnchorWorldPos('[data-logo-anchor="about"]', 0.88, 0.22);
       const eventsPos = calculateAnchorWorldPos('[data-logo-anchor="events"]', 0.90, 0.38);
       const footerPos = calculateAnchorWorldPos('[data-logo-anchor="footer"]', 0.5, 0.20);
 
-      const heroScale = width >= 1600 ? 1.05 : width >= 1280 ? 0.98 : 0.92;
       const footerScale = width >= 1600 ? 0.84 : width >= 1280 ? 0.78 : 0.72;
 
       return {
-        hero: { x: heroPos.x, y: heroPos.y, scale: heroScale, opacity: 1.0 },
+        hero: heroTarget,
         statement: { x: stmtPos.x, y: stmtPos.y, scale: 0.70, opacity: 0.95 },
         stats: { x: 0, y: 0, scale: 0.45, opacity: 0.0 },
         about: { x: aboutPos.x, y: aboutPos.y, scale: 0.38, opacity: 0.26 },
@@ -494,19 +499,139 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
     let targets = computeAllTargets();
 
     // ─────────────────────────────────────────────────────────────
-    // 7. CURRENT ANIMATION STATE PROXY & INTRO HOOKS
+    // 7. CURRENT ANIMATION STATE PROXY & SCROLL TRIGGER TRACKING
     // ─────────────────────────────────────────────────────────────
+    let isFacultyActive = false;
+    const triggers: ScrollTrigger[] = [];
+
     const currentLogoState = {
       x: isIntroPending ? 0 : targets.hero.x,
       y: isIntroPending ? 0 : targets.hero.y,
       scale: isIntroPending ? 1.15 : targets.hero.scale,
-      opacity: isIntroPending ? 0.0 : targets.hero.opacity,
+      opacity: 0.0,
     };
 
-    // The animated mesh proxy
+    const lerpPos = {
+      x: currentLogoState.x,
+      y: currentLogoState.y,
+      scale: currentLogoState.scale,
+      opacity: 0.0,
+    };
+
+    let isGlidingToHero = false;
+
+    // The animated mesh proxy - starts hidden
     logoGroup.position.set(currentLogoState.x, currentLogoState.y, 0);
     logoGroup.scale.set(currentLogoState.scale, currentLogoState.scale, currentLogoState.scale);
-    chromeMaterial.opacity = currentLogoState.opacity;
+    chromeMaterial.opacity = 0.0;
+    logoGroup.visible = false;
+
+    let hasFadedIn = false;
+    let fadeInTween: gsap.core.Tween | null = null;
+
+    const fadeInLogo = (targetOpacity: number = 1.0) => {
+      if (hasFadedIn || !introManager.isDone()) return;
+      hasFadedIn = true;
+      logoGroup.visible = true;
+      chromeMaterial.opacity = 0;
+      lerpPos.opacity = 0;
+
+      if (fadeInTween) fadeInTween.kill();
+      fadeInTween = gsap.to(chromeMaterial, {
+        opacity: targetOpacity,
+        duration: 0.4,
+        ease: "power2.out",
+        onUpdate: () => {
+          lerpPos.opacity = chromeMaterial.opacity;
+        },
+        onComplete: () => {
+          lerpPos.opacity = targetOpacity;
+          currentLogoState.opacity = targetOpacity;
+          fadeInTween = null;
+        },
+      });
+    };
+
+    const syncLogoToCurrentPosition = (instant: boolean = false) => {
+      if (isQaFrontOnMode) return;
+
+      camera.updateMatrixWorld(true);
+      camera.updateProjectionMatrix();
+
+      targets = computeAllTargets();
+
+      if (!introManager.isDone()) return;
+
+      const mob = window.innerWidth < 768;
+      const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+
+      let activeTarget: LogoAnchorTarget = targets.hero;
+      let hasActiveTrigger = false;
+
+      if (scrollY > 10 && triggers.length > 0) {
+        for (const t of triggers) {
+          if (t.isActive) {
+            if (t.vars.onToggle) {
+              (t.vars.onToggle as any)(t);
+            }
+            if (t.vars.onUpdate) {
+              t.vars.onUpdate(t);
+            }
+            activeTarget = {
+              x: currentLogoState.x,
+              y: currentLogoState.y,
+              scale: currentLogoState.scale,
+              opacity: currentLogoState.opacity,
+            };
+            hasActiveTrigger = true;
+            break;
+          }
+        }
+
+        if (!hasActiveTrigger) {
+          let lastPassedTrigger: ScrollTrigger | null = null;
+          for (const t of triggers) {
+            if (scrollY >= t.start) {
+              lastPassedTrigger = t;
+            }
+          }
+          if (lastPassedTrigger) {
+            if (lastPassedTrigger.vars.onLeave) {
+              (lastPassedTrigger.vars.onLeave as any)(lastPassedTrigger);
+            } else if (lastPassedTrigger.vars.onUpdate) {
+              lastPassedTrigger.vars.onUpdate(lastPassedTrigger);
+            }
+            activeTarget = {
+              x: currentLogoState.x,
+              y: currentLogoState.y,
+              scale: currentLogoState.scale,
+              opacity: currentLogoState.opacity,
+            };
+            hasActiveTrigger = true;
+          }
+        }
+      }
+
+      if (!hasActiveTrigger || scrollY <= 10) {
+        activeTarget = targets.hero;
+        currentLogoState.x = targets.hero.x;
+        currentLogoState.y = targets.hero.y;
+        currentLogoState.scale = targets.hero.scale;
+        currentLogoState.opacity = targets.hero.opacity;
+      }
+
+      if (instant) {
+        applyAssembledBlocks();
+        logoGroup.rotation.set(0, 0, 0);
+
+        lerpPos.x = activeTarget.x;
+        lerpPos.y = activeTarget.y;
+        lerpPos.scale = activeTarget.scale;
+
+        logoGroup.position.set(activeTarget.x, activeTarget.y, 0);
+        logoGroup.scale.set(activeTarget.scale, activeTarget.scale, activeTarget.scale);
+      }
+    };
 
     // Register Intro Orchestration Hooks
     introManager.registerHooks({
@@ -552,6 +677,14 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
         });
       },
 
+      flashLogo: () => {
+        gsap.fromTo(
+          chromeMaterial,
+          { emissiveIntensity: 0.30 },
+          { emissiveIntensity: 0.0, duration: 0.15, ease: "power2.out" }
+        );
+      },
+
       shakeCamera: () => {
         const shakeTl = gsap.timeline();
         shakeTl
@@ -562,45 +695,67 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       },
 
       onGlideToHero: (tl: gsap.core.Timeline, startTime: number) => {
-        targets = computeAllTargets();
+        window.scrollTo(0, 0);
+        const mob = window.innerWidth < 768;
+        isGlidingToHero = true;
+
+        const startX = 0;
+        const startY = 0;
+        const startScale = 1.15;
+        const glideProxy = { progress: 0 };
+
         tl.to(
-          logoGroup.position,
+          glideProxy,
           {
-            x: targets.hero.x,
-            y: targets.hero.y,
-            z: 0,
-            duration: 1.4,
+            progress: 1.0,
+            duration: 1.2,
             ease: "power3.inOut",
-            onUpdate: () => {
-              currentLogoState.x = logoGroup.position.x;
-              currentLogoState.y = logoGroup.position.y;
-              lerpPos.x = logoGroup.position.x;
-              lerpPos.y = logoGroup.position.y;
+            onStart: () => {
+              isGlidingToHero = true;
+              logoGroup.visible = true;
+              chromeMaterial.opacity = 1.0;
             },
-          },
-          startTime
-        );
-        tl.to(
-          logoGroup.scale,
-          {
-            x: targets.hero.scale,
-            y: targets.hero.scale,
-            z: targets.hero.scale,
-            duration: 1.4,
-            ease: "power3.inOut",
             onUpdate: () => {
-              currentLogoState.scale = logoGroup.scale.x;
-              lerpPos.scale = logoGroup.scale.x;
+              const p = glideProxy.progress;
+              const liveTarget = getLiveHeroTarget(mob);
+
+              const curX = gsap.utils.interpolate(startX, liveTarget.x, p);
+              const curY = gsap.utils.interpolate(startY, liveTarget.y, p);
+              const curScale = gsap.utils.interpolate(startScale, liveTarget.scale, p);
+
+              currentLogoState.x = curX;
+              currentLogoState.y = curY;
+              currentLogoState.scale = curScale;
+              currentLogoState.opacity = 1.0;
+
+              lerpPos.x = curX;
+              lerpPos.y = curY;
+              lerpPos.scale = curScale;
+              lerpPos.opacity = 1.0;
+
+              logoGroup.position.set(curX, curY, 0);
+              logoGroup.scale.set(curScale, curScale, curScale);
+              chromeMaterial.opacity = 1.0;
+              logoGroup.visible = true;
             },
             onComplete: () => {
-              currentLogoState.x = targets.hero.x;
-              currentLogoState.y = targets.hero.y;
-              currentLogoState.scale = targets.hero.scale;
-              currentLogoState.opacity = targets.hero.opacity;
-              lerpPos.x = targets.hero.x;
-              lerpPos.y = targets.hero.y;
-              lerpPos.scale = targets.hero.scale;
-              lerpPos.opacity = targets.hero.opacity;
+              isGlidingToHero = false;
+              const liveTarget = getLiveHeroTarget(mob);
+              targets.hero = liveTarget;
+
+              currentLogoState.x = liveTarget.x;
+              currentLogoState.y = liveTarget.y;
+              currentLogoState.scale = liveTarget.scale;
+              currentLogoState.opacity = 1.0;
+
+              lerpPos.x = liveTarget.x;
+              lerpPos.y = liveTarget.y;
+              lerpPos.scale = liveTarget.scale;
+              lerpPos.opacity = 1.0;
+
+              logoGroup.position.set(liveTarget.x, liveTarget.y, 0);
+              logoGroup.scale.set(liveTarget.scale, liveTarget.scale, liveTarget.scale);
+              chromeMaterial.opacity = 1.0;
             },
           },
           startTime
@@ -608,35 +763,17 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       },
 
       snapToHero: () => {
-        targets = computeAllTargets();
-        logoInnerGroup.children.forEach((c, idx) => {
-          const orig = originalTransforms[idx];
-          if (orig) {
-            c.position.set(orig.x, orig.y, orig.z);
-            c.rotation.set(orig.rx, orig.ry, orig.rz);
-          }
-        });
-        logoGroup.position.set(targets.hero.x, targets.hero.y, 0);
-        logoGroup.scale.set(targets.hero.scale, targets.hero.scale, targets.hero.scale);
-        currentLogoState.x = targets.hero.x;
-        currentLogoState.y = targets.hero.y;
-        currentLogoState.scale = targets.hero.scale;
-        currentLogoState.opacity = targets.hero.opacity;
-        lerpPos.x = targets.hero.x;
-        lerpPos.y = targets.hero.y;
-        lerpPos.scale = targets.hero.scale;
-        lerpPos.opacity = targets.hero.opacity;
-        chromeMaterial.opacity = targets.hero.opacity;
-        logoGroup.visible = true;
+        isGlidingToHero = false;
+        applyAssembledBlocks();
+        logoGroup.rotation.set(0, 0, 0);
+        syncLogoToCurrentPosition(true);
+        fadeInLogo(targets.hero.opacity);
       },
     });
 
     // ─────────────────────────────────────────────────────────────
     // 8. GSAP SCROLLTRIGGER TIMELINE JOURNEY
     // ─────────────────────────────────────────────────────────────
-    let isFacultyActive = false;
-    const triggers: ScrollTrigger[] = [];
-
     const initScrollTriggers = () => {
       // Clean up previous triggers
       triggers.forEach((t) => t.kill());
@@ -686,7 +823,23 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
           onToggle: (self) => {
             isFacultyActive = self.isActive;
           },
+          onEnter: () => {
+            isFacultyActive = true;
+            currentLogoState.x = targets.faculty.x;
+            currentLogoState.y = targets.faculty.y;
+            currentLogoState.scale = targets.faculty.scale;
+          },
+          onEnterBack: () => {
+            isFacultyActive = true;
+            currentLogoState.x = targets.faculty.x;
+            currentLogoState.y = targets.faculty.y;
+            currentLogoState.scale = targets.faculty.scale;
+          },
           onUpdate: (self) => {
+            currentLogoState.x = targets.faculty.x;
+            currentLogoState.y = targets.faculty.y;
+            currentLogoState.scale = targets.faculty.scale;
+            isFacultyActive = self.isActive;
             const beamSec = document.querySelector("#beam-section");
             const beamTop = beamSec ? beamSec.getBoundingClientRect().top : 0;
             if (beamTop <= 20) {
@@ -805,6 +958,12 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
           currentLogoState.scale = gsap.utils.interpolate(targets.hero.scale, targets.statement.scale, p);
           currentLogoState.opacity = gsap.utils.interpolate(targets.hero.opacity, targets.statement.opacity, p);
         },
+        onLeaveBack: () => {
+          currentLogoState.x = targets.hero.x;
+          currentLogoState.y = targets.hero.y;
+          currentLogoState.scale = targets.hero.scale;
+          currentLogoState.opacity = targets.hero.opacity;
+        },
       });
       triggers.push(st1);
 
@@ -884,6 +1043,35 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       });
       triggers.push(stEvents);
 
+      // Stage 3c: Events Showcase Pin Hold (Firmly keeps logo parked at far-right target while slider scrubs)
+      const stEventsHold = ScrollTrigger.create({
+        trigger: "#events-showcase-section",
+        start: "top 25%",
+        endTrigger: "#beam-section",
+        end: "top 85%",
+        onEnter: () => {
+          currentLogoState.x = targets.events.x;
+          currentLogoState.y = targets.events.y;
+          currentLogoState.scale = targets.events.scale;
+          currentLogoState.opacity = targets.events.opacity;
+        },
+        onEnterBack: () => {
+          currentLogoState.x = targets.events.x;
+          currentLogoState.y = targets.events.y;
+          currentLogoState.scale = targets.events.scale;
+          currentLogoState.opacity = targets.events.opacity;
+        },
+        onUpdate: (self) => {
+          if (self.isActive) {
+            currentLogoState.x = targets.events.x;
+            currentLogoState.y = targets.events.y;
+            currentLogoState.scale = targets.events.scale;
+            currentLogoState.opacity = targets.events.opacity;
+          }
+        },
+      });
+      triggers.push(stEventsHold);
+
       // Stage 4: Events -> Faculty (Glides from far right to center beam)
       const st4 = ScrollTrigger.create({
         trigger: "#beam-section",
@@ -910,7 +1098,23 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
         onToggle: (self) => {
           isFacultyActive = self.isActive;
         },
+        onEnter: () => {
+          isFacultyActive = true;
+          currentLogoState.x = targets.faculty.x;
+          currentLogoState.y = targets.faculty.y;
+          currentLogoState.scale = targets.faculty.scale;
+        },
+        onEnterBack: () => {
+          isFacultyActive = true;
+          currentLogoState.x = targets.faculty.x;
+          currentLogoState.y = targets.faculty.y;
+          currentLogoState.scale = targets.faculty.scale;
+        },
         onUpdate: (self) => {
+          currentLogoState.x = targets.faculty.x;
+          currentLogoState.y = targets.faculty.y;
+          currentLogoState.scale = targets.faculty.scale;
+          isFacultyActive = self.isActive;
           const beamSec = document.querySelector("#beam-section");
           const beamTop = beamSec ? beamSec.getBoundingClientRect().top : 0;
           if (beamTop <= 20) {
@@ -1015,34 +1219,105 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
 
       // Sync active trigger state to currentLogoState on init only when intro is done
       if (introManager.isDone()) {
+        ScrollTrigger.sort();
         ScrollTrigger.refresh();
-        triggers.forEach((t) => {
-          if (t.isActive && t.vars.onUpdate) {
-            t.vars.onUpdate(t);
-          }
-        });
+        syncLogoToCurrentPosition(false);
       }
     };
 
     // Recompute on ScrollTrigger.refresh()
     const handleScrollTriggerRefresh = () => {
-      targets = computeAllTargets();
+      if (introManager.isDone()) {
+        syncLogoToCurrentPosition(false);
+      }
     };
     ScrollTrigger.addEventListener("refresh", handleScrollTriggerRefresh);
 
-    // Subscribe to intro manager so triggers are initialized cleanly once intro completes
+    // Initial startup execution: if intro is already done, apply layout INSTANTLY and fade in!
+    if (introManager.isDone()) {
+      applyAssembledBlocks();
+      logoGroup.rotation.set(0, 0, 0);
+      initScrollTriggers();
+      ScrollTrigger.sort();
+      ScrollTrigger.refresh();
+      syncLogoToCurrentPosition(true);
+      fadeInLogo(currentLogoState.opacity);
+    }
+
+    // Subscribe to intro manager so triggers and positions are initialized cleanly on completion/skip
     const unsubscribeIntro = introManager.subscribe((state) => {
       if (state === "done") {
+        isGlidingToHero = false;
+        applyAssembledBlocks();
+        logoGroup.rotation.set(0, 0, 0);
         initScrollTriggers();
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh();
+        syncLogoToCurrentPosition(true);
+        fadeInLogo(currentLogoState.opacity);
       }
     });
 
-    // Small timeout to allow layout to settle before calculating bounding rects
-    const initTimer = setTimeout(() => {
+    // Recompute when fonts finish loading so position stays exact without any scroll
+    if (document.fonts) {
+      document.fonts.ready.then(() => {
+        if (introManager.isDone()) {
+          camera.updateMatrixWorld(true);
+          camera.updateProjectionMatrix();
+          ScrollTrigger.sort();
+          ScrollTrigger.refresh();
+          syncLogoToCurrentPosition(false);
+          fadeInLogo(currentLogoState.opacity);
+        }
+      });
+    }
+
+    // Timeouts to allow hero DOM layout to settle
+    const settleTimer1 = setTimeout(() => {
       if (introManager.isDone()) {
-        initScrollTriggers();
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh();
+        syncLogoToCurrentPosition(false);
+        fadeInLogo(currentLogoState.opacity);
+      }
+    }, 50);
+
+    const settleTimer2 = setTimeout(() => {
+      if (introManager.isDone()) {
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh();
+        syncLogoToCurrentPosition(false);
+        fadeInLogo(currentLogoState.opacity);
       }
     }, 120);
+
+    // ResizeObserver on Hero section and Anchor element
+    const heroSection = document.querySelector("#hero-section");
+    const heroAnchor = document.querySelector('[data-logo-anchor="hero"]');
+    const heroResizeObserver = new ResizeObserver(() => {
+      if (introManager.isDone()) {
+        camera.updateMatrixWorld(true);
+        camera.updateProjectionMatrix();
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh();
+        syncLogoToCurrentPosition(false);
+      }
+    });
+    if (heroSection) heroResizeObserver.observe(heroSection);
+    if (heroAnchor) heroResizeObserver.observe(heroAnchor);
+
+    // Back/forward cache (pageshow) handling
+    const handlePageShow = () => {
+      camera.updateMatrixWorld(true);
+      camera.updateProjectionMatrix();
+      if (introManager.isDone()) {
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh();
+        syncLogoToCurrentPosition(true);
+        fadeInLogo(currentLogoState.opacity);
+      }
+    };
+    window.addEventListener("pageshow", handlePageShow);
 
     // ─────────────────────────────────────────────────────────────
     // 9. MOUSE TILT & SCROLL VELOCITY SPIN
@@ -1077,19 +1352,125 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
     // ─────────────────────────────────────────────────────────────
     const clock = new THREE.Clock();
     let accumulatedRotationY = 0;
+    let qaOrthoCamera: THREE.OrthographicCamera | null = null;
+    let qaFlatMaterial: THREE.MeshBasicMaterial | null = null;
+    let savedStateBeforeQa: {
+      posX: number;
+      posY: number;
+      posZ: number;
+      rotX: number;
+      rotY: number;
+      rotZ: number;
+      scaleX: number;
+      scaleY: number;
+      scaleZ: number;
+      opacity: number;
+    } | null = null;
 
-    const lerpPos = {
-      x: currentLogoState.x,
-      y: currentLogoState.y,
-      scale: currentLogoState.scale,
-      opacity: currentLogoState.opacity,
+    const renderFrontOn = (options?: { flatLighting?: boolean }) => {
+      const flat = options?.flatLighting !== false;
+      if (!isQaFrontOnMode) {
+        savedStateBeforeQa = {
+          posX: logoOuterGroup.position.x,
+          posY: logoOuterGroup.position.y,
+          posZ: logoOuterGroup.position.z,
+          rotX: logoOuterGroup.rotation.x,
+          rotY: logoOuterGroup.rotation.y,
+          rotZ: logoOuterGroup.rotation.z,
+          scaleX: logoOuterGroup.scale.x,
+          scaleY: logoOuterGroup.scale.y,
+          scaleZ: logoOuterGroup.scale.z,
+          opacity: chromeMaterial.opacity,
+        };
+      }
+      isQaFrontOnMode = true;
+
+      logoOuterGroup.position.set(0, 0, 0);
+      logoOuterGroup.rotation.set(0, 0, 0);
+      logoOuterGroup.scale.set(1, 1, 1);
+      logoInnerGroup.rotation.set(0, 0, 0);
+
+      logoInnerGroup.children.forEach((c, idx) => {
+        const orig = originalTransforms[idx];
+        if (orig) {
+          c.position.set(orig.x, orig.y, orig.z);
+          c.rotation.set(orig.rx, orig.ry, orig.rz);
+        }
+      });
+
+      if (flat) {
+        if (!qaFlatMaterial) {
+          qaFlatMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        }
+        logoInnerGroup.children.forEach((c) => {
+          (c as THREE.Mesh).material = qaFlatMaterial!;
+        });
+        scene.background = new THREE.Color(0x000000);
+        renderer.setClearColor(0x000000, 1.0);
+      } else {
+        logoInnerGroup.children.forEach((c) => {
+          (c as THREE.Mesh).material = chromeMaterial;
+        });
+        scene.background = null;
+        renderer.setClearColor(0x000000, 0.0);
+      }
+      chromeMaterial.opacity = 1.0;
+      logoOuterGroup.visible = true;
+
+      const halfH = 2.5 * u * 1.05;
+      const aspect = width / height;
+      const halfW = halfH * aspect;
+      qaOrthoCamera = new THREE.OrthographicCamera(-halfW, halfW, halfH, -halfH, 0.1, 50);
+      qaOrthoCamera.position.set(0, 0, 10);
+      qaOrthoCamera.lookAt(0, 0, 0);
+
+      renderer.render(scene, qaOrthoCamera);
+
+      return {
+        unitSize: u,
+        gridHalfH: halfH,
+        gridHalfW: halfW,
+        viewportWidth: width,
+        viewportHeight: height,
+        table: LOGO_BLOCK_TABLE,
+        dataUrl: renderer.domElement.toDataURL("image/png"),
+      };
+    };
+
+    const restoreNormal = () => {
+      if (!isQaFrontOnMode) return;
+      isQaFrontOnMode = false;
+      if (savedStateBeforeQa) {
+        logoOuterGroup.position.set(savedStateBeforeQa.posX, savedStateBeforeQa.posY, savedStateBeforeQa.posZ);
+        logoOuterGroup.rotation.set(savedStateBeforeQa.rotX, savedStateBeforeQa.rotY, savedStateBeforeQa.rotZ);
+        logoOuterGroup.scale.set(savedStateBeforeQa.scaleX, savedStateBeforeQa.scaleY, savedStateBeforeQa.scaleZ);
+        chromeMaterial.opacity = savedStateBeforeQa.opacity;
+      }
+      logoInnerGroup.children.forEach((c) => {
+        (c as THREE.Mesh).material = chromeMaterial;
+      });
+      scene.background = null;
+      renderer.setClearColor(0x000000, 0.0);
+      qaOrthoCamera = null;
     };
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
 
+      if (isQaFrontOnMode && qaOrthoCamera) {
+        logoGroup.position.set(0, 0, 0);
+        logoGroup.rotation.set(0, 0, 0);
+        logoGroup.scale.set(1, 1, 1);
+        logoInnerGroup.rotation.set(0, 0, 0);
+        renderer.render(scene, qaOrthoCamera);
+        return;
+      }
+
       // Smooth position & scale lerp
-      if (isFacultyActive) {
+      if (isGlidingToHero) {
+        // While gliding to hero: the gsap tween directly drives position and scale onUpdate.
+        // Don't let lerp fighting disrupt the exact live curve.
+      } else if (isFacultyActive) {
         // While faculty section is active: lock x directly to the beam anchor (damp only y and scale)
         const liveBeamWorldX = screenToWorldOnZ(getBeamScreenCenterX(), 0, 0).x;
         currentLogoState.x = liveBeamWorldX;
@@ -1097,10 +1478,21 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
 
         lerpPos.y += (currentLogoState.y - lerpPos.y) * 0.12;
         lerpPos.scale += (currentLogoState.scale - lerpPos.scale) * 0.12;
+        logoGroup.position.set(lerpPos.x, lerpPos.y, 0);
+        logoGroup.scale.set(lerpPos.scale, lerpPos.scale, lerpPos.scale);
       } else {
         lerpPos.x += (currentLogoState.x - lerpPos.x) * 0.12;
         lerpPos.y += (currentLogoState.y - lerpPos.y) * 0.12;
         lerpPos.scale += (currentLogoState.scale - lerpPos.scale) * 0.12;
+
+        if (window.scrollY <= 10 && introManager.isDone()) {
+          if (Math.abs(currentLogoState.x - lerpPos.x) < 0.04) lerpPos.x = currentLogoState.x;
+          if (Math.abs(currentLogoState.y - lerpPos.y) < 0.04) lerpPos.y = currentLogoState.y;
+          if (Math.abs(currentLogoState.scale - lerpPos.scale) < 0.01) lerpPos.scale = currentLogoState.scale;
+        }
+
+        logoGroup.position.set(lerpPos.x, lerpPos.y, 0);
+        logoGroup.scale.set(lerpPos.scale, lerpPos.scale, lerpPos.scale);
       }
       lerpPos.opacity += (currentLogoState.opacity - lerpPos.opacity) * 0.12;
 
@@ -1108,7 +1500,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       chromeMaterial.opacity = Math.max(0, Math.min(1, lerpPos.opacity));
 
       // PAUSE RENDERING when fully transparent to eliminate GPU usage & clear canvas buffer
-      if (lerpPos.opacity <= 0.003) {
+      if (lerpPos.opacity <= 0.003 && currentLogoState.opacity <= 0.003 && !fadeInTween) {
         if (logoGroup.visible) {
           logoGroup.visible = false;
           chromeMaterial.opacity = 0;
@@ -1132,12 +1524,11 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       const velocitySpin = scrollVelocity * 0.000045;
       accumulatedRotationY += idleSpin + velocitySpin;
 
-      logoGroup.position.set(lerpPos.x, lerpPos.y, 0);
-      logoGroup.scale.set(lerpPos.scale, lerpPos.scale, lerpPos.scale);
-
       if (!prefersReducedMotion) {
-        // Float y only (damped inside faculty section for stability)
-        const floatY = Math.sin(time * 1.3) * (isFacultyActive ? 0.02 : 0.08);
+        // Float y only when scrolled past hero or damped in faculty
+        const floatY = window.scrollY > 20
+          ? Math.sin(time * 1.3) * (isFacultyActive ? 0.02 : 0.08)
+          : 0;
         logoGroup.position.y += floatY;
 
         if (!isMobile) {
@@ -1162,7 +1553,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
     animate();
 
     // Expose QA inspection data on window
-    (window as any).__getLogoQAData = () => {
+    window.__getLogoQAData = () => {
       const beamCenterX = getBeamScreenCenterX();
       const logoScreenPos = worldToScreen(logoGroup.position);
       const projectedBox = getLogoProjectedBox(logoGroup, camera);
@@ -1172,11 +1563,21 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       const headingTop = headingEl ? headingEl.getBoundingClientRect().top : 9999;
       const cardsEl = document.querySelector("#faculty-cards-container");
       const cardsTop = cardsEl ? cardsEl.getBoundingClientRect().top : 9999;
+      const anchorEl = document.querySelector('[data-logo-anchor="hero"]');
+      const anchorRect = anchorEl ? anchorEl.getBoundingClientRect() : null;
+      const anchorCenterX = anchorRect ? anchorRect.left + anchorRect.width / 2 : null;
+      const anchorCenterY = anchorRect ? anchorRect.top + anchorRect.height / 2 : null;
 
       return {
         isFacultyActive,
+        isGlidingToHero,
         beamCenterX,
         logoScreenCenterX: logoScreenPos.x,
+        logoScreenCenterY: logoScreenPos.y,
+        anchorCenterX,
+        anchorCenterY,
+        diffHeroX: anchorCenterX !== null ? Math.abs(anchorCenterX - logoScreenPos.x) : null,
+        diffHeroY: anchorCenterY !== null ? Math.abs(anchorCenterY - logoScreenPos.y) : null,
         diffX: Math.abs(beamCenterX - logoScreenPos.x),
         navBottom,
         logoTop: projectedBox.top,
@@ -1187,8 +1588,20 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
         opacity: chromeMaterial.opacity,
         scale: logoGroup.scale.x,
         scrollY: window.scrollY,
+        targetsHero: targets.hero,
+        currentLogoState: { ...currentLogoState },
+        lerpPos: { ...lerpPos },
+        groupPos: { x: logoGroup.position.x, y: logoGroup.position.y, z: logoGroup.position.z },
       };
     };
+
+    window.__renderLogoFrontOn = renderFrontOn;
+    window.__restoreLogoNormal = restoreNormal;
+    window.__getLogoGridData = () => ({
+      table: LOGO_BLOCK_TABLE,
+      layout: getLogoBlockLayout(u),
+      unitSize: u,
+    });
 
     // ─────────────────────────────────────────────────────────────
     // 11. RESIZE & CLEANUP
@@ -1200,14 +1613,24 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
 
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
+      camera.updateMatrixWorld(true);
       renderer.setSize(width, height);
 
       initScrollTriggers();
+      ScrollTrigger.sort();
+      ScrollTrigger.refresh();
+      if (introManager.isDone()) {
+        syncLogoToCurrentPosition(true);
+      }
     };
     window.addEventListener("resize", handleResize);
 
     return () => {
-      clearTimeout(initTimer);
+      clearTimeout(settleTimer1);
+      clearTimeout(settleTimer2);
+      if (fadeInTween) fadeInTween.kill();
+      heroResizeObserver.disconnect();
+      window.removeEventListener("pageshow", handlePageShow);
       cancelAnimationFrame(animId);
       unsubscribeIntro();
       triggers.forEach((t) => t.kill());
@@ -1215,7 +1638,14 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("scroll", onScroll);
-      delete (window as any).__getLogoQAData;
+      delete window.__getLogoQAData;
+      delete window.__renderLogoFrontOn;
+      delete window.__restoreLogoNormal;
+      delete window.__getLogoGridData;
+
+      if (qaFlatMaterial) {
+        qaFlatMaterial.dispose();
+      }
 
       // Clean Three.js resources
       logoInnerGroup.children.forEach((c) => {

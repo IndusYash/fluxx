@@ -13,6 +13,7 @@ export default function Layout() {
   useEffect(() => {
     // Refresh ScrollTrigger and Lenis on mount
     const timer = setTimeout(() => {
+      ScrollTrigger.sort();
       ScrollTrigger.refresh();
       (window as any).__lenis?.resize();
     }, 150);

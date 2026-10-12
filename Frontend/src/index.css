@@ -97,6 +97,29 @@
   }
 }
 
+/* Intro State Orchestration:
+   Hero elements start hidden in their final layout position with opacity 0, never moved offscreen.
+   Navbar and ticker start hidden until reveal starts. */
+html:not([data-intro="done"]):not([data-intro="revealing"]) .reveal-line-inner {
+  transform: translateY(100%);
+  opacity: 0;
+}
+html:not([data-intro="done"]):not([data-intro="revealing"]) .hero-fade-item {
+  transform: translateY(24px);
+  opacity: 0;
+}
+html:not([data-intro="done"]):not([data-intro="revealing"]) .hero-marquee-wrapper {
+  opacity: 0;
+}
+html:not([data-intro="done"]):not([data-intro="revealing"]) #main-header,
+html:not([data-intro="done"]):not([data-intro="revealing"]) #top-nav-scrim,
+html:not([data-intro="done"]):not([data-intro="revealing"]) #bottom-ticker,
+html:not([data-intro="done"]):not([data-intro="revealing"]) footer[aria-label="Status Ticker"] {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 html,
 body {
   margin: 0;

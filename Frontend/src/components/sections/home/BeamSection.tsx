@@ -1,13 +1,63 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import Container from "@/components/layout/Container";
+import { facultyData } from "@/pages/faculty/facultyData";
 
-import vcMaam from "/src/assets/images/Prof. Anupama Kaushik Sharma vc maam.jpeg";
-import shwetSir from "/src/assets/images/shwetSir.webp";
-import expert from "/src/assets/images/expert.webp";
+const FacultyPhotoFrame: React.FC<{ src: string; alt: string }> = ({ src, alt }) => {
+  const [blurredBg, setBlurredBg] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!src) return;
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = src;
+    img.onload = () => {
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = 40;
+        canvas.height = 30;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.filter = "blur(3px)";
+          ctx.drawImage(img, 0, 0, 40, 30);
+          setBlurredBg(canvas.toDataURL());
+        }
+      } catch {
+        setBlurredBg(src);
+      }
+    };
+  }, [src]);
+
+  return (
+    <div className="relative w-full aspect-[4/3] rounded-sm overflow-hidden mb-4 bg-black/90 flex items-center justify-center">
+      {/* Dark heavily blurred scaled-up backdrop to fill any empty space */}
+      {blurredBg ? (
+        <img
+          src={blurredBg}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover scale-125 filter blur-sm brightness-[0.3] opacity-85 select-none pointer-events-none"
+        />
+      ) : (
+        <div
+          className="absolute inset-0 bg-cover bg-center scale-125 filter blur-md brightness-[0.25] opacity-75"
+          style={{ backgroundImage: `url(${src})` }}
+        />
+      )}
+      <div className="absolute inset-0 bg-black/30 pointer-events-none" />
+
+      {/* Fully contained photo: whole photo visible, zero cropped heads, hands, shoulders or face */}
+      <img
+        src={src}
+        alt={alt}
+        className="relative z-10 w-full h-full object-contain drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)] group-hover:scale-[1.02] transition-transform duration-500 ease-out"
+      />
+    </div>
+  );
+};
 
 export default function BeamSection() {
   const navigate = useNavigate();
@@ -17,33 +67,27 @@ export default function BeamSection() {
   const word3Ref = useRef<HTMLSpanElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
 
-  const facultyNews = [
+  const mentorshipCards = [
     {
-      id: 1,
-      image: vcMaam,
+      slug: "satvik-vats",
+      role: "ASSISTANT PROFESSOR",
+      name: "Dr. Satvik Vats",
+      line: "Specializing in Big Data analytics and Deep Learning applications.",
+      image: facultyData.find((f) => f.slug === "satvik-vats")?.profileImage || "",
+    },
+    {
+      slug: "anupama-kaushik-sharma",
+      role: "HON'BLE VICE CHANCELLOR & PATRON",
       name: "Prof. Anupama Kaushik Sharma",
-      role: "Hon'ble Vice Chancellor & Patron",
-      date: "OCTOBER 2025",
-      title: "Vision for Interdisciplinary Student Research & Innovation Hubs",
-      link: "/about",
+      line: "Vision for Interdisciplinary Student Research & Innovation Hubs",
+      image: facultyData.find((f) => f.slug === "anupama-kaushik-sharma")?.profileImage || "",
     },
     {
-      id: 2,
-      image: shwetSir,
-      name: "Dr. Shweta Srivastava",
-      role: "Faculty Advisor, Dept. of CSE",
-      date: "JANUARY 2026",
-      title: "ATAL FDP: Leading Frontiers in Mechanistic Interpretability",
-      link: "/events/fdp",
-    },
-    {
-      id: 3,
-      image: expert,
-      name: "Er. Shivesh Sinha",
-      role: "Sr. Technical Program Manager, Intel USA",
-      date: "NOVEMBER 2025",
-      title: "Industry Keynote: Silicon Acceleration and Foundation Models",
-      link: "/events",
+      slug: "shwet-ketu",
+      role: "ASSISTANT PROFESSOR",
+      name: "Dr. Shwet Ketu",
+      line: "Expert in IoT systems and healthcare technology integration.",
+      image: facultyData.find((f) => f.slug === "shwet-ketu")?.profileImage || "",
     },
   ];
 
@@ -260,43 +304,44 @@ export default function BeamSection() {
         <div
           ref={cardsContainerRef}
           id="faculty-cards-container"
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8"
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch"
         >
-          {facultyNews.map((card) => (
-            <div key={card.id} className="will-change-transform">
+          {mentorshipCards.map((card) => (
+            <div key={card.slug} className="will-change-transform h-full flex flex-col">
               <div
-                onClick={() => navigate(card.link)}
+                tabIndex={0}
+                role="button"
+                aria-label={`Read profile of ${card.name}`}
+                onClick={() => navigate(`/faculty#${card.slug}`)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    navigate(`/faculty#${card.slug}`);
+                  }
+                }}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
-                className="group relative bg-[#0d0d0f] border border-white/10 hover:border-white/35 p-4 rounded-sm transition-all duration-300 ease-out cursor-pointer shadow-[0_15px_35px_rgba(0,0,0,0.6)] will-change-transform"
+                className="group relative bg-[#0d0d0f] border border-white/10 hover:border-white/35 p-4 rounded-sm transition-all duration-300 ease-out cursor-pointer shadow-[0_15px_35px_rgba(0,0,0,0.6)] will-change-transform h-full flex flex-col justify-between"
                 style={{ transformStyle: "preserve-3d" }}
               >
-                {/* Card Image */}
-                <div className="relative w-full aspect-[4/3] rounded-sm overflow-hidden mb-4 bg-black">
-                  <img
-                    src={card.image}
-                    alt={card.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
-                  <span className="absolute top-2.5 left-2.5 font-mono text-[11px] uppercase tracking-widest text-white/90 px-2 py-0.5 bg-black/60 backdrop-blur-sm">
-                    {card.date}
+                <div>
+                  {/* Card Image */}
+                  <FacultyPhotoFrame src={card.image} alt={card.name} />
+
+                  {/* Card Metadata */}
+                  <span className="block font-mono text-[11px] tracking-widest uppercase text-white/65 mb-1.5">
+                    {card.role}
                   </span>
+                  <h4 className="font-sans font-bold text-base sm:text-lg text-white leading-snug group-hover:text-white transition-colors mb-2">
+                    {card.name}
+                  </h4>
+                  <p className="font-sans text-xs text-neutral-400 font-light leading-relaxed">
+                    {card.line}
+                  </p>
                 </div>
 
-                {/* Card Metadata */}
-                <span className="block font-mono text-[11px] tracking-widest uppercase text-white/65 mb-1">
-                  {card.role}
-                </span>
-                <h4 className="font-sans font-bold text-base sm:text-lg text-white leading-snug group-hover:text-white transition-colors mb-2">
-                  {card.name}
-                </h4>
-                <p className="font-sans text-xs text-neutral-400 font-light leading-relaxed line-clamp-2">
-                  {card.title}
-                </p>
-
                 {/* Arrow link */}
-                <div className="mt-4 pt-3 border-t border-white/[0.08] flex items-center justify-between text-[11px] font-mono tracking-wider text-white/40 group-hover:text-white transition-colors">
+                <div className="mt-4 pt-3 border-t border-white/[0.08] flex items-center justify-between text-[11px] font-mono tracking-wider text-white/50 group-hover:text-white transition-colors">
                   <span>READ PROFILE</span>
                   <span>↗</span>
                 </div>

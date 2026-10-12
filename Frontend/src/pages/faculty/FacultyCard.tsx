@@ -5,17 +5,28 @@ import type { FacultyMember } from "./facultyData";
 interface FacultyCardProps {
   faculty: FacultyMember;
   idx?: number;
+  isHighlighted?: boolean;
 }
 
-const FacultyCard: React.FC<FacultyCardProps> = ({ faculty, idx = 0 }) => {
+const FacultyCard: React.FC<FacultyCardProps> = ({ faculty, idx = 0, isHighlighted = false }) => {
   const accentColor = "#E5E5E5";
+  const cardId = faculty.slug || faculty.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
   const renderMetrics = () => {
-    if (faculty.id === 0 || faculty.id === 1) {
+    if (faculty.id === 1) {
       return null;
     }
 
     switch (faculty.id) {
+      case 0:
+        return (
+          <>
+            <MetricItem value="25+" label="Experience" color={accentColor} />
+            <MetricItem value="Patron" label="FLUX MMMUT" color={accentColor} />
+            <MetricItem value="Leader" label="Research Hubs" color={accentColor} />
+          </>
+        );
+
       case 4:
         return (
           <>
@@ -91,14 +102,26 @@ const FacultyCard: React.FC<FacultyCardProps> = ({ faculty, idx = 0 }) => {
   };
 
   return (
-    <div className="group relative flex w-full">
-      <div className="absolute -inset-1 bg-gradient-to-r from-white/0 via-white/5 to-white/0 rounded-[2rem] blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-700 pointer-events-none" />
+    <div
+      id={cardId}
+      className="group relative flex w-full scroll-mt-28 md:scroll-mt-32"
+    >
+      <div
+        className={`absolute -inset-1 bg-gradient-to-r from-white/0 via-white/10 to-white/0 rounded-[2rem] blur-xl transition-opacity duration-700 pointer-events-none ${
+          isHighlighted ? "opacity-100" : "opacity-0 group-hover:opacity-60"
+        }`}
+      />
 
       <div
-        className="card-outline relative w-full bg-white/[0.03] backdrop-blur-[12px] rounded-[2rem] p-6 md:p-8 flex flex-col transition-all duration-500 hover:translate-y-0 overflow-hidden border border-white/10 group-hover:border-white/30"
+        className={`card-outline relative w-full bg-white/[0.03] backdrop-blur-[12px] rounded-[2rem] p-6 md:p-8 flex flex-col transition-all duration-500 hover:translate-y-0 overflow-hidden border ${
+          isHighlighted
+            ? "border-white/90 ring-2 ring-white/50 shadow-[0_0_35px_rgba(255,255,255,0.4)]"
+            : "border-white/10 group-hover:border-white/30"
+        }`}
         style={{
-          boxShadow:
-            "0 10px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)",
+          boxShadow: isHighlighted
+            ? "0 10px 40px rgba(0,0,0,0.5), 0 0 30px rgba(255,255,255,0.25), inset 0 1px 0 rgba(255,255,255,0.2)"
+            : "0 10px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)",
         }}
       >
         {/* Glass morphism top glow strip */}

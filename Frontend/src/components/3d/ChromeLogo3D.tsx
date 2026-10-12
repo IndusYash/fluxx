@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { buildLogoInnerGroup, LOGO_UNIT_SIZE } from "./logoConfig";
 
 interface ChromeLogo3DProps {
   className?: string;
@@ -117,74 +118,9 @@ export default function ChromeLogo3D({
 
     // 4. Construct 3D Beveled Flux Logo Model
     const logoGroup = new THREE.Group();
-
-    // Helper to create rounded beveled block
-    const createBeveledBlock = (
-      w: number,
-      h: number,
-      x: number,
-      y: number,
-      bevelR: number = 0.05
-    ) => {
-      const shape = new THREE.Shape();
-      const hw = w / 2;
-      const hh = h / 2;
-      const r = Math.min(bevelR, hw * 0.4, hh * 0.4);
-
-      shape.moveTo(-hw + r, -hh);
-      shape.lineTo(hw - r, -hh);
-      shape.quadraticCurveTo(hw, -hh, hw, -hh + r);
-      shape.lineTo(hw, hh - r);
-      shape.quadraticCurveTo(hw, hh, hw - r, hh);
-      shape.lineTo(-hw + r, hh);
-      shape.quadraticCurveTo(-hw, hh, -hw, hh - r);
-      shape.lineTo(-hw, -hh + r);
-      shape.quadraticCurveTo(-hw, -hh, -hw + r, -hh);
-
-      const extrudeSettings: THREE.ExtrudeGeometryOptions = {
-        depth: 0.52,
-        bevelEnabled: true,
-        bevelSegments: 5,
-        steps: 1,
-        bevelSize: 0.045,
-        bevelThickness: 0.055,
-      };
-
-      const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-      geometry.center();
-
-      const mesh = new THREE.Mesh(geometry, chromeMaterial);
-      mesh.position.set(x, y, 0);
-      mesh.castShadow = true;
-      mesh.receiveShadow = true;
-      return mesh;
-    };
-
-    const u = 0.64;
-
-    // Building the exact 5x5 Flux logo geometry:
-    // Row 2 (top)
-    logoGroup.add(createBeveledBlock(u * 0.96, u * 0.96, -u * 1.5, u * 1.5));
-    logoGroup.add(createBeveledBlock(u * 2.85, u * 0.96, u * 0.6, u * 1.5));
-
-    // Row 1
-    logoGroup.add(createBeveledBlock(u * 0.96, u * 0.96, -u * 0.5, u * 0.5));
-
-    // Row 0 (middle crossbar)
-    logoGroup.add(createBeveledBlock(u * 0.96, u * 0.96, -u * 1.5, -u * 0.5));
-    logoGroup.add(createBeveledBlock(u * 1.9, u * 0.96, u * 0.95, -u * 0.5));
-
-    // Row -1
-    logoGroup.add(createBeveledBlock(u * 0.96, u * 0.96, u * 0.5, -u * 1.5));
-
-    // Row -2 (bottom foot)
-    logoGroup.add(createBeveledBlock(u * 1.9, u * 0.96, -u * 1.05, -u * 2.0));
-
-    // Center offset
-    const yShift = u * 0.25;
-    logoGroup.children.forEach((c) => {
-      c.position.y += yShift;
-    });
+    const u = LOGO_UNIT_SIZE;
+    const { logoInnerGroup } = buildLogoInnerGroup(u, chromeMaterial);
+    logoGroup.add(logoInnerGroup);
 
     const getScale = (w: number) => {
       if (positionMode === "center") return scale * 0.88;
@@ -329,9 +265,9 @@ export default function ChromeLogo3D({
       }
 
       // Dispose resources
-      logoGroup.children.forEach((c) => {
+      logoGroup.traverse((c) => {
         const mesh = c as THREE.Mesh;
-        if (mesh.geometry) mesh.geometry.dispose();
+        if (mesh.isMesh && mesh.geometry) mesh.geometry.dispose();
       });
       chromeMaterial.dispose();
       envTexture.dispose();

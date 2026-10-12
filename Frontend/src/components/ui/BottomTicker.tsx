@@ -7,6 +7,7 @@ export default function BottomTicker() {
 
   return (
     <footer
+      id="bottom-ticker"
       aria-label="Status Ticker"
       className={`fixed bottom-0 inset-x-0 z-[80] pointer-events-none select-none h-[var(--ticker-h)] px-[var(--gutter)] flex items-center justify-between text-[11px] tracking-[0.28em] font-mono uppercase transition-colors duration-150 ${
         isTickerLight

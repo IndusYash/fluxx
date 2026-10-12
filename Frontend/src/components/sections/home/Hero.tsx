@@ -184,6 +184,7 @@ export default function Hero() {
               <div className="flex flex-col items-end text-right select-none pointer-events-auto">
                 {/* Role List vertical stack with 10px gap */}
                 <div
+                  id="hero-role-list"
                   ref={rolesRef}
                   className="hero-fade-item flex flex-col items-end gap-[10px] text-[12px] xl:text-[13px] font-mono tracking-[0.12em] text-white/80"
                 >
@@ -202,7 +203,7 @@ export default function Hero() {
                 </div>
 
                 {/* Only "Join Us ↗" pill button, 16px gap below role list, at least 24px above ticker */}
-                <div ref={joinChipRef} className="hero-fade-item mt-4 pointer-events-auto">
+                <div id="hero-join-chip" ref={joinChipRef} className="hero-fade-item mt-4 pointer-events-auto">
                   <button
                     onClick={() => navigate("/team")}
                     className="group inline-flex items-center justify-center px-4 py-2 rounded-full border border-white/20 bg-black/70 hover:bg-white hover:text-black text-white backdrop-blur-md text-xs font-mono tracking-wider transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)] cursor-pointer"

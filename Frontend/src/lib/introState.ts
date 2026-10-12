@@ -13,6 +13,7 @@ export interface IntroAnimationHooks {
   onGlideToHero?: (tl: gsap.core.Timeline, startTime: number) => void;
   shakeCamera?: () => void;
   snapToHero?: () => void;
+  flashLogo?: () => void;
 }
 
 const STORAGE_KEY = "flux_intro_seen_v1";

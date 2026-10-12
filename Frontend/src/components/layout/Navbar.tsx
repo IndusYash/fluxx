@@ -61,6 +61,7 @@ export default function Navbar() {
     <>
       {/* Pointer-events-none top gradient overlay behind navbar (neutral dark scrim in dark theme, no scrim in light theme) */}
       <div
+        id="top-nav-scrim"
         className={`pointer-events-none fixed top-0 inset-x-0 h-24 z-[89] transition-opacity duration-150 ${
           isNavbarLight
             ? "opacity-0"
@@ -70,6 +71,7 @@ export default function Navbar() {
       />
 
       <header
+        id="main-header"
         className="fixed top-0 inset-x-0 z-[90] pointer-events-none bg-transparent border-none"
       >
         <Container className="flex items-center justify-between pt-[clamp(14px,2vh,24px)]">

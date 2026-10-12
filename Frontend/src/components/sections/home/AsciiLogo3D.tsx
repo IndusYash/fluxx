@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { getLogoBlockLayout } from "@/components/3d/logoConfig";
 
 interface AsciiLogo3DProps {
   positionMode?: "right" | "center";
@@ -68,39 +69,28 @@ export default function AsciiLogo3D({ positionMode = "right" }: AsciiLogo3DProps
     const u = 0.68;
     const depth = 0.85;
 
-    // Grid coordinates centered around origin:
-    // Row 2 (top):
-    logoGroup.add(createBlock(u, u, depth, -u * 1.5, u * 1.5));        // (0, 0)
-    logoGroup.add(createBlock(u * 2.8, u, depth, u * 0.6, u * 1.5));   // (2..4, 0)
+    // Build 5x5 grid from shared layout
+    const layout = getLogoBlockLayout(u);
+    layout.forEach((b) => {
+      logoGroup.add(createBlock(b.w, b.h, depth, b.x, b.y));
+    });
 
-    // Row 1:
-    logoGroup.add(createBlock(u, u, depth, -u * 0.5, u * 0.5));        // (1, 1)
-
-    // Row 0 (middle bar):
-    logoGroup.add(createBlock(u, u, depth, -u * 1.5, -u * 0.5));       // (0, 2)
-    logoGroup.add(createBlock(u * 1.9, u, depth, u * 0.95, -u * 0.5)); // (3..4, 2)
-
-    // Row -1:
-    logoGroup.add(createBlock(u, u, depth, u * 0.5, -u * 1.5));        // (2, 3)
-
-    // Row -2 (bottom stem):
-    logoGroup.add(createBlock(u * 1.9, u, depth, -u * 1.05, -u * 2.0)); // (0..1, 4)
-
-    // Center offset of the geometry
-    const centerYOffset = u * 0.25;
+    const logoBox = new THREE.Box3().setFromObject(logoGroup);
+    const logoCenter = new THREE.Vector3();
+    logoBox.getCenter(logoCenter);
     logoGroup.children.forEach((child) => {
-      child.position.y += centerYOffset;
+      child.position.sub(logoCenter);
     });
 
     // Add rear slab for depth presence and silhouette stability
-    const backingGeom = new THREE.BoxGeometry(u * 4.6, u * 4.6, 0.1);
+    const backingGeom = new THREE.BoxGeometry(u * 5.0, u * 5.0, 0.1);
     const backingMat = new THREE.MeshStandardMaterial({
       color: 0x333333,
       roughness: 0.5,
       metalness: 0.2,
     });
     const backingMesh = new THREE.Mesh(backingGeom, backingMat);
-    backingMesh.position.set(-u * 0.05, centerYOffset - u * 0.2, -depth * 0.52);
+    backingMesh.position.set(0, 0, -depth * 0.52);
     logoGroup.add(backingMesh);
 
     scene.add(logoGroup);

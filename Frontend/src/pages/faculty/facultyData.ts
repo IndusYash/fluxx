@@ -45,6 +45,7 @@ export interface FacultyMember {
   mtechSupervised?: number;
   phdSupervised?: number;
   additionalInfo?: string;
+  slug?: string;
 }
 
 export const facultyData: FacultyMember[] = [
@@ -52,23 +53,30 @@ export const facultyData: FacultyMember[] = [
   // ⭐ UNDER GUIDANCE — Prof. Anupama Kaushik Sharma
   {
     id: 0,
+    slug: "anupama-kaushik-sharma",
     name: "Prof. Anupama Kaushik Sharma",
-    title: "Hon'ble Vice Chancellor",
-    department: "",
-    specialization: [],
-    email: "",
+    title: "Hon'ble Vice Chancellor & Patron",
+    department: "Executive Leadership, MMMUT",
+    specialization: [
+      "Interdisciplinary Research",
+      "Innovation Hubs",
+      "Academic Leadership",
+      "Institutional Vision"
+    ],
+    email: "vc@mmmut.ac.in",
     phone: "+91-XXXXXXXXXX",
     profileImage: anupamakaushik,
     description:
-      "Madan Mohan Malaviya University of Technology, Gorakhpur",
+      "Vision for Interdisciplinary Student Research & Innovation Hubs",
     isHOD: false,
-    qualification: "",
-    additionalInfo: "Vice Chancellor MMMUT Gorakhpur."
+    qualification: "PhD",
+    additionalInfo: "Hon'ble Vice Chancellor & Patron, MMMUT Gorakhpur."
   },
 
   // ⭐ UNDER GUIDANCE — Prof. Rakesh Kumar (HOD)
   {
     id: 1,
+    slug: "rakesh-kumar",
     name: "Prof. Rakesh Kumar",
     title: "Professor & Head",
     department: "Computer Science and Engineering",
@@ -143,6 +151,7 @@ export const facultyData: FacultyMember[] = [
   // ⭐ Dr. Satvik Vats
   {
     id: 4,
+    slug: "satvik-vats",
     name: "Dr. Satvik Vats",
     title: "Assistant Professor",
     department: "Computer Science and Engineering",
@@ -164,6 +173,7 @@ export const facultyData: FacultyMember[] = [
   // ⭐ Dr. Shwet Ketu
   {
     id: 5,
+    slug: "shwet-ketu",
     name: "Dr. Shwet Ketu",
     title: "Assistant Professor",
     department: "Computer Science & Engineering",

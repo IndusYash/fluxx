@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { introManager, type IntroState } from "@/lib/introState";
 import { DissolveRenderer } from "./DissolveShader";
@@ -8,7 +8,6 @@ export default function FluxIntro() {
   const [displayCount, setDisplayCount] = useState("000");
   const [scriptMorphRatio, setScriptMorphRatio] = useState(0); // 0 (upright) -> 1 (script)
   const [isReadyToActivate, setIsReadyToActivate] = useState(false);
-  const [flashOpacity, setFlashOpacity] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const shaderCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -27,6 +26,18 @@ export default function FluxIntro() {
   // ─────────────────────────────────────────────────────────────
   useEffect(() => {
     if (introManager.isDone()) return;
+
+    // Set manual scroll restoration and lock scroll at top top
+    if (typeof history !== "undefined" && "scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true });
+      window.__lenis.stop();
+    }
 
     // Lock page scroll
     document.body.style.overflow = "hidden";
@@ -179,41 +190,40 @@ export default function FluxIntro() {
       hooks.onAssemble(master, assembleStartTime);
     }
 
-    // At assembly snap point: White flash + camera shake
+    // At assembly snap point: Short additive glow on the logo itself + camera shake
     master.call(() => {
-      setFlashOpacity(1.0);
-      gsap.to({ val: 1.0 }, {
-        val: 0.0,
-        duration: 0.35,
-        ease: "power2.out",
-        onUpdate: function () {
-          setFlashOpacity(this.targets()[0].val);
-        },
-      });
-
+      if (hooks.flashLogo) {
+        hooks.flashLogo();
+      }
       if (hooks.shakeCamera) {
         hooks.shakeCamera();
       }
     }, undefined, assembleStartTime + 1.28);
 
-    // 4. HERO REVEAL (1.4s): Logo glides to hero while hero content manifests
+    // 4. HERO REVEAL (1.3s): Logo glides to hero and hero content manifests TOGETHER
     const revealStartTime = assembleStartTime + 1.35;
 
     master.call(() => {
       introManager.setState("revealing");
     }, undefined, revealStartTime);
 
-    // Glide logo to hero position
+    // Glide logo to hero position (duration 1.3s)
     if (hooks.onGlideToHero) {
       hooks.onGlideToHero(master, revealStartTime);
     }
 
-    // Hero elements choreography:
+    // Hero elements choreography: Starts at the EXACT SAME TIME as logo glide!
     master.call(() => {
-      // Navbar slides down
-      const nav = document.querySelector("header") || document.querySelector("nav");
+      // Navbar slides down from y: -80, opacity: 0
+      const nav = document.querySelector("#main-header") || document.querySelector("header");
+      const scrim = document.getElementById("top-nav-scrim");
       if (nav) {
+        gsap.set(nav, { visibility: "visible" });
         gsap.fromTo(nav, { y: -80, opacity: 0 }, { y: 0, opacity: 1, duration: 1.0, ease: "power3.out" });
+      }
+      if (scrim) {
+        gsap.set(scrim, { visibility: "visible" });
+        gsap.fromTo(scrim, { opacity: 0 }, { opacity: 1, duration: 1.0, ease: "power2.out" });
       }
 
       // Marquee sweeps in and settles
@@ -222,46 +232,74 @@ export default function FluxIntro() {
         gsap.fromTo(marquee, { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 1.2, ease: "power2.out" });
       }
 
-      // Headline lines slide up from overflow masks (stagger 0.12s)
+      // Headline lines slide up from overflow masks (y: +100% to 0, stagger 0.12s)
       const lines = document.querySelectorAll(".reveal-line-inner");
       if (lines.length > 0) {
         gsap.fromTo(
           lines,
-          { y: "110%", opacity: 0 },
+          { y: "100%", opacity: 0 },
           { y: "0%", opacity: 1, duration: 1.1, stagger: 0.12, ease: "power3.out" }
         );
       }
 
-      // Paragraphs and action buttons fade up
+      // Paragraphs and action buttons fade up (y: +24px to 0, stagger 0.08s)
       const fades = document.querySelectorAll(".hero-fade-item");
       if (fades.length > 0) {
         gsap.fromTo(
           fades,
-          { opacity: 0, y: 24 },
-          { opacity: 1, y: 0, duration: 0.9, stagger: 0.08, ease: "power2.out", delay: 0.3 }
+          { y: 24, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1.0, stagger: 0.08, ease: "power2.out" }
         );
       }
 
-      // Bottom ticker slides up
-      const ticker = document.getElementById("bottom-ticker");
+      // Bottom ticker slides up from y: 40, opacity: 0
+      const ticker = document.getElementById("bottom-ticker") || document.querySelector("footer[aria-label='Status Ticker']");
       if (ticker) {
-        gsap.fromTo(ticker, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", delay: 0.4 });
+        gsap.set(ticker, { visibility: "visible" });
+        gsap.fromTo(ticker, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, ease: "power3.out" });
       }
-    }, undefined, revealStartTime + 0.1);
+    }, undefined, revealStartTime);
 
     // Finalize intro completion
     master.call(() => {
+      // Ensure scroll is at 0 before unlocking
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+
       introManager.setState("done");
 
       // Start Lenis smooth scroll
-      if ((window as any).__lenis) {
-        (window as any).__lenis.start();
+      if (window.__lenis) {
+        window.__lenis.scrollTo(0, { immediate: true });
+        window.__lenis.start();
       }
 
       // Enable custom cursor
       window.dispatchEvent(new CustomEvent("intro-complete"));
-    }, undefined, revealStartTime + 1.4);
+    }, undefined, revealStartTime + 1.25);
   };
+
+  const handleSkip = useCallback((e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    if (masterTimelineRef.current) {
+      masterTimelineRef.current.kill();
+    }
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true });
+      window.__lenis.start();
+    }
+    introManager.skip();
+  }, []);
+
+  const handleActivation = useCallback(() => {
+    if (introState === "ready") {
+      triggerMasterExperience();
+    }
+  }, [introState]);
 
   // Keyboard and click activations
   useEffect(() => {
@@ -275,21 +313,7 @@ export default function FluxIntro() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [introState]);
-
-  const handleActivation = () => {
-    if (introState === "ready") {
-      triggerMasterExperience();
-    }
-  };
-
-  const handleSkip = (e?: React.MouseEvent) => {
-    if (e) e.stopPropagation();
-    if (masterTimelineRef.current) {
-      masterTimelineRef.current.kill();
-    }
-    introManager.skip();
-  };
+  }, [introState, handleSkip]);
 
   if (introState === "done") {
     return null;
@@ -364,16 +388,6 @@ export default function FluxIntro() {
           style={{ display: introState === "dissolving" ? "block" : "none" }}
         />
       </div>
-
-      {/* ─────────────────────────────────────────────────────────────
-          2. WHITE FLASH OVERLAY (TRIGGERED AT LOGO SNAP)
-      ───────────────────────────────────────────────────────────── */}
-      {flashOpacity > 0 && (
-        <div
-          className="fixed inset-0 z-[130] pointer-events-none bg-white transition-opacity"
-          style={{ opacity: flashOpacity }}
-        />
-      )}
     </>
   );
 }
