@@ -134,6 +134,15 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
     const u = LOGO_UNIT_SIZE;
     const { logoInnerGroup } = buildLogoInnerGroup(u, chromeMaterial);
 
+    // Upright front-facing hero pose (0 deg yaw, 0 deg pitch, 0 deg roll - straight without rightward tilt)
+    const heroPose = {
+      x: 0.0,
+      y: 0.0,
+      z: 0.0,
+    };
+    let accumulatedRotationY = heroPose.y;
+    (window as any).__heroPose = heroPose;
+
     const logoInnerBox = new THREE.Box3().setFromObject(logoInnerGroup);
     const logoInnerSize = new THREE.Vector3();
     logoInnerBox.getSize(logoInnerSize);
@@ -184,7 +193,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
     } else {
       applyAssembledBlocks();
       logoOuterGroup.position.set(0, 0, 0);
-      logoOuterGroup.rotation.set(0, 0, 0);
+      logoOuterGroup.rotation.set(heroPose.x, heroPose.y, heroPose.z);
       logoOuterGroup.scale.set(1.0, 1.0, 1.0);
       chromeMaterial.opacity = 0;
       logoOuterGroup.visible = false;
@@ -622,7 +631,8 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
 
       if (instant) {
         applyAssembledBlocks();
-        logoGroup.rotation.set(0, 0, 0);
+        logoGroup.rotation.set(heroPose.x, heroPose.y, heroPose.z);
+        accumulatedRotationY = heroPose.y;
 
         lerpPos.x = activeTarget.x;
         lerpPos.y = activeTarget.y;
@@ -638,6 +648,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       onAssemble: (tl: gsap.core.Timeline, startTime: number) => {
         logoGroup.position.set(0, 0, 0);
         logoGroup.scale.set(1.15, 1.15, 1.15);
+        logoGroup.rotation.set(0, -0.6, 0);
         chromeMaterial.opacity = 1.0;
         currentLogoState.x = 0;
         currentLogoState.y = 0;
@@ -648,6 +659,18 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
         lerpPos.scale = 1.15;
         lerpPos.opacity = 1.0;
         logoGroup.visible = true;
+
+        tl.to(
+          logoGroup.rotation,
+          {
+            x: 0.0,
+            y: 0.0,
+            z: 0.0,
+            duration: 1.25,
+            ease: "power2.out",
+          },
+          startTime
+        );
 
         logoInnerGroup.children.forEach((c, idx) => {
           const orig = originalTransforms[idx];
@@ -702,6 +725,16 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
         const startX = 0;
         const startY = 0;
         const startScale = 1.15;
+        const startRotX = logoGroup.rotation.x;
+        const startRotY = logoGroup.rotation.y;
+        const startRotZ = logoGroup.rotation.z;
+
+        // Calculate targetRotY so it rotates forward into heroPose.y without spinning backwards
+        let targetRotY = heroPose.y;
+        while (targetRotY < startRotY) {
+          targetRotY += Math.PI * 2;
+        }
+
         const glideProxy = { progress: 0 };
 
         tl.to(
@@ -723,6 +756,10 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
               const curY = gsap.utils.interpolate(startY, liveTarget.y, p);
               const curScale = gsap.utils.interpolate(startScale, liveTarget.scale, p);
 
+              const curRotX = gsap.utils.interpolate(startRotX, heroPose.x, p);
+              const curRotY = gsap.utils.interpolate(startRotY, targetRotY, p);
+              const curRotZ = gsap.utils.interpolate(startRotZ, heroPose.z, p);
+
               currentLogoState.x = curX;
               currentLogoState.y = curY;
               currentLogoState.scale = curScale;
@@ -735,6 +772,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
 
               logoGroup.position.set(curX, curY, 0);
               logoGroup.scale.set(curScale, curScale, curScale);
+              logoGroup.rotation.set(curRotX, curRotY, curRotZ);
               chromeMaterial.opacity = 1.0;
               logoGroup.visible = true;
             },
@@ -755,6 +793,8 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
 
               logoGroup.position.set(liveTarget.x, liveTarget.y, 0);
               logoGroup.scale.set(liveTarget.scale, liveTarget.scale, liveTarget.scale);
+              logoGroup.rotation.set(heroPose.x, heroPose.y, heroPose.z);
+              accumulatedRotationY = heroPose.y;
               chromeMaterial.opacity = 1.0;
             },
           },
@@ -765,7 +805,8 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       snapToHero: () => {
         isGlidingToHero = false;
         applyAssembledBlocks();
-        logoGroup.rotation.set(0, 0, 0);
+        logoGroup.rotation.set(heroPose.x, heroPose.y, heroPose.z);
+        accumulatedRotationY = heroPose.y;
         syncLogoToCurrentPosition(true);
         fadeInLogo(targets.hero.opacity);
       },
@@ -1264,7 +1305,8 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
     // Initial startup execution: if intro is already done, apply layout INSTANTLY and fade in!
     if (introManager.isDone()) {
       applyAssembledBlocks();
-      logoGroup.rotation.set(0, 0, 0);
+      logoGroup.rotation.set(heroPose.x, heroPose.y, heroPose.z);
+      accumulatedRotationY = heroPose.y;
       initScrollTriggers();
       ScrollTrigger.sort();
       ScrollTrigger.refresh();
@@ -1277,7 +1319,8 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       if (state === "done") {
         isGlidingToHero = false;
         applyAssembledBlocks();
-        logoGroup.rotation.set(0, 0, 0);
+        logoGroup.rotation.set(heroPose.x, heroPose.y, heroPose.z);
+        accumulatedRotationY = heroPose.y;
         initScrollTriggers();
         ScrollTrigger.sort();
         ScrollTrigger.refresh();
@@ -1379,7 +1422,6 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
     // 10. ANIMATION LOOP & GPU RENDER PAUSING
     // ─────────────────────────────────────────────────────────────
     const clock = new THREE.Clock();
-    let accumulatedRotationY = 0;
     let qaOrthoCamera: THREE.OrthographicCamera | null = null;
     let qaFlatMaterial: THREE.MeshBasicMaterial | null = null;
     let savedStateBeforeQa: {
@@ -1495,8 +1537,9 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       }
 
       // Smooth position & scale lerp
+      // Smooth position & scale lerp
       if (isGlidingToHero) {
-        // While gliding to hero: the gsap tween directly drives position and scale onUpdate.
+        // While gliding to hero: the gsap tween directly drives position, scale, and rotation onUpdate.
         // Don't let lerp fighting disrupt the exact live curve.
       } else if (isFacultyActive) {
         // While faculty section is active: lock x directly to the beam anchor (damp only y and scale)
@@ -1506,8 +1549,6 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
 
         lerpPos.y += (currentLogoState.y - lerpPos.y) * 0.12;
         lerpPos.scale += (currentLogoState.scale - lerpPos.scale) * 0.12;
-        logoGroup.position.set(lerpPos.x, lerpPos.y, 0);
-        logoGroup.scale.set(lerpPos.scale, lerpPos.scale, lerpPos.scale);
       } else {
         lerpPos.x += (currentLogoState.x - lerpPos.x) * 0.12;
         lerpPos.y += (currentLogoState.y - lerpPos.y) * 0.12;
@@ -1518,9 +1559,6 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
           if (Math.abs(currentLogoState.y - lerpPos.y) < 0.04) lerpPos.y = currentLogoState.y;
           if (Math.abs(currentLogoState.scale - lerpPos.scale) < 0.01) lerpPos.scale = currentLogoState.scale;
         }
-
-        logoGroup.position.set(lerpPos.x, lerpPos.y, 0);
-        logoGroup.scale.set(lerpPos.scale, lerpPos.scale, lerpPos.scale);
       }
       lerpPos.opacity += (currentLogoState.opacity - lerpPos.opacity) * 0.12;
 
@@ -1544,34 +1582,92 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       const delta = clock.getDelta();
       const time = clock.getElapsedTime();
 
+      // Hero scroll blend factor:
+      // First ~40% of the hero's scroll distance (hero height = window.innerHeight)
+      const heroScrollDistance = window.innerHeight;
+      const blendDistance = 0.4 * heroScrollDistance;
+      const scrollY = Math.max(0, window.scrollY || document.documentElement.scrollTop || 0);
+      const rawScrollNorm = blendDistance > 0 ? Math.min(1.0, scrollY / blendDistance) : 1.0;
+      // Smoothstep: 3*u^2 - 2*u^3
+      const scrollBlend = rawScrollNorm * rawScrollNorm * (3.0 - 2.0 * rawScrollNorm);
+
       // Decay scroll velocity smoothly
       scrollVelocity *= 0.92;
 
-      // Spin with scroll velocity + base idle drift
-      const idleSpin = (isMobile ? 0.3 : 0.42) * delta;
-      const velocitySpin = scrollVelocity * 0.000045;
+      // In the hero (scrollBlend === 0), freeze spin, tilt, and scroll-velocity rotation completely.
+      // Rotation returns as user scrolls away and eases back to heroPose when scrolling back up.
+      const idleSpin = (isMobile ? 0.3 : 0.42) * delta * scrollBlend;
+      const velocitySpin = scrollVelocity * 0.000045 * scrollBlend;
       accumulatedRotationY += idleSpin + velocitySpin;
 
-      if (!prefersReducedMotion) {
-        // Float y only when scrolled past hero or damped in faculty
-        const floatY = window.scrollY > 20
-          ? Math.sin(time * 1.3) * (isFacultyActive ? 0.02 : 0.08)
-          : 0;
-        logoGroup.position.y += floatY;
+      if (scrollBlend <= 0.0001) {
+        accumulatedRotationY = heroPose.y;
+      }
 
-        if (!isMobile) {
-          // Desktop: smooth mouse tilt ONLY rotates, NEVER translates
-          mouse.x += (mouse.targetX - mouse.x) * 0.06;
-          mouse.y += (mouse.targetY - mouse.y) * 0.06;
+      if (!isGlidingToHero) {
+        let currentFloatY = 0;
+        let currentScaleMult = 1.0;
 
-          logoGroup.rotation.y = accumulatedRotationY + mouse.x * 0.45;
-          logoGroup.rotation.x = -mouse.y * 0.35 + Math.sin(time * 0.8) * 0.05;
-          logoGroup.rotation.z = mouse.x * 0.12;
+        if (!prefersReducedMotion) {
+          // Floating:
+          // In the hero: gentle vertical bob of +/-10px (period ~5s, sine ease) + tiny scale breathing (1.00 to 1.015)
+          const vH = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z * 2;
+          const pxToWorld = height > 0 ? vH / height : 0.00593;
+          const heroPeriod = 5.0; // 5 seconds period
+          const heroBobWorldY = 10.0 * pxToWorld * Math.sin((2.0 * Math.PI * time) / heroPeriod);
+          const heroScaleBreathing = 1.0 + 0.0075 * (1.0 - Math.cos((2.0 * Math.PI * time) / heroPeriod));
+
+          // Other sections float:
+          const otherFloatY = Math.sin(time * 1.3) * (isFacultyActive ? 0.02 : 0.08);
+
+          // Blend floating between hero and other sections
+          currentFloatY = (1.0 - scrollBlend) * heroBobWorldY + scrollBlend * otherFloatY;
+          currentScaleMult = (1.0 - scrollBlend) * heroScaleBreathing + scrollBlend * 1.0;
+        }
+
+        // Apply position (no horizontal bob) and breathing scale
+        logoGroup.position.set(lerpPos.x, lerpPos.y + currentFloatY, 0);
+        const finalScale = lerpPos.scale * currentScaleMult;
+        logoGroup.scale.set(finalScale, finalScale, finalScale);
+
+        // Rotation:
+        // Blend rotation = lerp(heroPose, scroll-driven rotation, smoothstep over first ~40% hero distance)
+        if (!prefersReducedMotion) {
+          if (!isMobile) {
+            // Desktop: smooth mouse tilt ONLY rotates, NEVER translates
+            mouse.x += (mouse.targetX - mouse.x) * 0.06;
+            mouse.y += (mouse.targetY - mouse.y) * 0.06;
+
+            const targetRotY = accumulatedRotationY + mouse.x * 0.45;
+            const targetRotX = -mouse.y * 0.35 + Math.sin(time * 0.8) * 0.05;
+            const targetRotZ = mouse.x * 0.12;
+
+            // Align heroPose.y with targetRotY to prevent multiple unnecessary full spins when returning
+            const nearestHeroY = heroPose.y + Math.round((targetRotY - heroPose.y) / (Math.PI * 2)) * (Math.PI * 2);
+
+            logoGroup.rotation.x = THREE.MathUtils.lerp(heroPose.x, targetRotX, scrollBlend);
+            logoGroup.rotation.y = THREE.MathUtils.lerp(nearestHeroY, targetRotY, scrollBlend);
+            logoGroup.rotation.z = THREE.MathUtils.lerp(heroPose.z, targetRotZ, scrollBlend);
+          } else {
+            // Mobile: cursor tilt disabled
+            const targetRotY = accumulatedRotationY;
+            const targetRotX = Math.sin(time * 0.8) * 0.05;
+            const targetRotZ = 0;
+
+            const nearestHeroY = heroPose.y + Math.round((targetRotY - heroPose.y) / (Math.PI * 2)) * (Math.PI * 2);
+
+            logoGroup.rotation.x = THREE.MathUtils.lerp(heroPose.x, targetRotX, scrollBlend);
+            logoGroup.rotation.y = THREE.MathUtils.lerp(nearestHeroY, targetRotY, scrollBlend);
+            logoGroup.rotation.z = THREE.MathUtils.lerp(heroPose.z, targetRotZ, scrollBlend);
+          }
         } else {
-          // Mobile: cursor tilt disabled
-          logoGroup.rotation.y = accumulatedRotationY;
-          logoGroup.rotation.x = Math.sin(time * 0.8) * 0.05;
-          logoGroup.rotation.z = 0;
+          // prefers-reduced-motion: No cursor tilt, no precession
+          const targetRotY = accumulatedRotationY;
+          const nearestHeroY = heroPose.y + Math.round((targetRotY - heroPose.y) / (Math.PI * 2)) * (Math.PI * 2);
+
+          logoGroup.rotation.x = heroPose.x;
+          logoGroup.rotation.y = THREE.MathUtils.lerp(nearestHeroY, targetRotY, scrollBlend);
+          logoGroup.rotation.z = heroPose.z;
         }
       }
 
@@ -1595,6 +1691,13 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       const anchorRect = anchorEl ? anchorEl.getBoundingClientRect() : null;
       const anchorCenterX = anchorRect ? anchorRect.left + anchorRect.width / 2 : null;
       const anchorCenterY = anchorRect ? anchorRect.top + anchorRect.height / 2 : null;
+
+      // Compute current scrollBlend for QA reporting
+      const heroScrollDistance = window.innerHeight;
+      const blendDistance = 0.4 * heroScrollDistance;
+      const curScrollY = Math.max(0, window.scrollY || document.documentElement.scrollTop || 0);
+      const rawScrollNorm = blendDistance > 0 ? Math.min(1.0, curScrollY / blendDistance) : 1.0;
+      const currentScrollBlend = rawScrollNorm * rawScrollNorm * (3.0 - 2.0 * rawScrollNorm);
 
       return {
         isFacultyActive,
@@ -1620,6 +1723,13 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
         currentLogoState: { ...currentLogoState },
         lerpPos: { ...lerpPos },
         groupPos: { x: logoGroup.position.x, y: logoGroup.position.y, z: logoGroup.position.z },
+        rotation: {
+          x: logoGroup.rotation.x,
+          y: logoGroup.rotation.y,
+          z: logoGroup.rotation.z,
+        },
+        heroPose: { ...heroPose },
+        scrollBlend: currentScrollBlend,
       };
     };
 
