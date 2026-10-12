@@ -9,11 +9,9 @@ import FloatingPlane, {
   photos,
 } from "@/components/3d/FloatingPlane";
 import { resetThemeToDark } from "@/hooks/useLightSectionObserver";
-import { WavyCoverApron } from "./wavyCoverPath";
 
 export default function LegacySection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const wavyApronRef = useRef<HTMLDivElement>(null);
   const wordRef = useRef<HTMLHeadingElement>(null);
   const planeRef = useRef<FloatingPlaneHandle>(null);
   const stRef = useRef<ScrollTrigger | null>(null);
@@ -26,34 +24,10 @@ export default function LegacySection() {
     const section = sectionRef.current;
     if (!section) return;
 
-    const prefersReducedMotion =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (prefersReducedMotion && wavyApronRef.current) {
-      wavyApronRef.current.style.display = "none";
-    }
-
     const ctx = gsap.context(() => {
-      // 0. Rising Wavy Apron Drip Growth:
-      // As About ascends to cover Stats (start: top bottom, end: top top), drips grow (scaleY 0.7 -> 1.15)
-      if (!prefersReducedMotion) {
-        ScrollTrigger.create({
-          trigger: section,
-          start: "top bottom",
-          end: "top top",
-          scrub: true,
-          onUpdate: (self) => {
-            const c = self.progress;
-            if (wavyApronRef.current) {
-              wavyApronRef.current.style.transform = `scaleY(${0.7 + 0.45 * c})`;
-            }
-          },
-        });
-      }
-
       // 1. Pinned ScrollTrigger for the entire Legacy Section:
       // 3D card reel and interactive archive cards advance smoothly across the full pinned duration.
+      // During the first ~20% (dissolve reveal), card 0 is held static.
       const st = ScrollTrigger.create({
         trigger: section,
         start: "top top",
@@ -67,11 +41,12 @@ export default function LegacySection() {
         onUpdate: (self) => {
           const p = self.progress;
 
-          // Card progression advances across the full pinned section
-          planeRef.current?.updateProgress(p);
+          // Card progression advances across the pinned section after the dissolve entrance (first 20%)
+          const reelP = Math.max(0, (p - 0.20) / 0.80);
+          planeRef.current?.updateProgress(reelP);
 
           // Update active step for interactive tabs
-          const calculatedPos = computePos(p);
+          const calculatedPos = computePos(reelP);
           const step = Math.min(3, Math.max(0, Math.round(calculatedPos)));
 
           // Mutate bar widths directly for 60fps without React re-render
@@ -129,7 +104,7 @@ export default function LegacySection() {
   const handleJumpTo = (idx: number) => {
     const st = stRef.current;
     if (!st) return;
-    const targetNorm = idx === 0 ? 0.02 : idx === 1 ? 0.35 : idx === 2 ? 0.68 : 0.96;
+    const targetNorm = idx === 0 ? 0.22 : idx === 1 ? 0.48 : idx === 2 ? 0.74 : 0.96;
     const targetScroll = st.start + targetNorm * (st.end - st.start);
 
     if ((window as any).__lenis) {
@@ -145,8 +120,6 @@ export default function LegacySection() {
       ref={sectionRef}
       className="relative z-[35] w-full h-[100svh] min-h-[100svh] bg-[#060606] overflow-visible flex items-center justify-center select-none pt-[calc(var(--nav-h)+16px)] pb-[calc(var(--ticker-h)+24px)] safe-section-py"
     >
-      {/* Soft Wavy Mask Top Apron with Seeded Noise Waves & Rounded Drips */}
-      <WavyCoverApron apronRef={wavyApronRef} />
 
       {/* 1. Behind: Construction Lines drawn on scroll */}
       <ConstructionLines />

@@ -52,7 +52,7 @@ function updateThemeState(nextNavLight: boolean, nextTickerLight: boolean) {
   }
 }
 
-export function setLiquidProgress(progress: number) {
+export function setLiquidProgress(progress: number, dissolve: number = 0) {
   // If not on home page ("/"), never activate light theme!
   if (typeof window !== "undefined" && window.location.pathname !== "/") {
     resetThemeToDark();
@@ -61,26 +61,29 @@ export function setLiquidProgress(progress: number) {
 
   lastLiquidProgress = progress;
 
-  // If a cover is active, let setCoverProgress drive the theme
-  if (currentCoverProgress > 0.001) {
-    setCoverProgress(currentCoverProgress);
+  // If a dissolve is active, let setCoverProgress drive the theme
+  if (dissolve > 0.001) {
+    setCoverProgress(dissolve);
     return;
   }
+
+  // No dissolve active: clear cover progress
+  currentCoverProgress = 0.0;
 
   const windowH = typeof window !== "undefined" ? window.innerHeight : 1080;
   const navYNorm = 36 / windowH; // center of ~72px navbar (~0.033)
   const tickerYNorm = (windowH - 20) / windowH; // center of ~40px ticker (~0.981)
 
-  const nextNavLight = isLiquidCoveringY(progress, navYNorm);
-  const nextTickerLight = isLiquidCoveringY(progress, tickerYNorm);
+  const nextNavLight = isLiquidCoveringY(progress, navYNorm, 0);
+  const nextTickerLight = isLiquidCoveringY(progress, tickerYNorm, 0);
 
   updateThemeState(nextNavLight, nextTickerLight);
 }
 
 /**
- * Sync theme during Stats -> About rising cover transition.
- * coverProgress: 0.0 (Stats fully visible) to 1.0 (About fully covers screen).
- * The dark wavy edge ascends from screen bottom (y = windowH) to screen top (y = 0).
+ * Sync theme during Stats -> About dissolve transition.
+ * coverProgress: 0.0 (Stats fully visible) to 1.0 (About fully revealed).
+ * The dissolve front ascends from screen bottom (y = windowH) to screen top (y = 0).
  */
 export function setCoverProgress(coverProgress: number) {
   if (typeof window !== "undefined" && window.location.pathname !== "/") {
@@ -97,22 +100,16 @@ export function setCoverProgress(coverProgress: number) {
 
   const windowH = typeof window !== "undefined" ? window.innerHeight : 1080;
 
-  // Exact wavy edge position on screen (Legacy top minus apron wave baseline ~60px)
-  let edgeY = (1.0 - currentCoverProgress) * 1.15 * windowH - 60;
-  if (typeof document !== "undefined") {
-    const legacy = document.getElementById("legacy-section");
-    if (legacy) {
-      edgeY = legacy.getBoundingClientRect().top - 60;
-    }
-  }
+  // Dissolve front position on screen: sweeps from windowH down to 0
+  const frontY = (1.0 - currentCoverProgress) * windowH;
 
   // Ticker center is ~20px from bottom (windowH - 20).
-  // Ticker is light while edge is below it, switches to dark once edge passes it.
-  const nextTickerLight = edgeY > (windowH - 20);
+  // Ticker is light while dissolve front is below it, switches to dark once front passes it.
+  const nextTickerLight = frontY > (windowH - 35);
 
   // Navbar center is ~36px from top.
-  // Navbar is light while edge is below it, switches to dark once edge passes it.
-  const nextNavLight = edgeY > 36;
+  // Navbar is light while dissolve front is below it, switches to dark once front passes it.
+  const nextNavLight = frontY > 40;
 
   updateThemeState(nextNavLight, nextTickerLight);
 }

@@ -27,11 +27,8 @@ export default function HomePage({ isMobile: _isMobile }: { isMobile?: boolean }
       {/* 2. Scroll Text Section with 3D Chrome Logo & Masked Reveal */}
       <ScrollTextSection />
 
-      {/* 3. Liquid Fill Wave Transition -> White Screen Stats Count-Up */}
+      {/* 3. Liquid Fill Wave Transition -> White Screen Stats Count-Up -> Dissolve to About */}
       <LiquidTransition />
-
-      {/* Spacer for Stats Hold duration before About cover rises */}
-      <div id="stats-hold-spacer" className="h-[115vh] pointer-events-none" aria-hidden="true" />
 
       {/* 4. Legacy Section with Construction Lines & Floating 3D Image Card */}
       <LegacySection />

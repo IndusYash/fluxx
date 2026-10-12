@@ -38,15 +38,15 @@ export default function LiquidTransition() {
     };
 
     // 2. GSAP ScrollTrigger timeline pinned at top top with pinSpacing: false
-    // Total distance: 215% (~215vh of scroll)
-    // - Entry fill range: 0.0 to 0.21 (~45vh): liquid fills (0 -> 1), stats fade in and count up
-    // - Hold range: 0.21 to 0.465 (~55vh): hold readable stats on solid white
-    // - Cover range: 0.465 to 1.0 (~115vh): Stats section stays fixed at top: 0 while About rises over it
+    // Total distance: 200% (~200vh of scroll)
+    // - Entry fill range: 0.0 to 0.22 (~44vh): liquid fills (0 -> 1), stats fade in and count up
+    // - Hold range: 0.22 to 0.50 (~56vh): hold readable stats on solid white while About aligns underneath
+    // - Dissolve range: 0.50 to 1.0 (~100vh): organic FBM noise dissolve reveals stationary About section underneath
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: container,
         start: "top top",
-        end: "+=215%",
+        end: "+=200%",
         pin: true,
         pinSpacing: false,
         anticipatePin: 1,
@@ -56,26 +56,24 @@ export default function LiquidTransition() {
         onUpdate: (self) => {
           const p = self.progress;
 
-          // Liquid Fill: 0.0 -> 0.21 (~45vh of scroll)
+          // 1. Liquid Fill: 0.0 -> 0.22 (~44vh of scroll)
           let currentLiquidP = 0;
-          if (p <= 0.21) {
-            currentLiquidP = p / 0.21;
+          if (p <= 0.22) {
+            currentLiquidP = p / 0.22;
           } else {
             currentLiquidP = 1.0;
           }
 
           scrollObj.fillProgress = currentLiquidP;
-          liquidController.setProgress(currentLiquidP);
 
-          // Direct count calculation: finish counting by p = 0.21, hold steady at full target values afterwards
+          // Direct count calculation: finish counting by p = 0.22, hold steady at full target values afterwards
           let countE = 25;
           let countM = 500;
           let countH = 12;
           let countP = 18;
 
-          if (p < 0.21) {
-            const t = p / 0.21;
-            // power2.out ease: 1 - (1 - t)^2
+          if (p < 0.22) {
+            const t = p / 0.22;
             const easeT = 1 - (1 - t) * (1 - t);
             countE = Math.round(25 * easeT);
             countM = Math.round(500 * easeT);
@@ -97,57 +95,67 @@ export default function LiquidTransition() {
             projectsNumRef.current.textContent = `${countP}+`;
           }
 
-          // Stats container fade in during liquid fill (0.10 to 0.21)
-          if (statsContainerRef.current) {
-            if (p < 0.10) {
-              statsContainerRef.current.style.opacity = "0";
-              statsContainerRef.current.style.transform = "scale(1) translateY(24px)";
-            } else if (p < 0.21) {
-              const fadeInNorm = (p - 0.10) / 0.11;
-              statsContainerRef.current.style.opacity = `${fadeInNorm}`;
-              statsContainerRef.current.style.transform = `scale(1) translateY(${24 * (1 - fadeInNorm)}px)`;
-            } else {
-              statsContainerRef.current.style.opacity = "1";
+          // Stats container fade in during liquid fill (0.08 to 0.22)
+          if (p <= 0.22) {
+            liquidController.setProgress(currentLiquidP, 0);
+            if (statsContainerRef.current) {
+              statsContainerRef.current.style.visibility = "visible";
+              statsContainerRef.current.style.maskImage = "none";
+              statsContainerRef.current.style.webkitMaskImage = "none";
+              if (p < 0.08) {
+                statsContainerRef.current.style.opacity = "0";
+                statsContainerRef.current.style.transform = "scale(1) translateY(24px)";
+              } else {
+                const fadeInNorm = (p - 0.08) / 0.14;
+                statsContainerRef.current.style.opacity = `${fadeInNorm}`;
+                statsContainerRef.current.style.transform = `scale(1) translateY(${24 * (1 - fadeInNorm)}px)`;
+              }
             }
           }
 
-          // Hold range: 0.21 to 0.465 (~55vh, ~half a viewport of scroll)
-          // Solid white, static readable numbers, scale 1, translateY 0, brightness 1
-          if (p >= 0.21 && p <= 0.465) {
-            if (statsContainerRef.current) {
-              statsContainerRef.current.style.transform = "scale(1) translateY(0vh)";
-              statsContainerRef.current.style.filter = "brightness(1)";
-            }
-            if (canvasRef.current) {
-              canvasRef.current.style.filter = "brightness(1)";
-            }
+          // 2. Hold range: 0.22 to 0.50 (~56vh of scroll)
+          // Solid white, static readable numbers
+          if (p > 0.22 && p <= 0.50) {
+            liquidController.setProgress(1.0, 0);
             setCoverProgress(0.0);
+            if (statsContainerRef.current) {
+              statsContainerRef.current.style.visibility = "visible";
+              statsContainerRef.current.style.opacity = "1";
+              statsContainerRef.current.style.transform = "scale(1) translateY(0vh)";
+              statsContainerRef.current.style.maskImage = "none";
+              statsContainerRef.current.style.webkitMaskImage = "none";
+            }
           }
 
-          // Cover range: 0.465 to 1.0 (~115vh of scroll)
-          // Stats section stays pinned at top: 0 while About rises from below and covers it
-          // Stats reacts: scale 1 -> 0.96, translateY 0 -> -4vh, brightness 1 -> 0.75
-          if (p > 0.465) {
-            const c = Math.min(1.0, Math.max(0.0, (p - 0.465) / (1.0 - 0.465)));
-            const scale = 1.0 - 0.04 * c;
-            const transY = -4.0 * c;
-            const brightness = 1.0 - 0.25 * c;
+          // 3. Dissolve range: 0.50 to 1.0 (~100vh of scroll)
+          // White Stats screen and numbers dissolve away via organic FBM noise shader,
+          // revealing the stationary About section underneath at top: 0
+          if (p > 0.50) {
+            const c = Math.min(1.0, Math.max(0.0, (p - 0.50) / 0.50));
+            liquidController.setProgress(1.0, c);
+            setCoverProgress(c);
 
             if (statsContainerRef.current) {
-              statsContainerRef.current.style.transform = `scale(${scale}) translateY(${transY}vh)`;
-              statsContainerRef.current.style.filter = `brightness(${brightness})`;
+              if (c >= 0.999) {
+                statsContainerRef.current.style.opacity = "0";
+                statsContainerRef.current.style.visibility = "hidden";
+              } else {
+                statsContainerRef.current.style.visibility = "visible";
+                const dissolvePct = Math.min(100, Math.max(0, c * 115));
+                statsContainerRef.current.style.maskImage = `linear-gradient(to top, transparent ${dissolvePct}%, black ${Math.min(100, dissolvePct + 15)}%)`;
+                statsContainerRef.current.style.webkitMaskImage = `linear-gradient(to top, transparent ${dissolvePct}%, black ${Math.min(100, dissolvePct + 15)}%)`;
+                statsContainerRef.current.style.opacity = `${Math.max(0, 1 - c * 1.15)}`;
+                statsContainerRef.current.style.transform = `scale(${1.0 - 0.02 * c}) translateY(${-2 * c}vh)`;
+              }
             }
-            if (canvasRef.current) {
-              canvasRef.current.style.filter = `brightness(${brightness})`;
-            }
-
-            // Sync theme: edge passes ticker (~0.02) and navbar (~0.97)
-            setCoverProgress(c);
           }
         },
         onLeave: () => {
-          liquidController.forceState(1);
+          liquidController.setProgress(1.0, 1.0);
           setCoverProgress(1.0);
+          if (statsContainerRef.current) {
+            statsContainerRef.current.style.visibility = "hidden";
+          }
         },
         onLeaveBack: () => {
           liquidController.forceState(0);
@@ -155,7 +163,9 @@ export default function LiquidTransition() {
           resetThemeToDark();
         },
         onEnterBack: () => {
-          liquidController.forceState(1);
+          if (statsContainerRef.current) {
+            statsContainerRef.current.style.visibility = "visible";
+          }
         },
       },
     });
@@ -174,7 +184,7 @@ export default function LiquidTransition() {
     <div
       id="liquid-transition-section"
       ref={containerRef}
-      className="relative w-full h-screen bg-[#060606] overflow-hidden select-none safe-fullscreen"
+      className="relative z-[40] w-full h-screen bg-transparent overflow-hidden select-none safe-fullscreen"
     >
       {/* Background hint before liquid fills */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
@@ -183,10 +193,10 @@ export default function LiquidTransition() {
         </span>
       </div>
 
-      {/* Full-Screen WebGL Liquid Mask Overlay */}
+      {/* Full-Screen WebGL Liquid & Dissolve Mask Overlay */}
       <div
         id="flux-liquid-portal"
-        className="fixed inset-0 pointer-events-none z-[25] overflow-hidden"
+        className="fixed inset-0 pointer-events-none z-[38] overflow-hidden"
         style={{ visibility: "hidden" }}
       >
         <canvas
@@ -199,7 +209,7 @@ export default function LiquidTransition() {
       <div
         ref={statsContainerRef}
         data-theme="light"
-        className="relative z-30 w-full h-full max-w-7xl mx-auto px-6 sm:px-12 flex flex-col justify-center pointer-events-none pt-[calc(var(--nav-h)+24px)] pb-[calc(var(--ticker-h)+24px)]"
+        className="relative z-[39] w-full h-full max-w-7xl mx-auto px-6 sm:px-12 flex flex-col justify-center pointer-events-none pt-[calc(var(--nav-h)+24px)] pb-[calc(var(--ticker-h)+24px)]"
         style={{ opacity: 0 }}
       >
         <div className="text-center mb-8 sm:mb-12">

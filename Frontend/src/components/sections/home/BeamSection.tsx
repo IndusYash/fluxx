@@ -151,8 +151,8 @@ export default function BeamSection() {
               scale: 1,
             });
           } else {
-            // Middle card starts significantly higher in the upper zone, then glides down to its position on scroll
-            const middleStartOffset = isMobile ? -50 : -180;
+            // Middle card starts significantly higher in the upper zone (where logo was shown), then glides down to its position on scroll
+            const middleStartOffset = isMobile ? -140 : -480;
             const leftStartOffset = isMobile ? 15 : 30;
             const rightStartOffset = isMobile ? 10 : 20;
 
@@ -160,7 +160,7 @@ export default function BeamSection() {
               scrollTrigger: {
                 trigger: sectionRef.current,
                 start: "top top",
-                end: "+=550",
+                end: "+=650",
                 scrub: 0.8,
                 invalidateOnRefresh: true,
               },
@@ -169,7 +169,7 @@ export default function BeamSection() {
             // Middle card: starts elevated in the upper area, then smoothly descends into aligned position on scroll
             tl.fromTo(
               middleCard,
-              { y: middleStartOffset, opacity: 0.95, scale: 1.02 },
+              { y: middleStartOffset, opacity: 1, scale: 1.02 },
               { y: 0, opacity: 1, scale: 1, ease: "power2.out" },
               0
             );

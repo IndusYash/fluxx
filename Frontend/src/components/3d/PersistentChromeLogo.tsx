@@ -14,6 +14,20 @@ interface PersistentChromeLogoProps {
   isMobile?: boolean;
 }
 
+declare global {
+  interface Window {
+    __heroPose?: { x: number; y: number; z: number };
+    __getLogoQAData?: () => Record<string, unknown>;
+    __renderLogoFrontOn?: () => void;
+    __restoreLogoNormal?: () => void;
+    __getLogoGridData?: () => {
+      table: typeof LOGO_BLOCK_TABLE;
+      layout: ReturnType<typeof getLogoBlockLayout>;
+      unitSize: number;
+    };
+  }
+}
+
 export default function PersistentChromeLogo({ isMobile: propIsMobile }: PersistentChromeLogoProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -141,7 +155,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       z: 0.0,
     };
     let accumulatedRotationY = heroPose.y;
-    (window as any).__heroPose = heroPose;
+    window.__heroPose = heroPose;
 
     const logoInnerBox = new THREE.Box3().setFromObject(logoInnerGroup);
     const logoInnerSize = new THREE.Vector3();
@@ -403,8 +417,8 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
         }
       }
 
-      // Middle card can start raised by 180px (50px on mobile)
-      const middleCardOffset = isMob ? 50 : 180;
+      // Middle card starts raised by 480px (140px on mobile)
+      const middleCardOffset = isMob ? 140 : 480;
       const maxScreenYBottom = Math.min(headingSecTop, cardsSecTop - middleCardOffset) - 36;
 
       // Place target center in the safe upper vertical zone
@@ -423,7 +437,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
         x: facultyWorldX,
         y: facultyWorldY,
         scale: facultyScale,
-        opacity: 1.0,
+        opacity: 0.0,
       };
     };
 
@@ -571,7 +585,6 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
 
       if (!introManager.isDone()) return;
 
-      const mob = window.innerWidth < 768;
       const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
 
       let activeTarget: LogoAnchorTarget = targets.hero;
@@ -581,7 +594,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
         for (const t of triggers) {
           if (t.isActive) {
             if (t.vars.onToggle) {
-              (t.vars.onToggle as any)(t);
+              t.vars.onToggle(t);
             }
             if (t.vars.onUpdate) {
               t.vars.onUpdate(t);
@@ -606,7 +619,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
           }
           if (lastPassedTrigger) {
             if (lastPassedTrigger.vars.onLeave) {
-              (lastPassedTrigger.vars.onLeave as any)(lastPassedTrigger);
+              lastPassedTrigger.vars.onLeave(lastPassedTrigger);
             } else if (lastPassedTrigger.vars.onUpdate) {
               lastPassedTrigger.vars.onUpdate(lastPassedTrigger);
             }
@@ -1184,14 +1197,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
           currentLogoState.y = targets.faculty.y;
           currentLogoState.scale = targets.faculty.scale;
           isFacultyActive = self.isActive;
-          const beamSec = document.querySelector("#beam-section");
-          const beamTop = beamSec ? beamSec.getBoundingClientRect().top : 0;
-          if (beamTop <= 20) {
-            const fadeP = Math.min(1, Math.max(0, (20 - beamTop) / 60));
-            currentLogoState.opacity = gsap.utils.interpolate(1.0, 0.0, fadeP);
-          } else if (self.isActive) {
-            currentLogoState.opacity = 1.0;
-          }
+          currentLogoState.opacity = targets.faculty.opacity;
         },
       });
       triggers.push(st4b);
@@ -1780,6 +1786,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       delete window.__renderLogoFrontOn;
       delete window.__restoreLogoNormal;
       delete window.__getLogoGridData;
+      delete window.__heroPose;
 
       if (qaFlatMaterial) {
         qaFlatMaterial.dispose();
