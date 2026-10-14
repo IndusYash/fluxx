@@ -627,8 +627,8 @@ export default function EventSlider() {
             />
           </svg>
 
-          {/* Center number in Italic Script */}
-          <span className="absolute inset-0 flex items-center justify-center font-script text-2xl sm:text-3xl text-white italic drop-shadow-md">
+          {/* Center number in Poiret One */}
+          <span className="absolute inset-0 flex items-center justify-center font-poiret text-2xl sm:text-3xl text-white drop-shadow-md">
             {currentEvent.id}
           </span>
         </div>

@@ -233,13 +233,13 @@ export default function LiquidTransition() {
               {/* Invisible placeholder reserving final width to eliminate layout shift */}
               <span
                 aria-hidden="true"
-                className="font-script text-[clamp(48px,5.4vw,96px)] leading-none drop-shadow-sm tracking-[0.02em] invisible select-none"
+                className="font-poiret text-[clamp(48px,5.6vw,96px)] leading-none drop-shadow-sm tracking-[0.02em] invisible select-none"
               >
                 25+
               </span>
               <span
                 ref={eventsNumRef}
-                className="font-script text-[clamp(48px,5.4vw,96px)] text-black leading-none drop-shadow-sm tracking-[0.02em] absolute inset-0 flex items-center justify-center"
+                className="font-poiret text-[clamp(48px,5.6vw,96px)] text-black leading-none drop-shadow-sm tracking-[0.02em] absolute inset-0 flex items-center justify-center"
               >
                 0+
               </span>
@@ -257,13 +257,13 @@ export default function LiquidTransition() {
             <div className="relative flex items-center justify-center mb-2">
               <span
                 aria-hidden="true"
-                className="font-script text-[clamp(48px,5.4vw,96px)] leading-none drop-shadow-sm tracking-[0.02em] invisible select-none"
+                className="font-poiret text-[clamp(48px,5.6vw,96px)] leading-none drop-shadow-sm tracking-[0.02em] invisible select-none"
               >
                 500+
               </span>
               <span
                 ref={membersNumRef}
-                className="font-script text-[clamp(48px,5.4vw,96px)] text-black leading-none drop-shadow-sm tracking-[0.02em] absolute inset-0 flex items-center justify-center"
+                className="font-poiret text-[clamp(48px,5.6vw,96px)] text-black leading-none drop-shadow-sm tracking-[0.02em] absolute inset-0 flex items-center justify-center"
               >
                 0+
               </span>
@@ -281,13 +281,13 @@ export default function LiquidTransition() {
             <div className="relative flex items-center justify-center mb-2">
               <span
                 aria-hidden="true"
-                className="font-script text-[clamp(48px,5.4vw,96px)] leading-none drop-shadow-sm tracking-[0.02em] invisible select-none"
+                className="font-poiret text-[clamp(48px,5.6vw,96px)] leading-none drop-shadow-sm tracking-[0.02em] invisible select-none"
               >
                 12+
               </span>
               <span
                 ref={hackathonsNumRef}
-                className="font-script text-[clamp(48px,5.4vw,96px)] text-black leading-none drop-shadow-sm tracking-[0.02em] absolute inset-0 flex items-center justify-center"
+                className="font-poiret text-[clamp(48px,5.6vw,96px)] text-black leading-none drop-shadow-sm tracking-[0.02em] absolute inset-0 flex items-center justify-center"
               >
                 0+
               </span>
@@ -305,13 +305,13 @@ export default function LiquidTransition() {
             <div className="relative flex items-center justify-center mb-2">
               <span
                 aria-hidden="true"
-                className="font-script text-[clamp(48px,5.4vw,96px)] leading-none drop-shadow-sm tracking-[0.02em] invisible select-none"
+                className="font-poiret text-[clamp(48px,5.6vw,96px)] leading-none drop-shadow-sm tracking-[0.02em] invisible select-none"
               >
                 18+
               </span>
               <span
                 ref={projectsNumRef}
-                className="font-script text-[clamp(48px,5.4vw,96px)] text-black leading-none drop-shadow-sm tracking-[0.02em] absolute inset-0 flex items-center justify-center"
+                className="font-poiret text-[clamp(48px,5.6vw,96px)] text-black leading-none drop-shadow-sm tracking-[0.02em] absolute inset-0 flex items-center justify-center"
               >
                 0+
               </span>

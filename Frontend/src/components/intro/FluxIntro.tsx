@@ -6,7 +6,6 @@ import { DissolveRenderer } from "./DissolveShader";
 export default function FluxIntro() {
   const [introState, setIntroState] = useState<IntroState>(introManager.getState());
   const [displayCount, setDisplayCount] = useState("000");
-  const [scriptMorphRatio, setScriptMorphRatio] = useState(0); // 0 (upright) -> 1 (script)
   const [isReadyToActivate, setIsReadyToActivate] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -71,10 +70,6 @@ export default function FluxIntro() {
         const currentVal = Math.round(progressObj.value);
         const formatted = String(currentVal).padStart(3, "0");
         setDisplayCount(formatted);
-
-        // Morph ratio: between 12% and 36% count, morph upright into script font
-        const morphNorm = Math.min(1, Math.max(0, (progressObj.value - 12) / 24));
-        setScriptMorphRatio(morphNorm);
       },
     });
 
@@ -335,26 +330,10 @@ export default function FluxIntro() {
         {/* LIGHT SCREEN BACKGROUND (0 to 3.5s + DISSOLVE SHADER) */}
         {(introState === "loading" || introState === "ready") && (
           <div className="absolute inset-0 bg-[#ededed] flex flex-col items-center justify-center transition-colors">
-            {/* Centered morphing numerals */}
+            {/* Centered numerals in Poiret One */}
             <div className="relative w-full max-w-2xl h-48 sm:h-64 flex items-center justify-center">
-              {/* Upright font layer (Space Grotesk / Playfair Display) */}
               <span
-                className="font-sans font-extralight tracking-tight text-[clamp(6rem,19vw,15rem)] leading-none text-black absolute inset-0 flex items-center justify-center transition-opacity"
-                style={{
-                  opacity: 1 - scriptMorphRatio,
-                  filter: `blur(${scriptMorphRatio * 3.5}px)`,
-                }}
-              >
-                {displayCount}
-              </span>
-
-              {/* Italic script font layer (Pinyon Script) */}
-              <span
-                className="font-script italic text-[clamp(7.5rem,24vw,19rem)] leading-none text-black absolute inset-0 flex items-center justify-center transition-opacity"
-                style={{
-                  opacity: scriptMorphRatio,
-                  filter: `blur(${(1 - scriptMorphRatio) * 3.5}px)`,
-                }}
+                className="font-poiret text-[clamp(7.5rem,24vw,19rem)] leading-none text-black absolute inset-0 flex items-center justify-center select-none"
               >
                 {displayCount}
               </span>

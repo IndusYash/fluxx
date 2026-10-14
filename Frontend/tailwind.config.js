@@ -29,6 +29,11 @@ export default {
 					serif: [
 						'"Playfair Display"',
 						'serif'
+					],
+					poiret: [
+						'"Poiret One"',
+						'cursive',
+						'sans-serif'
 					]
 				},
 				zIndex: {
