@@ -79,13 +79,14 @@ void main() {
       return;
     }
 
-    // Organic noise field drifting slowly
-    float n = fbm4(uv * 4.2 + vec2(0.0, uTime * 0.15)) * 0.5 + 0.5;
+    // Monotonic single wave variation along X:
+    float n = getFbmNoise(vec2(uv.x * 2.4, uTime * 0.12));
+    float disp = (n - 0.5) * 0.14;
 
-    // Progress sweeps bottom to top: threshold moves from -0.1 to 1.15
-    float threshold = uDissolve * 1.25 - 0.1;
-    float edgePos = y + (n - 0.5) * 0.35;
-    float dist = edgePos - threshold;
+    // Progress sweeps bottom (y=0) to top (y=1)
+    float threshold = uDissolve * 1.28 - 0.14;
+    float edgeY = threshold + disp;
+    float dist = y - edgeY;
 
     if (dist < 0.0) {
       // Dissolved area: reveal transparent beneath
@@ -255,6 +256,9 @@ export class LiquidShaderRenderer {
       this.render2DFallback(progress, dissolve);
       return;
     }
+
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
 
     const elapsed = (performance.now() - this.startTime) * 0.001;
 

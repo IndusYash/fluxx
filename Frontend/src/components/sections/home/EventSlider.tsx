@@ -358,16 +358,26 @@ export default function EventSlider() {
       pin: true,
       scrub: 0.5,
       snap: {
-        snapTo: 1 / (numEvents - 1),
+        snapTo: (val) => {
+          if (val <= 0.16) return 0;
+          const cardP = (val - 0.16) / 0.84;
+          const snappedCardP = Math.round(cardP * (numEvents - 1)) / (numEvents - 1);
+          return 0.16 + snappedCardP * 0.84;
+        },
         duration: { min: 0.2, max: 0.5 },
         ease: "power2.inOut",
       },
       onUpdate: (self) => {
         const p = self.progress;
-        updateStack(p);
+        // Hold card 01 static during entrance from WhatWeDoSection dissolve (first 16% of scroll):
+        let effectiveP = 0;
+        if (p > 0.16) {
+          effectiveP = Math.min(1.0, (p - 0.16) / 0.84);
+        }
+        updateStack(effectiveP);
 
         const idx = Math.min(
-          Math.round(p * (numEvents - 1)),
+          Math.round(effectiveP * (numEvents - 1)),
           numEvents - 1
         );
         if (idx !== activeIndexRef.current) {
@@ -379,7 +389,7 @@ export default function EventSlider() {
     scrollTriggerRef.current = st;
 
     // Initial render layout
-    updateStack(st.progress || 0);
+    updateStack(0);
 
     return () => {
       st.kill();
@@ -392,7 +402,7 @@ export default function EventSlider() {
     } else {
       const st = scrollTriggerRef.current;
       if (!st) return;
-      const targetP = index / (events.length - 1);
+      const targetP = (index / (events.length - 1)) * 0.84 + 0.16;
       const targetScroll = st.start + targetP * (st.end - st.start);
       if ((window as any).__lenis) {
         (window as any).__lenis.scrollTo(targetScroll, { duration: 0.7 });
@@ -412,7 +422,7 @@ export default function EventSlider() {
     <section
       id="events-showcase-section"
       ref={sectionRef}
-      className="relative w-full h-screen bg-[#060606] overflow-hidden select-none safe-fullscreen"
+      className="relative z-[25] w-full h-screen bg-[#060606] overflow-hidden select-none safe-fullscreen"
     >
       {/* ─────────────────────────────────────────────────────────────
           1. BLURRED DUAL-LAYER CROSSFADING BACKGROUND POSTERS

@@ -56,13 +56,18 @@ void main() {
   
   // y: 0.0 at bottom, 1.0 at top
   float y = uv.y;
+  float x = uv.x;
   
-  // Organic noise field drifting slowly
-  float n = fbm(uv * 4.2 + vec2(0.0, uTime * 0.15)) * 0.5 + 0.5;
+  // Single continuous organic wave along X (monotonic in Y)
+  float n1 = noise2D(vec2(x * 2.4, uTime * 0.12));
+  float n2 = noise2D(vec2(x * 5.2 + 12.0, uTime * 0.18)) * 0.5;
+  float n3 = noise2D(vec2(x * 10.4 + 34.0, uTime * 0.24)) * 0.25;
+  float n = (n1 + n2 + n3) / 1.75;
+  float disp = (n - 0.5) * 0.14;
   
   // Progress sweeps bottom to top: threshold moves from -0.1 to 1.15
   float threshold = uProgress * 1.25 - 0.1;
-  float edgePos = y + (n - 0.5) * 0.35;
+  float edgePos = y + disp;
   
   // Base light screen color
   vec3 lightBg = vec3(0.929, 0.929, 0.929); // #ededed
@@ -203,6 +208,9 @@ export class DissolveRenderer {
       this.canvas.style.clipPath = `polygon(0 0, 100% 0, 100% ${pct}%, 0 ${pct}%)`;
       return;
     }
+
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
 
     const elapsed = (performance.now() - this.startTime) * 0.001;
 

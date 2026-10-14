@@ -33,8 +33,14 @@ export default function HomePage({ isMobile: _isMobile }: { isMobile?: boolean }
       {/* 4. Legacy Section with Construction Lines & Floating 3D Image Card */}
       <LegacySection />
 
+      {/* Spacer allowing WhatWeDoSection to arrive at top: 0 exactly when LegacySection dissolves */}
+      <div id="legacy-spacer" className="h-[230vh] pointer-events-none" aria-hidden="true" />
+
       {/* 5. What We Do Section with Skew Reveal Focus Areas */}
       <WhatWeDoSection />
+
+      {/* Spacer allowing EventSlider to arrive at top: 0 exactly when WhatWeDoSection dissolves */}
+      <div id="what-we-do-spacer" className="h-[100vh] pointer-events-none" aria-hidden="true" />
 
       {/* 6. Events Showcase Pinned Slider (Replaces Project Slider) */}
       <EventSlider />
