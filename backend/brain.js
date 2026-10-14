@@ -59,7 +59,16 @@ const corsOptions = {
       return callback(null, true);
     }
 
-    if (allowedOrigins.includes(normalizeOrigin(origin))) {
+    const normalized = normalizeOrigin(origin);
+    let isVercel = false;
+    try {
+      const url = new URL(origin);
+      isVercel = url.hostname.endsWith(".vercel.app");
+    } catch {
+      // ignore
+    }
+
+    if (allowedOrigins.includes(normalized) || isVercel) {
       return callback(null, true);
     }
 
@@ -71,6 +80,45 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.options(/.*/, cors(corsOptions));
+
+// ==================== DATABASE CONNECTION ====================
+
+let dbConnectionPromise = null;
+export const connectDB = async () => {
+  if (mongoose.connection.readyState >= 1) {
+    return;
+  }
+  if (!dbConnectionPromise) {
+    if (process.env.MONGO_URI) {
+      dbConnectionPromise = mongoose
+        .connect(process.env.MONGO_URI)
+        .then(() => {
+          console.log("✅ CONNECTED TO DB");
+        })
+        .catch((err) => {
+          dbConnectionPromise = null;
+          throw err;
+        });
+    } else {
+      console.log(
+        "⚠️ No MONGO_URI specified; running server in local storage mode."
+      );
+      return;
+    }
+  }
+  await dbConnectionPromise;
+};
+
+// Ensure DB connection for requests in serverless environments
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error("❌ DB Connection Failed:", error);
+    next(error);
+  }
+});
 
 // ==================== ROUTES ====================
 
@@ -104,43 +152,30 @@ app.get("/ping", (req, res) => {
   res.send("pong");
 });
 
-// ==================== START SERVER ====================
+// ==================== START SERVER (LOCAL DEV) ====================
 
-const start = async () => {
-  try {
-    // Connect to MongoDB
-    if (process.env.MONGO_URI) {
-      await mongoose.connect(process.env.MONGO_URI);
-
-      console.log("✅ CONNECTED TO DB");
-    } else {
-      console.log(
-        "⚠️ No MONGO_URI specified; running server in local storage mode."
-      );
-    }
-
-    // Port
-    const port = process.env.PORT || 4000;
-
-    // Start server
+if (process.env.VERCEL !== "1" && process.env.NODE_ENV !== "test") {
+  const port = process.env.PORT || 4000;
+  connectDB().finally(() => {
     app.listen(port, () => {
       console.log(`🚀 Server running on port ${port}`);
 
-      // Self ping every 10 minutes
-      setInterval(() => {
-        fetch("https://flux-backend-1hmq.onrender.com/ping")
-          .then(() => {
-            console.log("🔁 Pinged self!");
-          })
-          .catch(() => {
-            console.log("❌ Self ping failed.");
-          });
-      }, 1000 * 60 * 10);
+      const selfPingUrl = process.env.SELF_PING_URL;
+      if (selfPingUrl) {
+        // Self ping every 10 minutes
+        setInterval(() => {
+          fetch(selfPingUrl)
+            .then(() => {
+              console.log("🔁 Pinged self!");
+            })
+            .catch(() => {
+              console.log("❌ Self ping failed.");
+            });
+        }, 1000 * 60 * 10);
+      }
     });
-  } catch (error) {
-    console.error("❌ DB Connection Failed:", error);
-  }
-};
+  });
+}
 
-// Start application
-start();
+// Export app for Vercel serverless integration
+export default app;
