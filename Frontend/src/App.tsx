@@ -27,6 +27,7 @@ import SheLeadsPage from "@/pages/sheLeads/SheLeadsPage";
 
 import { Toaster } from "@/components/ui/toaster";
 import { introManager } from "@/lib/introState";
+import ChatbotWidget from "@/components/ChatbotWidget";
 
 export default function App() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -147,6 +148,7 @@ export default function App() {
         </Routes>
       </div>
       
+      <ChatbotWidget />
       <Toaster />
     </BrowserRouter>
   );
