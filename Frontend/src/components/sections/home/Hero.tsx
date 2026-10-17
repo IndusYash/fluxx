@@ -77,7 +77,7 @@ export default function Hero() {
       {/* ─────────────────────────────────────────────────────────────
           1. GIANT OVERSIZED BACKGROUND MARQUEE TEXT
       ───────────────────────────────────────────────────────────── */}
-      <div className="hero-marquee-wrapper absolute inset-0 flex items-center justify-center pointer-events-none z-[1] overflow-hidden">
+      <div className="hero-marquee-wrapper hidden md:flex absolute inset-0 items-center justify-center pointer-events-none z-[1] overflow-hidden">
         <Marquee text="WHERE IDEAS MEET IMPACT" outlined={true} speed={1.1} isHero={true} />
       </div>
 
@@ -216,7 +216,7 @@ export default function Hero() {
         <Container className="max-w-xl text-center flex flex-col items-center">
           
           {/* Headline clamped to 3 lines */}
-          <h1 className="font-sans font-light tracking-[-0.035em] text-[clamp(2.35rem,7.5vw,3.75rem)] leading-[1.04] text-white text-center mb-6">
+          <h1 className="font-sans font-light tracking-[-0.035em] text-[clamp(2.35rem,7.5vw,3.75rem)] leading-[1.12] text-white text-center mb-6">
             <span className="block overflow-hidden py-0.5">
               <span ref={mLine1Ref} className="block will-change-transform whitespace-nowrap">
                 The Innovation Core
@@ -247,14 +247,14 @@ export default function Hero() {
             student projects built directly into the university ecosystem.
           </p>
 
-          {/* Buttons: min-height 52px */}
+          {/* Buttons: full width on mobile, 48px high */}
           <div
             ref={mButtonsRef}
-            className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto justify-center mb-6"
+            className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto justify-center mb-4 sm:mb-6"
           >
             <button
               onClick={() => navigate("/about")}
-              className="w-full sm:w-auto group inline-flex items-center justify-center gap-2.5 min-h-[52px] px-6 py-3.5 border border-white/25 hover:border-white text-white text-xs font-medium tracking-wide uppercase bg-transparent hover:bg-white/[0.04] transition-all duration-200 rounded-none cursor-pointer"
+              className="w-full sm:w-auto group inline-flex items-center justify-center gap-2.5 h-12 min-h-[48px] px-6 py-3 border border-white/25 hover:border-white text-white text-xs font-medium tracking-wide uppercase bg-transparent hover:bg-white/[0.04] transition-all duration-200 rounded-none cursor-pointer"
             >
               <span className="w-1.5 h-1.5 bg-white inline-block flex-shrink-0" />
               <span>Read Docs</span>
@@ -262,34 +262,34 @@ export default function Hero() {
 
             <button
               onClick={() => navigate("/events")}
-              className="w-full sm:w-auto group inline-flex items-center justify-center gap-2.5 min-h-[52px] px-6 py-3.5 bg-white hover:bg-[#e6e6e6] text-black text-xs font-semibold tracking-wide uppercase border border-white transition-all duration-200 rounded-none cursor-pointer"
+              className="w-full sm:w-auto group inline-flex items-center justify-center gap-2.5 h-12 min-h-[48px] px-6 py-3 bg-white hover:bg-[#e6e6e6] text-black text-xs font-semibold tracking-wide uppercase border border-white transition-all duration-200 rounded-none cursor-pointer"
             >
               <span className="w-1.5 h-1.5 bg-black inline-block flex-shrink-0" />
               <span>Browse All Events</span>
             </button>
           </div>
 
-          {/* Persistent 3D Logo Anchor at ~36vh centered */}
+          {/* Persistent 3D Logo Anchor at ~34svh centered, never overlapping text */}
           <div
             ref={mCanvasRef}
-            className="relative w-full h-[36vh] min-h-[220px] max-h-[340px] flex items-center justify-center my-3 overflow-visible"
+            className="relative w-full h-[34svh] min-h-[190px] max-h-[300px] flex items-center justify-center my-2 overflow-visible"
           >
             <div
-              className="absolute inset-0 m-auto w-60 h-60 rounded-full bg-white/[0.06] blur-[70px] pointer-events-none"
+              className="absolute inset-0 m-auto w-48 h-48 sm:w-60 sm:h-60 rounded-full bg-white/[0.06] blur-[60px] pointer-events-none"
               aria-hidden="true"
             />
             <div
               data-logo-anchor="hero"
               data-logo-scale="0.75"
               data-logo-opacity="1.0"
-              className="w-[260px] h-[260px] mx-auto pointer-events-none"
+              className="w-[220px] h-[220px] sm:w-[260px] sm:h-[260px] mx-auto pointer-events-none"
             />
           </div>
 
-          {/* Role list as one inline wrap row */}
+          {/* Role list hidden on mobile (width < 768px), visible on tablet */}
           <div
             ref={mRolesRef}
-            className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] sm:text-xs font-mono tracking-[0.14em] text-white/80 my-3"
+            className="hidden md:flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] sm:text-xs font-mono tracking-[0.14em] text-white/80 my-3"
           >
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-white/60 inline-block flex-shrink-0" />
@@ -305,8 +305,8 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Only "Join Us ↗" pill button */}
-          <div className="flex justify-center mt-3 pointer-events-auto">
+          {/* Hero Join Us chip: hidden on mobile (the navbar already has Join Us) */}
+          <div className="hidden md:flex justify-center mt-3 pointer-events-auto">
             <button
               onClick={() => navigate("/team")}
               className="group inline-flex items-center justify-center px-4 py-2 rounded-full border border-white/20 bg-black/70 hover:bg-white hover:text-black text-white backdrop-blur-md text-xs font-mono tracking-wider transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)] cursor-pointer"

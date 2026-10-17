@@ -195,8 +195,10 @@ export default function LegacySection() {
         ref={contentWrapperRef}
         className="absolute inset-0 w-full h-full bg-[#060606] overflow-hidden flex items-center justify-center pt-[calc(var(--nav-h)+16px)] pb-[calc(var(--ticker-h)+24px)] safe-section-py will-change-transform"
       >
-        {/* 1. Behind: Construction Lines drawn on scroll */}
-        <ConstructionLines />
+        {/* 1. Behind: Construction Lines drawn on scroll (hidden on mobile) */}
+        <div className="hidden md:block pointer-events-none">
+          <ConstructionLines />
+        </div>
 
         {/* Persistent Logo Anchor */}
         <div
@@ -206,8 +208,8 @@ export default function LegacySection() {
           className="hidden lg:block absolute top-24 left-[var(--gutter)] w-[140px] h-[140px] pointer-events-none z-[1]"
         />
 
-        {/* 2. Huge Script Word centered on black */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden">
+        {/* 2. Huge Script Word centered on black (hidden on mobile) */}
+        <div className="hidden md:flex absolute inset-0 items-center justify-center pointer-events-none z-0 overflow-hidden">
           <h2
             ref={wordRef}
             className="font-script text-[clamp(7rem,22vw,24rem)] text-white select-none whitespace-nowrap leading-none will-change-transform"
@@ -233,7 +235,8 @@ export default function LegacySection() {
                 Built inside the Department of CSE at MMMUT Gorakhpur.
               </h3>
 
-              <p className="hidden md:block font-sans text-xs sm:text-sm text-neutral-400 font-light leading-relaxed max-w-xl mb-4">
+              {/* Heading and paragraph first on mobile & desktop */}
+              <p className="block font-sans text-xs sm:text-sm text-neutral-300 md:text-neutral-400 font-light leading-relaxed max-w-xl mb-3 md:mb-4">
                 FLUX was founded on a singular conviction: university students should not merely consume technology — they must engineer it. Through hands-on prototypes, competitive hackathons, mechanistic AI workshops, and faculty-guided research, we push boundaries and turn theoretical computer science into production software.
               </p>
 
@@ -243,8 +246,8 @@ export default function LegacySection() {
                 <span className="px-2.5 py-0.5 border border-white/10 bg-white/[0.02] rounded-sm">+ REAL IMPACT</span>
               </div>
 
-              {/* 4 Interactive Archive Cards synced to Scroll */}
-              <div className="grid grid-cols-2 gap-2 sm:gap-3 max-w-xl mb-3 lg:mb-0">
+              {/* 4 Interactive Archive Cards: full-width rows on mobile (no 2x2 truncated grid) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3 max-w-xl mb-3 lg:mb-0 w-full">
                 {photos.map((item, idx) => (
                   <button
                     key={idx}

@@ -34,6 +34,12 @@ export default function Marquee({
     const track = trackRef.current;
     if (!track) return;
 
+    const prefersReducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) {
+      track.style.transform = "translate3d(0, 0, 0)";
+      return;
+    }
+
     let xPos = 0;
     let targetSpeed = speed * (direction === "left" ? -1 : 1);
     let currentSpeed = targetSpeed;

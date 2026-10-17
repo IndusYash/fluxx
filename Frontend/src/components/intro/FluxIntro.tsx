@@ -333,7 +333,7 @@ export default function FluxIntro() {
             {/* Centered numerals in Poiret One */}
             <div className="relative w-full max-w-2xl h-48 sm:h-64 flex items-center justify-center">
               <span
-                className="font-poiret text-[clamp(7.5rem,24vw,19rem)] leading-none text-black absolute inset-0 flex items-center justify-center select-none"
+                className="font-poiret text-[clamp(5.5rem,20vw,19rem)] leading-none text-black absolute inset-0 flex items-center justify-center select-none"
               >
                 {displayCount}
               </span>
@@ -345,17 +345,17 @@ export default function FluxIntro() {
                 FLUX // LOADING
               </span>
             ) : (
-              <span id="flux-activate-prompt" className="font-mono text-xs sm:text-sm tracking-[0.28em] text-black/80 uppercase mt-12 animate-pulse transition-opacity duration-500">
-                CLICK ANYWHERE TO ACTIVATE THE EXPERIENCE
+              <span id="flux-activate-prompt" className="font-mono text-xs sm:text-sm tracking-[0.18em] sm:tracking-[0.28em] text-black/80 uppercase mt-12 animate-pulse transition-opacity duration-500 text-center px-4">
+                TAP ANYWHERE TO ACTIVATE
               </span>
             )}
 
             {/* Visible SKIP link in corner */}
             <button
               onClick={handleSkip}
-              className="absolute top-6 right-8 font-mono text-xs tracking-[0.2em] uppercase text-black/45 hover:text-black transition-colors cursor-pointer py-2 px-3 border border-black/15 hover:border-black/40"
+              className="absolute top-6 right-6 sm:right-8 font-mono text-xs tracking-[0.2em] uppercase text-black/60 hover:text-black transition-colors cursor-pointer py-2 px-3.5 min-h-[44px] min-w-[44px] flex items-center justify-center border border-black/20 hover:border-black/50"
             >
-              SKIP [ESC]
+              SKIP
             </button>
           </div>
         )}

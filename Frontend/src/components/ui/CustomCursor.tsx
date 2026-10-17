@@ -10,11 +10,16 @@ interface TrailPoint {
 export default function CustomCursor() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
+  if (typeof window !== "undefined" && window.innerWidth < 768) {
+    return null;
+  }
+
   useEffect(() => {
-    // Hide completely on touch devices or reduced motion
+    // Hide completely on touch devices, small screens or reduced motion
+    const isMobile = window.innerWidth < 768;
     const isTouch = window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window;
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (isTouch || prefersReducedMotion) return;
+    if (isMobile || isTouch || prefersReducedMotion) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;

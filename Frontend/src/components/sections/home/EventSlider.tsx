@@ -211,8 +211,30 @@ export default function EventSlider() {
         scalePeek,
         centerY: safeCenter,
       };
+    } else if (vw < 768) {
+      // Mobile (< 768px): thin non-overlapping strips (about 24px) above and below
+      const peekW = Math.min(vw - 64, 300);
+      const peekH = 24;
+      const gap = 12;
+
+      const targetMainW = Math.min(vw - 32, 360);
+      const targetMainH = Math.min(availableSafeH - 100, 360);
+      const mainH = Math.round(Math.max(220, targetMainH));
+      const mainW = targetMainW;
+      const scalePeek = peekW / mainW;
+      const yPeek = Math.round((mainH / 2) + gap + (peekH / 2));
+
+      return {
+        mainWidth: mainW,
+        mainHeight: mainH,
+        peekWidth: peekW,
+        peekHeight: peekH,
+        yPeek,
+        scalePeek,
+        centerY: safeCenter,
+      };
     } else {
-      // Mobile / Tablet: scale proportionally
+      // Tablet (768px - 1023px): scale proportionally
       const peekW = Math.min(200, Math.round(vw * 0.48));
       const peekH = Math.round(peekW * (9 / 16));
       const gap = 14;
@@ -344,6 +366,8 @@ export default function EventSlider() {
       const banner = el.querySelector(".card-mobile-banner") as HTMLElement | null;
       if (banner) {
         banner.style.opacity = isCurrentCard ? "1" : "0";
+        banner.style.display = isCurrentCard ? "block" : "none";
+        banner.style.pointerEvents = isCurrentCard ? "auto" : "none";
       }
     });
   };
@@ -489,11 +513,13 @@ export default function EventSlider() {
           2. TOP HEADER ROW (Clearance from logo and peek cards)
       ───────────────────────────────────────────────────────────── */}
       <div className="absolute top-[calc(var(--nav-h)+16px)] inset-x-[var(--gutter)] z-20 flex items-center justify-between pointer-events-none">
-        <span className="font-mono text-[11px] sm:text-xs tracking-[0.35em] uppercase text-white/80">
-          // SHOWCASE // 0{activeIndex + 1} OF 0{events.length}
+        <span className="font-mono text-[11px] sm:text-xs tracking-[0.25em] sm:tracking-[0.35em] uppercase text-white/80 whitespace-nowrap">
+          <span className="sm:hidden">0{activeIndex + 1} / 0{events.length}</span>
+          <span className="hidden sm:inline">// SHOWCASE // 0{activeIndex + 1} OF 0{events.length}</span>
         </span>
-        <span className="font-mono text-[11px] sm:text-xs tracking-[0.25em] uppercase text-white/70">
-          SCROLL TO EXPLORE EVENTS
+        <span className="font-mono text-[11px] sm:text-xs tracking-[0.2em] sm:tracking-[0.25em] uppercase text-white/70 whitespace-nowrap">
+          <span className="sm:hidden">Scroll ↓</span>
+          <span className="hidden sm:inline">SCROLL TO EXPLORE EVENTS</span>
         </span>
       </div>
 
@@ -565,16 +591,26 @@ export default function EventSlider() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-white/10 pointer-events-none" />
 
                   {/* Mobile text banner inside card (visible on mobile for center card) */}
-                  <div className="card-mobile-banner lg:hidden absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black via-black/85 to-transparent transition-opacity duration-300">
-                    <span className="font-mono text-[10px] tracking-widest text-white/70 uppercase">
+                  <div className="card-mobile-banner lg:hidden absolute bottom-0 inset-x-0 p-3 sm:p-4 bg-gradient-to-t from-black via-black/90 to-transparent transition-opacity duration-300 pointer-events-auto">
+                    <span className="font-mono text-[10px] tracking-widest text-white/70 uppercase block">
                       {ev.phase}
                     </span>
-                    <h4 className="font-sans font-bold text-lg uppercase text-white mt-0.5">
+                    <h4 className="font-sans font-bold text-base sm:text-lg uppercase text-white mt-0.5 leading-snug">
                       {ev.name}
                     </h4>
-                    <p className="font-sans text-[11px] text-neutral-300 font-light mt-0.5 line-clamp-2">
+                    <p className="font-sans text-xs text-neutral-300 font-light mt-1 line-clamp-2 leading-relaxed">
                       {ev.desc}
                     </p>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(ev.link);
+                      }}
+                      className="mt-2.5 w-full h-11 min-h-[44px] flex items-center justify-center gap-2 border border-white/40 bg-white/10 active:bg-white active:text-black backdrop-blur-sm text-white text-xs font-mono uppercase tracking-wider transition-colors cursor-pointer rounded-sm"
+                    >
+                      <span>Explore Event</span>
+                      <span>→</span>
+                    </button>
                   </div>
                 </div>
               );
@@ -607,7 +643,7 @@ export default function EventSlider() {
       {/* ─────────────────────────────────────────────────────────────
           4. BOTTOM-RIGHT EVENT NUMBER IN ITALIC SCRIPT WITH CIRCULAR ARC
       ───────────────────────────────────────────────────────────── */}
-      <div className="absolute bottom-[calc(var(--ticker-h)+18px)] right-[var(--gutter)] z-30 flex items-center gap-3 select-none pointer-events-none">
+      <div className="absolute bottom-[calc(var(--ticker-h)+18px)] right-[var(--gutter)] z-30 hidden sm:flex items-center gap-3 select-none pointer-events-none">
         <div className="relative w-14 h-14 flex items-center justify-center">
           {/* SVG Circular Progress Arc */}
           <svg className="w-full h-full -rotate-90" viewBox="0 0 60 60">

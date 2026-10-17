@@ -10,7 +10,7 @@ const HeroSection: React.FC<HeroSectionProps> = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-transparent">
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-transparent max-md:pt-28 max-md:pb-16">
       {/* Animated background grid */}
       <div
         className="absolute inset-0 opacity-20 pointer-events-none"

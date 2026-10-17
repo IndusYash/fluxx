@@ -53,7 +53,7 @@ export default function FluxObjectives() {
           {objectives.map((item) => (
              <div
               key={item.title}
-              className="w-full sm:w-[calc(50%-16px)] lg:w-[calc(33.333%-16px)] card-outline group relative p-8 rounded-2xl bg-white/5 transition-all duration-300 hover:bg-white/10 hover:shadow-[0_8px_0_rgba(255,255,255,0.12)] flex flex-col justify-between"
+              className="w-full sm:w-[calc(50%-16px)] lg:w-[calc(33.333%-16px)] card-outline group relative p-6 md:p-8 rounded-2xl bg-white/5 transition-all duration-300 hover:bg-white/10 hover:shadow-[0_8px_0_rgba(255,255,255,0.12)] flex flex-col justify-between"
             >
               <div>
                 <div className="mb-6 inline-flex items-center justify-center bg-white/10 rounded-xl p-3">

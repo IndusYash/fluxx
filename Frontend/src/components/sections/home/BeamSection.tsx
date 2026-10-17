@@ -93,6 +93,10 @@ export default function BeamSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      const prefersReducedMotion =
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
       // Horizontal drift of the script words across the screen at controlled speeds
       if (word1Ref.current) {
         gsap.to(word1Ref.current, {
@@ -102,7 +106,7 @@ export default function BeamSection() {
             trigger: sectionRef.current,
             start: "top bottom",
             end: "bottom top",
-            scrub: 1.2,
+            scrub: prefersReducedMotion ? true : 1.2,
           },
         });
       }
@@ -115,7 +119,7 @@ export default function BeamSection() {
             trigger: sectionRef.current,
             start: "top bottom",
             end: "bottom top",
-            scrub: 1.8,
+            scrub: prefersReducedMotion ? true : 1.8,
           },
         });
       }
@@ -128,7 +132,7 @@ export default function BeamSection() {
             trigger: sectionRef.current,
             start: "top bottom",
             end: "bottom top",
-            scrub: 1.4,
+            scrub: prefersReducedMotion ? true : 1.4,
           },
         });
       }
@@ -144,7 +148,7 @@ export default function BeamSection() {
           const middleCard = cards[1];
           const rightCard = cards[2];
 
-          if (prefersReducedMotion) {
+          if (prefersReducedMotion || isMobile) {
             gsap.set([leftCard, middleCard, rightCard], {
               y: 0,
               opacity: 1,
@@ -152,9 +156,9 @@ export default function BeamSection() {
             });
           } else {
             // Middle card starts significantly higher in the upper zone (where logo was shown), then glides down to its position on scroll
-            const middleStartOffset = isMobile ? -140 : -480;
-            const leftStartOffset = isMobile ? 15 : 30;
-            const rightStartOffset = isMobile ? 10 : 20;
+            const middleStartOffset = -480;
+            const leftStartOffset = 30;
+            const rightStartOffset = 20;
 
             const tl = gsap.timeline({
               scrollTrigger: {
@@ -199,6 +203,7 @@ export default function BeamSection() {
 
   // 3D Hover tilt handler for cards
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (window.innerWidth < 768) return;
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -233,10 +238,10 @@ export default function BeamSection() {
       <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-48 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent blur-[35px] pointer-events-none z-0" />
 
       {/* ─────────────────────────────────────────────────────────────
-          2. SCRIPT WORDS DRIFTING HORIZONTALLY (Kept inside viewport)
+          2. SCRIPT WORDS DRIFTING HORIZONTALLY (Kept inside viewport, desktop only)
           Discovery, Creativity, Innovation
       ───────────────────────────────────────────────────────────── */}
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden flex flex-col justify-around py-12 opacity-25">
+      <div className="hidden md:flex absolute inset-0 pointer-events-none z-0 overflow-hidden flex-col justify-around py-12 opacity-25">
         <div className="overflow-hidden whitespace-nowrap">
           <span
             ref={word1Ref}
@@ -264,9 +269,9 @@ export default function BeamSection() {
       </div>
 
       {/* ─────────────────────────────────────────────────────────────
-          3. PERSISTENT CHROME FLUX LOGO ANCHOR IN FRONT OF THE LIGHT BEAM
+          3. PERSISTENT CHROME FLUX LOGO ANCHOR IN FRONT OF THE LIGHT BEAM (Desktop only)
       ───────────────────────────────────────────────────────────── */}
-      <div className="relative z-10 w-full max-w-lg mx-auto h-[40vh] min-h-[300px] flex items-center justify-center my-4 pointer-events-none">
+      <div className="hidden md:flex relative z-10 w-full max-w-lg mx-auto h-[40vh] min-h-[300px] items-center justify-center my-4 pointer-events-none">
         <div
           data-logo-anchor="faculty"
           data-logo-scale="0.88"
@@ -279,8 +284,8 @@ export default function BeamSection() {
           4. ROW OF 3 FEATURED FACULTY & RESEARCH LEADERS (3D Hover Tilt)
           Safely ends >= var(--ticker-h) + 24px above viewport bottom
       ───────────────────────────────────────────────────────────── */}
-      <Container className="relative z-20 mt-8 pb-[calc(var(--ticker-h)+24px)] pointer-events-auto">
-        <div className="flex items-center justify-between mb-8">
+      <Container className="relative z-20 mt-4 md:mt-8 pb-[calc(var(--ticker-h)+24px)] pointer-events-auto">
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-3 md:gap-0">
           <div>
             <p className="font-mono text-xs tracking-[0.3em] uppercase text-white/50 mb-1">
               // ACADEMIC LEADERSHIP & ADVISORS
@@ -294,7 +299,7 @@ export default function BeamSection() {
           </div>
           <button
             onClick={() => navigate("/faculty")}
-            className="group hidden sm:flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-white/70 hover:text-white transition-colors"
+            className="group hidden md:flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-white/70 hover:text-white transition-colors cursor-pointer"
           >
             <span>View All Faculty</span>
             <span className="transition-transform group-hover:translate-x-1">→</span>

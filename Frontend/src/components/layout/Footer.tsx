@@ -36,7 +36,7 @@ const quickLinks = [
 
 export default function Footer() {
   return (
-    <footer id="site-footer" className="relative pt-20 pb-[calc(var(--ticker-h)+48px)] overflow-hidden bg-[#020202] text-white">
+    <footer id="site-footer" className="relative pt-16 sm:pt-20 pb-[calc(env(safe-area-inset-bottom,0px)+var(--ticker-h)+var(--chatbot-btn-size)+36px)] md:pb-[calc(var(--ticker-h)+48px)] overflow-hidden bg-[#020202] text-white">
       {/* Animated background grid */}
       <div 
         className="absolute inset-0 opacity-20 pointer-events-none"

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as THREE from "three";
 import gsap from "gsap";
@@ -31,6 +31,8 @@ export default function AchievementScene() {
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const headingScreenRef = useRef<HTMLDivElement>(null);
   const tabRef = useRef<HTMLDivElement>(null);
+  const [activeMobileCard, setActiveMobileCard] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   const achievements: AchievementData[] = [
     {
@@ -88,6 +90,7 @@ export default function AchievementScene() {
   ];
 
   useEffect(() => {
+    if (window.innerWidth < 768) return;
     const container = canvasContainerRef.current;
     const section = sectionRef.current;
     const headingScreen = headingScreenRef.current;
@@ -988,37 +991,154 @@ export default function AchievementScene() {
     };
   }, [navigate]);
 
+  const handleCarouselScroll = () => {
+    if (!carouselRef.current) return;
+    const el = carouselRef.current;
+    const scrollLeft = el.scrollLeft;
+    const cardWidth = el.offsetWidth * 0.84;
+    const newIdx = Math.round(scrollLeft / (cardWidth + 16));
+    setActiveMobileCard(Math.max(0, Math.min(achievements.length - 1, newIdx)));
+  };
+
+  const scrollToCard = (index: number) => {
+    if (!carouselRef.current) return;
+    const el = carouselRef.current;
+    const cardWidth = el.offsetWidth * 0.84;
+    el.scrollTo({ left: index * (cardWidth + 16), behavior: "smooth" });
+    setActiveMobileCard(index);
+  };
+
   return (
     <section
       id="achievement-scene-section"
       ref={sectionRef}
-      className="relative z-30 w-full h-screen bg-[#08080a] overflow-hidden select-none safe-fullscreen"
+      className="relative z-30 w-full min-h-[100svh] md:h-screen bg-[#08080a] overflow-x-hidden md:overflow-hidden select-none safe-section-py md:safe-fullscreen"
     >
       {/* ─────────────────────────────────────────────────────────────
-          1. 3D WEBGL SCENE CONTAINER (Fades in as heading leaves)
+          MOBILE 2D VIEW (Scroll-snap carousel, NO WebGL)
+      ───────────────────────────────────────────────────────────── */}
+      <div className="md:hidden flex flex-col justify-center w-full px-4 py-8 min-h-[100svh]">
+        {/* Mobile Heading */}
+        <div className="text-center mb-6">
+          <span className="font-script text-3xl text-neutral-400 italic block mb-1">
+            Achievements &amp;
+          </span>
+          <h2 className="font-sans font-black text-3xl sm:text-4xl tracking-tight uppercase text-white leading-none">
+            RECOGNITIONS
+          </h2>
+          <div className="mt-3 flex items-center justify-center gap-2">
+            <span className="h-px w-6 bg-white/20" />
+            <span className="font-mono text-[11px] tracking-widest uppercase text-neutral-400">
+              // COMPETITIVE PODIUMS // MMMUT
+            </span>
+            <span className="h-px w-6 bg-white/20" />
+          </div>
+        </div>
+
+        {/* 2D Swipeable Card Carousel with CSS scroll snap */}
+        <div
+          ref={carouselRef}
+          onScroll={handleCarouselScroll}
+          className="w-full flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 pt-2"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          {achievements.map((item) => (
+            <div
+              key={item.id}
+              className="w-[84vw] max-w-[340px] shrink-0 snap-center rounded-sm border border-white/15 bg-[#101014] p-4 flex flex-col justify-between shadow-xl"
+            >
+              <div>
+                {/* Photo frame */}
+                <div className="relative w-full aspect-[16/10] rounded-sm overflow-hidden mb-3 bg-black/60">
+                  <img
+                    src={item.image}
+                    alt={item.titleLine1}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-2 left-2 px-2 py-0.5 bg-black/80 border border-white/20 rounded-sm font-mono text-[10px] uppercase tracking-wider text-white">
+                    {item.id} / 04
+                  </div>
+                </div>
+
+                <span className="font-mono text-[11px] tracking-widest uppercase text-white/50 block mb-1">
+                  {item.dateLine}
+                </span>
+
+                <h3 className="font-sans font-bold text-lg text-white uppercase leading-snug">
+                  {item.titleLine1}
+                </h3>
+                <h4 className="font-sans font-semibold text-sm text-neutral-300 uppercase leading-snug mb-2">
+                  {item.titleLine2}
+                </h4>
+
+                <p className="font-sans text-sm text-neutral-300 font-light leading-relaxed line-clamp-3 mb-3">
+                  {item.description}
+                </p>
+
+                <span className="font-mono text-[11px] text-white/60 tracking-wider uppercase block">
+                  {item.teamName}
+                </span>
+              </div>
+
+              <button
+                onClick={() => navigate(item.link)}
+                className="mt-4 w-full h-11 min-h-[44px] flex items-center justify-center gap-2 border border-white/25 bg-white/10 active:bg-white active:text-black text-white text-xs font-mono uppercase tracking-wider transition-colors cursor-pointer rounded-sm"
+              >
+                <span>View Details</span>
+                <span>→</span>
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* Dots indicator with >= 44px tap targets */}
+        <div className="flex items-center justify-center gap-1 mt-1">
+          {achievements.map((item, idx) => (
+            <button
+              key={item.id}
+              onClick={() => scrollToCard(idx)}
+              aria-label={`Go to slide ${idx + 1}`}
+              className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer bg-transparent border-none p-0"
+            >
+              <span
+                className={`h-2 transition-all duration-300 rounded-full ${
+                  activeMobileCard === idx ? "w-6 bg-white" : "w-2 bg-white/25"
+                }`}
+              />
+            </button>
+          ))}
+        </div>
+
+        <p className="text-center font-mono text-[11px] text-white/40 uppercase tracking-widest mt-2">
+          Swipe to view ({activeMobileCard + 1} of {achievements.length})
+        </p>
+      </div>
+
+      {/* ─────────────────────────────────────────────────────────────
+          1. 3D WEBGL SCENE CONTAINER (Fades in as heading leaves, Desktop only)
       ───────────────────────────────────────────────────────────── */}
       <div
         ref={canvasContainerRef}
-        className="absolute inset-0 w-full h-full pointer-events-auto z-10 opacity-0 transition-opacity duration-300"
+        className="hidden md:block absolute inset-0 w-full h-full pointer-events-auto z-10 opacity-0 transition-opacity duration-300"
       />
 
       {/* ─────────────────────────────────────────────────────────────
-          2. LIGHT GRAIN OVERLAY (3% opacity)
+          2. LIGHT GRAIN OVERLAY (3% opacity, Desktop only)
       ───────────────────────────────────────────────────────────── */}
       <div
-        className="absolute inset-0 pointer-events-none z-20 opacity-[0.03]"
+        className="hidden md:block absolute inset-0 pointer-events-none z-20 opacity-[0.03]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
         }}
       />
 
       {/* ─────────────────────────────────────────────────────────────
-          3. HEADING SCREEN BEFORE THE 3D SCENE
+          3. HEADING SCREEN BEFORE THE 3D SCENE (Desktop only)
           Slides/wipes UP as user scrolls, text never overlaps cards.
       ───────────────────────────────────────────────────────────── */}
       <div
         ref={headingScreenRef}
-        className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-[#08080a] px-6 text-center will-change-transform pointer-events-auto"
+        className="hidden md:flex absolute inset-0 z-30 flex-col items-center justify-center bg-[#08080a] px-6 text-center will-change-transform pointer-events-auto"
       >
         <div className="max-w-4xl mx-auto flex flex-col items-center">
           <span className="font-script text-4xl sm:text-6xl md:text-7xl text-neutral-300 italic tracking-wide mb-2 select-none">
@@ -1042,12 +1162,12 @@ export default function AchievementScene() {
       </div>
 
       {/* ─────────────────────────────────────────────────────────────
-          4. VERTICAL TAB ON RIGHT EDGE ("LATEST WIN")
+          4. VERTICAL TAB ON RIGHT EDGE ("LATEST WIN", Desktop only)
           Safely docked to avoid overlapping cards, hidden on mobile
       ───────────────────────────────────────────────────────────── */}
       <div
         ref={tabRef}
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-25 pointer-events-auto transition-opacity duration-300"
+        className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 z-25 pointer-events-auto transition-opacity duration-300"
       >
         <button
           onClick={() => navigate("/ideathon")}
@@ -1063,9 +1183,9 @@ export default function AchievementScene() {
         </button>
       </div>
 
-      {/* Top & Bottom seamless gradient vignettes */}
-      <div className="absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-[#08080a] to-transparent pointer-events-none z-20" />
-      <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-[#08080a] to-transparent pointer-events-none z-20" />
+      {/* Top & Bottom seamless gradient vignettes (Desktop only) */}
+      <div className="hidden md:block absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-[#08080a] to-transparent pointer-events-none z-20" />
+      <div className="hidden md:block absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-[#08080a] to-transparent pointer-events-none z-20" />
     </section>
   );
 }

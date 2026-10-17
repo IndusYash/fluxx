@@ -32,6 +32,39 @@
   padding-bottom: calc(var(--ticker-h) + 24px);
 }
 
+/* Mobile-only safe area variables & constraints (width up to 767px) */
+@media (max-width: 767px) {
+  :root {
+    --nav-h: 56px;
+    --ticker-h: 36px;
+    --chatbot-btn-size: 48px;
+    --chatbot-gap: 12px;
+    --launcher-chamfer: 10px;
+    --launcher-inner-chamfer: 9px;
+    --mobile-safe-top: calc(env(safe-area-inset-top, 0px) + var(--nav-h) + 16px);
+    --mobile-safe-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--ticker-h) + var(--chatbot-btn-size) + 24px);
+  }
+
+  html,
+  body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+  }
+
+  .safe-section-py {
+    padding-top: var(--mobile-safe-top) !important;
+    padding-bottom: var(--mobile-safe-bottom) !important;
+  }
+
+  .safe-fullscreen {
+    min-height: 100svh !important;
+    height: auto !important;
+    padding-top: var(--mobile-safe-top) !important;
+    padding-bottom: var(--mobile-safe-bottom) !important;
+  }
+}
+
 /* Background outline marquee for Hero */
 .hero-marquee-text {
   font-size: clamp(8rem, 26vh, 22rem);
@@ -369,5 +402,13 @@ body {
   @page {
     size: A4 portrait;
     margin: 8mm;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }

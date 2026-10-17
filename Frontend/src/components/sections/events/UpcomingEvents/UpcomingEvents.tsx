@@ -272,7 +272,7 @@ const EventCard: React.FC<{ event: EventProps; index: number; showRegister?: boo
               {event.title?.toLowerCase().includes('ideathon') && (
                 <button
                   onClick={() => navigate('/ideathon')}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-200 text-black rounded-full font-semibold shadow-lg mt-1 w-fit"
+                  className="inline-flex items-center gap-2 px-4 py-2 max-md:px-5 max-md:py-2.5 max-md:min-h-[44px] bg-white hover:bg-gray-200 text-black rounded-full font-semibold shadow-lg mt-1 w-fit"
                 >
                   View Detail
                   <ArrowRight className="w-4 h-4" />
@@ -282,7 +282,7 @@ const EventCard: React.FC<{ event: EventProps; index: number; showRegister?: boo
               {event.title?.toLowerCase().includes('she lead') && (
                 <button
                   onClick={() => navigate('/she-leads')}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-zinc-100 text-black rounded-full font-semibold shadow-md border border-rose-200/40 hover:scale-105 active:scale-95 transition-all duration-200 mt-1 w-fit"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 max-md:min-h-[44px] bg-white hover:bg-zinc-100 text-black rounded-full font-semibold shadow-md border border-rose-200/40 hover:scale-105 active:scale-95 transition-all duration-200 mt-1 w-fit"
                 >
                   <span>View Details</span>
                   <ArrowRight className="w-4 h-4 text-rose-500" />
@@ -292,7 +292,7 @@ const EventCard: React.FC<{ event: EventProps; index: number; showRegister?: boo
               {event.title?.toLowerCase().includes('bytebrawl') && (
                 <button
                   onClick={() => navigate('/events/bytebrawl-hacktoberfest')}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-zinc-100 text-black rounded-full font-semibold shadow-md hover:scale-105 active:scale-95 transition-all duration-200 mt-1 w-fit"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 max-md:min-h-[44px] bg-white hover:bg-zinc-100 text-black rounded-full font-semibold shadow-md hover:scale-105 active:scale-95 transition-all duration-200 mt-1 w-fit"
                 >
                   <span>Explore Event</span>
                   <ArrowRight className="w-4 h-4" />
@@ -303,7 +303,7 @@ const EventCard: React.FC<{ event: EventProps; index: number; showRegister?: boo
                 <div className="pt-1">
                   {event.date === 'Coming Soon' ? (
                     <button
-                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-500 cursor-not-allowed text-white rounded-full font-semibold shadow-lg"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 max-md:min-h-[44px] bg-gray-500 cursor-not-allowed text-white rounded-full font-semibold shadow-lg"
                       disabled
                     >
                       Coming Soon
@@ -311,7 +311,7 @@ const EventCard: React.FC<{ event: EventProps; index: number; showRegister?: boo
                   ) : (
                     <button
                       onClick={() => setIsModalOpen(true)}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-gray-200 text-black rounded-full font-semibold shadow-lg transition-all duration-200 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 max-md:min-h-[44px] bg-white hover:bg-gray-200 text-black rounded-full font-semibold shadow-lg transition-all duration-200 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                     >
                       Register Now
                       <ArrowRight className="w-4 h-4" />

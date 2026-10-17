@@ -8,8 +8,15 @@ export default function FooterShowcase() {
   const scriptTrackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (window.innerWidth < 768) return;
     const track = scriptTrackRef.current;
     if (!track) return;
+
+    const prefersReducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) {
+      track.style.transform = "translate3d(0, 0, 0)";
+      return;
+    }
 
     let pos = 0;
     let animId: number;
@@ -37,9 +44,9 @@ export default function FooterShowcase() {
       className="relative w-full min-h-[100svh] bg-[#060606] overflow-hidden flex flex-col items-center justify-center select-none pt-[calc(var(--nav-h)+48px)] pb-[calc(var(--ticker-h)+56px)] safe-section-py"
     >
       {/* ─────────────────────────────────────────────────────────────
-          1. HUGE SCRIPT TEXT SCROLLING CONTINUOUSLY BEHIND
+          1. HUGE SCRIPT TEXT SCROLLING CONTINUOUSLY BEHIND (Desktop only)
       ───────────────────────────────────────────────────────────── */}
-      <div className="absolute inset-0 flex items-center pointer-events-none z-0 overflow-hidden opacity-25">
+      <div className="hidden md:flex absolute inset-0 items-center pointer-events-none z-0 overflow-hidden opacity-25">
         <div
           ref={scriptTrackRef}
           className="inline-flex whitespace-nowrap will-change-transform font-script text-[clamp(6rem,18vw,18rem)] text-white/50 leading-none"
@@ -65,9 +72,9 @@ export default function FooterShowcase() {
       />
 
       {/* ─────────────────────────────────────────────────────────────
-          3. PERSISTENT GIANT CHROME 3D FLUX LOGO ANCHOR CENTERED
+          3. PERSISTENT GIANT CHROME 3D FLUX LOGO ANCHOR CENTERED (Desktop only)
       ───────────────────────────────────────────────────────────── */}
-      <div className="relative z-10 w-full max-w-xl h-[36vh] min-h-[240px] flex items-center justify-center pointer-events-none mb-4 sm:mb-8">
+      <div className="hidden md:flex relative z-10 w-full max-w-xl h-[36vh] min-h-[240px] items-center justify-center pointer-events-none mb-4 sm:mb-8">
         <div
           data-logo-anchor="footer"
           data-logo-scale="0.85"
@@ -79,7 +86,7 @@ export default function FooterShowcase() {
       {/* ─────────────────────────────────────────────────────────────
           4. "LET'S CONNECT" BUTTON/CHIP & CONTACT LINKS BELOW
       ───────────────────────────────────────────────────────────── */}
-      <Container className="relative z-20 flex flex-col items-center gap-6 mt-4 sm:mt-6 pointer-events-auto">
+      <Container className="relative z-20 flex flex-col items-center gap-6 mt-4 md:mt-6 pointer-events-auto">
         <button
           onClick={() => navigate("/contact")}
           className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full border border-white/30 bg-black/80 hover:bg-white hover:text-black text-white text-xs sm:text-sm font-mono uppercase tracking-[0.22em] backdrop-blur-md transition-all duration-300 shadow-[0_10px_40px_rgba(255,255,255,0.15)] cursor-pointer"
@@ -93,28 +100,28 @@ export default function FooterShowcase() {
         </button>
 
         {/* Quick Contact Links */}
-        <div className="flex flex-wrap items-center justify-center gap-6 text-[11px] font-mono tracking-widest text-white/70 uppercase">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6 text-xs md:text-[11px] font-mono tracking-widest text-white/70 uppercase">
           <a
             href="mailto:flux@mmmut.ac.in"
-            className="hover:text-white transition-colors"
+            className="hover:text-white transition-colors py-1.5 md:py-0 min-h-[44px] md:min-h-0 flex items-center"
           >
             FLUX@MMMUT.AC.IN
           </a>
-          <span className="text-white/30">•</span>
+          <span className="hidden md:inline text-white/30">•</span>
           <a
             href="https://www.linkedin.com/company/flux-mmm/"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-white transition-colors"
+            className="hover:text-white transition-colors py-1.5 md:py-0 min-h-[44px] md:min-h-0 flex items-center"
           >
             LINKEDIN
           </a>
-          <span className="text-white/30">•</span>
+          <span className="hidden md:inline text-white/30">•</span>
           <a
             href="https://www.instagram.com/flux.mmmut"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-white transition-colors"
+            className="hover:text-white transition-colors py-1.5 md:py-0 min-h-[44px] md:min-h-0 flex items-center"
           >
             INSTAGRAM
           </a>

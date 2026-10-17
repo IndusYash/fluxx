@@ -29,7 +29,7 @@ export const ChatbotLauncher = forwardRef<HTMLButtonElement, ChatbotLauncherProp
 
     return (
       <div
-        className="fixed bottom-[calc(var(--ticker-h)+20px)] right-4 sm:right-6 z-[95] pointer-events-auto"
+        className="fixed bottom-[calc(var(--ticker-h)+env(safe-area-inset-bottom,0px)+12px)] md:bottom-[calc(var(--ticker-h)+20px)] right-4 sm:right-6 z-[95] pointer-events-auto"
         style={{
           // Chamfered tile clip-path
           clipPath: 'none',
@@ -37,7 +37,7 @@ export const ChatbotLauncher = forwardRef<HTMLButtonElement, ChatbotLauncherProp
       >
         {/* Soft 6s expanding pulse ring */}
         <div
-          className="absolute inset-0 rounded-2xl border border-white/40 pointer-events-none animate-[ping_6s_cubic-bezier(0,0,0.2,1)_infinite]"
+          className="absolute inset-0 rounded-xl md:rounded-2xl border border-white/40 pointer-events-none animate-[ping_6s_cubic-bezier(0,0,0.2,1)_infinite]"
           aria-hidden="true"
         />
 
@@ -55,23 +55,23 @@ export const ChatbotLauncher = forwardRef<HTMLButtonElement, ChatbotLauncherProp
           onClick={onClick}
           aria-label="Open FLUX AI Chatbot"
           aria-haspopup="dialog"
-          className="group relative w-[60px] h-[60px] rounded-2xl bg-[#080b12] border-2 border-white/35 flex items-center justify-center shadow-[0_0_24px_rgba(255,255,255,0.22)] hover:shadow-[0_0_36px_rgba(255,255,255,0.45)] hover:-translate-y-1.5 hover:-rotate-3 active:scale-95 transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+          className="group relative w-12 h-12 md:w-[60px] md:h-[60px] rounded-xl md:rounded-2xl bg-[#080b12] border-2 border-white/35 flex items-center justify-center shadow-[0_0_24px_rgba(255,255,255,0.22)] hover:shadow-[0_0_36px_rgba(255,255,255,0.45)] hover:-translate-y-1.5 hover:-rotate-3 active:scale-95 transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
           style={{
             clipPath:
-              'polygon(12px 0%, calc(100% - 12px) 0%, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0% calc(100% - 12px), 0% 12px)',
+              'polygon(var(--launcher-chamfer,12px) 0%, calc(100% - var(--launcher-chamfer,12px)) 0%, 100% var(--launcher-chamfer,12px), 100% calc(100% - var(--launcher-chamfer,12px)), calc(100% - var(--launcher-chamfer,12px)) 100%, var(--launcher-chamfer,12px) 100%, 0% calc(100% - var(--launcher-chamfer,12px)), 0% var(--launcher-chamfer,12px))',
           }}
         >
           {/* Inner subtle chamfer edge glow */}
           <div
-            className="absolute inset-[1px] rounded-2xl border border-white/20 pointer-events-none"
+            className="absolute inset-[1px] rounded-xl md:rounded-2xl border border-white/20 pointer-events-none"
             style={{
               clipPath:
-                'polygon(11px 0%, calc(100% - 11px) 0%, 100% 11px, 100% calc(100% - 11px), calc(100% - 11px) 100%, 11px 100%, 0% calc(100% - 11px), 0% 11px)',
+                'polygon(var(--launcher-inner-chamfer,11px) 0%, calc(100% - var(--launcher-inner-chamfer,11px)) 0%, 100% var(--launcher-inner-chamfer,11px), 100% calc(100% - var(--launcher-inner-chamfer,11px)), calc(100% - var(--launcher-inner-chamfer,11px)) 100%, var(--launcher-inner-chamfer,11px) 100%, 0% calc(100% - var(--launcher-inner-chamfer,11px)), 0% var(--launcher-inner-chamfer,11px))',
             }}
           />
 
           {/* Mini Robot Visor with glowing "^ ^" eyes */}
-          <div className="relative w-11 h-7 rounded-full bg-[#030508] border border-white/40 flex items-center justify-center shadow-[0_0_12px_rgba(103,232,249,0.35)] overflow-hidden">
+          <div className="relative w-8 h-5 md:w-11 md:h-7 rounded-full bg-[#030508] border border-white/40 flex items-center justify-center shadow-[0_0_12px_rgba(103,232,249,0.35)] overflow-hidden">
             {/* Subtle visor gloss reflection */}
             <div className="absolute top-0.5 inset-x-2 h-1 rounded-full bg-white/40 blur-[0.5px]" />
 
@@ -80,7 +80,7 @@ export const ChatbotLauncher = forwardRef<HTMLButtonElement, ChatbotLauncherProp
               viewBox="0 0 40 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="w-8 h-4 drop-shadow-[0_0_6px_#ffffff] drop-shadow-[0_0_12px_#38bdf8]"
+              className="w-5 h-3 md:w-8 md:h-4 drop-shadow-[0_0_6px_#ffffff] drop-shadow-[0_0_12px_#38bdf8]"
             >
               <path
                 d="M 7 14 Q 13 2 19 14"

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Search, ArrowRight, Menu, X } from "lucide-react";
 import ScrambleText from "@/components/ui/ScrambleText";
@@ -20,7 +20,9 @@ export default function Navbar() {
   const navigate = useNavigate();
   const { isNavbarLight } = useLightSectionObserver();
 
-  // Search shortcuts (⌘K / Ctrl+K)
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+
+  // Search shortcuts (⌘K / Ctrl+K) and Escape handler
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
@@ -28,11 +30,55 @@ export default function Navbar() {
         setSearchOpen((prev) => !prev);
       } else if (e.key === "Escape") {
         setSearchOpen(false);
+        setMobileOpen(false);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
+
+  // Lock scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+      if ((window as any).__lenis) (window as any).__lenis.stop();
+    } else {
+      document.body.style.overflow = "";
+      if ((window as any).__lenis) (window as any).__lenis.start();
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
+  // Focus trap for mobile navigation drawer
+  useEffect(() => {
+    if (!mobileOpen || !mobileMenuRef.current) return;
+    const focusable = mobileMenuRef.current.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), input:not([disabled])'
+    );
+    if (focusable.length > 0) {
+      focusable[0].focus();
+    }
+    const handleTab = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab' || !mobileMenuRef.current) return;
+      const elements = mobileMenuRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled])'
+      );
+      if (elements.length === 0) return;
+      const first = elements[0];
+      const last = elements[elements.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    window.addEventListener('keydown', handleTab);
+    return () => window.removeEventListener('keydown', handleTab);
+  }, [mobileOpen]);
 
   const eventSubLinks: NavDropdownItem[] = [
     { title: "All Events", path: "/events", desc: "Workshops, speaker sessions, and tech meets" },
@@ -77,7 +123,7 @@ export default function Navbar() {
         id="main-header"
         className="fixed top-0 inset-x-0 z-[90] pointer-events-none bg-transparent border-none"
       >
-        <Container className="flex items-center justify-between pt-[clamp(14px,2vh,24px)]">
+        <Container className="flex items-center justify-between pt-[clamp(14px,2vh,24px)] max-md:pt-[calc(clamp(14px,2vh,24px)+env(safe-area-inset-top,0px))]">
           
           {/* Left Column: Logo Chip (Small rounded square) */}
           <div className="flex-1 flex justify-start">
@@ -243,7 +289,7 @@ export default function Navbar() {
                   ? "text-black border-black/15 bg-white/90 backdrop-blur-xl"
                   : "text-white border-white/10 bg-[#111111]/80 backdrop-blur-xl"
               }`}
-              aria-label="Toggle navigation"
+              aria-label={mobileOpen ? "Close navigation menu" : "Open main menu"}
             >
               {mobileOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
@@ -252,62 +298,103 @@ export default function Navbar() {
 
         {/* Mobile Dropdown Menu */}
         {mobileOpen && (
-          <div className="pointer-events-auto md:hidden absolute top-[calc(clamp(14px,2vh,24px)+58px)] left-4 right-4 bg-[#0f0f0f]/95 backdrop-blur-2xl border border-white/10 p-5 rounded-2xl shadow-2xl flex flex-col gap-3 z-50">
+          <div
+            ref={mobileMenuRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile Navigation Menu"
+            className="pointer-events-auto md:hidden absolute top-[calc(clamp(14px,2vh,24px)+env(safe-area-inset-top,0px)+58px)] left-4 right-4 max-h-[calc(100svh-120px)] overflow-y-auto bg-[#0f0f0f]/98 backdrop-blur-2xl border border-white/15 p-5 rounded-2xl shadow-2xl flex flex-col gap-1 z-50 animate-in fade-in zoom-in-95 duration-150"
+          >
+            <div className="flex items-center justify-between pb-3 mb-1 border-b border-white/10">
+              <span className="text-[11px] font-mono tracking-widest text-white/50 uppercase">Navigation</span>
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="p-2 -mr-2 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-white rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white"
+                aria-label="Close navigation menu"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
             <Link
               to="/"
               onClick={() => setMobileOpen(false)}
-              className="text-sm text-[#9a9a9a] hover:text-white py-1.5"
+              className="text-sm font-medium text-[#9a9a9a] hover:text-white min-h-[44px] flex items-center px-2 rounded-lg hover:bg-white/[0.05] transition-colors"
             >
               Home
             </Link>
             <Link
               to="/about"
               onClick={() => setMobileOpen(false)}
-              className="text-sm text-[#9a9a9a] hover:text-white py-1.5"
+              className="text-sm font-medium text-[#9a9a9a] hover:text-white min-h-[44px] flex items-center px-2 rounded-lg hover:bg-white/[0.05] transition-colors"
             >
               About
             </Link>
-            <div className="border-t border-white/5 pt-2 flex flex-col gap-1.5">
-              <span className="text-[10px] uppercase font-mono text-white/40 tracking-wider">Events</span>
-              {eventSubLinks.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  onClick={() => setMobileOpen(false)}
-                  className="text-sm text-white/80 hover:text-white pl-2 py-1"
-                >
-                  {item.title}
-                </Link>
-              ))}
+
+            {/* Events + Sublinks */}
+            <div className="border-t border-white/10 pt-2 pb-1 flex flex-col">
+              <Link
+                to="/events"
+                onClick={() => setMobileOpen(false)}
+                className="text-sm font-medium text-white min-h-[44px] flex items-center justify-between px-2 rounded-lg hover:bg-white/[0.05] transition-colors"
+              >
+                <span>Events</span>
+                <span className="text-xs text-white/40 font-mono">View All →</span>
+              </Link>
+              <div className="pl-3 flex flex-col border-l border-white/10 ml-2 mt-1 space-y-0.5">
+                {eventSubLinks.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => setMobileOpen(false)}
+                    className="text-xs text-white/75 hover:text-white min-h-[44px] flex items-center px-2 rounded-md hover:bg-white/[0.05] transition-colors"
+                  >
+                    {item.title}
+                  </Link>
+                ))}
+              </div>
             </div>
+
             <Link
               to="/team"
               onClick={() => setMobileOpen(false)}
-              className="text-sm text-[#9a9a9a] hover:text-white py-1.5"
+              className="text-sm font-medium text-[#9a9a9a] hover:text-white min-h-[44px] flex items-center px-2 rounded-lg hover:bg-white/[0.05] transition-colors"
             >
               Team
             </Link>
             <Link
               to="/faculty"
               onClick={() => setMobileOpen(false)}
-              className="text-sm text-[#9a9a9a] hover:text-white py-1.5"
+              className="text-sm font-medium text-[#9a9a9a] hover:text-white min-h-[44px] flex items-center px-2 rounded-lg hover:bg-white/[0.05] transition-colors"
             >
               Faculty
             </Link>
             <Link
               to="/gallery"
               onClick={() => setMobileOpen(false)}
-              className="text-sm text-[#9a9a9a] hover:text-white py-1.5"
+              className="text-sm font-medium text-[#9a9a9a] hover:text-white min-h-[44px] flex items-center px-2 rounded-lg hover:bg-white/[0.05] transition-colors"
             >
               Gallery
             </Link>
             <Link
               to="/contact"
               onClick={() => setMobileOpen(false)}
-              className="text-sm text-[#9a9a9a] hover:text-white py-1.5"
+              className="text-sm font-medium text-[#9a9a9a] hover:text-white min-h-[44px] flex items-center px-2 rounded-lg hover:bg-white/[0.05] transition-colors"
             >
               Contact
             </Link>
+
+            {/* Join Us in mobile drawer */}
+            <div className="border-t border-white/10 pt-3 mt-1">
+              <Link
+                to="/team"
+                onClick={() => setMobileOpen(false)}
+                className="w-full min-h-[44px] px-4 rounded-xl bg-white text-black font-mono text-xs uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-lg"
+              >
+                <span>Join Us</span>
+                <span>↗</span>
+              </Link>
+            </div>
           </div>
         )}
       </header>

@@ -58,7 +58,8 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       powerPreference: "high-performance",
       preserveDrawingBuffer: true,
     });
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const maxDpr = isMobile ? 1.5 : 2;
+    const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
     renderer.setPixelRatio(dpr);
     renderer.setSize(width, height);
     renderer.setClearColor(0x000000, 0);
@@ -838,8 +839,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       const mob = window.innerWidth < 768;
 
       if (mob) {
-        // MOBILE JOURNEY: Hero -> Faded -> Faculty -> Faded -> Footer
-        // 1. Leave Hero -> Fade out
+        // MOBILE: Hero logo only. Smoothly fades out as user leaves hero and completely pauses off-screen.
         const t1 = ScrollTrigger.create({
           trigger: "#scroll-text-section",
           start: "top 95%",
@@ -849,151 +849,16 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
             const p = self.progress;
             currentLogoState.opacity = gsap.utils.interpolate(1.0, 0.0, p);
           },
-        });
-        triggers.push(t1);
-
-        // 2. Approach Faculty -> Glides in smoothly to anchor
-        const t2 = ScrollTrigger.create({
-          trigger: "#beam-section",
-          start: "top 85%",
-          end: "top 25%",
-          scrub: 0.8,
-          onUpdate: (self) => {
-            const p = self.progress;
-            const easeP = gsap.parseEase("power2.out")(p);
-            currentLogoState.x = targets.faculty.x;
-            currentLogoState.y = targets.faculty.y;
-            currentLogoState.scale = gsap.utils.interpolate(0.5, targets.faculty.scale, easeP);
-            currentLogoState.opacity = gsap.utils.interpolate(0.0, 1.0, easeP);
-          },
-        });
-        triggers.push(t2);
-
-        // 2b. Faculty Active Lock & Fade Out before cards overlap
-        const t2b = ScrollTrigger.create({
-          trigger: "#beam-section",
-          start: "top 25%",
-          end: "top -50px",
-          onToggle: (self) => {
-            isFacultyActive = self.isActive;
-          },
-          onEnter: () => {
-            isFacultyActive = true;
-            currentLogoState.x = targets.faculty.x;
-            currentLogoState.y = targets.faculty.y;
-            currentLogoState.scale = targets.faculty.scale;
-          },
-          onEnterBack: () => {
-            isFacultyActive = true;
-            currentLogoState.x = targets.faculty.x;
-            currentLogoState.y = targets.faculty.y;
-            currentLogoState.scale = targets.faculty.scale;
-          },
-          onUpdate: (self) => {
-            currentLogoState.x = targets.faculty.x;
-            currentLogoState.y = targets.faculty.y;
-            currentLogoState.scale = targets.faculty.scale;
-            isFacultyActive = self.isActive;
-            const beamSec = document.querySelector("#beam-section");
-            const beamTop = beamSec ? beamSec.getBoundingClientRect().top : 0;
-            if (beamTop <= 20) {
-              const fadeP = Math.min(1, Math.max(0, (20 - beamTop) / 60));
-              currentLogoState.opacity = gsap.utils.interpolate(1.0, 0.0, fadeP);
-            } else if (self.isActive) {
-              currentLogoState.opacity = 1.0;
-            }
-          },
-        });
-        triggers.push(t2b);
-
-        // 3. Leave Faculty -> Fade out
-        const t3 = ScrollTrigger.create({
-          trigger: "#achievement-scene-wrapper",
-          start: "top 95%",
-          end: "top 60%",
-          scrub: 0.5,
-          onUpdate: (self) => {
-            if (!self.isActive) return;
-            const p = self.progress;
-            currentLogoState.opacity = gsap.utils.interpolate(1.0, 0.0, p);
-          },
           onLeave: () => {
             currentLogoState.opacity = 0.0;
             chromeMaterial.opacity = 0.0;
             logoGroup.visible = false;
           },
-          onLeaveBack: () => {
-            currentLogoState.opacity = 1.0;
-          },
-        });
-        triggers.push(t3);
-
-        // 3b. Strictly keep logo invisible throughout Achievements & Objectives
-        const t3b = ScrollTrigger.create({
-          trigger: "#achievement-scene-wrapper",
-          start: "top 60%",
-          endTrigger: "#footer-showcase-section",
-          end: "top 85%",
-          onEnter: () => {
-            currentLogoState.opacity = 0.0;
-            chromeMaterial.opacity = 0.0;
-            logoGroup.visible = false;
-          },
           onEnterBack: () => {
-            currentLogoState.opacity = 0.0;
-            chromeMaterial.opacity = 0.0;
-            logoGroup.visible = false;
-          },
-          onUpdate: () => {
-            currentLogoState.opacity = 0.0;
-          },
-        });
-        triggers.push(t3b);
-
-        // 4. Approach Footer -> Glides in
-        const t4 = ScrollTrigger.create({
-          trigger: "#footer-showcase-section",
-          start: "top 85%",
-          end: "top 30%",
-          scrub: 0.8,
-          onEnter: () => {
             logoGroup.visible = true;
           },
-          onUpdate: (self) => {
-            const p = self.progress;
-            currentLogoState.x = 0;
-            currentLogoState.y = targets.footer.y;
-            currentLogoState.scale = gsap.utils.interpolate(0.5, targets.footer.scale, p);
-            currentLogoState.opacity = gsap.utils.interpolate(0.0, 1.0, p);
-          },
-          onLeaveBack: () => {
-            currentLogoState.opacity = 0.0;
-            chromeMaterial.opacity = 0.0;
-            logoGroup.visible = false;
-          },
         });
-        triggers.push(t4);
-
-        // 5. Leave Footer Showcase -> Fade out immediately as Site Footer enters
-        const t5 = ScrollTrigger.create({
-          trigger: "#site-footer",
-          start: "top bottom+=40",
-          end: "top 95%",
-          scrub: 0.2,
-          onUpdate: (self) => {
-            const p = self.progress;
-            currentLogoState.opacity = gsap.utils.interpolate(1.0, 0.0, p);
-            currentLogoState.y = targets.footer.y + p * 2.5;
-          },
-          onLeave: () => {
-            currentLogoState.opacity = 0.0;
-          },
-          onLeaveBack: () => {
-            currentLogoState.opacity = 1.0;
-          },
-        });
-        triggers.push(t5);
-
+        triggers.push(t1);
         return;
       }
 
@@ -1543,8 +1408,12 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
       }
 
       // Smooth position & scale lerp
-      // Smooth position & scale lerp
-      if (isGlidingToHero) {
+      if (prefersReducedMotion) {
+        lerpPos.x = currentLogoState.x;
+        lerpPos.y = currentLogoState.y;
+        lerpPos.scale = currentLogoState.scale;
+        lerpPos.opacity = currentLogoState.opacity;
+      } else if (isGlidingToHero) {
         // While gliding to hero: the gsap tween directly drives position, scale, and rotation onUpdate.
         // Don't let lerp fighting disrupt the exact live curve.
       } else if (isFacultyActive) {
@@ -1566,7 +1435,9 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
           if (Math.abs(currentLogoState.scale - lerpPos.scale) < 0.01) lerpPos.scale = currentLogoState.scale;
         }
       }
-      lerpPos.opacity += (currentLogoState.opacity - lerpPos.opacity) * 0.12;
+      if (!prefersReducedMotion) {
+        lerpPos.opacity += (currentLogoState.opacity - lerpPos.opacity) * 0.12;
+      }
 
       // Update material transparency
       chromeMaterial.opacity = Math.max(0, Math.min(1, lerpPos.opacity));
@@ -1602,9 +1473,13 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
 
       // In the hero (scrollBlend === 0), freeze spin, tilt, and scroll-velocity rotation completely.
       // Rotation returns as user scrolls away and eases back to heroPose when scrolling back up.
-      const idleSpin = (isMobile ? 0.3 : 0.42) * delta * scrollBlend;
-      const velocitySpin = scrollVelocity * 0.000045 * scrollBlend;
-      accumulatedRotationY += idleSpin + velocitySpin;
+      if (!prefersReducedMotion) {
+        const idleSpin = (isMobile ? 0.3 : 0.42) * delta * scrollBlend;
+        const velocitySpin = scrollVelocity * 0.000045 * scrollBlend;
+        accumulatedRotationY += idleSpin + velocitySpin;
+      } else {
+        accumulatedRotationY = heroPose.y;
+      }
 
       if (scrollBlend <= 0.0001) {
         accumulatedRotationY = heroPose.y;
@@ -1675,6 +1550,16 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
           logoGroup.rotation.y = THREE.MathUtils.lerp(nearestHeroY, targetRotY, scrollBlend);
           logoGroup.rotation.z = heroPose.z;
         }
+      }
+
+      if (isMobile && (window.scrollY > window.innerHeight * 1.05 || chromeMaterial.opacity < 0.005)) {
+        // Paused on mobile when out of hero viewport
+        if (logoGroup.visible) {
+          logoGroup.visible = false;
+          renderer.render(scene, camera);
+        }
+        animId = requestAnimationFrame(animate);
+        return;
       }
 
       renderer.render(scene, camera);

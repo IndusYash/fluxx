@@ -11,6 +11,10 @@ export default function ScrollTextSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      const prefersReducedMotion =
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
       // Masked slide up timeline pinned on scroll
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -18,7 +22,7 @@ export default function ScrollTextSection() {
           start: "top top",
           end: "+=120%",
           pin: true,
-          scrub: 0.8,
+          scrub: prefersReducedMotion ? true : 0.8,
         },
       });
 

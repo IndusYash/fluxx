@@ -25,6 +25,7 @@ uniform vec2 uResolution;
 uniform float uProgress; // 0.0 to 1.0 (liquid fill)
 uniform float uDissolve; // 0.0 to 1.0 (noise dissolve)
 uniform float uTime;
+uniform float uIsMobile; // 1.0 on mobile (< 768px), 0.0 on desktop
 
 // Fast 2D hash for 2D noise
 vec2 hash2(vec2 p) {
@@ -92,19 +93,22 @@ void main() {
       // Dissolved area: reveal transparent beneath
       gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
     } else {
-      // Intact area above threshold:
-      // Thin white-hot glowing line directly on edge (0.0 to 0.022)
-      float hotLine = 1.0 - smoothstep(0.0, 0.022, dist);
+      if (uIsMobile > 0.5) {
+        // Mobile: remove bright white wavy streak & hairline, soft subtle transition
+        float alpha = smoothstep(0.0, 0.035, dist);
+        gl_FragColor = vec4(1.0, 1.0, 1.0, alpha);
+      } else {
+        // Desktop: exact original formulation
+        float hotLine = 1.0 - smoothstep(0.0, 0.022, dist);
+        float smoke = smoothstep(0.01, 0.035, dist) * (1.0 - smoothstep(0.035, 0.08, dist));
 
-      // Soft smoke band right behind hot edge (0.015 to 0.075)
-      float smoke = smoothstep(0.01, 0.035, dist) * (1.0 - smoothstep(0.035, 0.08, dist));
+        vec3 col = vec3(1.0, 1.0, 1.0);
+        col = mix(col, vec3(0.5, 0.5, 0.52), smoke * 0.65);
+        col = mix(col, vec3(1.0, 1.0, 1.0), hotLine);
 
-      vec3 col = vec3(1.0, 1.0, 1.0);
-      col = mix(col, vec3(0.5, 0.5, 0.52), smoke * 0.65);
-      col = mix(col, vec3(1.0, 1.0, 1.0), hotLine);
-
-      float alpha = smoothstep(0.0, 0.008, dist);
-      gl_FragColor = vec4(col, alpha);
+        float alpha = smoothstep(0.0, 0.008, dist);
+        gl_FragColor = vec4(col, alpha);
+      }
     }
     return;
   }
@@ -132,6 +136,7 @@ export class LiquidShaderRenderer {
   private uProgressLoc: WebGLUniformLocation | null = null;
   private uDissolveLoc: WebGLUniformLocation | null = null;
   private uTimeLoc: WebGLUniformLocation | null = null;
+  private uIsMobileLoc: WebGLUniformLocation | null = null;
 
   private canvas: HTMLCanvasElement;
   private startTime = performance.now();
@@ -178,6 +183,7 @@ export class LiquidShaderRenderer {
     this.uProgressLoc = gl.getUniformLocation(program, "uProgress");
     this.uDissolveLoc = gl.getUniformLocation(program, "uDissolve");
     this.uTimeLoc = gl.getUniformLocation(program, "uTime");
+    this.uIsMobileLoc = gl.getUniformLocation(program, "uIsMobile");
 
     // Full-screen quad spanning -1 to 1
     const quadVertices = new Float32Array([
@@ -260,13 +266,17 @@ export class LiquidShaderRenderer {
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT);
 
-    const elapsed = (performance.now() - this.startTime) * 0.001;
+    const prefersReducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const elapsed = prefersReducedMotion ? 0.0 : (performance.now() - this.startTime) * 0.001;
 
     gl.useProgram(this.program);
     gl.uniform2f(this.uResolutionLoc, this.width, this.height);
     gl.uniform1f(this.uProgressLoc, progress);
     gl.uniform1f(this.uDissolveLoc, dissolve);
     gl.uniform1f(this.uTimeLoc, elapsed);
+    if (this.uIsMobileLoc) {
+      gl.uniform1f(this.uIsMobileLoc, typeof window !== "undefined" && window.innerWidth < 768 ? 1.0 : 0.0);
+    }
 
     gl.drawArrays(gl.TRIANGLES, 0, 6);
   }

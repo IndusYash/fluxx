@@ -42,27 +42,31 @@ const StatsCounter: React.FC = React.memo(() => {
     },
   ];
 
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   const containerVariants = {
-    hidden: { opacity: 0, y: 40 },
+    hidden: { opacity: prefersReducedMotion ? 1 : 0, y: prefersReducedMotion ? 0 : 40 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.7,
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
+        duration: prefersReducedMotion ? 0 : 0.7,
+        staggerChildren: prefersReducedMotion ? 0 : 0.15,
+        delayChildren: prefersReducedMotion ? 0 : 0.2,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.85 },
+    hidden: { opacity: prefersReducedMotion ? 1 : 0, y: prefersReducedMotion ? 0 : 30, scale: prefersReducedMotion ? 1 : 0.85 },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
       transition: {
-        duration: 0.6,
+        duration: prefersReducedMotion ? 0 : 0.6,
         ease: [0.25, 0.46, 0.45, 0.94] as const,
       },
     },
@@ -151,10 +155,8 @@ const StatsCounter: React.FC = React.memo(() => {
             {/* Floating element behind the card */}
             <motion.div
               className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-white/5 blur-[60px] opacity-0 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none"
-              animate={{
-                scale: [1, 1.1, 1],
-              }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }}
+              animate={prefersReducedMotion ? { scale: 1 } : { scale: [1, 1.1, 1] }}
+              transition={prefersReducedMotion ? { duration: 0 } : { duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }}
             />
           </motion.div>
         );

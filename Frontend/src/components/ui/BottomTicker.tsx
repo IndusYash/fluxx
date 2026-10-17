@@ -9,7 +9,7 @@ export default function BottomTicker() {
     <footer
       id="bottom-ticker"
       aria-label="Status Ticker"
-      className={`fixed bottom-0 inset-x-0 z-[80] pointer-events-none select-none h-[var(--ticker-h)] px-[var(--gutter)] flex items-center justify-between text-[11px] tracking-[0.28em] font-mono uppercase transition-colors duration-150 ${
+      className={`fixed bottom-0 inset-x-0 z-[80] pointer-events-none select-none h-[calc(var(--ticker-h)+env(safe-area-inset-bottom,0px))] md:h-[var(--ticker-h)] pb-[env(safe-area-inset-bottom,0px)] md:pb-0 px-[var(--gutter)] flex items-center justify-between text-[11px] tracking-[0.28em] font-mono uppercase transition-colors duration-150 ${
         isTickerLight
           ? "bg-white/90 backdrop-blur-md border-t border-black/15 text-black"
           : "bg-black/75 backdrop-blur-md border-t border-white/10 text-white"

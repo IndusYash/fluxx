@@ -171,6 +171,12 @@ const FloatingPlane = React.forwardRef<FloatingPlaneHandle, FloatingPlaneProps>(
       };
 
       const loop = () => {
+        const isMobile = window.innerWidth < 768;
+        if (isMobile) {
+          if (cardRef.current) cardRef.current.style.transform = "none";
+          return;
+        }
+
         const t = tiltRef.current;
         t.mouseTiltX += (t.targetMouseY - t.mouseTiltX) * 0.08;
         t.mouseTiltY += (t.targetMouseX - t.mouseTiltY) * 0.08;
@@ -185,8 +191,12 @@ const FloatingPlane = React.forwardRef<FloatingPlaneHandle, FloatingPlaneProps>(
         animId = requestAnimationFrame(loop);
       };
 
-      window.addEventListener("mousemove", onMouseMove, { passive: true });
-      animId = requestAnimationFrame(loop);
+      if (window.innerWidth >= 768) {
+        window.addEventListener("mousemove", onMouseMove, { passive: true });
+        animId = requestAnimationFrame(loop);
+      } else if (cardRef.current) {
+        cardRef.current.style.transform = "none";
+      }
 
       return () => {
         window.removeEventListener("mousemove", onMouseMove);
@@ -199,11 +209,11 @@ const FloatingPlane = React.forwardRef<FloatingPlaneHandle, FloatingPlaneProps>(
         className={`relative w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[480px] will-change-transform select-none ${className}`}
         style={{ perspective: "1000px" }}
       >
-        {/* 3D Glass Card Container */}
+        {/* 3D Glass Card Container (flat on mobile) */}
         <div
           ref={cardRef}
           data-testid="legacy-floating-card"
-          className="relative w-full aspect-[4/3] rounded-2xl p-2 sm:p-2.5 bg-gradient-to-br from-white/20 via-white/5 to-white/10 backdrop-blur-md border border-white/25 shadow-[0_30px_70px_rgba(0,0,0,0.85)] group transition-transform duration-75 ease-out"
+          className="relative w-full aspect-[4/3] rounded-2xl p-2 sm:p-2.5 bg-gradient-to-br from-white/20 via-white/5 to-white/10 backdrop-blur-md border border-white/25 shadow-[0_30px_70px_rgba(0,0,0,0.85)] group transition-transform duration-75 ease-out max-md:!transform-none"
           style={{
             transformStyle: "preserve-3d",
             transform: "perspective(1000px) rotateX(10deg) rotateY(-14deg) rotateZ(2deg)",

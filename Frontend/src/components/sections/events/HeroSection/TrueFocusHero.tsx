@@ -30,9 +30,10 @@ const TrueFocusHero: React.FC<TrueFocusProps> = ({
     textColorClasses = 'text-white' // Default to white to prevent it from being black
 }) => {
     const words = sentence.split(' ');
-    const [currentIndex, setCurrentIndex] = useState<number>(0);
+    const prefersReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const [currentIndex, setCurrentIndex] = useState<number>(prefersReduced ? -1 : 0);
     const [lastActiveIndex, setLastActiveIndex] = useState<number | null>(null);
-    const [isFinished, setIsFinished] = useState<boolean>(false);
+    const [isFinished, setIsFinished] = useState<boolean>(prefersReduced);
     const containerRef = useRef<HTMLDivElement | null>(null);
     const wordRefs = useRef<(HTMLSpanElement | null)[]>([]);
     const [focusRect, setFocusRect] = useState<FocusRect>({ x: 0, y: 0, width: 0, height: 0 });

@@ -226,100 +226,100 @@ export default function LiquidTransition() {
           4 equal columns on desktop, 2x2 on narrow screens.
           Gap: clamp(24px, 4vw, 72px)
         */}
-        <div id="stats-grid-container" className="grid grid-cols-2 lg:grid-cols-4 gap-[clamp(24px,4vw,72px)] w-full max-w-6xl mx-auto">
+        <div id="stats-grid-container" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-[clamp(24px,4vw,72px)] w-full max-w-6xl mx-auto">
           {/* Stat 1: Events */}
           <div className="flex flex-col items-center text-center w-full">
-            <div className="relative flex items-center justify-center mb-2">
+            <div className="relative flex items-center justify-center mb-1 md:mb-2">
               {/* Invisible placeholder reserving final width to eliminate layout shift */}
               <span
                 aria-hidden="true"
-                className="font-poiret text-[clamp(48px,5.6vw,96px)] leading-none drop-shadow-sm tracking-[0.02em] invisible select-none"
+                className="font-poiret text-[clamp(40px,5.6vw,96px)] md:text-[clamp(48px,5.6vw,96px)] leading-none drop-shadow-sm tracking-[0.02em] invisible select-none"
               >
                 25+
               </span>
               <span
                 ref={eventsNumRef}
-                className="font-poiret text-[clamp(48px,5.6vw,96px)] text-black leading-none drop-shadow-sm tracking-[0.02em] absolute inset-0 flex items-center justify-center"
+                className="font-poiret text-[clamp(40px,5.6vw,96px)] md:text-[clamp(48px,5.6vw,96px)] text-black leading-none drop-shadow-sm tracking-[0.02em] absolute inset-0 flex items-center justify-center"
               >
                 0+
               </span>
             </div>
-            <span className="font-sans font-bold text-xs sm:text-sm tracking-[0.18em] uppercase text-black whitespace-nowrap">
+            <span className="font-sans font-bold text-xs sm:text-sm tracking-[0.18em] uppercase text-black max-md:whitespace-normal whitespace-nowrap text-center max-md:max-w-xs">
               TECH CONCLAVES &amp; EVENTS
             </span>
-            <span className="font-mono text-[11px] sm:text-[13px] text-neutral-700 font-medium tracking-wider mt-1.5 whitespace-nowrap">
+            <span className="font-mono text-[11px] sm:text-[13px] text-neutral-700 font-medium tracking-wider mt-1 md:mt-1.5 max-md:whitespace-normal whitespace-nowrap text-center max-md:max-w-xs max-md:line-clamp-2">
               INCLUDING ATAL FDP &amp; SHE LEADS
             </span>
           </div>
 
           {/* Stat 2: Members */}
           <div className="flex flex-col items-center text-center w-full">
-            <div className="relative flex items-center justify-center mb-2">
+            <div className="relative flex items-center justify-center mb-1 md:mb-2">
               <span
                 aria-hidden="true"
-                className="font-poiret text-[clamp(48px,5.6vw,96px)] leading-none drop-shadow-sm tracking-[0.02em] invisible select-none"
+                className="font-poiret text-[clamp(40px,5.6vw,96px)] md:text-[clamp(48px,5.6vw,96px)] leading-none drop-shadow-sm tracking-[0.02em] invisible select-none"
               >
                 500+
               </span>
               <span
                 ref={membersNumRef}
-                className="font-poiret text-[clamp(48px,5.6vw,96px)] text-black leading-none drop-shadow-sm tracking-[0.02em] absolute inset-0 flex items-center justify-center"
+                className="font-poiret text-[clamp(40px,5.6vw,96px)] md:text-[clamp(48px,5.6vw,96px)] text-black leading-none drop-shadow-sm tracking-[0.02em] absolute inset-0 flex items-center justify-center"
               >
                 0+
               </span>
             </div>
-            <span className="font-sans font-bold text-xs sm:text-sm tracking-[0.18em] uppercase text-black whitespace-nowrap">
+            <span className="font-sans font-bold text-xs sm:text-sm tracking-[0.18em] uppercase text-black max-md:whitespace-normal whitespace-nowrap text-center max-md:max-w-xs">
               STUDENT DEVELOPERS
             </span>
-            <span className="font-mono text-[11px] sm:text-[13px] text-neutral-700 font-medium tracking-wider mt-1.5 whitespace-nowrap">
+            <span className="font-mono text-[11px] sm:text-[13px] text-neutral-700 font-medium tracking-wider mt-1 md:mt-1.5 max-md:whitespace-normal whitespace-nowrap text-center max-md:max-w-xs max-md:line-clamp-2">
               ACROSS B.TECH &amp; M.TECH
             </span>
           </div>
 
           {/* Stat 3: Hackathons */}
           <div className="flex flex-col items-center text-center w-full">
-            <div className="relative flex items-center justify-center mb-2">
+            <div className="relative flex items-center justify-center mb-1 md:mb-2">
               <span
                 aria-hidden="true"
-                className="font-poiret text-[clamp(48px,5.6vw,96px)] leading-none drop-shadow-sm tracking-[0.02em] invisible select-none"
+                className="font-poiret text-[clamp(40px,5.6vw,96px)] md:text-[clamp(48px,5.6vw,96px)] leading-none drop-shadow-sm tracking-[0.02em] invisible select-none"
               >
                 12+
               </span>
               <span
                 ref={hackathonsNumRef}
-                className="font-poiret text-[clamp(48px,5.6vw,96px)] text-black leading-none drop-shadow-sm tracking-[0.02em] absolute inset-0 flex items-center justify-center"
+                className="font-poiret text-[clamp(40px,5.6vw,96px)] md:text-[clamp(48px,5.6vw,96px)] text-black leading-none drop-shadow-sm tracking-[0.02em] absolute inset-0 flex items-center justify-center"
               >
                 0+
               </span>
             </div>
-            <span className="font-sans font-bold text-xs sm:text-sm tracking-[0.18em] uppercase text-black whitespace-nowrap">
+            <span className="font-sans font-bold text-xs sm:text-sm tracking-[0.18em] uppercase text-black max-md:whitespace-normal whitespace-nowrap text-center max-md:max-w-xs">
               HACKATHONS &amp; SPRINTS
             </span>
-            <span className="font-mono text-[11px] sm:text-[13px] text-neutral-700 font-medium tracking-wider mt-1.5 whitespace-nowrap">
+            <span className="font-mono text-[11px] sm:text-[13px] text-neutral-700 font-medium tracking-wider mt-1 md:mt-1.5 max-md:whitespace-normal whitespace-nowrap text-center max-md:max-w-xs max-md:line-clamp-2">
               IDEATHON, BYTEBRAWL &amp; MORE
             </span>
           </div>
 
           {/* Stat 4: Projects & Papers */}
           <div className="flex flex-col items-center text-center w-full">
-            <div className="relative flex items-center justify-center mb-2">
+            <div className="relative flex items-center justify-center mb-1 md:mb-2">
               <span
                 aria-hidden="true"
-                className="font-poiret text-[clamp(48px,5.6vw,96px)] leading-none drop-shadow-sm tracking-[0.02em] invisible select-none"
+                className="font-poiret text-[clamp(40px,5.6vw,96px)] md:text-[clamp(48px,5.6vw,96px)] leading-none drop-shadow-sm tracking-[0.02em] invisible select-none"
               >
                 18+
               </span>
               <span
                 ref={projectsNumRef}
-                className="font-poiret text-[clamp(48px,5.6vw,96px)] text-black leading-none drop-shadow-sm tracking-[0.02em] absolute inset-0 flex items-center justify-center"
+                className="font-poiret text-[clamp(40px,5.6vw,96px)] md:text-[clamp(48px,5.6vw,96px)] text-black leading-none drop-shadow-sm tracking-[0.02em] absolute inset-0 flex items-center justify-center"
               >
                 0+
               </span>
             </div>
-            <span className="font-sans font-bold text-xs sm:text-sm tracking-[0.18em] uppercase text-black whitespace-nowrap">
+            <span className="font-sans font-bold text-xs sm:text-sm tracking-[0.18em] uppercase text-black max-md:whitespace-normal whitespace-nowrap text-center max-md:max-w-xs">
               RESEARCH BUILDS &amp; PAPERS
             </span>
-            <span className="font-mono text-[11px] sm:text-[13px] text-neutral-700 font-medium tracking-wider mt-1.5 whitespace-nowrap">
+            <span className="font-mono text-[11px] sm:text-[13px] text-neutral-700 font-medium tracking-wider mt-1 md:mt-1.5 max-md:whitespace-normal whitespace-nowrap text-center max-md:max-w-xs max-md:line-clamp-2">
               AI, MECHANISTIC INT. &amp; SYSTEMS
             </span>
           </div>
