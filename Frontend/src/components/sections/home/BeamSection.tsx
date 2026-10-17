@@ -224,7 +224,7 @@ export default function BeamSection() {
     <section
       id="beam-section"
       ref={sectionRef}
-      className="relative w-full min-h-screen bg-[#060606] overflow-hidden pt-[calc(var(--nav-h)+24px)] pb-[calc(var(--ticker-h)+36px)] safe-section-py flex flex-col justify-between select-none"
+      className="relative w-full min-h-screen bg-[#060606] overflow-hidden pt-[calc(var(--nav-h)+24px)] pb-[calc(var(--ticker-h)+36px)] flex flex-col justify-between select-none"
     >
       {/* ─────────────────────────────────────────────────────────────
           1. VERTICAL WHITE LIGHT BEAM IN CENTER
@@ -316,10 +316,10 @@ export default function BeamSection() {
               key={card.slug}
               className={`will-change-transform h-full flex flex-col ${
                 card.slug === "anupama-kaushik-sharma"
-                  ? "order-1 md:order-2"
+                  ? "max-md:order-1"
                   : card.slug === "satvik-vats"
-                  ? "order-2 md:order-1"
-                  : "order-3 md:order-3"
+                  ? "max-md:order-2"
+                  : "max-md:order-3"
               }`}
             >
               <div
