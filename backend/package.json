@@ -6,8 +6,7 @@
   "scripts": {
     "start": "node brain.js",
     "dev": "node --watch brain.js",
-    "test": "node tests/bytebrawl.test.mjs",
-    "postinstall": "prisma generate"
+    "test": "node tests/bytebrawl.test.mjs"
   },
   "engines": {
     "node": "24.x"

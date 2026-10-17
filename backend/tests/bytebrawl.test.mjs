@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import http from "node:http";
-import { prisma } from "../prisma/client.js";
+import ByteBrawlRegistration from "../models/bytebrawlModel.js";
 import { bytebrawlRegistrationSchema } from "../validation/bytebrawlSchema.js";
 import app from "../brain.js";
 import { BYTEBRAWL_CONFIG } from "../config/bytebrawlConfig.js";
@@ -23,12 +23,13 @@ async function runTests() {
   }
 
   // Clear test data for clean slate
-  await prisma.participant.deleteMany({
-    where: { eventSlug: BYTEBRAWL_CONFIG.slug },
-  });
-  await prisma.registration.deleteMany({
-    where: { eventSlug: BYTEBRAWL_CONFIG.slug },
-  });
+  try {
+    await ByteBrawlRegistration.deleteMany({
+      eventSlug: BYTEBRAWL_CONFIG.slug,
+    });
+  } catch (err) {
+    console.warn("Notice: Test cleanup skipped (DB not connected yet):", err.message);
+  }
 
   // ─────────────────────────────────────────────────────────────
   // 1. VALIDATION SCHEMA UNIT TESTS

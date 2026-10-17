@@ -1,5 +1,5 @@
 import express from "express";
-import { prisma } from "../prisma/client.js";
+import ByteBrawlRegistration from "../models/bytebrawlModel.js";
 
 const router = express.Router();
 
@@ -33,14 +33,7 @@ function escapeCsv(val) {
  */
 router.get("/registrations", requireAdminToken, async (req, res) => {
   try {
-    const registrations = await prisma.registration.findMany({
-      orderBy: { createdAt: "desc" },
-      include: {
-        participants: {
-          orderBy: { role: "asc" },
-        },
-      },
-    });
+    const registrations = await ByteBrawlRegistration.find().sort({ createdAt: -1 });
 
     return res.status(200).json({
       success: true,
@@ -59,14 +52,8 @@ router.get("/registrations", requireAdminToken, async (req, res) => {
  */
 router.get("/registrations.csv", requireAdminToken, async (req, res) => {
   try {
-    const registrations = await prisma.registration.findMany({
-      orderBy: { createdAt: "desc" },
-      include: {
-        participants: {
-          orderBy: { role: "asc" },
-        },
-      },
-    });
+    const registrations = await ByteBrawlRegistration.find().sort({ createdAt: -1 });
+
 
     const headers = [
       "Registration ID",

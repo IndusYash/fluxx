@@ -22,13 +22,8 @@ function saveScreenshotCopy(filename) {
 
 async function runVerification() {
   console.log('Resetting ByteBrawl database records for a clean run...');
-  const { prisma } = await import('../backend/prisma/client.js');
-  await prisma.participant.deleteMany({
-    where: { eventSlug: 'bytebrawl-hacktoberfest' },
-  });
-  await prisma.registration.deleteMany({
-    where: { eventSlug: 'bytebrawl-hacktoberfest' },
-  });
+  const { default: ByteBrawlRegistration } = await import('../backend/models/bytebrawlModel.js');
+  await ByteBrawlRegistration.deleteMany({ eventSlug: 'bytebrawl-hacktoberfest' });
   console.log('ByteBrawl database reset complete.');
 
   console.log('Launching browser for ByteBrawl verification...');

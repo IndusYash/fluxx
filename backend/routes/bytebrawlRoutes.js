@@ -1,6 +1,6 @@
 import express from "express";
 import rateLimit from "express-rate-limit";
-import { prisma } from "../prisma/client.js";
+import ByteBrawlRegistration from "../models/bytebrawlModel.js";
 import { bytebrawlRegistrationSchema } from "../validation/bytebrawlSchema.js";
 import { generateUniqueRegistrationId } from "../utils/idGenerator.js";
 import { BYTEBRAWL_CONFIG, getEventStatus } from "../config/bytebrawlConfig.js";
@@ -61,7 +61,7 @@ if (process.env.NODE_ENV !== "production") {
  */
 router.get("/status", async (req, res) => {
   try {
-    const status = await getEventStatus(prisma);
+    const status = await getEventStatus();
     return res.status(200).json(status);
   } catch (error) {
     console.error("Error fetching event status:", error.message || error);
@@ -82,16 +82,11 @@ router.get("/check-team-name", async (req, res) => {
       return res.status(400).json({ available: false, error: "Team name must be at least 2 characters" });
     }
 
-    const existingTeam = await prisma.registration.findFirst({
-      where: {
-        eventSlug: BYTEBRAWL_CONFIG.slug,
-        teamName: {
-          equals: name,
-          mode: "insensitive",
-        },
-      },
-      select: { id: true },
-    });
+    const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const existingTeam = await ByteBrawlRegistration.findOne({
+      eventSlug: BYTEBRAWL_CONFIG.slug,
+      teamName: { $regex: new RegExp(`^${escapedName}$`, "i") },
+    }).select("_id");
 
     if (existingTeam) {
       return res.status(200).json({ available: false, message: "Team name is already taken" });
@@ -203,7 +198,7 @@ router.post("/register", registerRateLimiter, async (req, res) => {
 
   try {
     // 1. Check if event registration is still open (deadline / capacity)
-    const status = await getEventStatus(prisma);
+    const status = await getEventStatus();
     if (!status.open) {
       return res.status(410).json({
         error: status.message || "Registrations are closed for this event",
@@ -282,18 +277,14 @@ router.post("/register", registerRateLimiter, async (req, res) => {
     }
 
     // 6. Duplicate checks - privacy safe: error says ONLY "already registered"
-    if (isTeam && data.teamName) {
+    // 6. Duplicate checks - privacy safe: error says ONLY "already registered"
+    if (data.teamName) {
       const cleanTeamName = data.teamName.trim();
-      const existingTeam = await prisma.registration.findFirst({
-        where: {
-          eventSlug: BYTEBRAWL_CONFIG.slug,
-          teamName: {
-            equals: cleanTeamName,
-            mode: "insensitive",
-          },
-        },
-        select: { id: true },
-      });
+      const escapedTeam = cleanTeamName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const existingTeam = await ByteBrawlRegistration.findOne({
+        eventSlug: BYTEBRAWL_CONFIG.slug,
+        teamName: { $regex: new RegExp(`^${escapedTeam}$`, "i") },
+      }).select("_id");
 
       if (existingTeam) {
         return res.status(409).json({
@@ -311,10 +302,10 @@ router.post("/register", registerRateLimiter, async (req, res) => {
     const p2Email = isTeam && data.participant2 ? data.participant2.email.toLowerCase() : null;
 
     // Check P1 roll
-    const existingP1Roll = await prisma.participant.findFirst({
-      where: { eventSlug: BYTEBRAWL_CONFIG.slug, rollNumber: p1Roll },
-      select: { id: true },
-    });
+    const existingP1Roll = await ByteBrawlRegistration.findOne({
+      eventSlug: BYTEBRAWL_CONFIG.slug,
+      "participants.rollNumber": p1Roll,
+    }).select("_id");
     if (existingP1Roll) {
       return res.status(409).json({
         error: "Duplicate registration",
@@ -325,10 +316,10 @@ router.post("/register", registerRateLimiter, async (req, res) => {
     }
 
     // Check P1 email
-    const existingP1Email = await prisma.participant.findFirst({
-      where: { eventSlug: BYTEBRAWL_CONFIG.slug, email: p1Email },
-      select: { id: true },
-    });
+    const existingP1Email = await ByteBrawlRegistration.findOne({
+      eventSlug: BYTEBRAWL_CONFIG.slug,
+      "participants.email": p1Email,
+    }).select("_id");
     if (existingP1Email) {
       return res.status(409).json({
         error: "Duplicate registration",
@@ -340,10 +331,10 @@ router.post("/register", registerRateLimiter, async (req, res) => {
 
     // Check P2 if Team
     if (isTeam && p2Roll && p2Email) {
-      const existingP2Roll = await prisma.participant.findFirst({
-        where: { eventSlug: BYTEBRAWL_CONFIG.slug, rollNumber: p2Roll },
-        select: { id: true },
-      });
+      const existingP2Roll = await ByteBrawlRegistration.findOne({
+        eventSlug: BYTEBRAWL_CONFIG.slug,
+        "participants.rollNumber": p2Roll,
+      }).select("_id");
       if (existingP2Roll) {
         return res.status(409).json({
           error: "Duplicate registration",
@@ -353,10 +344,10 @@ router.post("/register", registerRateLimiter, async (req, res) => {
         });
       }
 
-      const existingP2Email = await prisma.participant.findFirst({
-        where: { eventSlug: BYTEBRAWL_CONFIG.slug, email: p2Email },
-        select: { id: true },
-      });
+      const existingP2Email = await ByteBrawlRegistration.findOne({
+        eventSlug: BYTEBRAWL_CONFIG.slug,
+        "participants.email": p2Email,
+      }).select("_id");
       if (existingP2Email) {
         return res.status(409).json({
           error: "Duplicate registration",
@@ -373,7 +364,6 @@ router.post("/register", registerRateLimiter, async (req, res) => {
     // 8. Assemble participants data
     const participantsToCreate = [
       {
-        eventSlug: BYTEBRAWL_CONFIG.slug,
         role: isTeam ? "LEADER" : "INDIVIDUAL",
         fullName: data.participant1.fullName.trim(),
         rollNumber: p1Roll,
@@ -387,7 +377,6 @@ router.post("/register", registerRateLimiter, async (req, res) => {
     if (isTeam && data.participant2) {
       const p2PhoneVal = validateIndianPhone(data.participant2.mobile);
       participantsToCreate.push({
-        eventSlug: BYTEBRAWL_CONFIG.slug,
         role: "MEMBER",
         fullName: data.participant2.fullName.trim(),
         rollNumber: p2Roll,
@@ -398,26 +387,16 @@ router.post("/register", registerRateLimiter, async (req, res) => {
       });
     }
 
-    // 9. Execute in ONE Prisma transaction
-    const newRegistration = await prisma.$transaction(async (tx) => {
-      const reg = await tx.registration.create({
-        data: {
-          registrationId,
-          eventSlug: BYTEBRAWL_CONFIG.slug,
-          type: data.type,
-          teamName: data.teamName ? data.teamName.trim() : null,
-          agreedRules: data.agreedRules,
-          confirmedDetails: data.confirmedDetails,
-          status: "CONFIRMED",
-          participants: {
-            create: participantsToCreate,
-          },
-        },
-        include: {
-          participants: true,
-        },
-      });
-      return reg;
+    // 9. Execute creation in MongoDB
+    const newRegistration = await ByteBrawlRegistration.create({
+      registrationId,
+      eventSlug: BYTEBRAWL_CONFIG.slug,
+      type: data.type,
+      teamName: data.teamName ? data.teamName.trim() : null,
+      agreedRules: data.agreedRules,
+      confirmedDetails: data.confirmedDetails,
+      status: "CONFIRMED",
+      participants: participantsToCreate,
     });
 
     // 10. Send personalized success email to EACH participant in background
@@ -450,7 +429,7 @@ router.post("/register", registerRateLimiter, async (req, res) => {
       message: "Registration completed successfully",
     });
   } catch (error) {
-    if (error.code === "P2002") {
+    if (error.code === 11000 || error.code === "P2002") {
       return res.status(409).json({
         error: "Duplicate registration",
         fieldErrors: {

@@ -75,13 +75,8 @@ async function runVerification() {
 
   // 1. Reset Database & Dev Mail/OTP Stores
   console.log('[1/7] Resetting database and OTP test store...');
-  const { prisma } = await import('../backend/prisma/client.js');
-  await prisma.participant.deleteMany({
-    where: { eventSlug: 'bytebrawl-hacktoberfest' },
-  });
-  await prisma.registration.deleteMany({
-    where: { eventSlug: 'bytebrawl-hacktoberfest' },
-  });
+  const { default: ByteBrawlRegistration } = await import('../backend/models/bytebrawlModel.js');
+  await ByteBrawlRegistration.deleteMany({ eventSlug: 'bytebrawl-hacktoberfest' });
   await fetch('http://localhost:4000/api/events/bytebrawl-hacktoberfest/dev-reset', { method: 'POST' });
   console.log('✓ Clean database & mail state established.\n');
 
@@ -504,11 +499,7 @@ async function runVerification() {
     // TEST SUITE E: DISPLAY SAVED DB RECORDS
     // ─────────────────────────────────────────────────────────────
     console.log('\n[6/7] Querying Database for Saved Registrations:');
-    const savedRegistrations = await prisma.registration.findMany({
-      where: { eventSlug: 'bytebrawl-hacktoberfest' },
-      include: { participants: true },
-      orderBy: { createdAt: 'desc' },
-    });
+    const savedRegistrations = await ByteBrawlRegistration.find({ eventSlug: 'bytebrawl-hacktoberfest' }).sort({ createdAt: -1 });
     console.log(JSON.stringify(savedRegistrations, null, 2));
 
     // ─────────────────────────────────────────────────────────────

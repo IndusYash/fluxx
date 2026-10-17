@@ -1,3 +1,5 @@
+import ByteBrawlRegistration from "../models/bytebrawlModel.js";
+
 // Event facts and backend constraints for ByteBrawl x Hacktoberfest
 
 export const BYTEBRAWL_CONFIG = {
@@ -11,17 +13,21 @@ export const BYTEBRAWL_CONFIG = {
     : 100,
 };
 
-export async function getEventStatus(prisma) {
+export async function getEventStatus() {
   const now = new Date();
   const deadlineDate = new Date(BYTEBRAWL_CONFIG.deadline);
   const isPastDeadline = !isNaN(deadlineDate.getTime()) && now > deadlineDate;
 
-  const registeredCount = await prisma.registration.count({
-    where: {
+  let registeredCount = 0;
+  try {
+    registeredCount = await ByteBrawlRegistration.countDocuments({
       eventSlug: BYTEBRAWL_CONFIG.slug,
       status: "CONFIRMED",
-    },
-  });
+    });
+  } catch (err) {
+    console.error("Error counting ByteBrawl registrations:", err.message || err);
+  }
+
 
   const isFull =
     BYTEBRAWL_CONFIG.capacity > 0 &&
