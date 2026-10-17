@@ -1,12 +1,12 @@
 // Prisma schema for ByteBrawl x Hacktoberfest registrations
-// Local development uses SQLite; in production, PostgreSQL is supported via DATABASE_URL
+// Powered by Supabase PostgreSQL (or any PostgreSQL connection string)
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 

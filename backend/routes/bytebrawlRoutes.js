@@ -87,6 +87,7 @@ router.get("/check-team-name", async (req, res) => {
         eventSlug: BYTEBRAWL_CONFIG.slug,
         teamName: {
           equals: name,
+          mode: "insensitive",
         },
       },
       select: { id: true },
@@ -286,7 +287,10 @@ router.post("/register", registerRateLimiter, async (req, res) => {
       const existingTeam = await prisma.registration.findFirst({
         where: {
           eventSlug: BYTEBRAWL_CONFIG.slug,
-          teamName: { equals: cleanTeamName },
+          teamName: {
+            equals: cleanTeamName,
+            mode: "insensitive",
+          },
         },
         select: { id: true },
       });
