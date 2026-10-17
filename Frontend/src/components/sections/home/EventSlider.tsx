@@ -10,6 +10,7 @@ import sheLeadsBanner from "/src/assets/images/she_leads_hero_banner.jpg";
 import conferenceImg from "/src/assets/images/conferenceImg.webp";
 
 import Container from "@/components/layout/Container";
+import { BYTEBRAWL_CONFIG } from "@/config/eventConfig";
 
 interface EventItem {
   id: string;
@@ -85,14 +86,17 @@ export default function EventSlider() {
     },
     {
       id: "05",
-      name: "BYTEBRAWL",
+      name: "BYTEBRAWL x HACKTOBERFEST",
       phase: "HACKATHON",
-      date: "COMING SOON",
-      attendees: "REGISTRATIONS OPENING SOON",
-      isUpcoming: true,
+      date: BYTEBRAWL_CONFIG.date,
+      attendees:
+        new Date() > new Date(BYTEBRAWL_CONFIG.registrationDeadline)
+          ? "Registrations closed"
+          : "Registrations open",
+      isUpcoming: false,
       desc: "High-intensity competitive coding showdown where architectural resilience meets rapid implementation under strict production grading constraints.",
       image: conferenceImg,
-      link: "/events",
+      link: "/events/bytebrawl-hacktoberfest",
     },
   ];
 
@@ -580,7 +584,9 @@ export default function EventSlider() {
           {/* RIGHT COLUMN: Description with subtle dark scrim for crisp readability */}
           <div className="w-full max-w-[280px] xl:max-w-[320px] 2xl:max-w-[340px] hidden lg:flex flex-col items-end text-right pointer-events-auto p-4 sm:p-5 rounded-lg bg-black/40 backdrop-blur-md border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
             <span className="font-mono text-[11px] tracking-widest text-white/80 uppercase mb-2.5">
-              {currentEvent.isUpcoming || currentEvent.date.toLowerCase().includes("coming soon")
+              {currentEvent.id === "05"
+                ? currentEvent.attendees
+                : currentEvent.isUpcoming || currentEvent.date.toLowerCase().includes("coming soon")
                 ? "Registrations opening soon"
                 : currentEvent.attendees}
             </span>

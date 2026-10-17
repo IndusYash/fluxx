@@ -1,0 +1,46 @@
+// Prisma schema for ByteBrawl x Hacktoberfest registrations
+// Local development uses SQLite; in production, PostgreSQL is supported via DATABASE_URL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Registration {
+  id               Int           @id @default(autoincrement())
+  registrationId   String        @unique @map("registration_id")
+  eventSlug        String        @default("bytebrawl-hacktoberfest") @map("event_slug")
+  type             String        // "TEAM" | "INDIVIDUAL"
+  teamName         String?       @map("team_name")
+  agreedRules      Boolean       @map("agreed_rules")
+  confirmedDetails Boolean       @map("confirmed_details")
+  status           String        @default("CONFIRMED")
+  createdAt        DateTime      @default(now()) @map("created_at")
+  participants     Participant[]
+
+  @@map("registrations")
+}
+
+model Participant {
+  id             Int          @id @default(autoincrement())
+  registrationId Int          @map("registration_id")
+  registration   Registration @relation(fields: [registrationId], references: [id], onDelete: Cascade)
+  eventSlug      String       @default("bytebrawl-hacktoberfest") @map("event_slug")
+  role           String       // "LEADER" | "MEMBER" | "INDIVIDUAL"
+  fullName       String       @map("full_name")
+  rollNumber     String       @map("roll_number")
+  branch         String
+  year           String
+  mobile         String
+  email          String
+  createdAt      DateTime     @default(now()) @map("created_at")
+
+  @@unique([eventSlug, rollNumber], name: "eventSlug_rollNumber")
+  @@unique([eventSlug, email], name: "eventSlug_email")
+  @@map("participants")
+}
+

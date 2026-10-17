@@ -18,7 +18,6 @@ export default function Hero() {
   const buttonsRef = useRef<HTMLDivElement>(null);
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
   const rolesRef = useRef<HTMLDivElement>(null);
-  const joinChipRef = useRef<HTMLDivElement>(null);
 
   // Mobile refs
   const mLine1Ref = useRef<HTMLSpanElement>(null);
@@ -38,7 +37,6 @@ export default function Hero() {
       buttonsRef.current,
       canvasWrapperRef.current,
       rolesRef.current,
-      joinChipRef.current,
       mLine1Ref.current,
       mLine2Ref.current,
       mLine3Ref.current,
@@ -177,11 +175,11 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Columns 9-12: Empty center space so 3D logo shines through, Bottom-Right Role Stack & Join Us Chip */}
+            {/* Columns 9-12: Empty center space so 3D logo shines through, Bottom-Right Role Stack */}
             <div className="col-span-4 flex flex-col justify-end items-end self-stretch py-2 h-full pointer-events-none overflow-visible">
               
-              {/* Bottom-Right Role List & Join Us Chip */}
-              <div className="flex flex-col items-end text-right select-none pointer-events-auto">
+              {/* Bottom-Right Role List */}
+              <div className="flex flex-col items-end text-right select-none pointer-events-auto pb-16 xl:pb-20">
                 {/* Role List vertical stack with 10px gap */}
                 <div
                   id="hero-role-list"
@@ -200,16 +198,6 @@ export default function Hero() {
                     <span className="w-1.5 h-1.5 bg-white/60 inline-block flex-shrink-0" />
                     <span>RESEARCH MENTORSHIP</span>
                   </div>
-                </div>
-
-                {/* Only "Join Us ↗" pill button, 16px gap below role list, at least 24px above ticker */}
-                <div id="hero-join-chip" ref={joinChipRef} className="hero-fade-item mt-4 pointer-events-auto">
-                  <button
-                    onClick={() => navigate("/team")}
-                    className="group inline-flex items-center justify-center px-4 py-2 rounded-full border border-white/20 bg-black/70 hover:bg-white hover:text-black text-white backdrop-blur-md text-xs font-mono tracking-wider transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)] cursor-pointer"
-                  >
-                    <span className="font-medium">Join Us ↗</span>
-                  </button>
                 </div>
               </div>
 

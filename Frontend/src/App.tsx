@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import MobileLayout from "@/components/layout/mobileLayout";
@@ -24,6 +24,13 @@ import IdeathonPage from "@/pages/Ideathon/Ideathon";
 import GalleryPage from "@/pages/gallery/GalleryPage";
 import JudgePanel from "@/pages/judge/JudgePanel";
 import SheLeadsPage from "@/pages/sheLeads/SheLeadsPage";
+
+const ByteBrawlPage = lazy(
+  () => import("@/pages/events/bytebrawl-hacktoberfest/ByteBrawlPage")
+);
+const ByteBrawlRegisterPage = lazy(
+  () => import("@/pages/events/bytebrawl-hacktoberfest/ByteBrawlRegisterPage")
+);
 
 import { Toaster } from "@/components/ui/toaster";
 import { introManager } from "@/lib/introState";
@@ -137,6 +144,38 @@ export default function App() {
             <Route path="/faculty" element={<FacultyPage isMobile={isMobile} />} />
             <Route path="/events" element={<EventsPage isMobile={isMobile} />} />
             <Route path="/events/fdp" element={<FDPDetailsPage />} />
+            <Route
+              path="/events/bytebrawl-hacktoberfest"
+              element={
+                <Suspense
+                  fallback={
+                    <div className="min-h-screen bg-[#060606] flex items-center justify-center">
+                      <div className="font-mono text-xs tracking-widest text-neutral-400 animate-pulse">
+                        // LOADING BYTEBRAWL X HACKTOBERFEST //
+                      </div>
+                    </div>
+                  }
+                >
+                  <ByteBrawlPage isMobile={isMobile} />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/events/bytebrawl-hacktoberfest/register"
+              element={
+                <Suspense
+                  fallback={
+                    <div className="min-h-screen bg-[#060606] flex items-center justify-center">
+                      <div className="font-mono text-xs tracking-widest text-neutral-400 animate-pulse">
+                        // LOADING REGISTRATION PORTAL //
+                      </div>
+                    </div>
+                  }
+                >
+                  <ByteBrawlRegisterPage isMobile={isMobile} />
+                </Suspense>
+              }
+            />
             <Route path="/team" element={<TeamPage isMobile={isMobile} />} />
             <Route path="/gallery" element={<GalleryPage isMobile={isMobile} />} />
             <Route path="/contact" element={<ContactPage isMobile={isMobile} />} />

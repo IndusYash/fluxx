@@ -36,6 +36,7 @@ export default function Navbar() {
 
   const eventSubLinks: NavDropdownItem[] = [
     { title: "All Events", path: "/events", desc: "Workshops, speaker sessions, and tech meets" },
+    { title: "ByteBrawl x Hacktoberfest", path: "/events/bytebrawl-hacktoberfest", desc: "Competitive coding showdown & open source" },
     { title: "Ideathon", path: "/ideathon", desc: "Flagship innovation competition" },
     { title: "She Leads", path: "/she-leads", desc: "Women in tech leadership conclave" },
     { title: "Faculty Dev (FDP)", path: "/events/fdp", desc: "Advanced training programs" },
@@ -47,6 +48,8 @@ export default function Navbar() {
     { name: "Faculty Advisory", path: "/faculty" },
     { name: "Student Team", path: "/team" },
     { name: "All Events", path: "/events" },
+    { name: "ByteBrawl x Hacktoberfest", path: "/events/bytebrawl-hacktoberfest" },
+    { name: "ByteBrawl Registration", path: "/events/bytebrawl-hacktoberfest/register" },
     { name: "Ideathon Conclave", path: "/ideathon" },
     { name: "She Leads Conclave", path: "/she-leads" },
     { name: "Photo Gallery", path: "/gallery" },
@@ -215,26 +218,22 @@ export default function Navbar() {
             </Link>
           </nav>
 
-          {/* Right Column: Search Pill & Mobile Toggle */}
-          <div className="flex-1 flex justify-end items-center gap-3">
-            {/* Search ⌘K Pill (height 52px) */}
-            <button
-              onClick={() => setSearchOpen(true)}
-              className={`pointer-events-auto flex items-center gap-2.5 h-[48px] sm:h-[52px] px-4 rounded-full border text-xs transition-colors shadow-sm ${
+          {/* Right Column: Join Us Action & Mobile Toggle */}
+          <div className="flex-1 flex justify-end items-center gap-2 sm:gap-3">
+            {/* Join Us Pill */}
+            <Link
+              to="/team"
+              className={`pointer-events-auto group inline-flex items-center justify-center gap-2 h-[48px] sm:h-[52px] px-4 sm:px-6 rounded-full border text-xs font-mono uppercase tracking-wider transition-all duration-200 shadow-sm ${
                 isNavbarLight
-                  ? "border-black/15 bg-white/90 backdrop-blur-xl text-neutral-800 hover:text-black hover:border-black/40"
-                  : "border-white/10 bg-[#111111]/80 backdrop-blur-xl text-[#9a9a9a] hover:text-white hover:border-white/30"
+                  ? "border-black/20 bg-black text-white hover:bg-neutral-800"
+                  : "border-white/20 bg-white text-black hover:bg-[#e6e6e6] shadow-[0_0_20px_rgba(255,255,255,0.15)] font-semibold"
               }`}
-              title="Search (⌘K)"
             >
-              <Search className="w-3.5 h-3.5" />
-              <span className="text-[12px] font-medium">Search</span>
-              <span className={`px-1.5 py-0.5 rounded text-[10px] font-mono ${
-                isNavbarLight ? "bg-black/10 text-black/70" : "bg-white/10 text-white/80"
-              }`}>
-                ⌘K
+              <span>Join Us</span>
+              <span className="text-xs transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                ↗
               </span>
-            </button>
+            </Link>
 
             {/* Mobile Menu Toggle */}
             <button

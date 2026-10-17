@@ -68,13 +68,13 @@ const EventsPage: React.FC = () => {
     },
     {
       id: 5,
-      name: "ByteBrawl",
+      name: "ByteBrawl x Hacktoberfest",
       imageUrl: conferenceImg,
-      date: "Coming Soon",
+      date: "To be announced",
       icon: "WEEK TWO",
-      phase: "Workshop",
+      phase: "Hackathon",
       description:
-        "Get ready for ByteBrawl — a high-energy coding showdown where creativity meets code. Build, experiment, and ship cool projects in a collaborative, vibe-driven environment.",
+        "High-intensity competitive coding showdown where architectural resilience meets rapid implementation under strict production-grading constraints. Organized by FLUX, Department of CSE, MMMUT Gorakhpur.",
       attendees: 300,
     },
     {

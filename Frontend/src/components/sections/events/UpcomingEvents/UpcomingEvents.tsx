@@ -43,16 +43,16 @@ const events: EventProps[] = [
   },
   {
     id: 2,
-    title: 'ByteBrawl',
-    date: 'Coming Soon',
+    title: 'ByteBrawl x Hacktoberfest',
+    date: 'To be announced',
     description:
-      "Get ready for ByteBrawl — a high-energy coding showdown where creativity meets code. Build, experiment, and ship cool projects in a collaborative, vibe-driven environment.",
+      "High-intensity competitive coding showdown where architectural resilience meets rapid implementation under strict production-grading constraints. Organized by FLUX, Department of CSE, MMMUT Gorakhpur.",
     imageUrl: conferenceImg,
-    isUpcoming: true,
+    isUpcoming: false,
     location: 'MMMUT Gorakhpur',
-    attendees: 300,
+    attendees: 0,
     category: 'Innovation',
-    prize: '',
+    prize: 'To be announced',
     featured: true,
   },
   {
@@ -286,6 +286,16 @@ const EventCard: React.FC<{ event: EventProps; index: number; showRegister?: boo
                 >
                   <span>View Details</span>
                   <ArrowRight className="w-4 h-4 text-rose-500" />
+                </button>
+              )}
+
+              {event.title?.toLowerCase().includes('bytebrawl') && (
+                <button
+                  onClick={() => navigate('/events/bytebrawl-hacktoberfest')}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-zinc-100 text-black rounded-full font-semibold shadow-md hover:scale-105 active:scale-95 transition-all duration-200 mt-1 w-fit"
+                >
+                  <span>Explore Event</span>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               )}
 

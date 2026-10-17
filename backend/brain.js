@@ -1,3 +1,7 @@
+import dns from 'node:dns';
+
+dns.setServers(['8.8.8.8', '1.1.1.1']);
+
 import dotenv from "dotenv";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -12,6 +16,7 @@ dotenv.config({
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import helmet from "helmet";
 
 import auth from "./routes/auth.js";
 import detailed from "./routes/getDetail.js";
@@ -22,8 +27,13 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 import applications from "./routes/applications.js";
 import judgeAuthRoutes from "./routes/judgeAuth.js";
 import sheLeadsRoutes from "./routes/sheLeadsRoutes.js";
+import bytebrawlRoutes from "./routes/bytebrawlRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
 const app = express();
+
+// Security Headers
+app.use(helmet({ crossOriginResourcePolicy: false }));
 
 // Middleware
 app.use(express.json());
@@ -139,6 +149,10 @@ app.use("/api/applications", applications);
 app.use("/api/judge-auth", judgeAuthRoutes);
 
 app.use("/api/she-leads", sheLeadsRoutes);
+
+app.use("/api/events/bytebrawl-hacktoberfest", bytebrawlRoutes);
+
+app.use("/api/admin", adminRoutes);
 
 // ==================== HEALTH CHECK ====================
 
