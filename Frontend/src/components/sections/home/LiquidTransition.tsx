@@ -186,8 +186,8 @@ export default function LiquidTransition() {
       ref={containerRef}
       className="relative z-[40] w-full h-screen bg-transparent overflow-hidden select-none safe-fullscreen"
     >
-      {/* Background hint before liquid fills */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+      {/* Background hint before liquid fills (hidden on mobile) */}
+      <div className="hidden md:flex absolute inset-0 items-center justify-center pointer-events-none opacity-20">
         <span className="font-mono text-xs tracking-[0.4em] uppercase text-white/40">
           // SCROLL TO DISCOVER CLUB METRICS
         </span>

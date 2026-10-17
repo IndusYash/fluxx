@@ -212,8 +212,8 @@ export default function Hero() {
           Stacked vertically: Bio -> Headline -> Paragraph -> Buttons ->
           3D Logo (~40vh centered) -> Role List (inline wrap row) -> Join Chip
       ───────────────────────────────────────────────────────────── */}
-      <div className="lg:hidden flex flex-col w-full relative z-10 py-4">
-        <Container className="max-w-xl text-center flex flex-col items-center">
+      <div className="lg:hidden flex flex-col items-center justify-center w-full my-auto relative z-10 px-4">
+        <Container className="max-w-xl text-center flex flex-col items-center justify-center">
           
           {/* Headline clamped to 3 lines */}
           <h1 className="font-sans font-light tracking-[-0.035em] text-[clamp(2.35rem,7.5vw,3.75rem)] leading-[1.12] text-white text-center mb-6">
@@ -250,7 +250,7 @@ export default function Hero() {
           {/* Buttons: full width on mobile, 48px high */}
           <div
             ref={mButtonsRef}
-            className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto justify-center mb-4 sm:mb-6"
+            className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto justify-center mb-0 sm:mb-6"
           >
             <button
               onClick={() => navigate("/about")}
@@ -269,10 +269,10 @@ export default function Hero() {
             </button>
           </div>
 
-          {/* Persistent 3D Logo Anchor at ~34svh centered, never overlapping text */}
+          {/* Persistent 3D Logo Anchor on tablet (hidden on mobile < 768px) */}
           <div
             ref={mCanvasRef}
-            className="relative w-full h-[34svh] min-h-[190px] max-h-[300px] flex items-center justify-center my-2 overflow-visible"
+            className="hidden md:flex relative w-full h-[24vh] min-h-[160px] max-h-[300px] items-center justify-center my-2 overflow-visible"
           >
             <div
               className="absolute inset-0 m-auto w-48 h-48 sm:w-60 sm:h-60 rounded-full bg-white/[0.06] blur-[60px] pointer-events-none"

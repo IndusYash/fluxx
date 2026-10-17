@@ -63,6 +63,15 @@
     padding-top: var(--mobile-safe-top) !important;
     padding-bottom: var(--mobile-safe-bottom) !important;
   }
+
+  #hero-section {
+    padding-top: var(--mobile-safe-top) !important;
+    padding-bottom: var(--mobile-safe-bottom) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
 }
 
 /* Background outline marquee for Hero */

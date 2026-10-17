@@ -39,6 +39,8 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
     let width = window.innerWidth;
     let height = window.innerHeight;
     let isMobile = propIsMobile !== undefined ? propIsMobile : width < 768;
+    if (isMobile) return;
+
     let isQaFrontOnMode = false;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1694,7 +1696,7 @@ export default function PersistentChromeLogo({ isMobile: propIsMobile }: Persist
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 pointer-events-none z-[15] overflow-visible w-full h-full"
+      className="fixed inset-0 pointer-events-none z-[15] overflow-visible w-full h-full hidden md:block"
       aria-hidden="true"
     />
   );

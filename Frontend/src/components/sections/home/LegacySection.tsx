@@ -223,8 +223,8 @@ export default function LegacySection() {
         </div>
 
         {/* 3. Main Content Grid Inside Container */}
-        <Container className="relative z-20 w-full h-full flex items-center">
-          <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
+        <Container className="relative z-20 w-full h-full flex items-center justify-center">
+          <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-12 items-center">
             {/* Left Column: Narrative, Mission Badges & Interactive Archive Step Cards */}
             <div ref={leftColRef} className="lg:col-span-7 flex flex-col justify-center text-left will-change-opacity">
               <span className="inline-block self-start font-mono text-[9px] sm:text-xs tracking-[0.35em] text-white/60 uppercase mb-2 sm:mb-3 px-2 sm:px-3 py-0.5 sm:py-1 border border-white/10 bg-black/60 backdrop-blur-sm rounded-sm">
@@ -236,7 +236,7 @@ export default function LegacySection() {
               </h3>
 
               {/* Heading and paragraph first on mobile & desktop */}
-              <p className="block font-sans text-xs sm:text-sm text-neutral-300 md:text-neutral-400 font-light leading-relaxed max-w-xl mb-3 md:mb-4">
+              <p className="block font-sans text-xs sm:text-sm text-neutral-300 md:text-neutral-400 font-light leading-relaxed max-w-xl mb-0 md:mb-4">
                 FLUX was founded on a singular conviction: university students should not merely consume technology — they must engineer it. Through hands-on prototypes, competitive hackathons, mechanistic AI workshops, and faculty-guided research, we push boundaries and turn theoretical computer science into production software.
               </p>
 
@@ -246,8 +246,8 @@ export default function LegacySection() {
                 <span className="px-2.5 py-0.5 border border-white/10 bg-white/[0.02] rounded-sm">+ REAL IMPACT</span>
               </div>
 
-              {/* 4 Interactive Archive Cards: full-width rows on mobile (no 2x2 truncated grid) */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3 max-w-xl mb-3 lg:mb-0 w-full">
+              {/* 4 Interactive Archive Cards: hidden on mobile (< 768px), visible on tablet & desktop */}
+              <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3 max-w-xl mb-3 lg:mb-0 w-full">
                 {photos.map((item, idx) => (
                   <button
                     key={idx}
@@ -291,7 +291,7 @@ export default function LegacySection() {
             </div>
 
             {/* Right Column: 3D Card Reel */}
-            <div className="lg:col-span-5 flex items-center justify-center relative w-full h-[36vh] sm:h-[46vh] lg:h-[58vh]">
+            <div className="lg:col-span-5 flex items-center justify-center relative w-full max-md:h-auto sm:h-[46vh] lg:h-[58vh]">
               <FloatingPlane ref={planeRef} />
             </div>
           </div>
