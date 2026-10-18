@@ -37,6 +37,7 @@ import { introManager } from "@/lib/introState";
 import ChatbotWidget from "@/components/ChatbotWidget";
 import FluxLoadingScreen from "@/components/ui/FluxLoadingScreen";
 import RouteTransitionLoader from "@/components/ui/RouteTransitionLoader";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function App() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -190,6 +191,7 @@ export default function App() {
       
       <ChatbotWidget />
       <Toaster />
+      <Analytics />
     </BrowserRouter>
   );
 }
