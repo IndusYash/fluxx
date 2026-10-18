@@ -35,6 +35,8 @@ const ByteBrawlRegisterPage = lazy(
 import { Toaster } from "@/components/ui/toaster";
 import { introManager } from "@/lib/introState";
 import ChatbotWidget from "@/components/ChatbotWidget";
+import FluxLoadingScreen from "@/components/ui/FluxLoadingScreen";
+import RouteTransitionLoader from "@/components/ui/RouteTransitionLoader";
 
 export default function App() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -131,6 +133,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop isMobile={isMobile} />
+      <RouteTransitionLoader />
       <div className="min-h-dvh flex flex-col">
         <Routes>
           {/* Standalone routes — no Layout wrapper */}
@@ -149,11 +152,10 @@ export default function App() {
               element={
                 <Suspense
                   fallback={
-                    <div className="min-h-screen bg-[#060606] flex items-center justify-center">
-                      <div className="font-mono text-xs tracking-widest text-neutral-400 animate-pulse">
-                        // LOADING BYTEBRAWL X HACKTOBERFEST //
-                      </div>
-                    </div>
+                    <FluxLoadingScreen
+                      text="BYTEBRAWL X HACKTOBERFEST"
+                      subText="MMMUT COMPUTER SCIENCE & ENGINEERING // EVENT PROTOCOL"
+                    />
                   }
                 >
                   <ByteBrawlPage isMobile={isMobile} />
@@ -165,11 +167,10 @@ export default function App() {
               element={
                 <Suspense
                   fallback={
-                    <div className="min-h-screen bg-[#060606] flex items-center justify-center">
-                      <div className="font-mono text-xs tracking-widest text-neutral-400 animate-pulse">
-                        // LOADING REGISTRATION PORTAL //
-                      </div>
-                    </div>
+                    <FluxLoadingScreen
+                      text="CONNECTING REGISTRATION PORTAL"
+                      subText="BYTEBRAWL 2026 // ESTABLISHING SECURE GATEWAY"
+                    />
                   }
                 >
                   <ByteBrawlRegisterPage isMobile={isMobile} />

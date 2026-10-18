@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import Marquee from "@/components/ui/Marquee";
 import Container from "@/components/layout/Container";
+import ByteBrawlHeroPopup from "./ByteBrawlHeroPopup";
 
 import { introManager } from "@/lib/introState";
 
@@ -68,7 +69,7 @@ export default function Hero() {
     <section
       id="hero-section"
       ref={heroRef}
-      className="hero-section-wrapper relative w-full h-[100svh] min-h-[100svh] bg-[#060606] overflow-hidden select-none flex flex-col justify-center"
+      className="hero-section-wrapper relative w-full h-[100svh] min-h-[100svh] max-md:h-auto max-md:min-h-[100svh] bg-[#060606] overflow-hidden max-md:overflow-visible select-none flex flex-col justify-center max-md:justify-start"
       style={{
         paddingTop: "calc(clamp(14px, 2vh, 24px) + 52px + 40px)",
         paddingBottom: "calc(var(--ticker-h) + 32px)",
@@ -212,11 +213,11 @@ export default function Hero() {
           Stacked vertically: Bio -> Headline -> Paragraph -> Buttons ->
           3D Logo (~40vh centered) -> Role List (inline wrap row) -> Join Chip
       ───────────────────────────────────────────────────────────── */}
-      <div className="lg:hidden flex flex-col items-center justify-center w-full my-auto relative z-10 px-4">
+      <div className="lg:hidden flex flex-col items-center justify-center w-full md:my-auto relative z-10 px-4 pt-1 pb-16">
         <Container className="max-w-xl text-center flex flex-col items-center justify-center">
           
           {/* Headline clamped to 3 lines */}
-          <h1 className="font-sans font-light tracking-[-0.035em] text-[clamp(2.35rem,7.5vw,3.75rem)] leading-[1.12] text-white text-center mb-6">
+          <h1 className="font-sans font-light tracking-[-0.035em] text-[clamp(1.75rem,6vw,3.75rem)] leading-[1.08] text-white text-center mb-3 sm:mb-6">
             <span className="block overflow-hidden py-0.5">
               <span ref={mLine1Ref} className="block will-change-transform whitespace-nowrap">
                 The Innovation Core
@@ -240,21 +241,21 @@ export default function Hero() {
           {/* Main description paragraph: shared paragraphStyle */}
           <p
             ref={mDescRef}
-            className={`${paragraphStyle} text-center mb-6`}
+            className="text-xs sm:text-base leading-relaxed text-white/65 font-light text-center max-w-[44ch] mb-3 sm:mb-6"
           >
             Empowering students to interact, innovate, and engineer real-world impact.
             Source-first tech conclaves, research mentorship, hackathons, and breakthrough
             student projects built directly into the university ecosystem.
           </p>
 
-          {/* Buttons: full width on mobile, 48px high */}
+          {/* Buttons: 44px min tap targets, side-by-side row */}
           <div
             ref={mButtonsRef}
-            className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto justify-center mb-0 sm:mb-6"
+            className="flex flex-row items-center gap-2.5 w-full max-w-sm justify-center mb-3 sm:mb-6"
           >
             <button
               onClick={() => navigate("/about")}
-              className="w-full sm:w-auto group inline-flex items-center justify-center gap-2.5 h-12 min-h-[48px] px-6 py-3 border border-white/25 hover:border-white text-white text-xs font-medium tracking-wide uppercase bg-transparent hover:bg-white/[0.04] transition-all duration-200 rounded-none cursor-pointer"
+              className="flex-1 group inline-flex items-center justify-center gap-2 h-11 min-h-[44px] px-3 py-2.5 border border-white/25 hover:border-white text-white text-xs font-medium tracking-wide uppercase bg-transparent hover:bg-white/[0.04] transition-all duration-200 rounded-none cursor-pointer"
             >
               <span className="w-1.5 h-1.5 bg-white inline-block flex-shrink-0" />
               <span>Read Docs</span>
@@ -262,11 +263,16 @@ export default function Hero() {
 
             <button
               onClick={() => navigate("/events")}
-              className="w-full sm:w-auto group inline-flex items-center justify-center gap-2.5 h-12 min-h-[48px] px-6 py-3 bg-white hover:bg-[#e6e6e6] text-black text-xs font-semibold tracking-wide uppercase border border-white transition-all duration-200 rounded-none cursor-pointer"
+              className="flex-1 group inline-flex items-center justify-center gap-2 h-11 min-h-[44px] px-3 py-2.5 bg-white hover:bg-[#e6e6e6] text-black text-xs font-semibold tracking-wide uppercase border border-white transition-all duration-200 rounded-none cursor-pointer"
             >
               <span className="w-1.5 h-1.5 bg-black inline-block flex-shrink-0" />
-              <span>Browse All Events</span>
+              <span>Browse Events</span>
             </button>
+          </div>
+
+          {/* 3D Immersive ByteBrawl Registration Popup on Mobile */}
+          <div className="w-full max-w-sm mt-1 mb-4 flex justify-center">
+            <ByteBrawlHeroPopup isMobile={true} />
           </div>
 
           {/* Persistent 3D Logo Anchor on tablet (hidden on mobile < 768px) */}
@@ -317,6 +323,9 @@ export default function Hero() {
 
         </Container>
       </div>
+
+      {/* 3D Immersive Floating ByteBrawl Registration Popup */}
+      <ByteBrawlHeroPopup isMobile={false} />
 
       {/* Subtle bottom fade to seamlessly blend into subsequent sections */}
       <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-[#060606] to-transparent pointer-events-none z-[5]" />

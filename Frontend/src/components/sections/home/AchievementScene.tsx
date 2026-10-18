@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import ideathoncomp from "/src/assets/images/ideathoncomp.webp";
-import hackathon from "/src/assets/images/hackathon.webp";
+import conferenceImg from "/src/assets/images/conferenceImg.webp";
 import atalFdp from "/src/assets/images/atalFdp.webp";
 import sheLeadsBanner from "/src/assets/images/she_leads_hero_banner.jpg";
 
@@ -40,10 +40,10 @@ export default function AchievementScene() {
       theme: "offwhite",
       titleLine1: "Ideathon 2025.",
       titleLine2: "1st Prize & Innovation Podium.",
-      dateLine: "DECEMBER 2025 // ANNUAL CONCLAVE",
-      teamName: "TEAM FLUX INNOVATORS",
+      dateLine: "DECEMBER 17 - 19, 2025 // INNOVATION SPRINT",
+      teamName: "FLUX INNOVATION & HARDWARE CELL",
       institution: "MADAN MOHAN MALAVIYA UNIVERSITY OF TECHNOLOGY",
-      description: "Awarded 1st place for autonomous edge intelligence & neural sensor telemetry architecture.",
+      description: "Flagship 3-day multidisciplinary innovation sprint engineering viable prototypes evaluated by industry evaluators.",
       image: ideathoncomp,
       link: "/ideathon",
       yaw: 0.14, // ~+8 deg
@@ -51,25 +51,25 @@ export default function AchievementScene() {
     {
       id: "02",
       theme: "graphite",
-      titleLine1: "Smart India Hackathon.",
-      titleLine2: "National Podium Finalists.",
-      dateLine: "OCTOBER 2025 // MINISTRY OF EDUCATION",
-      teamName: "TEAM ALGORITHMIC FLUX",
-      institution: "GOVERNMENT OF INDIA // NATIONAL MERIT",
-      description: "Selected among top tier nationwide innovators solving mission-critical public infrastructure.",
-      image: hackathon,
-      link: "/events",
+      titleLine1: "ByteBrawl Hackathon.",
+      titleLine2: "Competitive Code Clash.",
+      dateLine: "OCTOBER // ANNUAL HACKATHON",
+      teamName: "FLUX DEV & ALGORITHMS WING",
+      institution: "DEPARTMENT OF COMPUTER SCIENCE & ENG., MMMUT",
+      description: "High-intensity competitive coding showdown where architectural resilience meets rapid implementation under strict production constraints.",
+      image: conferenceImg,
+      link: "/events/bytebrawl-hacktoberfest",
       yaw: -0.14, // ~-8 deg
     },
     {
       id: "03",
       theme: "midgrey",
-      titleLine1: "ATAL FDP Research.",
+      titleLine1: "ATAL FDP 2026.",
       titleLine2: "Mechanistic Interpretability.",
-      dateLine: "JANUARY 2026 // AICTE ATAL ACADEMY",
-      teamName: "RESEARCH CELL & FACULTY ADVISORY",
-      institution: "DEPARTMENT OF COMPUTER SCIENCE & ENG.",
-      description: "Faculty development commendation in deep representation interpretability and neural auditing.",
+      dateLine: "JANUARY 19 - 24, 2026 // AICTE ATAL ACADEMY",
+      teamName: "RESEARCH CELL & CSE FACULTY",
+      institution: "DEPARTMENT OF COMPUTER SCIENCE & ENG., MMMUT",
+      description: "Advanced deep dive into the hidden mathematical science of Mechanistic Interpretability, neural representation circuits, and explainable AI.",
       image: atalFdp,
       link: "/events/fdp",
       yaw: 0.12, // ~+7 deg
@@ -77,12 +77,12 @@ export default function AchievementScene() {
     {
       id: "04",
       theme: "offwhite",
-      titleLine1: "Dr. Tessy Thomas Conclave.",
-      titleLine2: "Excellence in Tech Leadership.",
-      dateLine: "SEPTEMBER 2025 // SHE LEADS SUMMIT",
-      teamName: "FLUX WOMEN IN TECH DELEGATION",
-      institution: "AEROSPACE RESEARCH & DEFENSE LEADERSHIP",
-      description: "Distinguished citation honoring women leadership in aerospace engineering and technology innovation.",
+      titleLine1: "She Leads.",
+      titleLine2: "Women in Tech Leadership.",
+      dateLine: "SEPTEMBER 12 - 13 // ANNUAL SUMMIT",
+      teamName: "FLUX WOMEN IN TECH INITIATIVE",
+      institution: "DEPARTMENT OF COMPUTER SCIENCE & ENG., MMMUT",
+      description: "Annual She Leads summit honoring excellence in technology leadership, interactive masterclasses, and executive mentorship.",
       image: sheLeadsBanner,
       link: "/she-leads",
       yaw: -0.14, // ~-8 deg
@@ -328,38 +328,28 @@ export default function AchievementScene() {
         ctx.lineWidth = 1;
         ctx.strokeRect(100, 675, 1200, 565);
 
-        // 6. Bottom signatures and details (safely above the bottom 12% margin)
-        // Left signature
-        ctx.fillStyle = theme.text;
-        ctx.font = "italic 58px 'Pinyon Script', cursive";
-        ctx.fillText("Prof. R. K. Chauhan", 110, 1300);
+        // 6. Bottom citation verification details (clean official citation record)
+        ctx.strokeStyle = theme.rule;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(110, 1340);
+        ctx.lineTo(470, 1340);
+        ctx.stroke();
+
+        ctx.fillStyle = theme.muted;
+        ctx.font = "bold 13px 'Space Mono', monospace";
+        ctx.fillText("DEPARTMENT OF COMPUTER SCIENCE & ENG.", 110, 1370);
 
         ctx.strokeStyle = theme.rule;
         ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.moveTo(110, 1320);
-        ctx.lineTo(470, 1320);
+        ctx.moveTo(840, 1340);
+        ctx.lineTo(1200, 1340);
         ctx.stroke();
 
         ctx.fillStyle = theme.muted;
-        ctx.font = "14px 'Space Mono', monospace";
-        ctx.fillText("HEAD OF DEPARTMENT // PATRON", 110, 1350);
-
-        // Right signature
-        ctx.fillStyle = theme.text;
-        ctx.font = "italic 58px 'Pinyon Script', cursive";
-        ctx.fillText("Dr. Archana Shukla", 840, 1300);
-
-        ctx.strokeStyle = theme.rule;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(840, 1320);
-        ctx.lineTo(1200, 1320);
-        ctx.stroke();
-
-        ctx.fillStyle = theme.muted;
-        ctx.font = "14px 'Space Mono', monospace";
-        ctx.fillText("FACULTY ADVISOR // FLUX", 840, 1350);
+        ctx.font = "bold 13px 'Space Mono', monospace";
+        ctx.fillText("MMMUT GORAKHPUR // UTTAR PRADESH", 840, 1370);
 
         // Small "flux" wordmark bottom-left
         ctx.fillStyle = theme.text;

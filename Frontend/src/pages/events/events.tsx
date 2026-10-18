@@ -57,36 +57,25 @@ const EventsPage: React.FC = () => {
     },
     {
       id: 4,
-      name: "Orientation",
+      name: "FLUX Orientation 2025",
       imageUrl: orientation,
-      date: "Coming Soon",
+      date: "September 2025",
       icon: "WEEK ONE",
       phase: "Induction",
       description:
-        "Join us for the Flux Orientation session to learn about our community, upcoming events, and how you can get involved. Perfect for new members who want to kickstart their journey with us.",
-      attendees: 200,
-    },
-    {
-      id: 5,
-      name: "ByteBrawl x Hacktoberfest",
-      imageUrl: conferenceImg,
-      date: "To be announced",
-      icon: "WEEK TWO",
-      phase: "Hackathon",
-      description:
-        "High-intensity competitive coding showdown where architectural resilience meets rapid implementation under strict production-grading constraints. Organized by FLUX, Department of CSE, MMMUT Gorakhpur.",
+        "The FLUX Annual Orientation session successfully welcomed new members, introducing them to our society wings, core initiatives, hands-on learning pathways, and community projects.",
       attendees: 300,
     },
     {
-      id: 6,
-      name: "She Leads – Dr. Tessy Thomas Annual Conclave",
+      id: 5,
+      name: "She Leads – Women in Technology Summit",
       imageUrl: sheLeadsBanner,
-      date: "12 - 13 September",
+      date: "September 12 - 13, 2025",
       icon: "WEEK ONE",
       phase: "Summit",
       description:
-        "An empowering leadership summit designed to inspire, mentor, and connect tech innovators and future leaders. Join us for insightful talks, hands-on workshops, and networking with industry leaders.",
-      attendees: 250,
+        "An empowering leadership summit designed to inspire, mentor, and connect women innovators and future tech leaders. Successfully hosted insightful talks, hands-on masterclasses, and executive mentorship.",
+      attendees: 300,
     },
   ];
 

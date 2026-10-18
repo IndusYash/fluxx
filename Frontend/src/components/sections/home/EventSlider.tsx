@@ -93,7 +93,7 @@ export default function EventSlider() {
         new Date() > new Date(BYTEBRAWL_CONFIG.registrationDeadline)
           ? "Registrations closed"
           : "Registrations open",
-      isUpcoming: false,
+      isUpcoming: true,
       desc: "High-intensity competitive coding showdown where architectural resilience meets rapid implementation under strict production grading constraints.",
       image: conferenceImg,
       link: "/events/bytebrawl-hacktoberfest",

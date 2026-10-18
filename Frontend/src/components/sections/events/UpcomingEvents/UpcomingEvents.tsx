@@ -24,50 +24,54 @@ export interface EventProps {
   category: 'Tech' | 'Design' | 'Business' | 'Innovation';
   prize?: string;
   featured?: boolean;
+  registrationClosed?: boolean;
 }
 
 const events: EventProps[] = [
   {
     id: 1,
-    title: 'Orientation',
-    date: 'Coming Soon',
-    description:
-      "Join us for the Flux Orientation session to learn about our community, upcoming events, and how you can get involved. Perfect for new members who want to kickstart their journey with us.",
-    imageUrl: orientation,
-    isUpcoming: true,
-    location: 'MMMUT Gorakhpur',
-    attendees: 200,
-    category: 'Tech',
-    prize: '',
-    featured: false,
-  },
-  {
-    id: 2,
     title: 'ByteBrawl x Hacktoberfest',
     date: 'To be announced',
     description:
       "High-intensity competitive coding showdown where architectural resilience meets rapid implementation under strict production-grading constraints. Organized by FLUX, Department of CSE, MMMUT Gorakhpur.",
     imageUrl: conferenceImg,
-    isUpcoming: false,
-    location: 'MMMUT Gorakhpur',
-    attendees: 0,
-    category: 'Innovation',
-    prize: 'To be announced',
-    featured: true,
-  },
-  {
-    id: 3,
-    title: 'She Leads – Dr. Tessy Thomas Annual Conclave',
-    date: '12 - 13 September',
-    description:
-      "An empowering leadership and tech summit designed to inspire, mentor, and connect tech innovators and future leaders. Join us for insightful talks, hands-on workshops, mentorship, and networking.",
-    imageUrl: sheLeadsBanner,
     isUpcoming: true,
     location: 'MMMUT Gorakhpur',
     attendees: 300,
     category: 'Innovation',
-    prize: 'Certificates & Swag',
+    prize: 'Trophies, Certificates & Swag',
     featured: true,
+    registrationClosed: false,
+  },
+  {
+    id: 2,
+    title: 'She Leads – Women in Technology Summit',
+    date: '12 - 13 September (Ended)',
+    description:
+      "An empowering leadership and tech summit designed to inspire, mentor, and connect tech innovators and future leaders. Event successfully concluded.",
+    imageUrl: sheLeadsBanner,
+    isUpcoming: false,
+    location: 'MMMUT Gorakhpur',
+    attendees: 300,
+    category: 'Innovation',
+    prize: 'Certificates & Swag',
+    featured: false,
+    registrationClosed: true,
+  },
+  {
+    id: 3,
+    title: 'FLUX Orientation',
+    date: 'September 2025 (Completed)',
+    description:
+      "The FLUX Annual Orientation session successfully welcomed new members, introducing them to our society wings, technical projects, and upcoming hackathons.",
+    imageUrl: orientation,
+    isUpcoming: false,
+    location: 'MMMUT Gorakhpur',
+    attendees: 300,
+    category: 'Tech',
+    prize: '',
+    featured: false,
+    registrationClosed: true,
   }
 ];
 
@@ -300,10 +304,25 @@ const EventCard: React.FC<{ event: EventProps; index: number; showRegister?: boo
               )}
 
               {showRegister && (
-                <div className="pt-1">
-                  {event.date === 'Coming Soon' ? (
+                <div className="pt-1 flex flex-wrap gap-3">
+                  {event.registrationClosed ? (
                     <button
-                      className="inline-flex items-center gap-2 px-5 py-2.5 max-md:min-h-[44px] bg-gray-500 cursor-not-allowed text-white rounded-full font-semibold shadow-lg"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 max-md:min-h-[44px] bg-white/10 text-rose-300 border border-rose-500/30 rounded-full font-semibold shadow-lg cursor-not-allowed text-sm"
+                      disabled
+                    >
+                      Registrations Closed
+                    </button>
+                  ) : event.title?.toLowerCase().includes('bytebrawl') ? (
+                    <button
+                      onClick={() => navigate('/events/bytebrawl-hacktoberfest/register')}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 max-md:min-h-[44px] bg-white hover:bg-gray-200 text-black rounded-full font-semibold shadow-lg transition-all duration-200 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] cursor-pointer text-sm"
+                    >
+                      Register Now
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  ) : event.date === 'Coming Soon' ? (
+                    <button
+                      className="inline-flex items-center gap-2 px-5 py-2.5 max-md:min-h-[44px] bg-gray-500 cursor-not-allowed text-white rounded-full font-semibold shadow-lg text-sm"
                       disabled
                     >
                       Coming Soon
@@ -311,7 +330,7 @@ const EventCard: React.FC<{ event: EventProps; index: number; showRegister?: boo
                   ) : (
                     <button
                       onClick={() => setIsModalOpen(true)}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 max-md:min-h-[44px] bg-white hover:bg-gray-200 text-black rounded-full font-semibold shadow-lg transition-all duration-200 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 max-md:min-h-[44px] bg-white hover:bg-gray-200 text-black rounded-full font-semibold shadow-lg transition-all duration-200 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] text-sm"
                     >
                       Register Now
                       <ArrowRight className="w-4 h-4" />
