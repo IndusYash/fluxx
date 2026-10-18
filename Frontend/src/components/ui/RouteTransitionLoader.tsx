@@ -5,64 +5,7 @@ import FluxLoadingScreen from "./FluxLoadingScreen";
 import { introManager } from "@/lib/introState";
 import { resetThemeToDark } from "@/hooks/useLightSectionObserver";
 import { liquidController } from "@/components/sections/home/liquidController";
-
-export const ROUTE_LABELS: Record<string, string> = {
-  "/": "INITIALIZING FLUX CORE",
-  "/about": "ACCESSING ARCHITECTURAL LEGACY",
-  "/events": "SYNCHRONIZING FLUX EVENTS & CONCLAVES",
-  "/events/bytebrawl-hacktoberfest": "LOADING BYTEBRAWL X HACKTOBERFEST",
-  "/events/bytebrawl-hacktoberfest/register": "CONNECTING REGISTRATION PORTAL",
-  "/events/fdp": "LOADING ATAL FDP RESEARCH",
-  "/ideathon": "LOADING IDEATHON PROTOCOL",
-  "/she-leads": "LOADING SHE LEADS CONCLAVE",
-  "/sheleads": "LOADING SHE LEADS CONCLAVE",
-  "/team": "LOADING FLUX TALENT CELL",
-  "/faculty": "LOADING FACULTY ADVISORY",
-  "/gallery": "LOADING PHOTO & MEDIA ARCHIVES",
-  "/contact": "CONNECTING SECURE COMMUNICATION MATRIX",
-};
-
-/**
- * Returns a clean, high-tech cyber status label for any given pathname.
- */
-export function getRouteLabel(pathname: string): string {
-  if (!pathname) return "INITIALIZING FLUX CORE";
-  const clean = pathname.replace(/\/+$/, "") || "/";
-  if (ROUTE_LABELS[clean]) return ROUTE_LABELS[clean];
-
-  // Check prefix matches for nested routes
-  for (const [key, label] of Object.entries(ROUTE_LABELS)) {
-    if (key !== "/" && clean.startsWith(key)) {
-      return label;
-    }
-  }
-
-  const formatted = clean
-    .replace(/^\//, "")
-    .replace(/[-_/]/g, " ")
-    .toUpperCase();
-  return `LOADING ${formatted || "SYSTEM CORE"}`;
-}
-
-/**
- * Helper to trigger a cyber page transition from anywhere in the application.
- */
-export function triggerRouteTransition(targetPath: string, customLabel?: string, duration = 460) {
-  if (typeof window === "undefined") return;
-  window.dispatchEvent(
-    new CustomEvent("flux:start-transition", {
-      detail: { path: targetPath, label: customLabel, duration },
-    })
-  );
-}
-
-/**
- * Helper to smoothly return to the homepage top with cyber animation.
- */
-export function triggerHomeNavigation() {
-  if (typeof window === "undefined") return;
-  window.dispatchEvent(new CustomEvent("flux:navigate-home"));
-}
+import { ROUTE_LABELS, getRouteLabel } from "@/lib/routeTransition";
 
 export default function RouteTransitionLoader() {
   const location = useLocation();
@@ -97,12 +40,12 @@ export default function RouteTransitionLoader() {
     if (typeof window === "undefined") return;
 
     if (isNavigating) {
-      if ((window as any).__lenis && introManager.isDone()) {
-        (window as any).__lenis.stop();
+      if (window.__lenis && introManager.isDone()) {
+        window.__lenis.stop();
       }
     } else {
-      if ((window as any).__lenis && introManager.isDone()) {
-        (window as any).__lenis.start();
+      if (window.__lenis && introManager.isDone()) {
+        window.__lenis.start();
       }
     }
   }, [isNavigating]);
@@ -130,8 +73,8 @@ export default function RouteTransitionLoader() {
       startLoader(ROUTE_LABELS["/"] || "INITIALIZING FLUX CORE", 450);
 
       // Instantly reset scroll to top while loader covers screen
-      if ((window as any).__lenis) {
-        (window as any).__lenis.scrollTo(0, { immediate: true });
+      if (window.__lenis) {
+        window.__lenis.scrollTo(0, { immediate: true });
       }
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
       document.documentElement.scrollTop = 0;
@@ -143,8 +86,8 @@ export default function RouteTransitionLoader() {
 
       // Redundant frame check for Lenis and browser scroll restoration
       requestAnimationFrame(() => {
-        if ((window as any).__lenis) {
-          (window as any).__lenis.scrollTo(0, { immediate: true });
+        if (window.__lenis) {
+          window.__lenis.scrollTo(0, { immediate: true });
         }
         window.scrollTo({ top: 0, left: 0, behavior: "instant" });
         document.documentElement.scrollTop = 0;
@@ -190,9 +133,12 @@ export default function RouteTransitionLoader() {
 
     // 5. Always display the matching FLUX cyber loading animation across all route changes
     const label = getRouteLabel(location.pathname);
-    startLoader(label, 450);
+    const frameId = requestAnimationFrame(() => {
+      startLoader(label, 450);
+    });
 
     return () => {
+      cancelAnimationFrame(frameId);
       if (timerRef.current) clearTimeout(timerRef.current);
     };
   }, [location.pathname, startLoader]);

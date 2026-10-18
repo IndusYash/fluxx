@@ -57,11 +57,11 @@ export default function ByteBrawlHeroPopup({ isMobile = false }: ByteBrawlHeroPo
 
   const containerClasses = isMobile
     ? "relative w-full max-w-[325px] mx-auto pointer-events-auto select-none mb-1"
-    : "hidden lg:block absolute bottom-12 right-24 xl:right-28 z-[30] pointer-events-auto w-[355px] select-none";
+    : "hidden lg:block absolute bottom-7 sm:bottom-9 xl:bottom-11 left-[39.5%] xl:left-[39.5%] 2xl:left-[40.5%] z-[30] pointer-events-auto w-[295px] xl:w-[300px] 2xl:w-[305px] select-none";
 
   const pillContainerClasses = isMobile
     ? "relative flex justify-center w-full pointer-events-auto my-2"
-    : "hidden lg:block absolute bottom-12 right-24 xl:right-28 z-[30] pointer-events-auto";
+    : "hidden lg:block absolute bottom-7 sm:bottom-9 xl:bottom-11 left-[39.5%] xl:left-[39.5%] 2xl:left-[40.5%] z-[30] pointer-events-auto";
 
   return (
     <div className={isMobile ? "w-full flex justify-center" : "contents"}>
@@ -193,7 +193,7 @@ export default function ByteBrawlHeroPopup({ isMobile = false }: ByteBrawlHeroPo
                     </div>
                   </div>
                   <p className="text-[11px] sm:text-xs text-neutral-300/85 mt-0.5 line-clamp-2 font-normal leading-relaxed">
-                    24-hour national hackathon & open-source sprint. Build, innovate, and compete for exciting awards.
+                    Hackathon & Open-source sprint. Build, innovate, and compete for exciting awards.
                   </p>
                 </div>
 
