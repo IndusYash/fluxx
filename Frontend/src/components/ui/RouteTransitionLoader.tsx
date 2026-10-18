@@ -3,8 +3,11 @@ import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import FluxLoadingScreen from "./FluxLoadingScreen";
 import { introManager } from "@/lib/introState";
+import { resetThemeToDark } from "@/hooks/useLightSectionObserver";
+import { liquidController } from "@/components/sections/home/liquidController";
 
-const ROUTE_LABELS: Record<string, string> = {
+export const ROUTE_LABELS: Record<string, string> = {
+  "/": "INITIALIZING FLUX CORE",
   "/about": "ACCESSING ARCHITECTURAL LEGACY",
   "/events": "SYNCHRONIZING FLUX EVENTS & CONCLAVES",
   "/events/bytebrawl-hacktoberfest": "LOADING BYTEBRAWL X HACKTOBERFEST",
@@ -25,6 +28,67 @@ export default function RouteTransitionLoader() {
   const [activeLabel, setActiveLabel] = useState("");
   const prevPath = useRef(location.pathname);
   const isFirstRender = useRef(true);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const startLoader = (label: string, duration = 450) => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    setActiveLabel(label);
+    setIsNavigating(true);
+
+    timerRef.current = setTimeout(() => {
+      setIsNavigating(false);
+      timerRef.current = null;
+    }, duration);
+  };
+
+  // Listen for custom transition events and home return requests
+  useEffect(() => {
+    const handleStartTransition = (e: Event) => {
+      if (!introManager.isDone()) return;
+      const customEvent = e as CustomEvent<{ path?: string; label?: string; duration?: number }>;
+      const targetPath = customEvent.detail?.path || "/";
+      const label = customEvent.detail?.label || ROUTE_LABELS[targetPath] || "INITIALIZING FLUX CORE";
+      startLoader(label, customEvent.detail?.duration || 480);
+    };
+
+    const handleNavigateHome = () => {
+      if (!introManager.isDone()) return;
+
+      // Start loader immediately
+      startLoader(ROUTE_LABELS["/"] || "INITIALIZING FLUX CORE", 450);
+
+      // Instantly reset scroll to top while loader covers screen
+      if ((window as any).__lenis) {
+        (window as any).__lenis.scrollTo(0, { immediate: true });
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+
+      // Reset theme & liquid state
+      resetThemeToDark();
+      liquidController.forceState(0);
+
+      // Redundant frame check for Lenis / browser scroll
+      requestAnimationFrame(() => {
+        if ((window as any).__lenis) {
+          (window as any).__lenis.scrollTo(0, { immediate: true });
+        }
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      });
+    };
+
+    window.addEventListener("flux:start-transition", handleStartTransition);
+    window.addEventListener("flux:navigate-home", handleNavigateHome);
+
+    return () => {
+      window.removeEventListener("flux:start-transition", handleStartTransition);
+      window.removeEventListener("flux:navigate-home", handleNavigateHome);
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     // 1. Initial mount: never show transition loading animation on initial site load
@@ -34,12 +98,11 @@ export default function RouteTransitionLoader() {
       return;
     }
 
-    // 2. Only trigger on actual pathname changes (not in-page hash movements or section scrolling)
+    // 2. Only trigger on actual pathname changes
     if (prevPath.current === location.pathname) {
       return;
     }
 
-    const fromPath = prevPath.current;
     prevPath.current = location.pathname;
 
     // 3. If landing intro is still running, do not show loader
@@ -47,23 +110,16 @@ export default function RouteTransitionLoader() {
       return;
     }
 
-    // 4. When returning to home page ("/"), ensure buttery smoothness without loading flash
-    if (location.pathname === "/") {
-      return;
-    }
-
+    // 4. Always display the matching FLUX cyber loading animation across all route changes including "/"
     const label =
       ROUTE_LABELS[location.pathname] ||
       `LOADING ${location.pathname.replace(/^\//, "").toUpperCase().replace(/[-/]/g, " ")}`;
 
-    setActiveLabel(label);
-    setIsNavigating(true);
+    startLoader(label, 450);
 
-    const timer = setTimeout(() => {
-      setIsNavigating(false);
-    }, 420);
-
-    return () => clearTimeout(timer);
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
   }, [location.pathname]);
 
   return (
@@ -74,7 +130,7 @@ export default function RouteTransitionLoader() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2, ease: "easeInOut" }}
+          transition={{ duration: 0.22, ease: "easeInOut" }}
           className="fixed inset-0 z-[99999] pointer-events-auto"
         >
           <FluxLoadingScreen text={activeLabel} fullScreen={true} />
@@ -83,3 +139,4 @@ export default function RouteTransitionLoader() {
     </AnimatePresence>
   );
 }
+

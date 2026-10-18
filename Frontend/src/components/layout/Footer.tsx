@@ -1,6 +1,7 @@
 import { FaWhatsapp, FaInstagram, FaLinkedin, FaMapMarkerAlt, FaEnvelope } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import logo from "@/assets/images/flux-logo-silver.jpg";
 
 const socialLinks = [
@@ -35,6 +36,30 @@ const quickLinks = [
 ];
 
 export default function Footer() {
+  const navigate = useNavigate();
+
+  const handleQuickLinkClick = (href: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    if (href === "/") {
+      if (window.location.pathname === "/") {
+        window.dispatchEvent(new CustomEvent("flux:navigate-home"));
+      } else {
+        window.dispatchEvent(
+          new CustomEvent("flux:start-transition", {
+            detail: { path: "/", label: "INITIALIZING FLUX CORE" },
+          })
+        );
+        setTimeout(() => navigate("/"), 30);
+      }
+    } else {
+      window.dispatchEvent(
+        new CustomEvent("flux:start-transition", {
+          detail: { path: href },
+        })
+      );
+      setTimeout(() => navigate(href), 30);
+    }
+  };
   return (
     <footer id="site-footer" className="relative pt-16 sm:pt-20 pb-[calc(env(safe-area-inset-bottom,0px)+var(--ticker-h)+var(--chatbot-btn-size)+36px)] md:pb-[calc(var(--ticker-h)+48px)] overflow-hidden bg-[#020202] text-white">
       {/* Animated background grid */}
@@ -130,6 +155,7 @@ export default function Footer() {
                 <li key={index}>
                   <motion.a 
                     href={link.href} 
+                    onClick={(e) => handleQuickLinkClick(link.href, e)}
                     className="text-gray-400 hover:text-white transition-all duration-300 flex items-center group text-sm"
                     whileHover={{ x: 5 }}
                   >

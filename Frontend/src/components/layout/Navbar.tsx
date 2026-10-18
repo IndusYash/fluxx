@@ -22,6 +22,49 @@ export default function Navbar() {
 
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
+  const handleHomeClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setMobileOpen(false);
+
+    if (location.pathname === "/") {
+      const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+      if (scrollY > 15) {
+        window.dispatchEvent(new CustomEvent("flux:navigate-home"));
+      } else {
+        if ((window as any).__lenis) {
+          (window as any).__lenis.scrollTo(0, { immediate: false });
+        }
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+      }
+    } else {
+      window.dispatchEvent(
+        new CustomEvent("flux:start-transition", {
+          detail: { path: "/", label: "INITIALIZING FLUX CORE" },
+        })
+      );
+      setTimeout(() => {
+        navigate("/");
+      }, 30);
+    }
+  };
+
+  const handleNavClick = (path: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    setMobileOpen(false);
+    setEventsOpen(false);
+
+    if (location.pathname === path) return;
+
+    window.dispatchEvent(
+      new CustomEvent("flux:start-transition", {
+        detail: { path },
+      })
+    );
+    setTimeout(() => {
+      navigate(path);
+    }, 30);
+  };
+
   // Search shortcuts (⌘K / Ctrl+K) and Escape handler
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -130,7 +173,7 @@ export default function Navbar() {
             <Link
               to="/"
               className="pointer-events-auto flex items-center gap-3 group"
-              onClick={() => setMobileOpen(false)}
+              onClick={handleHomeClick}
             >
               <div className={`w-[48px] h-[48px] sm:w-[52px] sm:h-[52px] rounded-xl border flex items-center justify-center p-2.5 transition-all duration-150 shadow-lg ${
                 isNavbarLight
@@ -161,6 +204,7 @@ export default function Navbar() {
           }`}>
             <Link
               to="/about"
+              onClick={(e) => handleNavClick("/about", e)}
               className={`px-3 py-1.5 text-xs transition-colors ${
                 isNavbarLight
                   ? location.pathname === "/about" ? "text-black font-semibold" : "text-neutral-600 hover:text-black"
@@ -178,6 +222,7 @@ export default function Navbar() {
             >
               <Link
                 to="/events"
+                onClick={(e) => handleNavClick("/events", e)}
                 className={`px-3 py-1.5 text-xs flex items-center gap-1 transition-colors ${
                   isNavbarLight
                     ? location.pathname.startsWith("/events") || location.pathname === "/ideathon" || location.pathname === "/she-leads"
@@ -200,7 +245,7 @@ export default function Navbar() {
                       <Link
                         key={item.path}
                         to={item.path}
-                        onClick={() => setEventsOpen(false)}
+                        onClick={(e) => handleNavClick(item.path, e)}
                         className="block px-3 py-2 rounded-lg hover:bg-white/[0.06] transition-colors group"
                       >
                         <div className="text-xs font-medium text-white flex items-center justify-between">
@@ -221,6 +266,7 @@ export default function Navbar() {
 
             <Link
               to="/team"
+              onClick={(e) => handleNavClick("/team", e)}
               className={`px-3 py-1.5 text-xs transition-colors ${
                 isNavbarLight
                   ? location.pathname === "/team" ? "text-black font-semibold" : "text-neutral-600 hover:text-black"
@@ -232,6 +278,7 @@ export default function Navbar() {
 
             <Link
               to="/faculty"
+              onClick={(e) => handleNavClick("/faculty", e)}
               className={`px-3 py-1.5 text-xs transition-colors ${
                 isNavbarLight
                   ? location.pathname === "/faculty" ? "text-black font-semibold" : "text-neutral-600 hover:text-black"
@@ -243,6 +290,7 @@ export default function Navbar() {
 
             <Link
               to="/gallery"
+              onClick={(e) => handleNavClick("/gallery", e)}
               className={`px-3 py-1.5 text-xs transition-colors ${
                 isNavbarLight
                   ? location.pathname === "/gallery" ? "text-black font-semibold" : "text-neutral-600 hover:text-black"
@@ -254,6 +302,7 @@ export default function Navbar() {
 
             <Link
               to="/contact"
+              onClick={(e) => handleNavClick("/contact", e)}
               className={`px-3 py-1.5 text-xs transition-colors ${
                 isNavbarLight
                   ? location.pathname === "/contact" ? "text-black font-semibold" : "text-neutral-600 hover:text-black"
@@ -269,6 +318,7 @@ export default function Navbar() {
             {/* Join Us Pill */}
             <Link
               to="/team"
+              onClick={(e) => handleNavClick("/team", e)}
               className={`pointer-events-auto group inline-flex items-center justify-center gap-2 h-[48px] sm:h-[52px] px-4 sm:px-6 rounded-full border text-xs font-mono uppercase tracking-wider transition-all duration-200 shadow-sm ${
                 isNavbarLight
                   ? "border-black/20 bg-black text-white hover:bg-neutral-800"
@@ -318,14 +368,14 @@ export default function Navbar() {
 
             <Link
               to="/"
-              onClick={() => setMobileOpen(false)}
+              onClick={handleHomeClick}
               className="text-sm font-medium text-[#9a9a9a] hover:text-white min-h-[44px] flex items-center px-2 rounded-lg hover:bg-white/[0.05] transition-colors"
             >
               Home
             </Link>
             <Link
               to="/about"
-              onClick={() => setMobileOpen(false)}
+              onClick={(e) => handleNavClick("/about", e)}
               className="text-sm font-medium text-[#9a9a9a] hover:text-white min-h-[44px] flex items-center px-2 rounded-lg hover:bg-white/[0.05] transition-colors"
             >
               About
@@ -335,7 +385,7 @@ export default function Navbar() {
             <div className="border-t border-white/10 pt-2 pb-1 flex flex-col">
               <Link
                 to="/events"
-                onClick={() => setMobileOpen(false)}
+                onClick={(e) => handleNavClick("/events", e)}
                 className="text-sm font-medium text-white min-h-[44px] flex items-center justify-between px-2 rounded-lg hover:bg-white/[0.05] transition-colors"
               >
                 <span>Events</span>
@@ -346,7 +396,7 @@ export default function Navbar() {
                   <Link
                     key={item.path}
                     to={item.path}
-                    onClick={() => setMobileOpen(false)}
+                    onClick={(e) => handleNavClick(item.path, e)}
                     className="text-xs text-white/75 hover:text-white min-h-[44px] flex items-center px-2 rounded-md hover:bg-white/[0.05] transition-colors"
                   >
                     {item.title}
@@ -357,28 +407,28 @@ export default function Navbar() {
 
             <Link
               to="/team"
-              onClick={() => setMobileOpen(false)}
+              onClick={(e) => handleNavClick("/team", e)}
               className="text-sm font-medium text-[#9a9a9a] hover:text-white min-h-[44px] flex items-center px-2 rounded-lg hover:bg-white/[0.05] transition-colors"
             >
               Team
             </Link>
             <Link
               to="/faculty"
-              onClick={() => setMobileOpen(false)}
+              onClick={(e) => handleNavClick("/faculty", e)}
               className="text-sm font-medium text-[#9a9a9a] hover:text-white min-h-[44px] flex items-center px-2 rounded-lg hover:bg-white/[0.05] transition-colors"
             >
               Faculty
             </Link>
             <Link
               to="/gallery"
-              onClick={() => setMobileOpen(false)}
+              onClick={(e) => handleNavClick("/gallery", e)}
               className="text-sm font-medium text-[#9a9a9a] hover:text-white min-h-[44px] flex items-center px-2 rounded-lg hover:bg-white/[0.05] transition-colors"
             >
               Gallery
             </Link>
             <Link
               to="/contact"
-              onClick={() => setMobileOpen(false)}
+              onClick={(e) => handleNavClick("/contact", e)}
               className="text-sm font-medium text-[#9a9a9a] hover:text-white min-h-[44px] flex items-center px-2 rounded-lg hover:bg-white/[0.05] transition-colors"
             >
               Contact
@@ -388,7 +438,7 @@ export default function Navbar() {
             <div className="border-t border-white/10 pt-3 mt-1">
               <Link
                 to="/team"
-                onClick={() => setMobileOpen(false)}
+                onClick={(e) => handleNavClick("/team", e)}
                 className="w-full min-h-[44px] px-4 rounded-xl bg-white text-black font-mono text-xs uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-lg"
               >
                 <span>Join Us</span>
@@ -431,9 +481,13 @@ export default function Navbar() {
                 filteredSearch.map((page) => (
                   <button
                     key={page.path}
-                    onClick={() => {
+                    onClick={(e) => {
                       setSearchOpen(false);
-                      navigate(page.path);
+                      if (page.path === "/") {
+                        handleHomeClick(e);
+                      } else {
+                        handleNavClick(page.path, e);
+                      }
                     }}
                     className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-left text-xs text-white/90 hover:bg-white/[0.08] hover:text-white transition-colors"
                   >
