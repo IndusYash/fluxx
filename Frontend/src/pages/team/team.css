@@ -1,0 +1,227 @@
+/* ─── FLUX TEAM PAGE STYLES & LAYOUT TOKENS ────────────────────────────────── */
+
+:root {
+  --pad: clamp(16px, 3.83vw, 64px);
+  --gap: clamp(8px, 0.84vw, 14px);
+  --ratio: 0.68;
+}
+
+.flux-team-page {
+  --pad: clamp(16px, 3.83vw, 64px);
+  --gap: clamp(8px, 0.84vw, 14px);
+  --ratio: 0.68;
+  background-color: #060606;
+  color: #ffffff;
+  overflow-x: clip;
+  position: relative;
+  width: 100%;
+}
+
+/* ── Stage Grid: Desktop >1180px ── */
+@media (min-width: 1181px) {
+  .flux-stage {
+    grid-template-columns: minmax(0, 1fr) 58% !important;
+    align-items: stretch !important;
+  }
+
+  .flux-zone {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .flux-sticky-track {
+    position: sticky !important;
+    top: clamp(100px, 14vh, 150px) !important;
+    width: 100% !important;
+    height: var(--sh, 380px) !important;
+    align-self: start !important;
+  }
+
+  .flux-stack-anchor {
+    left: 42% !important;
+    top: 50% !important;
+  }
+
+  .flux-spotlight-container {
+    left: 42% !important;
+    top: 50% !important;
+  }
+
+  .flux-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+
+  .flux-trajectory {
+    display: block !important;
+  }
+}
+
+/* ── Stage Grid: <=1180px ── */
+@media (max-width: 1180px) {
+  .flux-stage {
+    grid-template-columns: 1fr !important;
+  }
+
+  .flux-zone {
+    height: calc(var(--sh, 280px) + 60px) !important;
+    margin-bottom: 24px !important;
+    position: relative !important;
+  }
+
+  .flux-sticky-track {
+    position: relative !important;
+    top: auto !important;
+    height: 100% !important;
+  }
+
+  .flux-stack-anchor {
+    left: calc(50% + 70px) !important;
+    top: 50% !important;
+  }
+
+  .flux-trajectory {
+    display: none !important;
+  }
+
+  .flux-trajectory-node,
+  .flux-trajectory-arrow {
+    display: none !important;
+  }
+
+  .flux-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+/* ── Stage Grid: <=700px ── */
+@media (max-width: 700px) {
+  .flux-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* ── Card Styles ── */
+.flux-team-card {
+  aspect-ratio: 0.68;
+  border-radius: 12px;
+  overflow: hidden;
+  container-type: inline-size;
+  box-sizing: border-box;
+  background-color: #0a100d;
+}
+
+/* Hover state only after entrance animation finishes (.done class) */
+.flux-grid-card-wrapper .flux-team-card {
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.22s ease,
+              box-shadow 0.22s ease;
+}
+
+.flux-grid-card-wrapper.done .flux-team-card:hover {
+  transform: translateY(-3px) !important;
+  border-color: rgba(77, 255, 124, 0.8) !important;
+  box-shadow: 0 8px 24px rgba(77, 255, 124, 0.25) !important;
+}
+
+/* Social links hover & focus */
+.flux-social-link {
+  transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.flux-social-link:hover {
+  color: #4dff7c !important;
+  transform: translateY(-1px);
+}
+
+.flux-social-link:focus-visible {
+  outline: 2px solid #4dff7c !important;
+  outline-offset: 2px !important;
+}
+
+/* ── Stack & Trajectory Transitions on Settle & Hover ── */
+.flux-stack-anchor {
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.flux-stage.flux-settled .flux-stack-anchor,
+.flux-stack-anchor.flux-stack-hidden {
+  opacity: 0 !important;
+  transform: scale(0.88) translateY(-10px) !important;
+  pointer-events: none !important;
+}
+
+.flux-trajectory {
+  transition: opacity 0.35s ease;
+}
+
+.flux-stage.flux-settled .flux-trajectory,
+.flux-stage.flux-settled .flux-trajectory-node,
+.flux-stage.flux-settled .flux-trajectory-arrow {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* ── IDEA 1: Dynamic Member Spotlight Container ── */
+.flux-spotlight-container {
+  opacity: 0;
+  transform: scale(0.9) rotate(-1.5deg);
+  pointer-events: none;
+  transition: opacity 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+.flux-stage.flux-settled .flux-spotlight-container,
+.flux-spotlight-container.flux-force-visible {
+  opacity: 1 !important;
+  transform: scale(1) rotate(0deg) !important;
+  pointer-events: auto !important;
+}
+
+@media (max-width: 1180px) {
+  .flux-spotlight-container {
+    left: 50% !important;
+    top: 50% !important;
+    margin: calc(var(--sh, 280px) / -2) 0 0 calc(var(--sw, 210px) / -2) !important;
+  }
+}
+
+/* Utility to hide scrollbar in spotlight modal if needed */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .flux-grid-card-wrapper {
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+  }
+
+  .flux-trajectory-node,
+  .flux-trajectory-arrow {
+    opacity: 1 !important;
+  }
+
+  .flux-trajectory path:nth-child(2) {
+    stroke-dashoffset: 0 !important;
+  }
+
+  .flux-stack-anchor {
+    opacity: 0 !important;
+  }
+
+  .flux-spotlight-container {
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+}
