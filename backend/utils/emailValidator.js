@@ -18,6 +18,15 @@ const COMMON_TYPOS = {
   "mmut.ac.in": "mmmut.ac.in",
 };
 
+const KNOWN_VALID_DOMAINS = new Set([
+  "gmail.com",
+  "yahoo.com",
+  "outlook.com",
+  "hotmail.com",
+  "icloud.com",
+  "mmmut.ac.in",
+]);
+
 /**
  * Validates email format, disposable check, allowed domains, typo check, and MX lookup
  * @param {string} email
@@ -44,17 +53,22 @@ export async function validateEmail(email, { skipMx = false } = {}) {
 
   const domain = parts[1];
 
-  // 1. Check Typo Hint
-  let typoHint = null;
+  // 1. Check Typo Hint & Reject common typos
   if (COMMON_TYPOS[domain]) {
-    typoHint = `Did you mean ${parts[0]}@${COMMON_TYPOS[domain]}?`;
+    const typoHint = `Did you mean ${parts[0]}@${COMMON_TYPOS[domain]}?`;
+    return {
+      valid: false,
+      error: `Wrong email domain "@${domain}". ${typoHint}`,
+      domain,
+      typoHint,
+    };
   }
 
   // 2. Check Disposable Email
   if (disposableSet.has(domain)) {
     return {
       valid: false,
-      error: "Disposable email addresses are not permitted",
+      error: `Wrong email: disposable email addresses are not permitted`,
       domain,
     };
   }
@@ -75,34 +89,58 @@ export async function validateEmail(email, { skipMx = false } = {}) {
     }
   }
 
-  // 4. MX DNS Lookup
+  // 4. Known major email domains skip external DNS check
+  if (KNOWN_VALID_DOMAINS.has(domain)) {
+    return { valid: true, domain };
+  }
+
+  // 5. MX DNS Lookup with OS resolver fallback
   if (!skipMx && process.env.NODE_ENV !== "test-skip-mx") {
     // If it's a test domain like test.local or localhost, allow in test
     if (domain === "test.local" || domain === "example.com" || domain.endsWith(".test")) {
-      return { valid: true, domain, typoHint };
+      return { valid: true, domain };
     }
 
     try {
       const records = await dns.resolveMx(domain);
-      if (!records || records.length === 0) {
-        return {
-          valid: false,
-          error: typoHint || "Domain does not have valid mail exchange (MX) servers",
-          domain,
-          typoHint,
-        };
+      if (records && records.length > 0) {
+        return { valid: true, domain };
       }
-    } catch (err) {
       return {
         valid: false,
-        error: typoHint || "Unable to verify mail exchange records for this domain (no MX records)",
+        error: `Domain "@${domain}" does not have valid mail exchange (MX) servers`,
         domain,
-        typoHint,
       };
+    } catch (err) {
+      if (err.code === "ENOTFOUND" || err.code === "NODATA") {
+        return {
+          valid: false,
+          error: `Domain "@${domain}" does not exist or has no mail servers`,
+          domain,
+        };
+      }
+      // If resolveMx encountered connection refused (e.g. UDP port 53 restricted on host), fallback to OS resolver
+      try {
+        await dns.lookup(domain);
+        return { valid: true, domain };
+      } catch (lookupErr) {
+        if (lookupErr.code === "ENOTFOUND") {
+          return {
+            valid: false,
+            error: `Domain "@${domain}" does not exist`,
+            domain,
+          };
+        }
+        return {
+          valid: false,
+          error: `Unable to verify domain "@${domain}"`,
+          domain,
+        };
+      }
     }
   }
 
-  return { valid: true, domain, typoHint };
+  return { valid: true, domain };
 }
 
 /**

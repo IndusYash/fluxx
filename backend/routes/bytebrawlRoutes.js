@@ -121,6 +121,9 @@ router.post("/check-email", async (req, res) => {
 router.post("/send-otp", otpSendRateLimiter, async (req, res) => {
   try {
     const email = String(req.body?.email || "").trim().toLowerCase();
+    if (!email) {
+      return res.status(400).json({ error: "Email is required" });
+    }
     
     // First validate email format, MX and disposable check
     const validation = await validateEmail(email);
@@ -128,12 +131,18 @@ router.post("/send-otp", otpSendRateLimiter, async (req, res) => {
       return res.status(422).json({
         error: validation.error,
         typoHint: validation.typoHint,
+        email,
       });
     }
 
     const sendResult = await sendEmailOtp(email);
     if (!sendResult.success) {
-      return res.status(429).json({ error: sendResult.error });
+      const isRateLimit = sendResult.error?.toLowerCase().includes("rate limit");
+      return res.status(isRateLimit ? 429 : 422).json({
+        error: sendResult.error,
+        email,
+        typoHint: validation.typoHint,
+      });
     }
 
     const smtpConfigured = Boolean(

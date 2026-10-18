@@ -1,15 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 import {
   Users,
   User,
-  Mail,
-  Phone,
-  Hash,
-  GraduationCap,
-  GitBranch,
-  ShieldAlert,
   Loader2,
   CheckCircle2,
   AlertTriangle,
@@ -21,7 +15,6 @@ import {
   Edit2,
   KeyRound,
   RefreshCw,
-  Lock,
 } from "lucide-react";
 import {
   Select,
@@ -30,7 +23,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { BYTEBRAWL_CONFIG } from "@/config/eventConfig";
 import type { ConfirmedRegistrationData } from "./ConfirmationPanel";
 
 interface RegistrationFormProps {
@@ -45,8 +37,8 @@ const BRANCH_OPTIONS = [
   "EE",
   "ME",
   "CE",
-  "Chemical",
-  "Biotech",
+  "CHE",
+  "BBA",
   "Other",
 ];
 
@@ -100,7 +92,7 @@ const COMMON_TYPOS: Record<string, string> = {
   "mmut.ac.in": "mmmut.ac.in",
 };
 
-export default function RegistrationForm({ isOpen, onSuccess }: RegistrationFormProps) {
+export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
   // Step State
   const [currentStep, setCurrentStep] = useState(1);
   const [regType, setRegType] = useState<"TEAM" | "INDIVIDUAL">("TEAM");
@@ -170,7 +162,7 @@ export default function RegistrationForm({ isOpen, onSuccess }: RegistrationForm
 
   // Timers for OTP resend cooldown
   useEffect(() => {
-    let t: any;
+    let t: ReturnType<typeof setTimeout> | undefined;
     if (p1OtpState.timer > 0) {
       t = setTimeout(() => {
         setP1OtpState((prev) => ({ ...prev, timer: prev.timer - 1 }));
@@ -180,7 +172,7 @@ export default function RegistrationForm({ isOpen, onSuccess }: RegistrationForm
   }, [p1OtpState.timer]);
 
   useEffect(() => {
-    let t: any;
+    let t: ReturnType<typeof setTimeout> | undefined;
     if (p2OtpState.timer > 0) {
       t = setTimeout(() => {
         setP2OtpState((prev) => ({ ...prev, timer: prev.timer - 1 }));
@@ -193,12 +185,17 @@ export default function RegistrationForm({ isOpen, onSuccess }: RegistrationForm
   useEffect(() => {
     const clean = teamName.trim();
     if (clean.length < 2) {
-      setTeamNameStatus("idle");
-      setTeamNameMsg("");
-      return;
+      const resetTimeout = setTimeout(() => {
+        setTeamNameStatus("idle");
+        setTeamNameMsg("");
+      }, 0);
+      return () => clearTimeout(resetTimeout);
     }
 
-    setTeamNameStatus("checking");
+    const checkingTimeout = setTimeout(() => {
+      setTeamNameStatus("checking");
+    }, 0);
+
     const timeout = setTimeout(async () => {
       try {
         const res = await fetch(
@@ -218,8 +215,27 @@ export default function RegistrationForm({ isOpen, onSuccess }: RegistrationForm
       }
     }, 350);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(checkingTimeout);
+      clearTimeout(timeout);
+    };
   }, [teamName, regType]);
+
+  // Email validation helpers
+  const isValidEmailFormat = (email: string) => {
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+    return emailRegex.test(email.trim().toLowerCase());
+  };
+
+  const formatWrongEmailError = (email: string, errorMsg?: string) => {
+    if (!errorMsg) {
+      return `Wrong email: "${email}". Verification email could not be sent.`;
+    }
+    if (errorMsg.toLowerCase().startsWith("wrong email")) {
+      return errorMsg;
+    }
+    return `Wrong email: "${email}" — ${errorMsg}`;
+  };
 
   // Check email typo hints on blur
   const checkTypo = (email: string, setter: (val: string | null) => void) => {
@@ -230,7 +246,7 @@ export default function RegistrationForm({ isOpen, onSuccess }: RegistrationForm
     const domain = email.trim().toLowerCase().split("@")[1];
     if (COMMON_TYPOS[domain]) {
       const prefix = email.split("@")[0];
-      setter(`${prefix}@${COMMON_TYPOS[domain]}`);
+      setter(`Did you mean ${prefix}@${COMMON_TYPOS[domain]}?`);
     } else {
       setter(null);
     }
@@ -239,8 +255,21 @@ export default function RegistrationForm({ isOpen, onSuccess }: RegistrationForm
   // OTP handlers for Participant 1
   const handleSendP1Otp = async () => {
     const email = p1.email.trim().toLowerCase();
-    if (!email || !email.includes("@")) {
-      setP1OtpState((prev) => ({ ...prev, error: "Please enter a valid email address first" }));
+    if (!email) {
+      setP1OtpState((prev) => ({
+        ...prev,
+        error: "Please enter your email address first.",
+        active: false,
+      }));
+      return;
+    }
+
+    if (!isValidEmailFormat(email)) {
+      setP1OtpState((prev) => ({
+        ...prev,
+        error: `Wrong email: "${p1.email}". Please enter a valid email address (e.g. name@domain.com).`,
+        active: false,
+      }));
       return;
     }
 
@@ -256,8 +285,12 @@ export default function RegistrationForm({ isOpen, onSuccess }: RegistrationForm
         setP1OtpState((prev) => ({
           ...prev,
           sending: false,
-          error: data.error || "Failed to send verification code",
+          active: prev.active ? true : false,
+          error: formatWrongEmailError(p1.email, data.error),
         }));
+        if (data.typoHint) {
+          setP1TypoHint(data.typoHint);
+        }
       } else {
         setP1OtpState((prev) => ({
           ...prev,
@@ -275,7 +308,8 @@ export default function RegistrationForm({ isOpen, onSuccess }: RegistrationForm
       setP1OtpState((prev) => ({
         ...prev,
         sending: false,
-        error: "Network error sending verification code",
+        active: false,
+        error: `Wrong email: "${p1.email}" — Network error sending verification code. Please check your connection.`,
       }));
     }
   };
@@ -319,12 +353,28 @@ export default function RegistrationForm({ isOpen, onSuccess }: RegistrationForm
   // OTP handlers for Participant 2 (Teammate)
   const handleSendP2Otp = async () => {
     const email = p2.email.trim().toLowerCase();
-    if (!email || !email.includes("@")) {
-      setP2OtpState((prev) => ({ ...prev, error: "Please enter a valid teammate email address first" }));
+    if (!email) {
+      setP2OtpState((prev) => ({
+        ...prev,
+        error: "Please enter teammate email address first.",
+        active: false,
+      }));
+      return;
+    }
+    if (!isValidEmailFormat(email)) {
+      setP2OtpState((prev) => ({
+        ...prev,
+        error: `Wrong email: "${p2.email}". Please enter a valid email address (e.g. name@domain.com).`,
+        active: false,
+      }));
       return;
     }
     if (email === p1.email.trim().toLowerCase()) {
-      setP2OtpState((prev) => ({ ...prev, error: "Teammate cannot have the same email as Team Leader" }));
+      setP2OtpState((prev) => ({
+        ...prev,
+        error: `Wrong email: "${p2.email}" — Teammate cannot have the same email as Team Leader.`,
+        active: false,
+      }));
       return;
     }
 
@@ -340,8 +390,12 @@ export default function RegistrationForm({ isOpen, onSuccess }: RegistrationForm
         setP2OtpState((prev) => ({
           ...prev,
           sending: false,
-          error: data.error || "Failed to send verification code",
+          active: prev.active ? true : false,
+          error: formatWrongEmailError(p2.email, data.error),
         }));
+        if (data.typoHint) {
+          setP2TypoHint(data.typoHint);
+        }
       } else {
         setP2OtpState((prev) => ({
           ...prev,
@@ -359,7 +413,8 @@ export default function RegistrationForm({ isOpen, onSuccess }: RegistrationForm
       setP2OtpState((prev) => ({
         ...prev,
         sending: false,
-        error: "Network error sending verification code",
+        active: false,
+        error: `Wrong email: "${p2.email}" — Network error sending verification code. Please check your connection.`,
       }));
     }
   };
@@ -489,7 +544,7 @@ export default function RegistrationForm({ isOpen, onSuccess }: RegistrationForm
     setFieldErrors({});
 
     const p1Phone = checkClientPhone(p1.mobile);
-    const payload: any = {
+    const payload: Record<string, unknown> = {
       type: regType,
       teamName: teamName.trim(),
       participant1: {
@@ -912,12 +967,17 @@ export default function RegistrationForm({ isOpen, onSuccess }: RegistrationForm
                   onChange={(e) => {
                     setP1({ ...p1, email: e.target.value.toLowerCase() });
                     checkTypo(e.target.value, setP1TypoHint);
+                    if (p1OtpState.error) {
+                      setP1OtpState((prev) => ({ ...prev, error: "" }));
+                    }
                   }}
                   onBlur={() => checkTypo(p1.email, setP1TypoHint)}
                   placeholder="e.g. student@mmmut.ac.in"
                   className={`w-full px-4 py-3 rounded-xl bg-[#161616] border text-white placeholder:text-neutral-500 font-sans text-sm focus:outline-none transition-colors ${
                     p1Verified
                       ? "border-emerald-500/60 bg-emerald-950/10 text-emerald-200 cursor-not-allowed"
+                      : !p1OtpState.active && p1OtpState.error
+                      ? "border-rose-500/80 bg-rose-950/20 text-white focus:border-rose-500 focus:ring-1 focus:ring-rose-500"
                       : "border-white/15 focus:border-white focus:ring-1 focus:ring-white"
                   }`}
                 />
@@ -937,7 +997,7 @@ export default function RegistrationForm({ isOpen, onSuccess }: RegistrationForm
                   <button
                     type="button"
                     id="btn-verify-p1"
-                    disabled={p1OtpState.sending || !p1.email.includes("@")}
+                    disabled={p1OtpState.sending || !p1.email.trim()}
                     onClick={handleSendP1Otp}
                     className="px-4 py-2 rounded-xl bg-white text-black hover:bg-neutral-200 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-mono font-bold uppercase tracking-wider transition-colors flex items-center gap-1.5 flex-shrink-0"
                   >
@@ -958,15 +1018,33 @@ export default function RegistrationForm({ isOpen, onSuccess }: RegistrationForm
                 </div>
               )}
 
+              {/* Wrong Email Error Banner (shown when verification email is not sent) */}
+              {!p1OtpState.active && p1OtpState.error && !p1Verified && (
+                <div className="flex items-start gap-2.5 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs font-mono mt-2">
+                  <AlertTriangle className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1 space-y-1">
+                    <p className="font-semibold text-rose-200">Wrong Email Address (Email Not Sent)</p>
+                    <p className="text-neutral-300 leading-relaxed break-all">
+                      {p1OtpState.error}
+                    </p>
+                  </div>
+                </div>
+              )}
+
               {p1TypoHint && !p1Verified && (
                 <div className="flex items-center gap-1.5 text-xs text-amber-300 mt-1.5">
                   <span>{p1TypoHint}</span>
                   <button
                     type="button"
                     onClick={() => {
-                      const corrected = p1TypoHint.replace("Did you mean ", "").replace("?", "").trim();
+                      const corrected = p1TypoHint.includes("Did you mean ")
+                        ? p1TypoHint.replace("Did you mean ", "").replace("?", "").trim()
+                        : p1TypoHint.trim();
                       setP1({ ...p1, email: corrected });
                       setP1TypoHint(null);
+                      if (p1OtpState.error) {
+                        setP1OtpState((prev) => ({ ...prev, error: "" }));
+                      }
                     }}
                     className="underline hover:text-white font-mono uppercase text-[10px]"
                   >
@@ -1267,12 +1345,17 @@ export default function RegistrationForm({ isOpen, onSuccess }: RegistrationForm
                       onChange={(e) => {
                         setP2({ ...p2, email: e.target.value.toLowerCase() });
                         checkTypo(e.target.value, setP2TypoHint);
+                        if (p2OtpState.error) {
+                          setP2OtpState((prev) => ({ ...prev, error: "" }));
+                        }
                       }}
                       onBlur={() => checkTypo(p2.email, setP2TypoHint)}
                       placeholder="e.g. teammate@mmmut.ac.in"
                       className={`w-full px-4 py-3 rounded-xl bg-[#161616] border text-white placeholder:text-neutral-500 font-sans text-sm focus:outline-none transition-colors ${
                         p2Verified
                           ? "border-emerald-500/60 bg-emerald-950/10 text-emerald-200 cursor-not-allowed"
+                          : !p2OtpState.active && p2OtpState.error
+                          ? "border-rose-500/80 bg-rose-950/20 text-white focus:border-rose-500 focus:ring-1 focus:ring-rose-500"
                           : "border-white/15 focus:border-white focus:ring-1 focus:ring-white"
                       }`}
                     />
@@ -1292,7 +1375,7 @@ export default function RegistrationForm({ isOpen, onSuccess }: RegistrationForm
                       <button
                         type="button"
                         id="btn-verify-p2"
-                        disabled={p2OtpState.sending || !p2.email.includes("@")}
+                        disabled={p2OtpState.sending || !p2.email.trim()}
                         onClick={handleSendP2Otp}
                         className="px-4 py-2 rounded-xl bg-white text-black hover:bg-neutral-200 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-mono font-bold uppercase tracking-wider transition-colors flex items-center gap-1.5 flex-shrink-0"
                       >
@@ -1319,15 +1402,33 @@ export default function RegistrationForm({ isOpen, onSuccess }: RegistrationForm
                     </p>
                   )}
 
+                  {/* Wrong Email Error Banner (shown when verification email is not sent) */}
+                  {!p2OtpState.active && p2OtpState.error && !p2Verified && (
+                    <div className="flex items-start gap-2.5 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs font-mono mt-2">
+                      <AlertTriangle className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
+                      <div className="flex-1 space-y-1">
+                        <p className="font-semibold text-rose-200">Wrong Email Address (Email Not Sent)</p>
+                        <p className="text-neutral-300 leading-relaxed break-all">
+                          {p2OtpState.error}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
                   {p2TypoHint && !p2Verified && (
                     <div className="flex items-center gap-1.5 text-xs text-amber-300 mt-1.5">
                       <span>{p2TypoHint}</span>
                       <button
                         type="button"
                         onClick={() => {
-                          const corrected = p2TypoHint.replace("Did you mean ", "").replace("?", "").trim();
+                          const corrected = p2TypoHint.includes("Did you mean ")
+                            ? p2TypoHint.replace("Did you mean ", "").replace("?", "").trim()
+                            : p2TypoHint.trim();
                           setP2({ ...p2, email: corrected });
                           setP2TypoHint(null);
+                          if (p2OtpState.error) {
+                            setP2OtpState((prev) => ({ ...prev, error: "" }));
+                          }
                         }}
                         className="underline hover:text-white font-mono uppercase text-[10px]"
                       >

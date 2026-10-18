@@ -133,12 +133,23 @@ export async function sendEmailOtp(email) {
 
   // Dispatch via email
   try {
-    await sendOtpEmail({
+    const mailResult = await sendOtpEmail({
       recipientEmail: normalized,
       otpCode: code,
     });
+    if (mailResult && mailResult.success === false) {
+      console.warn(`[OTP] Mailer dispatch failed for ${normalized}: ${mailResult.error}`);
+      return {
+        success: false,
+        error: `Could not send verification email: ${mailResult.error || "delivery failed"}. Please check your email address.`,
+      };
+    }
   } catch (err) {
     console.warn(`[OTP] Mailer dispatch notice: ${err.message}`);
+    return {
+      success: false,
+      error: `Could not send verification email: ${err.message}. Please check your email address.`,
+    };
   }
 
   return {

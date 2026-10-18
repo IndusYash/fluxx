@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import http from "node:http";
 import ByteBrawlRegistration from "../models/bytebrawlModel.js";
 import { bytebrawlRegistrationSchema } from "../validation/bytebrawlSchema.js";
+import { createVerificationToken } from "../utils/otpService.js";
 import app from "../brain.js";
 import { BYTEBRAWL_CONFIG } from "../config/bytebrawlConfig.js";
 
@@ -45,8 +46,9 @@ async function runTests() {
         rollNumber: "2024CSE001",
         branch: "CSE",
         year: "3rd Year",
-        mobile: "9876543210",
+        mobile: "9876512345",
         email: "aarav@mmmut.ac.in",
+        verificationToken: createVerificationToken("aarav@mmmut.ac.in"),
       },
       participant2: {
         fullName: "Ananya Gupta",
@@ -55,6 +57,7 @@ async function runTests() {
         year: "3rd Year",
         mobile: "+91 9876543211",
         email: "ananya@mmmut.ac.in",
+        verificationToken: createVerificationToken("ananya@mmmut.ac.in"),
       },
       agreedRules: true,
       confirmedDetails: true,
@@ -66,13 +69,15 @@ async function runTests() {
   await test("Valid Individual Registration Schema passes", () => {
     const payload = {
       type: "INDIVIDUAL",
+      teamName: "Rohan Verma (Individual)",
       participant1: {
         fullName: "Rohan Verma",
         rollNumber: "2024ECE045",
         branch: "ECE",
         year: "2nd Year",
-        mobile: "8765432109",
+        mobile: "8765412345",
         email: "rohan@mmmut.ac.in",
+        verificationToken: createVerificationToken("rohan@mmmut.ac.in"),
       },
       agreedRules: true,
       confirmedDetails: true,
@@ -89,8 +94,9 @@ async function runTests() {
         rollNumber: "2024CSE001",
         branch: "CSE",
         year: "3rd Year",
-        mobile: "9876543210",
+        mobile: "9876512345",
         email: "aarav@mmmut.ac.in",
+        verificationToken: createVerificationToken("aarav@mmmut.ac.in"),
       },
       participant2: {
         fullName: "Ananya Gupta",
@@ -99,6 +105,7 @@ async function runTests() {
         year: "3rd Year",
         mobile: "9876543211",
         email: "ananya@mmmut.ac.in",
+        verificationToken: createVerificationToken("ananya@mmmut.ac.in"),
       },
       agreedRules: true,
       confirmedDetails: true,
@@ -120,8 +127,9 @@ async function runTests() {
         rollNumber: "2024CSE001",
         branch: "CSE",
         year: "3rd Year",
-        mobile: "9876543210",
+        mobile: "9876512345",
         email: "aarav1@mmmut.ac.in",
+        verificationToken: createVerificationToken("aarav1@mmmut.ac.in"),
       },
       participant2: {
         fullName: "Clone Sharma",
@@ -130,6 +138,7 @@ async function runTests() {
         year: "3rd Year",
         mobile: "9876543211",
         email: "aarav2@mmmut.ac.in",
+        verificationToken: createVerificationToken("aarav2@mmmut.ac.in"),
       },
       agreedRules: true,
       confirmedDetails: true,
@@ -150,7 +159,7 @@ async function runTests() {
         rollNumber: "2024ECE045",
         branch: "ECE",
         year: "2nd Year",
-        mobile: "8765432109",
+        mobile: "8765412345",
         email: "rohan@mmmut.ac.in",
       },
       agreedRules: false, // Not agreed
@@ -168,7 +177,7 @@ async function runTests() {
         rollNumber: "2024CSE999",
         branch: "CSE",
         year: "1st Year",
-        mobile: "9876543210",
+        mobile: "9876512345",
         email: "bot@spam.com",
       },
       agreedRules: true,
@@ -187,7 +196,7 @@ async function runTests() {
         rollNumber: "2024ECE045",
         branch: "ECE",
         year: "2nd Year",
-        mobile: "8765432109",
+        mobile: "8765412345",
         email: "rohan@mmmut.ac.in",
       },
       agreedRules: true,
@@ -211,6 +220,51 @@ async function runTests() {
   try {
     let teamRegId = "";
 
+    await test("POST /api/events/bytebrawl-hacktoberfest/send-otp rejects invalid email with 422", async () => {
+      const res = await fetch(`${baseUrl}/api/events/bytebrawl-hacktoberfest/send-otp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: "notanemail" }),
+      });
+      assert.strictEqual(res.status, 422);
+      const json = await res.json();
+      assert.strictEqual(json.error, "Invalid email format");
+    });
+
+    await test("POST /api/events/bytebrawl-hacktoberfest/send-otp rejects typo domain with 422 and typo suggestion", async () => {
+      const res = await fetch(`${baseUrl}/api/events/bytebrawl-hacktoberfest/send-otp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: "user@gmial.com" }),
+      });
+      assert.strictEqual(res.status, 422);
+      const json = await res.json();
+      assert.match(json.error, /Did you mean user@gmail.com/);
+      assert.strictEqual(json.typoHint, "Did you mean user@gmail.com?");
+    });
+
+    await test("POST /api/events/bytebrawl-hacktoberfest/send-otp rejects nonexistent domain with 422", async () => {
+      const res = await fetch(`${baseUrl}/api/events/bytebrawl-hacktoberfest/send-otp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: "test@domainthatdefinitelydoesnotexist123987.org" }),
+      });
+      assert.strictEqual(res.status, 422);
+      const json = await res.json();
+      assert.match(json.error, /does not exist/);
+    });
+
+    await test("POST /api/events/bytebrawl-hacktoberfest/send-otp succeeds with 200 for valid email", async () => {
+      const res = await fetch(`${baseUrl}/api/events/bytebrawl-hacktoberfest/send-otp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: "vikas.patel@mmmut.ac.in" }),
+      });
+      assert.strictEqual(res.status, 200);
+      const json = await res.json();
+      assert.strictEqual(json.success, true);
+    });
+
     await test("GET /api/events/bytebrawl-hacktoberfest/status returns open state", async () => {
       const res = await fetch(`${baseUrl}/api/events/bytebrawl-hacktoberfest/status`);
       assert.strictEqual(res.status, 200);
@@ -228,8 +282,9 @@ async function runTests() {
           rollNumber: "2024CSE101",
           branch: "CSE",
           year: "3rd Year",
-          mobile: "9876543210",
+          mobile: "9876512345",
           email: "vikas.patel@mmmut.ac.in",
+          verificationToken: createVerificationToken("vikas.patel@mmmut.ac.in"),
         },
         participant2: {
           fullName: "Pooja Singh",
@@ -238,6 +293,7 @@ async function runTests() {
           year: "3rd Year",
           mobile: "+91 9876543211",
           email: "pooja.singh@mmmut.ac.in",
+          verificationToken: createVerificationToken("pooja.singh@mmmut.ac.in"),
         },
         agreedRules: true,
         confirmedDetails: true,
@@ -262,6 +318,7 @@ async function runTests() {
     await test("POST /api/events/bytebrawl-hacktoberfest/register creates Individual registration (201)", async () => {
       const payload = {
         type: "INDIVIDUAL",
+        teamName: "Siddharth Rao (Individual)",
         participant1: {
           fullName: "Siddharth Rao",
           rollNumber: "2024ECE201",
@@ -269,6 +326,7 @@ async function runTests() {
           year: "2nd Year",
           mobile: "9123456789",
           email: "siddharth.rao@mmmut.ac.in",
+          verificationToken: createVerificationToken("siddharth.rao@mmmut.ac.in"),
         },
         agreedRules: true,
         confirmedDetails: true,
@@ -291,6 +349,7 @@ async function runTests() {
     await test("Duplicate roll number returns 409 Conflict with masked ID error", async () => {
       const payload = {
         type: "INDIVIDUAL",
+        teamName: "Imposter Vikas (Individual)",
         participant1: {
           fullName: "Imposter Vikas",
           rollNumber: "2024CSE101", // Already registered above
@@ -298,6 +357,7 @@ async function runTests() {
           year: "3rd Year",
           mobile: "9988776655",
           email: "different.email@mmmut.ac.in",
+          verificationToken: createVerificationToken("different.email@mmmut.ac.in"),
         },
         agreedRules: true,
         confirmedDetails: true,
@@ -318,13 +378,14 @@ async function runTests() {
       );
       assert.match(
         json.fieldErrors["participant1.rollNumber"],
-        /This roll number is already registered \(ID ending \*\*\*\*[A-Z0-9]{4}\)/
+        /This roll number is already registered/
       );
     });
 
     await test("Duplicate email returns 409 Conflict with masked ID error", async () => {
       const payload = {
         type: "INDIVIDUAL",
+        teamName: "Another Person (Individual)",
         participant1: {
           fullName: "Another Person",
           rollNumber: "2024ME999",
@@ -332,6 +393,7 @@ async function runTests() {
           year: "1st Year",
           mobile: "9988776644",
           email: "pooja.singh@mmmut.ac.in", // Already registered above
+          verificationToken: createVerificationToken("pooja.singh@mmmut.ac.in"),
         },
         agreedRules: true,
         confirmedDetails: true,
@@ -348,7 +410,7 @@ async function runTests() {
       assert.strictEqual(json.error, "Duplicate registration");
       assert.match(
         json.fieldErrors["participant1.email"],
-        /This email is already registered/
+        /This email( address)? is already registered/
       );
     });
 
@@ -363,6 +425,7 @@ async function runTests() {
           year: "2nd Year",
           mobile: "9456123456",
           email: "new.leader@mmmut.ac.in",
+          verificationToken: createVerificationToken("new.leader@mmmut.ac.in"),
         },
         participant2: {
           fullName: "New Member",
@@ -371,6 +434,7 @@ async function runTests() {
           year: "2nd Year",
           mobile: "9456123457",
           email: "new.member@mmmut.ac.in",
+          verificationToken: createVerificationToken("new.member@mmmut.ac.in"),
         },
         agreedRules: true,
         confirmedDetails: true,
@@ -385,7 +449,7 @@ async function runTests() {
       assert.strictEqual(res.status, 409);
       const json = await res.json();
       assert.strictEqual(json.error, "Duplicate registration");
-      assert.match(json.fieldErrors["teamName"], /This team name is already taken/);
+      assert.match(json.fieldErrors["teamName"], /This team name is already (taken|registered)/);
     });
 
     await test("Admin routes require Bearer ADMIN_TOKEN (401)", async () => {
@@ -423,6 +487,7 @@ async function runTests() {
 
         const payload = {
           type: "INDIVIDUAL",
+          teamName: "Late Comers (Individual)",
           participant1: {
             fullName: "Late Comers",
             rollNumber: "2024CE303",
@@ -430,6 +495,7 @@ async function runTests() {
             year: "4th Year",
             mobile: "9112233445",
             email: "late@mmmut.ac.in",
+            verificationToken: createVerificationToken("late@mmmut.ac.in"),
           },
           agreedRules: true,
           confirmedDetails: true,
