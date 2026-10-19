@@ -67,18 +67,18 @@ export default function LiquidTransition() {
           scrollObj.fillProgress = currentLiquidP;
 
           // Direct count calculation: finish counting by p = 0.22, hold steady at full target values afterwards
-          let countE = 25;
+          let countE = 5;
           let countM = 500;
-          let countH = 12;
-          let countP = 18;
+          let countH = 3;
+          let countP = 5;
 
           if (p < 0.22) {
             const t = p / 0.22;
             const easeT = 1 - (1 - t) * (1 - t);
-            countE = Math.round(25 * easeT);
+            countE = Math.round(5 * easeT);
             countM = Math.round(500 * easeT);
-            countH = Math.round(12 * easeT);
-            countP = Math.round(18 * easeT);
+            countH = Math.round(3 * easeT);
+            countP = Math.round(5 * easeT);
           }
 
           // Zero-rerender DOM mutations directly into stat elements
@@ -235,7 +235,7 @@ export default function LiquidTransition() {
                 aria-hidden="true"
                 className="font-poiret text-[clamp(40px,5.6vw,96px)] md:text-[clamp(48px,5.6vw,96px)] leading-none drop-shadow-sm tracking-[0.02em] invisible select-none"
               >
-                25+
+                5+
               </span>
               <span
                 ref={eventsNumRef}
@@ -283,7 +283,7 @@ export default function LiquidTransition() {
                 aria-hidden="true"
                 className="font-poiret text-[clamp(40px,5.6vw,96px)] md:text-[clamp(48px,5.6vw,96px)] leading-none drop-shadow-sm tracking-[0.02em] invisible select-none"
               >
-                12+
+                3+
               </span>
               <span
                 ref={hackathonsNumRef}
@@ -307,7 +307,7 @@ export default function LiquidTransition() {
                 aria-hidden="true"
                 className="font-poiret text-[clamp(40px,5.6vw,96px)] md:text-[clamp(48px,5.6vw,96px)] leading-none drop-shadow-sm tracking-[0.02em] invisible select-none"
               >
-                18+
+                5+
               </span>
               <span
                 ref={projectsNumRef}
