@@ -45,7 +45,7 @@ const events: EventProps[] = [
   },
   {
     id: 2,
-    title: 'She Leads – Women in Technology Summit',
+    title: 'She Leads',
     date: '12 - 13 September (Ended)',
     description:
       "An empowering leadership and tech summit designed to inspire, mentor, and connect tech innovators and future leaders. Event successfully concluded.",

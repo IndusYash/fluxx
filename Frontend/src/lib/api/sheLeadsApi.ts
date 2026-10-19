@@ -94,7 +94,7 @@ export async function submitSheLeadsRegistration(
     }
 
     // If server is unreachable (offline/no network), gracefully cache locally so work is not lost
-    console.warn('Backend currently unreachable, saving She Leads – Dr. Tessy Thomas Annual Conclave registration locally:', error);
+    console.warn('Backend currently unreachable, saving She Leads registration locally:', error);
 
     const fallbackResult: SheLeadsRegistrationResult = {
       success: true,
