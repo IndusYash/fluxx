@@ -38,8 +38,8 @@ export default function ByteBrawlHeroPopup({ isMobile = false }: ByteBrawlHeroPo
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
 
-    const rY = (x / (rect.width / 2)) * 10;
-    const rX = -(y / (rect.height / 2)) * 10;
+    const rY = (x / (rect.width / 2)) * 8;
+    const rX = -(y / (rect.height / 2)) * 8;
 
     setRotateX(rX);
     setRotateY(rY);
@@ -56,8 +56,8 @@ export default function ByteBrawlHeroPopup({ isMobile = false }: ByteBrawlHeroPo
   }
 
   const containerClasses = isMobile
-    ? "relative w-full max-w-[325px] mx-auto pointer-events-auto select-none mb-1"
-    : "hidden lg:block absolute bottom-7 sm:bottom-9 xl:bottom-11 left-[39.5%] xl:left-[39.5%] 2xl:left-[40.5%] z-[30] pointer-events-auto w-[295px] xl:w-[300px] 2xl:w-[305px] select-none";
+    ? "relative w-full max-w-[340px] mx-auto pointer-events-auto select-none mb-1 px-2"
+    : "hidden lg:block absolute bottom-7 sm:bottom-9 xl:bottom-11 left-[39.5%] xl:left-[39.5%] 2xl:left-[40.5%] z-[30] pointer-events-auto w-[310px] xl:w-[320px] 2xl:w-[330px] select-none";
 
   const pillContainerClasses = isMobile
     ? "relative flex justify-center w-full pointer-events-auto my-2"
@@ -96,167 +96,243 @@ export default function ByteBrawlHeroPopup({ isMobile = false }: ByteBrawlHeroPo
                 transformStyle: "preserve-3d",
                 transition: "transform 0.15s ease-out",
               }}
-              className="relative group rounded-2xl p-[1px] bg-gradient-to-br from-orange-500/60 via-amber-500/30 to-red-600/60 shadow-[0_12px_44px_rgba(0,0,0,0.9),0_0_32px_rgba(249,115,22,0.32)] backdrop-blur-2xl"
+              className="relative group"
             >
-              {/* Inner Cyber HUD Box */}
-              <div className="relative rounded-2xl bg-[#0b0c13]/95 p-3.5 sm:p-4 overflow-hidden border border-orange-500/40">
-                {/* 4 Cyber Tech Corner Brackets */}
-                <div className="absolute top-1.5 left-1.5 w-3 h-3 border-t-2 border-l-2 border-orange-500 pointer-events-none" />
-                <div className="absolute top-1.5 right-1.5 w-3 h-3 border-t-2 border-r-2 border-orange-500 pointer-events-none" />
-                <div className="absolute bottom-1.5 left-1.5 w-3 h-3 border-b-2 border-l-2 border-orange-500 pointer-events-none" />
-                <div className="absolute bottom-1.5 right-1.5 w-3 h-3 border-b-2 border-r-2 border-orange-500 pointer-events-none" />
+              {/* Outer Glitch Slices (Signature Hologram Lines on Left/Right Edges) */}
+              <div className="absolute -left-3.5 top-9 w-4 h-[2px] bg-white/90 shadow-[0_0_8px_#ffffff] pointer-events-none z-30" />
+              <div className="absolute -left-5 top-20 w-6 h-[2.5px] bg-white shadow-[0_0_10px_#ffffff] pointer-events-none z-30" />
+              <div className="absolute -left-3 top-36 w-3.5 h-[1.5px] bg-white/80 shadow-[0_0_6px_#ffffff] pointer-events-none z-30" />
+              <div className="absolute -left-4 bottom-14 w-4.5 h-[2px] bg-white/90 shadow-[0_0_8px_#ffffff] pointer-events-none z-30" />
 
-                {/* Subtle Amber Glow Background */}
-                <div
-                  className="absolute -top-12 -right-12 w-36 h-36 rounded-full pointer-events-none blur-3xl opacity-30"
-                  style={{
-                    background:
-                      "radial-gradient(circle, rgba(249,115,22,0.9) 0%, rgba(239,68,68,0.4) 60%, transparent 100%)",
-                  }}
-                  aria-hidden="true"
-                />
+              <div className="absolute -right-3 top-12 w-3.5 h-[2px] bg-white/80 shadow-[0_0_8px_#ffffff] pointer-events-none z-30" />
+              <div className="absolute -right-5 top-28 w-6 h-[2.5px] bg-white shadow-[0_0_10px_#ffffff] pointer-events-none z-30" />
+              <div className="absolute -right-3.5 bottom-16 w-4 h-[2px] bg-white/90 shadow-[0_0_8px_#ffffff] pointer-events-none z-30" />
 
-                {/* Cyber Scanline Texture */}
-                <div
-                  className="absolute inset-0 pointer-events-none opacity-15 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.3)_50%)]"
-                  style={{ backgroundSize: "100% 4px" }}
-                  aria-hidden="true"
-                />
+              {/* Top and Bottom Tech Bar Notches */}
+              <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 flex items-center gap-1 px-3 py-0.5 rounded-full bg-neutral-900 border border-white/30 text-[7px] font-mono text-white/50 z-30 pointer-events-none">
+                <span className="w-1 h-1 rounded-full bg-white/80" />
+                <span className="w-1 h-1 rounded-full bg-white/40" />
+                <span className="w-1 h-1 rounded-full bg-white/40" />
+                <span className="w-1 h-1 rounded-full bg-white/80" />
+              </div>
 
-                {/* TOP HEADER: Registrations Live + Heartbeat ECG + Reticle Red Close */}
-                <div className="flex items-center justify-between gap-2 mb-2 relative z-10">
-                  {/* Left: Registrations Live Pill */}
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-orange-950/50 border border-orange-500/70 shadow-[0_0_10px_rgba(249,115,22,0.35)]">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75" />
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500 shadow-[0_0_6px_#f97316]" />
-                    </span>
-                    <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.2em] font-black text-amber-300 uppercase">
-                      REGISTRATIONS LIVE
+              {/* Glossy Metallic Chrome Bevel Frame (Sharp Rectangle) */}
+              <div
+                className="relative rounded-none p-[2px] shadow-[0_20px_50px_rgba(0,0,0,0.95),0_0_35px_rgba(220,240,255,0.18)]"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(180,195,215,0.35) 25%, rgba(90,105,125,0.5) 50%, rgba(230,242,255,0.8) 75%, rgba(140,155,175,0.4) 100%)",
+                }}
+              >
+                {/* Inner Dark Glass Panel (Sharp Rectangle) */}
+                <div className="relative rounded-none bg-[#090b10]/95 backdrop-blur-2xl p-4 sm:p-4.5 overflow-hidden border border-white/15">
+                  {/* Cyber Reticle Corner Brackets (White/Chrome) */}
+                  <div className="absolute top-1.5 left-1.5 w-3.5 h-3.5 border-t-2 border-l-2 border-white/80 pointer-events-none z-20" />
+                  <div className="absolute top-1.5 right-1.5 w-3.5 h-3.5 border-t-2 border-r-2 border-white/80 pointer-events-none z-20" />
+                  <div className="absolute bottom-1.5 left-1.5 w-3.5 h-3.5 border-b-2 border-l-2 border-white/80 pointer-events-none z-20" />
+                  <div className="absolute bottom-1.5 right-1.5 w-3.5 h-3.5 border-b-2 border-r-2 border-white/80 pointer-events-none z-20" />
+
+                  {/* Ambient Top-Left & Bottom Specular Radial Glows */}
+                  <div
+                    className="absolute -top-16 -left-16 w-44 h-44 rounded-full pointer-events-none blur-3xl opacity-25"
+                    style={{
+                      background: "radial-gradient(circle, rgba(230,245,255,0.9) 0%, rgba(140,190,240,0.3) 60%, transparent 100%)",
+                    }}
+                    aria-hidden="true"
+                  />
+                  <div
+                    className="absolute -bottom-16 -right-16 w-40 h-40 rounded-full pointer-events-none blur-3xl opacity-20"
+                    style={{
+                      background: "radial-gradient(circle, rgba(160,210,255,0.8) 0%, transparent 70%)",
+                    }}
+                    aria-hidden="true"
+                  />
+
+                  {/* Subtle Diagonal Carbon Scanline Texture */}
+                  <div
+                    className="absolute inset-0 pointer-events-none opacity-[0.06]"
+                    style={{
+                      backgroundImage:
+                        "repeating-linear-gradient(0deg, rgba(255,255,255,0.3) 0px, rgba(255,255,255,0.3) 1px, transparent 1px, transparent 3px)",
+                    }}
+                    aria-hidden="true"
+                  />
+
+                  {/* 3D Perspective Cyber Grid Floor at Bottom */}
+                  <div
+                    className="absolute inset-x-0 bottom-0 h-24 pointer-events-none overflow-hidden opacity-25 z-0"
+                    aria-hidden="true"
+                  >
+                    <div
+                      className="w-full h-full"
+                      style={{
+                        backgroundImage:
+                          "linear-gradient(to right, rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.3) 1px, transparent 1px)",
+                        backgroundSize: "18px 18px",
+                        transform: "perspective(180px) rotateX(62deg) translateY(10px)",
+                        maskImage: "linear-gradient(to top, black 40%, transparent 100%)",
+                        WebkitMaskImage: "linear-gradient(to top, black 40%, transparent 100%)",
+                      }}
+                    />
+                  </div>
+
+                  {/* ==================== 1. TOP HEADER ROW ==================== */}
+                  <div className="flex items-center justify-between gap-2 mb-2.5 relative z-10">
+                    {/* Left: "REGISTRATIONS LIVE" Glass Pill */}
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 border border-white/35 shadow-[0_0_12px_rgba(255,255,255,0.22),inset_0_1px_1px_rgba(255,255,255,0.35)] backdrop-blur-md">
+                      {/* Luminous Pulsing Dot */}
+                      <span className="relative flex h-2.5 w-2.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white shadow-[0_0_8px_#ffffff]" />
+                      </span>
+                      <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.2em] font-black text-white uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+                        REGISTRATIONS LIVE
+                      </span>
+                    </div>
+
+                    {/* Center: Glowing White/Ice Heartbeat Trace (ECG Pulse) */}
+                    <svg
+                      className="w-10 sm:w-11 h-3.5 text-white stroke-current drop-shadow-[0_0_6px_rgba(255,255,255,0.85)] select-none pointer-events-none"
+                      viewBox="0 0 50 16"
+                      fill="none"
+                    >
+                      <path
+                        d="M0 8h10l3-6 4 12 4-8 3 4h26"
+                        strokeWidth="1.75"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+
+                    {/* Right: Reticle Close Button with Corner Brackets */}
+                    <div className="relative p-0.5">
+                      <div className="absolute -top-0.5 -left-0.5 w-1.5 h-1.5 border-t border-l border-white/70 pointer-events-none" />
+                      <div className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 border-t border-r border-white/70 pointer-events-none" />
+                      <div className="absolute -bottom-0.5 -left-0.5 w-1.5 h-1.5 border-b border-l border-white/70 pointer-events-none" />
+                      <div className="absolute -bottom-0.5 -right-0.5 w-1.5 h-1.5 border-b border-r border-white/70 pointer-events-none" />
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsDismissed(true);
+                        }}
+                        aria-label="Minimize ByteBrawl Alert"
+                        className="w-6 h-6 min-w-[24px] min-h-[24px] rounded bg-white/5 hover:bg-white/15 border border-white/30 hover:border-white flex items-center justify-center text-white/80 hover:text-white transition-all shadow-[0_0_8px_rgba(255,255,255,0.2)] cursor-pointer"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* ==================== 2. CATEGORY TAG ==================== */}
+                  <div className="flex items-center gap-1.5 font-mono text-[10px] tracking-widest uppercase mb-1.5 relative z-10">
+                    <span className="text-white font-black">&gt;_</span>
+                    <span className="px-2 py-0.5 rounded border border-white/25 bg-white/[0.05] text-white/90 font-mono text-[9px] sm:text-[10px] font-bold tracking-wider shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]">
+                      [ FLAGSHIP HACKATHON ]
                     </span>
                   </div>
 
-                  {/* Center: Amber Heartbeat Trace */}
-                  <svg
-                    className="w-8 sm:w-10 h-3 text-amber-400/80 stroke-current drop-shadow-[0_0_6px_rgba(249,115,22,0.5)] select-none pointer-events-none"
-                    viewBox="0 0 50 16"
-                    fill="none"
-                  >
-                    <path
-                      d="M0 8h10l3-6 4 12 4-8 3 4h26"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                  {/* ==================== 3. TITLE ROW ==================== */}
+                  <div className="relative z-10 mb-2 text-left">
+                    <div className="flex items-center justify-between gap-1">
+                      <h3 className="text-base sm:text-lg font-black tracking-tight leading-snug">
+                        <span className="text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
+                          ByteBrawl
+                        </span>{" "}
+                        <span className="text-white/60 font-light mx-0.5">×</span>{" "}
+                        <span className="text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
+                          Hacktoberfest
+                        </span>
+                      </h3>
+                      <div className="flex items-center gap-1 text-[10px] font-mono text-white/60 select-none">
+                        <span>─</span>
+                        <span>01</span>
+                      </div>
+                    </div>
+                    <p className="text-[11px] sm:text-xs text-neutral-300 mt-1 line-clamp-2 font-normal leading-relaxed">
+                      Hackathon &amp; Open-source sprint. Build, innovate, and compete for exciting awards.
+                    </p>
+                  </div>
 
-                  {/* Right: Red Reticle Crosshair Close Button */}
-                  <div className="relative p-0.5">
-                    <div className="absolute -top-0.5 -left-0.5 w-1.5 h-1.5 border-t border-l border-red-500 pointer-events-none" />
-                    <div className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 border-t border-r border-red-500 pointer-events-none" />
-                    <div className="absolute -bottom-0.5 -left-0.5 w-1.5 h-1.5 border-b border-l border-red-500 pointer-events-none" />
-                    <div className="absolute -bottom-0.5 -right-0.5 w-1.5 h-1.5 border-b border-r border-red-500 pointer-events-none" />
+                  {/* ==================== 4. METADATA PILLS ==================== */}
+                  <div className="relative z-10 flex flex-wrap gap-1.5 mb-3 font-mono text-[10px]">
+                    <span className="px-2.5 py-0.5 rounded-full bg-black/60 border border-white/25 hover:border-white/45 text-white/90 flex items-center gap-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.25)] backdrop-blur-md transition-colors">
+                      <Flame className="w-3 h-3 text-white" /> 26-29 Oct 2026
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded-full bg-black/60 border border-white/25 hover:border-white/45 text-white/90 flex items-center gap-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.25)] backdrop-blur-md transition-colors">
+                      <Zap className="w-3 h-3 text-white" /> Alan Turing Hall
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded-full bg-black/60 border border-white/25 hover:border-white/45 text-white/90 shadow-[inset_0_1px_0_rgba(255,255,255,0.25)] backdrop-blur-md transition-colors">
+                      Free Entry
+                    </span>
+                  </div>
+
+                  {/* ==================== 5. ACTION BUTTONS ==================== */}
+                  <div className="relative z-10 flex items-center gap-2">
+                    {/* Primary CTA: Iconic Glossy Liquid Glass / Mercury Button */}
                     <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setIsDismissed(true);
+                      onClick={() => navigate("/events/bytebrawl-hacktoberfest/register")}
+                      className="relative flex-1 h-12 min-h-[48px] rounded-xl cursor-pointer group overflow-hidden transition-all duration-300 transform active:scale-[0.98]"
+                      style={{
+                        background:
+                          "linear-gradient(180deg, rgba(255,255,255,0.75) 0%, rgba(180,215,245,0.3) 48%, rgba(80,130,175,0.25) 52%, rgba(175,220,255,0.45) 85%, rgba(230,245,255,0.8) 100%)",
+                        boxShadow:
+                          "inset 0 1px 1px 0 rgba(255,255,255,1), inset 0 -2px 5px 0 rgba(0,25,50,0.5), inset 0 0 14px 0 rgba(190,230,255,0.6), 0 0 24px 0 rgba(200,235,255,0.4), 0 8px 24px 0 rgba(0,0,0,0.75)",
+                        border: "1px solid rgba(255,255,255,0.6)",
                       }}
-                      aria-label="Minimize ByteBrawl Alert"
-                      className="w-6 h-6 min-w-[24px] min-h-[24px] rounded bg-red-950/60 border border-red-500/70 hover:bg-red-900/70 hover:border-red-400 flex items-center justify-center text-red-400 hover:text-red-200 transition-all shadow-[0_0_8px_rgba(239,68,68,0.4)] cursor-pointer"
                     >
-                      <X className="w-3.5 h-3.5" />
+                      {/* Top Curved Specular Highlight Reflection */}
+                      <div
+                        className="absolute inset-x-1.5 top-0.5 h-[50%] rounded-t-lg pointer-events-none"
+                        style={{
+                          background:
+                            "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.35) 75%, transparent 100%)",
+                        }}
+                      />
+
+                      {/* Animated Shimmer Sweep on Hover */}
+                      <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none" />
+
+                      {/* Cyber Button Corner Brackets */}
+                      <div className="absolute top-1 left-1.5 w-1.5 h-1.5 border-t border-l border-white/80 pointer-events-none" />
+                      <div className="absolute top-1 right-1.5 w-1.5 h-1.5 border-t border-r border-white/80 pointer-events-none" />
+                      <div className="absolute bottom-1 left-1.5 w-1.5 h-1.5 border-b border-l border-white/80 pointer-events-none" />
+                      <div className="absolute bottom-1 right-1.5 w-1.5 h-1.5 border-b border-r border-white/80 pointer-events-none" />
+
+                      {/* Stacked Button Typography */}
+                      <div className="relative z-10 flex flex-col items-center justify-center h-full leading-tight">
+                        <span className="font-mono text-[11px] sm:text-xs font-black tracking-[0.2em] text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] uppercase">
+                          REGISTER
+                        </span>
+                        <span className="font-mono text-[10px] sm:text-[11px] font-black tracking-[0.16em] text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] uppercase flex items-center gap-0.5 mt-0.5">
+                          NOW ↗
+                        </span>
+                      </div>
+                    </button>
+
+                    {/* Secondary CTA: Reticle Wireframe Explore Button */}
+                    <button
+                      onClick={() => navigate("/events/bytebrawl-hacktoberfest")}
+                      className="relative px-4 h-12 min-h-[48px] rounded-xl bg-black/75 hover:bg-white/[0.08] border border-white/30 hover:border-white/70 shadow-[0_4px_16px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.2)] flex items-center justify-center text-white font-mono text-xs font-bold tracking-[0.18em] uppercase transition-all cursor-pointer group"
+                    >
+                      {/* 4 Corner Reticle Crosshairs */}
+                      <div className="absolute top-1 left-1 w-1.5 h-1.5 border-t border-l border-white/50 group-hover:border-white transition-colors" />
+                      <div className="absolute top-1 right-1 w-1.5 h-1.5 border-t border-r border-white/50 group-hover:border-white transition-colors" />
+                      <div className="absolute bottom-1 left-1 w-1.5 h-1.5 border-b border-l border-white/50 group-hover:border-white transition-colors" />
+                      <div className="absolute bottom-1 right-1 w-1.5 h-1.5 border-b border-r border-white/50 group-hover:border-white transition-colors" />
+                      <span>EXPLORE</span>
                     </button>
                   </div>
-                </div>
 
-                {/* CATEGORY: >_ [ FLAGSHIP HACKATHON ] */}
-                <div className="flex items-center gap-1.5 font-mono text-[10px] tracking-widest uppercase mb-1 relative z-10">
-                  <span className="text-orange-500 font-bold">&gt;_</span>
-                  <span className="px-1.5 py-0.5 rounded border border-orange-500/40 bg-orange-500/10 text-orange-300 font-bold">
-                    [ FLAGSHIP HACKATHON ]
-                  </span>
-                </div>
-
-                {/* TITLE ROW: ByteBrawl × Hacktoberfest with Tech lines and 01 indicator */}
-                <div className="relative z-10 mb-1.5 text-left">
-                  <div className="flex items-center justify-between gap-1">
-                    <h3 className="text-base sm:text-lg font-black tracking-tight leading-snug">
-                      <span className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">ByteBrawl</span>{" "}
-                      <span className="text-orange-500 font-normal">×</span>{" "}
-                      <span className="bg-gradient-to-r from-orange-400 via-amber-400 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(249,115,22,0.6)]">
-                        Hacktoberfest
-                      </span>
-                    </h3>
-                    <div className="hidden sm:flex items-center gap-1 text-[9px] font-mono text-orange-500/70 select-none">
-                      <span>─</span>
-                      <span>01</span>
-                    </div>
+                  {/* ==================== 6. BOTTOM RIGHT DECAL ==================== */}
+                  <div className="font-mono text-[8px] sm:text-[9px] text-white/50 select-none pointer-events-none text-right mt-2 mr-0.5 tracking-wider">
+                    [SYS://BYTEBRAWL_v2]
                   </div>
-                  <p className="text-[11px] sm:text-xs text-neutral-300/85 mt-0.5 line-clamp-2 font-normal leading-relaxed">
-                    Hackathon & Open-source sprint. Build, innovate, and compete for exciting awards.
-                  </p>
-                </div>
-
-                {/* METADATA PILLS: 26-29 Oct 2026 | Alan Turing Hall | Free Entry */}
-                <div className="relative z-10 flex flex-wrap gap-1.5 mb-2.5 font-mono text-[10px]">
-                  <span className="px-2 py-0.5 rounded-full bg-orange-950/40 border border-orange-500/60 text-orange-300 flex items-center gap-1">
-                    <Flame className="w-3 h-3 text-orange-400" /> 26-29 Oct 2026
-                  </span>
-                  <span className="px-2 py-0.5 rounded-full bg-purple-950/40 border border-purple-500/60 text-purple-200 flex items-center gap-1">
-                    <Zap className="w-3 h-3 text-amber-300" /> Alan Turing Hall
-                  </span>
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-950/40 border border-emerald-500/60 text-emerald-300">
-                    Free Entry
-                  </span>
-                </div>
-
-                {/* ACTION BUTTONS: Sci-Fi Hazard Caution Mecha Button + Reticle Explore Button */}
-                <div className="relative z-10 flex items-center gap-2">
-                  {/* Primary CTA: Futuristic Sci-Fi Mecha Register Button with Caution Stripes */}
-                  <button
-                    onClick={() => navigate("/events/bytebrawl-hacktoberfest/register")}
-                    className="flex-1 h-11 min-h-[44px] rounded-lg p-[1px] bg-gradient-to-r from-orange-600 via-amber-500 to-red-600 shadow-[0_0_22px_rgba(249,115,22,0.6)] hover:shadow-[0_0_30px_rgba(249,115,22,0.85)] transition-all transform active:scale-95 cursor-pointer group flex items-center overflow-hidden"
-                  >
-                    {/* Left Hazard Stripes */}
-                    <div className="w-4 h-full flex items-center justify-center bg-black/40 border-r border-orange-500/40 font-mono text-[8px] font-bold text-amber-400 select-none tracking-tighter">
-                      ///
-                    </div>
-
-                    {/* Center Stepped Glowing Core */}
-                    <div className="flex-1 h-full bg-gradient-to-r from-orange-600 via-amber-500 to-red-600 flex items-center justify-center gap-1.5 px-2 text-white font-mono text-xs font-black tracking-wider uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
-                      <span>REGISTER NOW ↗</span>
-                      <span className="text-amber-200 font-extrabold">&gt;&gt;&gt;</span>
-                    </div>
-
-                    {/* Right Hazard Stripes */}
-                    <div className="w-4 h-full flex items-center justify-center bg-black/40 border-l border-orange-500/40 font-mono text-[8px] font-bold text-amber-400 select-none tracking-tighter">
-                      ///
-                    </div>
-                  </button>
-
-                  {/* Secondary CTA: Reticle Wireframe Explore Button (No White Dot) */}
-                  <button
-                    onClick={() => navigate("/events/bytebrawl-hacktoberfest")}
-                    className="relative px-3.5 h-11 min-h-[44px] rounded-lg bg-black/70 border border-neutral-700 hover:border-orange-500/70 flex items-center justify-center text-neutral-300 hover:text-white font-mono text-xs font-bold tracking-[0.16em] uppercase transition-colors cursor-pointer group"
-                  >
-                    {/* Corner Crosshairs */}
-                    <div className="absolute top-1 left-1 w-1.5 h-1.5 border-t border-l border-neutral-500 group-hover:border-orange-400" />
-                    <div className="absolute top-1 right-1 w-1.5 h-1.5 border-t border-r border-neutral-500 group-hover:border-orange-400" />
-                    <div className="absolute bottom-1 left-1 w-1.5 h-1.5 border-b border-l border-neutral-500 group-hover:border-orange-400" />
-                    <div className="absolute bottom-1 right-1 w-1.5 h-1.5 border-b border-r border-neutral-500 group-hover:border-orange-400" />
-                    <span>EXPLORE</span>
-                  </button>
-                </div>
-
-                {/* BOTTOM RIGHT DECAL: [SYS://BYTEBRAWL_v2] */}
-                <div className="font-mono text-[8px] text-orange-500/60 select-none pointer-events-none text-right mt-1.5 mr-0.5 tracking-wider">
-                  [SYS://BYTEBRAWL_v2]
                 </div>
               </div>
             </motion.div>
           </motion.div>
         ) : (
-          /* Minimized Floating Cyber Pill */
+          /* Minimized Floating Glossy Chrome Pill */
           <motion.div
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -265,14 +341,14 @@ export default function ByteBrawlHeroPopup({ isMobile = false }: ByteBrawlHeroPo
           >
             <button
               onClick={() => setIsDismissed(false)}
-              className="group flex items-center gap-2 px-3.5 py-2 min-h-[44px] rounded-full bg-[#0a0a0e]/95 border border-orange-500/60 hover:border-orange-400 shadow-[0_0_20px_rgba(249,115,22,0.35)] backdrop-blur-xl text-white font-mono text-xs tracking-wider transition-all transform hover:scale-105 cursor-pointer"
+              className="group flex items-center gap-2.5 px-4 py-2 min-h-[44px] rounded-full bg-[#0a0c12]/95 border border-white/40 hover:border-white shadow-[0_0_24px_rgba(255,255,255,0.25),inset_0_1px_1px_rgba(255,255,255,0.4)] backdrop-blur-xl text-white font-mono text-xs tracking-wider transition-all transform hover:scale-105 cursor-pointer"
             >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500" />
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white shadow-[0_0_8px_#ffffff]" />
               </span>
-              <span className="text-amber-300 font-semibold">BYTEBRAWL LIVE</span>
-              <Sparkles className="w-3.5 h-3.5 text-orange-400 group-hover:rotate-12 transition-transform" />
+              <span className="text-white font-bold tracking-wider">BYTEBRAWL LIVE</span>
+              <Sparkles className="w-3.5 h-3.5 text-white/80 group-hover:rotate-12 transition-transform" />
             </button>
           </motion.div>
         )}
