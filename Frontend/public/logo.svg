@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250" width="250" height="250" fill="white">
+  <!-- FLUX Geometric F Mark -->
+  <rect x="0" y="0" width="50" height="50" rx="2" />
+  <rect x="100" y="0" width="150" height="50" rx="2" />
+  <rect x="50" y="50" width="50" height="50" rx="2" />
+  <rect x="0" y="100" width="50" height="50" rx="2" />
+  <rect x="150" y="100" width="100" height="50" rx="2" />
+  <rect x="100" y="150" width="50" height="50" rx="2" />
+  <rect x="0" y="200" width="100" height="50" rx="2" />
+</svg>
+

@@ -1,10 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import FacultyCard from "./FacultyCard";
 import StatsCounter from "./StatsCounter";
 import { underGuidance, facultyCoordinators } from "./facultyData";
 import { BookOpen, Award, Users, Trophy } from "lucide-react";
 
 const FacultyPage: React.FC = () => {
+  const location = useLocation();
+  const [highlightedSlug, setHighlightedSlug] = useState<string | null>(null);
+
+  useEffect(() => {
+    const hash = location.hash;
+    if (!hash) return;
+    const slug = hash.replace("#", "");
+    setHighlightedSlug(slug);
+
+    const scrollToTarget = () => {
+      const el = document.getElementById(slug);
+      if (el) {
+        if ((window as any).__lenis) {
+          (window as any).__lenis.start();
+          (window as any).__lenis.resize();
+          // scroll-mt-28 md:scroll-mt-32 accounts for fixed navbar offset
+          (window as any).__lenis.scrollTo(el, { duration: 0.8, force: true });
+        } else {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+    };
+
+    // Staggered attempts to ensure DOM and images have settled
+    const timer1 = setTimeout(scrollToTarget, 80);
+    const timer2 = setTimeout(scrollToTarget, 300);
+    const clearHighlightTimer = setTimeout(() => {
+      setHighlightedSlug(null);
+    }, 1800);
+
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(clearHighlightTimer);
+    };
+  }, [location.pathname, location.hash]);
   return (
     <div className="min-h-screen relative overflow-hidden bg-[#020202] text-white pb-24">
       {/* ── Header Area ─────────────────────────────────────────────────────── */}
@@ -70,7 +107,11 @@ const FacultyPage: React.FC = () => {
 
           <div className="flex justify-center flex-col gap-8 max-w-4xl mx-auto">
             {underGuidance.map((faculty) => (
-              <FacultyCard key={faculty.id} faculty={faculty} />
+              <FacultyCard
+                key={faculty.id}
+                faculty={faculty}
+                isHighlighted={highlightedSlug === faculty.slug}
+              />
             ))}
           </div>
         </section>
@@ -93,7 +134,11 @@ const FacultyPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
             {facultyCoordinators.map((faculty) => (
-              <FacultyCard key={faculty.id} faculty={faculty} />
+              <FacultyCard
+                key={faculty.id}
+                faculty={faculty}
+                isHighlighted={highlightedSlug === faculty.slug}
+              />
             ))}
           </div>
         </section>

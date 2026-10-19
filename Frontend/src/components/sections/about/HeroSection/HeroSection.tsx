@@ -5,27 +5,28 @@ import ParticleText from './ParticleText';
 
 const HeroSection: React.FC<HeroSectionProps> = ({ description }) => {
   return (
-    <section className="relative w-full h-screen overflow-hidden bg-black">
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 gap-2 sm:gap-3">
-        <div className="w-full flex-shrink-0">
+    <section className="relative w-full h-[100svh] min-h-[100svh] overflow-hidden bg-black flex items-center justify-center pt-[var(--nav-h)] pb-[var(--ticker-h)]">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 gap-2.5 sm:gap-3.5 w-full max-w-6xl -translate-y-12 sm:-translate-y-16 lg:-translate-y-20">
+        <div className="relative w-full flex-shrink-0 flex items-center justify-center min-h-[220px]">
+          <h1 className="sr-only">Welcome To FLUX</h1>
           <ParticleText
             text="Welcome To FLUX"
-            particleSize={2.2}
-            density={4}
+            particleSize={3.4}
+            density={5}
             color="#ffffff"
-            highlightColor="#9ca3af"
-            scatter={190}
-            gatherDuration={1600}
-            stagger={420}
-            pointerRepel={42}
-            repelRadius={120}
-            idleDrift={0.8}
+            highlightColor="#ffffff"
+            scatter={150}
+            gatherDuration={1400}
+            stagger={300}
+            pointerRepel={45}
+            repelRadius={130}
+            idleDrift={0.6}
             trigger="mount"
             fontSize="clamp(3.5rem, 13vw, 9rem)"
-            fontWeight={800}
+            fontWeight={900}
             fontFamily="inherit"
-            glow
-            style={{ width: '100%', height: 220, background: '#000000' }}
+            glow={true}
+            style={{ width: '100%', height: 220, background: 'transparent' }}
           />
         </div>
 

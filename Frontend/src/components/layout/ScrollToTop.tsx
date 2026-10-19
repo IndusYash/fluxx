@@ -1,5 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
+import { resetThemeToDark } from "@/hooks/useLightSectionObserver";
+import { liquidController } from "@/components/sections/home/liquidController";
+import { introManager } from "@/lib/introState";
 
 interface ScrollToTopProps {
   isMobile?: boolean;
@@ -7,46 +10,37 @@ interface ScrollToTopProps {
 
 export default function ScrollToTop({ isMobile = false }: ScrollToTopProps) {
   const { pathname } = useLocation();
+  const prevPathRef = useRef<string | null>(null);
 
   useEffect(() => {
-    if (isMobile) {
-      // For mobile layout (single page with sections)
-      const routeToSectionMap: { [key: string]: string } = {
-        "/": "home",
-        "/about": "about",
-        "/faculty": "faculty",
-        "/events": "events",
-        "/team": "team",
-        "/gallery": "gallery",
-        "/join": "join",
-        "/contact": "contact"
-      };
+    // 1. Immediately and unconditionally reset theme to dark on any route navigation
+    resetThemeToDark();
+    liquidController.forceState(0);
 
-      const sectionId = routeToSectionMap[pathname];
-      
-      if (sectionId) {
-        requestAnimationFrame(() => {
-          const element = document.getElementById(sectionId);
-          if (element) {
-            element.scrollIntoView({ 
-              behavior: "smooth",
-              block: "start"
-            });
-          }
-        });
+    const isInitialMount = prevPathRef.current === null;
+    prevPathRef.current = pathname;
+
+    // On initial mount / reload when intro is already done, preserve browser scroll restoration
+    if (isInitialMount && introManager.isDone()) {
+      return;
+    }
+
+    // 2. High performance instant scroll reset to top on page navigation
+    if ((window as any).__lenis) {
+      (window as any).__lenis.scrollTo(0, { immediate: true });
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    requestAnimationFrame(() => {
+      if ((window as any).__lenis) {
+        (window as any).__lenis.scrollTo(0, { immediate: true });
       }
-    } else {
-      // High performance instant reset for desktop page changes
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
-      
-      requestAnimationFrame(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-      });
-    }
+    });
   }, [pathname, isMobile]);
 
   return null;

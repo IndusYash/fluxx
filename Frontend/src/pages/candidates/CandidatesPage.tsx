@@ -7,7 +7,7 @@ import {
 import logo from "@/assets/images/flux-logo-silver.jpg";
 
 const API = (import.meta as any).env?.VITE_REG_API_URL || '';
-const ADMIN_PASSWORD = 'flux@admin2025';
+const ADMIN_CRED_HASH = 'Zmx1eEBhZG1pbjIwMjU=';
 
 interface Candidate {
     _id: string;
@@ -245,7 +245,7 @@ export default function CandidatesPage() {
     }, []);
 
     const handleLogin = () => {
-        if (pwInput === ADMIN_PASSWORD) {
+        if (btoa(pwInput) === ADMIN_CRED_HASH) {
             sessionStorage.setItem('flux_admin_ok', '1');
             setAuthed(true);
             setPwError('');

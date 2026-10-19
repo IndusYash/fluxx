@@ -3,6 +3,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Camera } from "lucide-react";
+import Container from "@/components/layout/Container";
 
 import ideathonImg from "@/assets/images/ideathoncomp.webp";
 import orientationImg from "@/assets/images/freshmen_orientation_poster.png";
@@ -35,8 +36,8 @@ const stripItems = previewItems.filter((item) => !item.featured);
 
 export default function GalleryPreview() {
   return (
-    <section className="text-white py-24 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="gallery-preview-section" className="text-white pt-[var(--section-pad)] pb-[calc(var(--ticker-h)+48px)] overflow-hidden">
+      <Container>
         {/* Header */}
         <div className="mb-12 text-center">
           <span className="text-white font-semibold text-sm tracking-widest uppercase mb-4 block">
@@ -124,7 +125,7 @@ export default function GalleryPreview() {
           .scrollbar-hide::-webkit-scrollbar { display: none; }
           .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         `}</style>
-      </div>
+      </Container>
     </section>
   );
 }

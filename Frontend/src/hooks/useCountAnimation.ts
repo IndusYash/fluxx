@@ -5,9 +5,17 @@ import { useState, useEffect } from 'react';
  * Provides smooth counting animation from 0 to target value
  */
 export const useCountAnimation = (target: number, duration: number = 2000, startAnimation: boolean = false) => {
-  const [count, setCount] = useState(0);
+  const prefersReducedMotion =
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const [count, setCount] = useState(prefersReducedMotion ? target : 0);
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      setCount(target);
+      return;
+    }
     if (!startAnimation) return;
 
     let startTime: number;

@@ -28,10 +28,18 @@ export interface TeamPayload {
   member4?: MemberPayload;
 }
 
+const getBase = () => {
+  const url = (import.meta as any).env?.VITE_REG_API_URL;
+  if (url && url !== '/') {
+    return String(url).replace(/\/+$/, '');
+  }
+  return '';
+};
+
 export async function uploadFile(file: File, type: 'pdf' | 'image') {
   const formData = new FormData();
   formData.append('file', file);
-  const BASE = (import.meta as any).env?.VITE_REG_API_URL || '/';
+  const BASE = getBase();
   const endpoint = type === 'pdf' ? `${BASE}/api/upload/ppt` : `${BASE}/api/upload/photo`;
 
   const res = await fetch(endpoint, {
@@ -51,7 +59,7 @@ export async function uploadFile(file: File, type: 'pdf' | 'image') {
 }
 
 export async function submitTeam(team: TeamPayload) {
-  const BASE = (import.meta as any).env?.VITE_REG_API_URL || '/';
+  const BASE = getBase();
   const res = await fetch(`${BASE}/api/ideathonTeam/save`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -69,7 +77,7 @@ export async function submitTeam(team: TeamPayload) {
 }
 
 export async function checkTeamExists(teamName?: string, leaderRoll?: string,leaderPhone?: string,leaderEmail?: string,rolls?: string[]) {
-  const BASE = (import.meta as any).env?.VITE_REG_API_URL || '/';
+  const BASE = getBase();
   const res = await fetch(`${BASE}/api/ideathonTeam/check`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -87,7 +95,7 @@ export async function checkTeamExists(teamName?: string, leaderRoll?: string,lea
 }
 
 export async function rollExists(roll: string) {
-  const BASE = (import.meta as any).env?.VITE_REG_API_URL || '/';
+  const BASE = getBase();
   const res = await fetch(`${BASE}/api/ideathonTeam/roll-exists`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -104,7 +112,7 @@ export async function rollExists(roll: string) {
 }
 
 export async function attachPpt(roll: string, pptLink: string) {
-  const BASE = (import.meta as any).env?.VITE_REG_API_URL || '/';
+  const BASE = getBase();
   const res = await fetch(`${BASE}/api/ideathonTeam/attach-ppt`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

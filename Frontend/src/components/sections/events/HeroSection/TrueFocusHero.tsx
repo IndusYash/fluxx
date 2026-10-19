@@ -30,24 +30,41 @@ const TrueFocusHero: React.FC<TrueFocusProps> = ({
     textColorClasses = 'text-white' // Default to white to prevent it from being black
 }) => {
     const words = sentence.split(' ');
-    const [currentIndex, setCurrentIndex] = useState<number>(0);
+    const prefersReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const [currentIndex, setCurrentIndex] = useState<number>(prefersReduced ? -1 : 0);
     const [lastActiveIndex, setLastActiveIndex] = useState<number | null>(null);
+    const [isFinished, setIsFinished] = useState<boolean>(prefersReduced);
     const containerRef = useRef<HTMLDivElement | null>(null);
     const wordRefs = useRef<(HTMLSpanElement | null)[]>([]);
     const [focusRect, setFocusRect] = useState<FocusRect>({ x: 0, y: 0, width: 0, height: 0 });
 
+    // Step through each word and then finish with all words sharp
     useEffect(() => {
-        if (!manualMode) {
-            const interval = setInterval(
-                () => {
-                    setCurrentIndex(prev => (prev + 1) % words.length);
-                },
-                (animationDuration + pauseBetweenAnimations) * 1000
-            );
+        if (manualMode || isFinished) return;
 
-            return () => clearInterval(interval);
-        }
-    }, [manualMode, animationDuration, pauseBetweenAnimations, words.length]);
+        let stepCount = 0;
+        const totalSteps = words.length;
+
+        const interval = setInterval(() => {
+            stepCount++;
+            if (stepCount >= totalSteps) {
+                setIsFinished(true);
+                clearInterval(interval);
+            } else {
+                setCurrentIndex(stepCount % words.length);
+            }
+        }, (animationDuration + pauseBetweenAnimations) * 1000);
+
+        // Fallback: after 3.5s, always ensure all words are sharp
+        const timeoutFallback = setTimeout(() => {
+            setIsFinished(true);
+        }, 3500);
+
+        return () => {
+            clearInterval(interval);
+            clearTimeout(timeoutFallback);
+        };
+    }, [manualMode, animationDuration, pauseBetweenAnimations, words.length, isFinished]);
 
     useEffect(() => {
         if (currentIndex === null || currentIndex === -1) return;
@@ -90,12 +107,10 @@ const TrueFocusHero: React.FC<TrueFocusProps> = ({
                         className={`relative text-[3rem] font-black cursor-pointer ${textColorClasses}`}
                         style={
                             {
-                                filter: manualMode
-                                    ? isActive
-                                        ? `blur(0px)`
-                                        : `blur(${blurAmount}px)`
+                                filter: isFinished
+                                    ? 'blur(0px)'
                                     : isActive
-                                        ? `blur(0px)`
+                                        ? 'blur(0px)'
                                         : `blur(${blurAmount}px)`,
                                 transition: `filter ${animationDuration}s ease`
                             } as React.CSSProperties
@@ -115,7 +130,7 @@ const TrueFocusHero: React.FC<TrueFocusProps> = ({
                     y: focusRect.y,
                     width: focusRect.width,
                     height: focusRect.height,
-                    opacity: currentIndex >= 0 ? 1 : 0
+                    opacity: isFinished ? 0 : (currentIndex >= 0 ? 1 : 0)
                 }}
                 transition={{
                     duration: animationDuration

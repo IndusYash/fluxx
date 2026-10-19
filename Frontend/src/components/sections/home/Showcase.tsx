@@ -1,6 +1,7 @@
 "use client";
 
 import { Target, Lightbulb, Users, Trophy, Microscope } from "lucide-react";
+import Container from "@/components/layout/Container";
 
 export default function FluxObjectives() {
   const objectives = [
@@ -32,8 +33,8 @@ export default function FluxObjectives() {
   ];
 
   return (
-    <section className="text-white py-24">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="objectives-section" className="text-white pt-[var(--section-pad)] pb-[calc(var(--ticker-h)+48px)]">
+      <Container>
         {/* Header */}
         <div className="text-center mb-16">
           <span className="text-white font-semibold text-sm tracking-widest uppercase mb-4 block">
@@ -47,22 +48,24 @@ export default function FluxObjectives() {
           </p>
         </div>
 
-        {/* Grid */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {objectives.map((item, index) => (
+        {/* 3 + 2 Layout: Row 1 has 3 cards, Row 2 has 2 cards centered */}
+        <div className="flex flex-wrap justify-center gap-6">
+          {objectives.map((item) => (
              <div
               key={item.title}
-              className="card-outline group relative p-8 rounded-2xl bg-white/5 transition-all duration-300 hover:bg-white/10 hover:shadow-[0_8px_0_rgba(255,255,255,0.12)]"
+              className="w-full sm:w-[calc(50%-16px)] lg:w-[calc(33.333%-16px)] card-outline group relative p-6 md:p-8 rounded-2xl bg-white/5 transition-all duration-300 hover:bg-white/10 hover:shadow-[0_8px_0_rgba(255,255,255,0.12)] flex flex-col justify-between"
             >
-              <div className="mb-6 inline-flex items-center justify-center bg-white/10 rounded-xl p-3">
-                {item.icon}
+              <div>
+                <div className="mb-6 inline-flex items-center justify-center bg-white/10 rounded-xl p-3">
+                  {item.icon}
+                </div>
+                <h3 className="text-xl font-semibold mb-3 text-white">
+                  {item.title}
+                </h3>
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  {item.desc}
+                </p>
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-white">
-                {item.title}
-              </h3>
-              <p className="text-gray-300 text-sm leading-relaxed">
-                {item.desc}
-              </p>
             </div>
           ))}
         </div>
@@ -73,7 +76,7 @@ export default function FluxObjectives() {
             Building tomorrow's technology leaders, today
           </p>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

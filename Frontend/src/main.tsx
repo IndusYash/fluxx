@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "@/styles/globals.css";
+import "@/index.css";
 import favicon from "@/assets/images/favicon.webp"; // ✅ Import favicon
 
 // Inject favicon dynamically

@@ -12,8 +12,19 @@
     --grid-dot: 0 0% 25%;
     --radial: 0 0% 100%;
     --primary: 0 0% 100%;
-    --accent: 0 0% 90%;
     --radius: 0.75rem;
+
+    --nav-h: 76px;
+    --ticker-h: 40px;
+    --gutter: clamp(24px, 4vw, 64px);
+    --section-pad: clamp(96px, 10vh, 160px);
+
+    --z-canvas: 0;
+    --z-content: 10;
+    --z-floating-cards: 20;
+    --z-ticker: 80;
+    --z-navbar: 90;
+    --z-cursor: 100;
   }
 
   .shadow-glow {
@@ -44,6 +55,57 @@
   }
   .lenis.lenis-stopped {
     overflow: hidden;
+  }
+
+  /* Hero Section Spacing & Typography */
+  .hero-section-wrapper {
+    padding-top: calc(clamp(14px, 2vh, 24px) + 52px + 40px);
+    padding-bottom: calc(var(--ticker-h) + 32px);
+  }
+  .hero-headline {
+    font-size: clamp(48px, min(5.8vw, 11.2vh), 104px);
+    line-height: 1.01;
+    letter-spacing: -0.035em;
+  }
+  .hero-paragraph-shared {
+    font-size: clamp(16px, 1.15vw, 20px);
+    line-height: 1.6;
+    max-width: 52ch;
+    color: rgba(255, 255, 255, 0.65);
+    font-weight: 300;
+  }
+  .hero-gap-headline {
+    margin-bottom: 28px;
+  }
+  .hero-gap-desc {
+    margin-bottom: 32px;
+  }
+  .hero-btn {
+    min-height: 52px;
+  }
+
+  /* Short viewports responsive adjustments (height < 760px) */
+  @media (max-height: 760px) {
+    .hero-section-wrapper {
+      padding-top: calc(clamp(14px, 2vh, 20px) + 52px + 28px) !important;
+      padding-bottom: calc(var(--ticker-h) + 24px) !important;
+    }
+    .hero-headline {
+      font-size: clamp(38px, min(5.8vw, 9vh), 68px) !important;
+    }
+    .hero-paragraph-shared {
+      font-size: clamp(14px, min(1.1vw, 2.1vh), 16.5px) !important;
+      line-height: 1.48 !important;
+    }
+    .hero-gap-headline {
+      margin-bottom: 16px !important;
+    }
+    .hero-gap-desc {
+      margin-bottom: 20px !important;
+    }
+    .hero-btn {
+      min-height: 46px !important;
+    }
   }
 }
 

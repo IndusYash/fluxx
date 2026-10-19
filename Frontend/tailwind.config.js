@@ -5,21 +5,60 @@ export default {
   content: ["./index.html","./src/**/*.{ts,tsx}"],
   theme: {
   	extend: {
-  		fontFamily: {
+	  		fontFamily: {
 					sans: [
 						'Space Grotesk',
 						'sans-serif'
 					],
-  			display: [
+					display: [
 						'Space Grotesk',
 						'sans-serif'
-  			],
-  			heading: [
+					],
+					heading: [
 						'Space Grotesk',
-  				'sans-serif'
-  			]
-  		},
-  		colors: {
+						'sans-serif'
+					],
+					mono: [
+						'Space Mono',
+						'monospace'
+					],
+					script: [
+						'"Pinyon Script"',
+						'cursive'
+					],
+					serif: [
+						'"Playfair Display"',
+						'serif'
+					],
+					poiret: [
+						'"Poiret One"',
+						'cursive',
+						'sans-serif'
+					]
+				},
+				zIndex: {
+					canvas: '0',
+					content: '10',
+					floating: '20',
+					ticker: '80',
+					navbar: '90',
+					cursor: '100',
+				},
+				colors: {
+					mono: {
+						950: '#060606',
+						900: '#0a0a0a',
+						850: '#111111',
+						800: '#161616',
+						700: '#222222',
+						600: '#444444',
+						500: '#666666',
+						400: '#9a9a9a',
+						300: '#c0c0c0',
+						200: '#e6e6e6',
+						100: '#f5f5f5',
+						50: '#ffffff'
+					},
   			bg: 'hsl(var(--bg))',
   			fg: 'hsl(var(--fg))',
   			muted: {

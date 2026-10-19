@@ -5,9 +5,35 @@
     <link rel="icon" type="image/png" href="/src/assets/images/flux-logo-new.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Flux - Future Leaders of Unbound Xperiments</title>
+    <!-- Critical inline script: manual scroll restoration, scroll reset, initial intro state -->
+    <script>
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+      try {
+        var seen = sessionStorage.getItem('flux_intro_seen_v1') === '1';
+        if (seen) {
+          document.documentElement.setAttribute('data-intro', 'done');
+        } else {
+          document.documentElement.setAttribute('data-intro', 'loading');
+        }
+      } catch (e) {}
+    </script>
+    <!-- Critical inline CSS: prevent white flash on first paint -->
+    <style>
+      html, body {
+        background-color: #ededed;
+        margin: 0;
+        padding: 0;
+      }
+      html[data-intro="done"], html[data-intro="done"] body {
+        background-color: #060606;
+      }
+    </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Poiret+One&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-NWFYWZE8PQ"></script>
     <script>
       window.dataLayer = window.dataLayer || [];

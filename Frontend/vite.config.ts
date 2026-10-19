@@ -5,12 +5,21 @@ import path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  envPrefix: ['VITE_', 'NEXT_PUBLIC_'],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
   server: {
+    host: true,
+    port: 5173,
+    allowedHosts: [
+      'front-deodorize-favored.ngrok-free.dev',
+      '.ngrok-free.dev',
+      '.ngrok.app',
+      '.ngrok-free.app',
+    ],
     proxy: {
       '/api': {
         target: 'http://localhost:4000',
@@ -18,7 +27,21 @@ export default defineConfig({
       },
     },
   },
+  preview: {
+    host: true,
+    port: 5173,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:4000',
+        changeOrigin: true,
+      },
+    },
+  },
+  esbuild: {
+    drop: process.env.NODE_ENV === 'production' ? ['console', 'debugger'] : [],
+  },
   build: {
+    sourcemap: false,
     chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
