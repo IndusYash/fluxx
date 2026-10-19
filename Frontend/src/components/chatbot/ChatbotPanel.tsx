@@ -1,4 +1,6 @@
 import React, { useRef, useEffect, useState, forwardRef } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import {
   Sparkles,
   Send,
@@ -25,6 +27,24 @@ interface ChatbotPanelProps {
   onMinimize: () => void;
   onClose: () => void;
   onTypingInput: (isTyping: boolean) => void;
+}
+
+/**
+ * Cleans response markdown to ensure raw start '**' never flashes on screen,
+ * especially during token streaming or at the start of bullet list items.
+ */
+function cleanMarkdown(content: string): string {
+  if (!content) return '';
+  // 1. Remove leading '**' from start of bullet points (e.g. "- **Title:**" -> "- Title:")
+  let cleaned = content.replace(/^([ \t]*[-*]\s*)\*\*([^*]+)\*\*(:?)/gm, '$1$2$3');
+  // 2. Remove standalone starting '**' if a line begins with '**'
+  cleaned = cleaned.replace(/^([ \t]*)\*\*([^*]+)\*\*(:?)/gm, '$1$2$3');
+  // 3. Auto-close any unclosed '**' so raw asterisks never flash during streaming
+  const asterisksMatch = cleaned.match(/\*\*/g);
+  if (asterisksMatch && asterisksMatch.length % 2 !== 0) {
+    cleaned = cleaned + '**';
+  }
+  return cleaned;
 }
 
 export const ChatbotPanel = forwardRef<HTMLDivElement, ChatbotPanelProps>(
@@ -268,7 +288,64 @@ export const ChatbotPanel = forwardRef<HTMLDivElement, ChatbotPanelProps>(
                           : 'chat-greeting-bubble bg-[#111520]/95 border border-white/18 text-white rounded-tl-sm shadow-lg'
                       }`}
                     >
-                      <div className="whitespace-pre-wrap break-words">{message.content}</div>
+                      {isUser ? (
+                        <div className="whitespace-pre-wrap break-words">{message.content}</div>
+                      ) : (
+                        <div className="chat-markdown-content break-words text-neutral-100">
+                          <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            components={{
+                              p: ({ children }) => (
+                                <p className="mb-2 last:mb-0 leading-relaxed">{children}</p>
+                              ),
+                              strong: ({ children }) => (
+                                <strong className="font-semibold text-white">{children}</strong>
+                              ),
+                              em: ({ children }) => (
+                                <em className="italic text-neutral-200">{children}</em>
+                              ),
+                              ul: ({ children }) => (
+                                <ul className="space-y-1.5 my-2 list-none pl-0">{children}</ul>
+                              ),
+                              ol: ({ children }) => (
+                                <ol className="space-y-1.5 my-2 list-decimal pl-4">{children}</ol>
+                              ),
+                              li: ({ children }) => (
+                                <li className="flex items-start gap-2 text-neutral-200">
+                                  <span className="text-white/60 select-none mt-0.5 text-[9px]">✦</span>
+                                  <span className="flex-1 leading-relaxed">{children}</span>
+                                </li>
+                              ),
+                              h1: ({ children }) => (
+                                <h1 className="text-sm font-bold text-white mt-2.5 mb-1">{children}</h1>
+                              ),
+                              h2: ({ children }) => (
+                                <h2 className="text-xs sm:text-sm font-bold text-white mt-2 mb-1">{children}</h2>
+                              ),
+                              h3: ({ children }) => (
+                                <h3 className="text-xs sm:text-sm font-semibold text-white mt-2 mb-1">{children}</h3>
+                              ),
+                              code: ({ children }) => (
+                                <code className="px-1.5 py-0.5 rounded bg-white/10 font-mono text-[11px] text-white">
+                                  {children}
+                                </code>
+                              ),
+                              a: ({ href, children }) => (
+                                <a
+                                  href={href}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-white underline underline-offset-2 decoration-white/40 hover:decoration-white transition-colors"
+                                >
+                                  {children}
+                                </a>
+                              ),
+                            }}
+                          >
+                            {cleanMarkdown(message.content)}
+                          </ReactMarkdown>
+                        </div>
+                      )}
 
                       {/* Error Retry Option */}
                       {message.status === 'error' && (

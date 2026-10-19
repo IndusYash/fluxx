@@ -31,12 +31,12 @@ const events: EventProps[] = [
   {
     id: 1,
     title: 'ByteBrawl x Hacktoberfest',
-    date: 'To be announced',
+    date: '26 - 29 October, 2026',
     description:
       "High-intensity competitive coding showdown where architectural resilience meets rapid implementation under strict production-grading constraints. Organized by FLUX, Department of CSE, MMMUT Gorakhpur.",
     imageUrl: conferenceImg,
     isUpcoming: true,
-    location: 'MMMUT Gorakhpur',
+    location: 'Alan Turing Hall, MMMUT',
     attendees: 300,
     category: 'Innovation',
     prize: 'Trophies, Certificates & Swag',
@@ -45,7 +45,7 @@ const events: EventProps[] = [
   },
   {
     id: 2,
-    title: 'She Leads – Women in Technology Summit',
+    title: 'She Leads',
     date: '12 - 13 September (Ended)',
     description:
       "An empowering leadership and tech summit designed to inspire, mentor, and connect tech innovators and future leaders. Event successfully concluded.",

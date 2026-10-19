@@ -21,8 +21,8 @@ export const VALID_BRANCHES = [
   "EE",
   "ME",
   "CE",
-  "Chemical",
-  "Biotech",
+  "CHE",
+  "BBA",
   "Other",
 ];
 
@@ -56,6 +56,13 @@ export const participantSchema = z
       ),
     branch: z
       .string({ required_error: "Branch is required" })
+      .trim()
+      .transform((val) => {
+        const upper = val.toUpperCase();
+        if (upper === "CHEMICAL" || upper === "CHE") return "CHE";
+        if (upper === "BIOTECH" || upper === "BIOTECHNOLOGY" || upper === "BBA") return "BBA";
+        return val;
+      })
       .refine((b) => VALID_BRANCHES.includes(b), {
         message: "Please select a valid branch",
       }),

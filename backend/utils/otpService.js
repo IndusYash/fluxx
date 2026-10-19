@@ -139,16 +139,36 @@ export async function sendEmailOtp(email) {
     });
     if (mailResult && mailResult.success === false) {
       console.warn(`[OTP] Mailer dispatch failed for ${normalized}: ${mailResult.error}`);
+      const errStr = (mailResult.error || "").toLowerCase();
+      const isAuthOrConfigError =
+        errStr.includes("535") ||
+        errStr.includes("badcredentials") ||
+        errStr.includes("username and password not accepted") ||
+        errStr.includes("eauth") ||
+        errStr.includes("econnrefused") ||
+        errStr.includes("etimedout") ||
+        errStr.includes("connection closed");
+
+      if (isAuthOrConfigError) {
+        return {
+          success: false,
+          isServerError: true,
+          error: "Verification email service is temporarily unavailable. Please try again shortly or contact support.",
+        };
+      }
+
       return {
         success: false,
-        error: `Could not send verification email: ${mailResult.error || "delivery failed"}. Please check your email address.`,
+        isEmailError: true,
+        error: `Could not send verification email to this address (${mailResult.error || "delivery failed"}). Please check the email address.`,
       };
     }
   } catch (err) {
-    console.warn(`[OTP] Mailer dispatch notice: ${err.message}`);
+    console.warn(`[OTP] Mailer dispatch exception for ${normalized}: ${err.message}`);
     return {
       success: false,
-      error: `Could not send verification email: ${err.message}. Please check your email address.`,
+      isServerError: true,
+      error: "Verification email service is temporarily unavailable. Please try again shortly.",
     };
   }
 

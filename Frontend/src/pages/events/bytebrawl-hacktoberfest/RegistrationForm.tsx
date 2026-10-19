@@ -229,9 +229,20 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
 
   const formatWrongEmailError = (email: string, errorMsg?: string) => {
     if (!errorMsg) {
-      return `Wrong email: "${email}". Verification email could not be sent.`;
+      return `Wrong email: "${email}". Please enter a valid email address.`;
     }
-    if (errorMsg.toLowerCase().startsWith("wrong email")) {
+    const lower = errorMsg.toLowerCase();
+    if (
+      lower.includes("service is temporarily unavailable") ||
+      lower.includes("service temporarily unavailable") ||
+      lower.includes("rate limit") ||
+      lower.includes("too many") ||
+      lower.includes("network error") ||
+      lower.includes("server error")
+    ) {
+      return errorMsg;
+    }
+    if (lower.startsWith("wrong email")) {
       return errorMsg;
     }
     return `Wrong email: "${email}" — ${errorMsg}`;
@@ -286,7 +297,9 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
           ...prev,
           sending: false,
           active: prev.active ? true : false,
-          error: formatWrongEmailError(p1.email, data.error),
+          error: data.isServerError
+            ? data.error || "Email verification service is temporarily unavailable."
+            : formatWrongEmailError(p1.email, data.error),
         }));
         if (data.typoHint) {
           setP1TypoHint(data.typoHint);
@@ -309,7 +322,7 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
         ...prev,
         sending: false,
         active: false,
-        error: `Wrong email: "${p1.email}" — Network error sending verification code. Please check your connection.`,
+        error: "Network error sending verification code. Please check your connection and try again.",
       }));
     }
   };
@@ -391,7 +404,9 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
           ...prev,
           sending: false,
           active: prev.active ? true : false,
-          error: formatWrongEmailError(p2.email, data.error),
+          error: data.isServerError
+            ? data.error || "Email verification service is temporarily unavailable."
+            : formatWrongEmailError(p2.email, data.error),
         }));
         if (data.typoHint) {
           setP2TypoHint(data.typoHint);
@@ -414,7 +429,7 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
         ...prev,
         sending: false,
         active: false,
-        error: `Wrong email: "${p2.email}" — Network error sending verification code. Please check your connection.`,
+        error: "Network error sending verification code. Please check your connection and try again.",
       }));
     }
   };
@@ -595,6 +610,9 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
         return;
       }
 
+      // Preserve leader email before resetting form state
+      const leaderEmail = p1.email.trim().toLowerCase();
+
       // Success! Clear state completely to protect privacy
       setTeamName("");
       setP1({
@@ -621,7 +639,7 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
         registrationId: data.registrationId,
         type: data.type,
         teamName: data.teamName,
-        leaderEmail: p1.email.trim().toLowerCase(),
+        leaderEmail,
         participants: data.participants,
       });
     } catch {

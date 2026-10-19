@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Search, ArrowRight, Menu, X } from "lucide-react";
+import { Search, ArrowRight, Menu, X, Sparkles } from "lucide-react";
 import ScrambleText from "@/components/ui/ScrambleText";
 import Container from "@/components/layout/Container";
 import { useLightSectionObserver } from "@/hooks/useLightSectionObserver";
@@ -9,6 +9,7 @@ interface NavDropdownItem {
   title: string;
   path: string;
   desc?: string;
+  isNew?: boolean;
 }
 
 export default function Navbar() {
@@ -125,7 +126,12 @@ export default function Navbar() {
 
   const eventSubLinks: NavDropdownItem[] = [
     { title: "All Events", path: "/events", desc: "Workshops, speaker sessions, and tech meets" },
-    { title: "ByteBrawl x Hacktoberfest", path: "/events/bytebrawl-hacktoberfest", desc: "Competitive coding showdown & open source" },
+    {
+      title: "ByteBrawl x Hacktoberfest",
+      path: "/events/bytebrawl-hacktoberfest",
+      desc: "Competitive coding showdown & open source",
+      isNew: true,
+    },
     { title: "Ideathon", path: "/ideathon", desc: "Flagship innovation competition" },
     { title: "She Leads", path: "/she-leads", desc: "Women in tech leadership conclave" },
     { title: "Faculty Dev (FDP)", path: "/events/fdp", desc: "Advanced training programs" },
@@ -239,7 +245,7 @@ export default function Navbar() {
 
               {/* Hover Dropdown Panel */}
               {eventsOpen && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-64 z-50">
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-[285px] z-50">
                   <div className="bg-[#121212]/95 backdrop-blur-2xl border border-white/10 rounded-xl p-2 shadow-2xl">
                     {eventSubLinks.map((item) => (
                       <Link
@@ -248,9 +254,17 @@ export default function Navbar() {
                         onClick={(e) => handleNavClick(item.path, e)}
                         className="block px-3 py-2 rounded-lg hover:bg-white/[0.06] transition-colors group"
                       >
-                        <div className="text-xs font-medium text-white flex items-center justify-between">
-                          <span>{item.title}</span>
-                          <ArrowRight className="w-3 h-3 text-[#9a9a9a] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
+                        <div className="text-xs font-medium text-white flex items-center justify-between gap-1.5">
+                          <span className="flex items-center gap-1.5 min-w-0">
+                            <span className="truncate">{item.title}</span>
+                            {item.isNew && (
+                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-mono font-bold tracking-wider uppercase bg-orange-500/15 border border-orange-500/35 text-amber-300 shadow-[0_0_8px_rgba(249,115,22,0.25)] flex-shrink-0">
+                                <Sparkles className="w-2.5 h-2.5 text-amber-400" />
+                                <span>NEW</span>
+                              </span>
+                            )}
+                          </span>
+                          <ArrowRight className="w-3 h-3 text-[#9a9a9a] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
                         </div>
                         {item.desc && (
                           <div className="text-[10px] text-[#9a9a9a] mt-0.5 line-clamp-1">
@@ -399,9 +413,17 @@ export default function Navbar() {
                     key={item.path}
                     to={item.path}
                     onClick={(e) => handleNavClick(item.path, e)}
-                    className="text-xs text-white/75 hover:text-white min-h-[44px] flex items-center px-2 rounded-md hover:bg-white/[0.05] transition-colors"
+                    className="text-xs text-white/75 hover:text-white min-h-[44px] flex items-center justify-between px-2 rounded-md hover:bg-white/[0.05] transition-colors"
                   >
-                    {item.title}
+                    <span className="flex items-center gap-2">
+                      <span>{item.title}</span>
+                      {item.isNew && (
+                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-mono font-bold tracking-wider uppercase bg-orange-500/15 border border-orange-500/35 text-amber-300 shadow-[0_0_8px_rgba(249,115,22,0.25)] flex-shrink-0">
+                          <Sparkles className="w-2.5 h-2.5 text-amber-400" />
+                          <span>NEW</span>
+                        </span>
+                      )}
+                    </span>
                   </Link>
                 ))}
               </div>

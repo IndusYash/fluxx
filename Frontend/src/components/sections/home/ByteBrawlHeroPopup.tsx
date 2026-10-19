@@ -197,13 +197,13 @@ export default function ByteBrawlHeroPopup({ isMobile = false }: ByteBrawlHeroPo
                   </p>
                 </div>
 
-                {/* METADATA PILLS: Oct 2026 | Online + Onsite | Free Entry */}
+                {/* METADATA PILLS: 26-29 Oct 2026 | Alan Turing Hall | Free Entry */}
                 <div className="relative z-10 flex flex-wrap gap-1.5 mb-2.5 font-mono text-[10px]">
                   <span className="px-2 py-0.5 rounded-full bg-orange-950/40 border border-orange-500/60 text-orange-300 flex items-center gap-1">
-                    <Flame className="w-3 h-3 text-orange-400" /> Oct 2026
+                    <Flame className="w-3 h-3 text-orange-400" /> 26-29 Oct 2026
                   </span>
                   <span className="px-2 py-0.5 rounded-full bg-purple-950/40 border border-purple-500/60 text-purple-200 flex items-center gap-1">
-                    <Zap className="w-3 h-3 text-amber-300" /> Online + Onsite
+                    <Zap className="w-3 h-3 text-amber-300" /> Alan Turing Hall
                   </span>
                   <span className="px-2 py-0.5 rounded-full bg-emerald-950/40 border border-emerald-500/60 text-emerald-300">
                     Free Entry

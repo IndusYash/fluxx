@@ -1,12 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 import {
-  Trophy,
   Users2,
   GraduationCap,
   CalendarDays,
   Flame,
-  Award,
 } from "lucide-react";
 import Container from "@/components/layout/Container";
 import { BYTEBRAWL_CONFIG } from "@/config/eventConfig";
@@ -62,12 +60,12 @@ export default function EventDetailsGrid() {
             </span>
           </h2>
           <p className="font-sans text-sm sm:text-base text-neutral-400 font-light max-w-xl">
-            Everything you need to know about the format, eligibility, logistics, and rewards.
+            Everything you need to know about the format, eligibility, timeline, and venue logistics.
           </p>
         </div>
 
         {/* 4 Details Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {detailCards.map((item, idx) => (
             <motion.div
               key={item.label}
@@ -105,53 +103,6 @@ export default function EventDetailsGrid() {
               </div>
             </motion.div>
           ))}
-        </div>
-
-        {/* Prizes Section */}
-        <div className="p-8 sm:p-10 rounded-2xl border border-white/10 bg-gradient-to-b from-[#141414] to-[#0e0e0e]">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300">
-                <Trophy className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-white">
-                  Prize Pool & Honors
-                </h3>
-                <p className="font-mono text-xs text-neutral-400">
-                  Official ByteBrawl x Hacktoberfest Recognition
-                </p>
-              </div>
-            </div>
-
-            <span className="font-mono text-[11px] uppercase tracking-wider px-3 py-1 rounded bg-white/5 border border-white/10 text-white/70">
-              STATUS: {BYTEBRAWL_CONFIG.prizesTBA ? "TO BE ANNOUNCED" : "CONFIRMED"}
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {BYTEBRAWL_CONFIG.prizes.map((prize, idx) => (
-              <div
-                key={prize.place}
-                className="p-5 rounded-xl border border-white/10 bg-black/40 flex flex-col justify-between"
-              >
-                <div>
-                  <span className="font-mono text-[10px] text-amber-400/80 tracking-widest uppercase block mb-1">
-                    PODIUM 0{idx + 1}
-                  </span>
-                  <h4 className="font-sans font-bold text-sm text-white mb-2">
-                    {prize.place}
-                  </h4>
-                  <div className="font-mono text-lg font-black text-white/90 mb-2">
-                    {prize.amount}
-                  </div>
-                </div>
-                <p className="font-sans text-xs text-neutral-400 font-light leading-relaxed pt-3 border-t border-white/5">
-                  {prize.description}
-                </p>
-              </div>
-            ))}
-          </div>
         </div>
       </Container>
     </section>

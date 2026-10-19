@@ -157,7 +157,8 @@ export default function ConfirmationPanel({ data }: ConfirmationPanelProps) {
         <Mail className="w-4 h-4 text-neutral-400 flex-shrink-0" />
         <p className="font-sans text-xs text-neutral-300 leading-relaxed">
           A confirmation email has been dispatched to{" "}
-          <strong className="text-white font-mono">{data.leaderEmail}</strong>. Please save your Registration ID for venue check-in on event day.
+          <strong className="text-white font-mono">{data.leaderEmail}</strong>
+          {data.type === "TEAM" && data.participants.length > 1 ? " and your team member" : ""}. Please check your inbox (and spam/junk folder) and save your Registration ID for venue check-in on event day.
         </p>
       </div>
 

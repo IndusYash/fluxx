@@ -1,5 +1,5 @@
 import type { ChatMessage } from './types';
-import { findKnowledgeAnswer } from './knowledge';
+import { findKnowledgeAnswer, classifyQuery, OFF_TOPIC_RESPONSE } from './knowledge';
 
 export interface ChatClientOptions {
   apiUrl?: string;
@@ -18,6 +18,7 @@ export class ChatClient {
   /**
    * Send chat messages to the backend or use local site knowledge base.
    * Supports optional onChunk callback for token-by-token streaming.
+   * Strictly enforces that non-FLUX queries are rejected.
    */
   async send(
     messages: ChatMessage[],
@@ -27,7 +28,27 @@ export class ChatClient {
     const lastUserMsg = [...messages].reverse().find((m) => m.role === 'user');
     const query = lastUserMsg?.content || '';
 
-    // If external API URL is configured, POST to it
+    // Guardrail: Intercept off-topic queries immediately
+    const category = classifyQuery(query);
+    if (category === 'OFF_TOPIC') {
+      const answer = OFF_TOPIC_RESPONSE;
+      if (onChunk) {
+        const words = answer.split(' ');
+        let accumulated = '';
+        for (let i = 0; i < words.length; i++) {
+          if (signal?.aborted) break;
+          const piece = i === 0 ? words[i] : ' ' + words[i];
+          accumulated += piece;
+          onChunk(piece);
+          await new Promise((r) => setTimeout(r, Math.min(20, 350 / words.length)));
+        }
+        return accumulated;
+      }
+      await new Promise((r) => setTimeout(r, 200));
+      return answer;
+    }
+
+    // If external API URL is configured, POST to it with strict system instructions
     if (this.apiUrl) {
       try {
         const response = await fetch(this.apiUrl, {
@@ -36,10 +57,17 @@ export class ChatClient {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            messages: messages.map((m) => ({
-              role: m.role,
-              content: m.content,
-            })),
+            messages: [
+              {
+                role: 'system',
+                content:
+                  'You are FLUX AI, the official assistant for FLUX (Future Leaders of Unbound Xperiments), the research and innovation society at MMMUT Gorakhpur. You must ONLY answer queries directly related to FLUX society, its events (Ideathon, ByteBrawl, Hacktoberfest, ATAL FDP, bootcamps), student wings (AI/ML, Dev, CP, Design, Media, Operations), recruitment/inductions, faculty mentors (Prof. Anupama Kaushik Sharma, CSED), and initiatives (She Leads). If the user asks about ANY topic unrelated to FLUX, you must strictly refuse to answer and state that you are specifically designed to assist with FLUX-related inquiries at MMMUT Gorakhpur.',
+              },
+              ...messages.map((m) => ({
+                role: m.role,
+                content: m.content,
+              })),
+            ],
           }),
           signal,
         });

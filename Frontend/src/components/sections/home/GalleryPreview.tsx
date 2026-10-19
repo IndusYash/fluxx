@@ -6,7 +6,7 @@ import { ArrowRight, Camera } from "lucide-react";
 import Container from "@/components/layout/Container";
 
 import ideathonImg from "@/assets/images/ideathoncomp.webp";
-import orientationImg from "@/assets/images/orientation_2.webp";
+import orientationImg from "@/assets/images/freshmen_orientation_poster.png";
 import xpertTalkImg from "@/assets/images/xpert_talk.webp";
 
 const previewItems = [
@@ -19,7 +19,7 @@ const previewItems = [
   },
   {
     id: "2",
-    title: "FLUX Orientation",
+    title: "Freshmen Orientation",
     category: "Induction",
     image: orientationImg,
   },

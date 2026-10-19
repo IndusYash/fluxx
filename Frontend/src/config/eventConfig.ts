@@ -31,12 +31,10 @@ export const BYTEBRAWL_CONFIG = {
   organizer: "FLUX, Department of Computer Science & Engineering, MMMUT Gorakhpur",
 
   // ── Event Logistics ──────────────────────────────────────────
-  // TODO: Announce official event date once finalized by CSE Dept
-  date: "To be announced",
+  date: "26 - 29 October, 2026",
   // TODO: Announce official reporting and hackathon hours
   time: "To be announced",
-  // TODO: Announce specific auditorium / computer center venue at MMMUT
-  venue: "To be announced",
+  venue: "Alan Turing Hall",
   // TODO: Update official registration deadline timestamp
   registrationDeadline: "2026-10-31T23:59:59+05:30",
   // TODO: Set venue seating capacity (number of registrations)

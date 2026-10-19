@@ -170,6 +170,34 @@ async function runVerification() {
     await page.screenshot({ path: shot4, fullPage: false });
     console.log('Saved screenshot 4:', shot4);
 
+    // Test off-topic query: "What is the capital of France?"
+    console.log('Testing off-topic query rejection in chat UI...');
+    const inputSelector = 'input[placeholder="Type your message..."]';
+    await page.waitForSelector(inputSelector, { visible: true });
+    await page.type(inputSelector, 'What is the capital of France?');
+    await page.keyboard.press('Enter');
+
+    // Wait for the refusal response to stream in
+    await new Promise((r) => setTimeout(r, 1600));
+
+    // Verify the bot message contains the strict refusal message
+    const botMessages = await page.evaluate(() => {
+      const container = document.querySelector('[data-lenis-prevent]');
+      return container ? container.textContent || '' : '';
+    });
+
+    const isRefusalPresent =
+      botMessages.includes('not programmed to answer queries about other subjects') ||
+      botMessages.includes('exclusively to FLUX') ||
+      botMessages.includes('FLUX AI');
+    console.log('Off-topic refusal verified in UI:', isRefusalPresent);
+    report.offTopicGuardrailVerified = isRefusalPresent;
+
+    // Screenshot 5: Desktop off-topic refusal
+    const shot5 = path.join(SCREENSHOT_DIR, 'desktop_5_off_topic_refusal.png');
+    await page.screenshot({ path: shot5, fullPage: false });
+    console.log('Saved screenshot 5 (off-topic guardrail):', shot5);
+
     // Test wheel scroll inside messages container does NOT scroll page
     const scrollTest = await page.evaluate(async () => {
       const scrollBox = document.querySelector('div[data-lenis-prevent]');
@@ -254,19 +282,19 @@ async function runVerification() {
     await mobilePage.goto('http://localhost:5173/', { waitUntil: 'networkidle2' });
     await new Promise((r) => setTimeout(r, 1200));
 
-    // Screenshot 5: Mobile closed launcher
-    const shot5 = path.join(SCREENSHOT_DIR, 'mobile_1_closed_launcher.png');
-    await mobilePage.screenshot({ path: shot5, fullPage: false });
-    console.log('Saved screenshot 5:', shot5);
+    // Screenshot: Mobile closed launcher
+    const mShot1 = path.join(SCREENSHOT_DIR, 'mobile_1_closed_launcher.png');
+    await mobilePage.screenshot({ path: mShot1, fullPage: false });
+    console.log('Saved mobile screenshot 1:', mShot1);
 
     // Open mobile panel
     await mobilePage.click(launcherSelector);
     await new Promise((r) => setTimeout(r, 1000));
 
-    // Screenshot 6: Mobile open panel with robot
-    const shot6 = path.join(SCREENSHOT_DIR, 'mobile_2_open_panel_robot.png');
-    await mobilePage.screenshot({ path: shot6, fullPage: false });
-    console.log('Saved screenshot 6:', shot6);
+    // Screenshot: Mobile open panel with robot
+    const mShot2 = path.join(SCREENSHOT_DIR, 'mobile_2_open_panel_robot.png');
+    await mobilePage.screenshot({ path: mShot2, fullPage: false });
+    console.log('Saved mobile screenshot 2:', mShot2);
 
     // Click chip on mobile
     await mobilePage.evaluate((text) => {
@@ -277,10 +305,10 @@ async function runVerification() {
 
     await new Promise((r) => setTimeout(r, 300));
 
-    // Screenshot 7: Mobile conversation with typing/reply
-    const shot7 = path.join(SCREENSHOT_DIR, 'mobile_3_conversation.png');
-    await mobilePage.screenshot({ path: shot7, fullPage: false });
-    console.log('Saved screenshot 7:', shot7);
+    // Screenshot: Mobile conversation with typing/reply
+    const mShot3 = path.join(SCREENSHOT_DIR, 'mobile_3_conversation.png');
+    await mobilePage.screenshot({ path: mShot3, fullPage: false });
+    console.log('Saved mobile screenshot 3:', mShot3);
 
     await mobilePage.close();
 
