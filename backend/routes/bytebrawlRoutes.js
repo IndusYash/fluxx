@@ -137,6 +137,13 @@ router.post("/send-otp", otpSendRateLimiter, async (req, res) => {
 
     const sendResult = await sendEmailOtp(email);
     if (!sendResult.success) {
+      if (sendResult.isServerError) {
+        return res.status(503).json({
+          error: sendResult.error,
+          isServerError: true,
+          email,
+        });
+      }
       const isRateLimit = sendResult.error?.toLowerCase().includes("rate limit");
       return res.status(isRateLimit ? 429 : 422).json({
         error: sendResult.error,
@@ -408,19 +415,38 @@ router.post("/register", registerRateLimiter, async (req, res) => {
       participants: participantsToCreate,
     });
 
-    // 10. Send personalized success email to EACH participant in background
-    for (const participant of newRegistration.participants) {
-      sendPersonalizedSuccessEmail({
-        participantName: participant.fullName,
-        recipientEmail: participant.email,
-        registrationId: newRegistration.registrationId,
-        type: newRegistration.type,
-        teamName: newRegistration.teamName,
-        allParticipants: newRegistration.participants,
-      }).catch((err) => {
-        console.error("[Mailer] Background confirmation mail failed safely:", err.message || "Unknown error");
-      });
-    }
+    // 10. Send personalized success email to EACH participant
+    await Promise.allSettled(
+      newRegistration.participants.map(async (participant) => {
+        try {
+          const sendResult = await sendPersonalizedSuccessEmail({
+            participantName: participant.fullName,
+            recipientEmail: participant.email,
+            registrationId: newRegistration.registrationId,
+            type: newRegistration.type,
+            teamName: newRegistration.teamName,
+            allParticipants: newRegistration.participants,
+          });
+          if (sendResult && !sendResult.success) {
+            console.error(
+              `[Mailer] Confirmation email failed for ${participant.email}:`,
+              sendResult.error
+            );
+          } else {
+            console.log(
+              `[Mailer] Confirmation email delivered to ${participant.email} for ${newRegistration.registrationId}`
+            );
+          }
+          return sendResult;
+        } catch (err) {
+          console.error(
+            `[Mailer] Background confirmation mail error for ${participant.email}:`,
+            err.message || err
+          );
+          return { success: false, error: err.message };
+        }
+      })
+    );
 
     // 11. Return 201 Created (never leak internal sensitive fields)
     return res.status(201).json({

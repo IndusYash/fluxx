@@ -3,6 +3,7 @@ import type { LucideIcon } from 'lucide-react';
 export type MessageRole = 'user' | 'assistant' | 'system';
 export type MessageStatus = 'sending' | 'sent' | 'error';
 export type RobotMood = 'idle' | 'typing' | 'thinking' | 'happy' | 'wave' | 'blink';
+export type QueryCategory = 'GREETING' | 'CLOSING' | 'IDENTITY' | 'FLUX_TOPIC' | 'OFF_TOPIC';
 
 export interface ChatMessage {
   id: string;

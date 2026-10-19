@@ -18,6 +18,19 @@ import mongoose from "mongoose";
 import cors from "cors";
 import helmet from "helmet";
 
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("⚠️ Unhandled Rejection at:", promise, "reason:", reason);
+});
+process.on("uncaughtException", (err) => {
+  console.error("⚠️ Uncaught Exception:", err);
+});
+mongoose.connection.on("error", (err) => {
+  console.error("⚠️ Mongoose connection error:", err.message);
+});
+mongoose.connection.on("disconnected", () => {
+  console.warn("⚠️ Mongoose connection disconnected.");
+});
+
 import auth from "./routes/auth.js";
 import detailed from "./routes/getDetail.js";
 import judge from "./routes/judge.js";

@@ -1,24 +1,25 @@
 import nodemailer from "nodemailer";
 
 let transporter = null;
+let cachedCredentials = null;
 
 // Test helper: stores sent emails in memory for test inspections
 export const lastSentEmails = [];
 
-function getTransporter() {
+export function getTransporter() {
   const host = (process.env.SMTP_HOST || "").trim();
   const user = (process.env.SMTP_USER || "").trim();
   const rawPass = (process.env.SMTP_PASS || "").trim();
   const pass = rawPass.replace(/^["']|["']$/g, "");
+  const port = Number.parseInt(process.env.SMTP_PORT || "587", 10);
+  const secure = process.env.SMTP_SECURE === "true" || port === 465;
 
   if (!host || !user || !pass) {
     return null;
   }
 
-  if (!transporter) {
-    const port = Number.parseInt(process.env.SMTP_PORT || "587", 10);
-    const secure = process.env.SMTP_SECURE === "true" || port === 465;
-
+  const credKey = `${host}:${user}:${pass}:${port}:${secure}`;
+  if (!transporter || cachedCredentials !== credKey) {
     transporter = nodemailer.createTransport({
       host,
       port,
@@ -28,6 +29,7 @@ function getTransporter() {
         pass,
       },
     });
+    cachedCredentials = credKey;
   }
 
   return transporter;
@@ -72,7 +74,7 @@ export async function sendOtpEmail({ recipientEmail, otpCode }) {
   }
 
   try {
-    await mailClient.sendMail({
+    const info = await mailClient.sendMail({
       from,
       to: recipientEmail,
       replyTo: user || from,
@@ -85,10 +87,11 @@ export async function sendOtpEmail({ recipientEmail, otpCode }) {
         'Importance': 'Normal',
       },
     });
-    return { success: true };
+    console.log(`[Mailer] OTP email dispatched successfully to ${recipientEmail} (ID: ${info?.messageId || "ok"})`);
+    return { success: true, messageId: info?.messageId };
   } catch (err) {
-    console.warn(`[Mailer] Failed to send OTP to ${recipientEmail}: ${err.message}`);
-    return { success: false, error: err.message };
+    console.error(`[Mailer] Failed to send OTP to ${recipientEmail}:`, err.message || err);
+    return { success: false, error: err.message || "Failed to send email" };
   }
 }
 
@@ -180,7 +183,7 @@ ${societyName} Team`;
   }
 
   try {
-    await mailClient.sendMail({
+    const info = await mailClient.sendMail({
       from,
       to: recipientEmail,
       replyTo: user || from,
@@ -193,9 +196,10 @@ ${societyName} Team`;
         'Importance': 'Normal',
       },
     });
-    return { success: true };
+    console.log(`[Mailer] Confirmation email dispatched successfully to ${recipientEmail} (ID: ${info?.messageId || "ok"})`);
+    return { success: true, messageId: info?.messageId };
   } catch (err) {
-    console.warn(`[Mailer] Failed to dispatch confirmation email: ${err.message}`);
-    return { success: false, error: err.message };
+    console.error(`[Mailer] Failed to dispatch confirmation email to ${recipientEmail}:`, err.message || err);
+    return { success: false, error: err.message || "Failed to dispatch email" };
   }
 }

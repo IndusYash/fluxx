@@ -3,7 +3,7 @@ import http from "node:http";
 import ByteBrawlRegistration from "../models/bytebrawlModel.js";
 import { bytebrawlRegistrationSchema } from "../validation/bytebrawlSchema.js";
 import { createVerificationToken } from "../utils/otpService.js";
-import app from "../brain.js";
+import app, { connectDB } from "../brain.js";
 import { BYTEBRAWL_CONFIG } from "../config/bytebrawlConfig.js";
 
 async function runTests() {
@@ -25,11 +25,12 @@ async function runTests() {
 
   // Clear test data for clean slate
   try {
+    await connectDB();
     await ByteBrawlRegistration.deleteMany({
       eventSlug: BYTEBRAWL_CONFIG.slug,
     });
   } catch (err) {
-    console.warn("Notice: Test cleanup skipped (DB not connected yet):", err.message);
+    console.warn("Notice: Test cleanup skipped:", err.message);
   }
 
   // ─────────────────────────────────────────────────────────────
@@ -84,6 +85,44 @@ async function runTests() {
     };
     const res = bytebrawlRegistrationSchema.safeParse(payload);
     assert.strictEqual(res.success, true, "Schema should accept valid individual");
+  });
+
+  await test("Branch validation accepts CHE and BBA", () => {
+    const payloadChe = {
+      type: "INDIVIDUAL",
+      teamName: "Che Individual",
+      participant1: {
+        fullName: "Karan Singh",
+        rollNumber: "2024CHE011",
+        branch: "CHE",
+        year: "2nd Year",
+        mobile: "9123456789",
+        email: "karan@mmmut.ac.in",
+        verificationToken: createVerificationToken("karan@mmmut.ac.in"),
+      },
+      agreedRules: true,
+      confirmedDetails: true,
+    };
+    const resChe = bytebrawlRegistrationSchema.safeParse(payloadChe);
+    assert.strictEqual(resChe.success, true, "Schema should accept CHE branch");
+
+    const payloadBba = {
+      type: "INDIVIDUAL",
+      teamName: "BBA Individual",
+      participant1: {
+        fullName: "Sneha Patel",
+        rollNumber: "2024BBA022",
+        branch: "BBA",
+        year: "1st Year",
+        mobile: "9123456780",
+        email: "sneha@mmmut.ac.in",
+        verificationToken: createVerificationToken("sneha@mmmut.ac.in"),
+      },
+      agreedRules: true,
+      confirmedDetails: true,
+    };
+    const resBba = bytebrawlRegistrationSchema.safeParse(payloadBba);
+    assert.strictEqual(resBba.success, true, "Schema should accept BBA branch");
   });
 
   await test("Team Registration without teamName fails validation (422)", () => {
@@ -523,6 +562,7 @@ async function runTests() {
   if (failedCount > 0) {
     process.exit(1);
   }
+  process.exit(0);
 }
 
 runTests().catch((err) => {

@@ -6,7 +6,6 @@ import AboutByteBrawl from "./AboutByteBrawl";
 import AboutHacktoberfest from "./AboutHacktoberfest";
 import EventDetailsGrid from "./EventDetailsGrid";
 import RulesAndFAQ from "./RulesAndFAQ";
-import CoordinatorsContact from "./CoordinatorsContact";
 import PaintEdgeDivider from "@/components/ui/PaintEdgeDivider";
 import Container from "@/components/layout/Container";
 import { BYTEBRAWL_CONFIG } from "@/config/eventConfig";
@@ -75,7 +74,7 @@ export default function ByteBrawlPage({ isMobile: _isMobile }: ByteBrawlPageProp
       <RulesAndFAQ />
 
       {/* Paint Edge Divider */}
-      <PaintEdgeDivider topColor="#090909" bottomColor="#0e0e0e" />
+      <PaintEdgeDivider topColor="#090909" bottomColor="#0a0a0a" />
 
       {/* 6. Registration Gateway Section */}
       <section id="registration-section" className="relative py-20 sm:py-28 bg-[#0a0a0a] text-white">
@@ -115,12 +114,6 @@ export default function ByteBrawlPage({ isMobile: _isMobile }: ByteBrawlPageProp
           </div>
         </Container>
       </section>
-
-      {/* Paint Edge Divider */}
-      <PaintEdgeDivider topColor="#0e0e0e" bottomColor="#0a0a0a" flip />
-
-      {/* 7. Coordinators & Support Contacts */}
-      <CoordinatorsContact />
 
     </div>
   );
