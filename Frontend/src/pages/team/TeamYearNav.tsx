@@ -57,8 +57,8 @@ export const TeamYearNav: React.FC = () => {
       {/* Section Eyebrow & Title */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-5 border-b border-white/10 pb-4">
         <div>
-          <div className="flex items-center gap-2 font-mono text-[11px] text-[#4dff7c] uppercase tracking-widest font-semibold mb-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#4dff7c] animate-pulse" />
+          <div className="flex items-center gap-2 font-mono text-[11px] text-white/90 uppercase tracking-widest font-semibold mb-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
             <span>COHORT DIRECTORY // SELECT TO JUMP</span>
           </div>
           <h2
@@ -87,19 +87,19 @@ export const TeamYearNav: React.FC = () => {
               onClick={() => handleScrollToSection(section.id)}
               className={`group relative flex flex-col justify-between p-4 sm:p-5 rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden backdrop-blur-md ${
                 isActive
-                  ? 'bg-gradient-to-b from-[#4dff7c]/15 to-[#0a100d] border border-[#4dff7c]/70 shadow-[0_0_35px_rgba(77,255,124,0.18)] translate-y-[-2px]'
-                  : 'bg-[#0a100d]/80 border border-white/10 hover:border-[#4dff7c]/40 hover:bg-[#0c1410] hover:translate-y-[-3px] hover:shadow-[0_12px_30px_rgba(0,0,0,0.6)]'
+                  ? 'bg-gradient-to-b from-white/10 to-[#101010] border border-white/60 shadow-[0_0_30px_rgba(255,255,255,0.12)] translate-y-[-2px]'
+                  : 'bg-[#0e0e0e]/90 border border-white/10 hover:border-white/30 hover:bg-[#131313] hover:translate-y-[-3px] hover:shadow-[0_12px_30px_rgba(0,0,0,0.6)]'
               }`}
             >
               {/* Sci-Fi Micro Tech Brackets */}
-              <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-[#4dff7c]/50 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
-              <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-[#4dff7c]/50 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
-              <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-[#4dff7c]/50 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
-              <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-[#4dff7c]/50 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-white/30 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-white/30 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-white/30 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-white/30 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
 
               {/* Active top neon glow line */}
               {isActive && (
-                <div className="absolute top-0 inset-x-0 h-[2.5px] bg-[#4dff7c] shadow-[0_0_12px_#4dff7c]" />
+                <div className="absolute top-0 inset-x-0 h-[2px] bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
               )}
 
               <div>
@@ -108,8 +108,8 @@ export const TeamYearNav: React.FC = () => {
                   <div
                     className={`flex items-center gap-1.5 font-mono font-bold text-xs px-2.5 py-1 rounded-md border transition-all ${
                       isActive
-                        ? 'border-[#4dff7c] text-[#4dff7c] bg-[#4dff7c]/15 shadow-[0_0_10px_rgba(77,255,124,0.3)]'
-                        : 'border-white/10 text-neutral-400 group-hover:border-[#4dff7c]/50 group-hover:text-white bg-white/[0.03]'
+                        ? 'border-white/50 text-white bg-white/10 shadow-[0_0_10px_rgba(255,255,255,0.15)]'
+                        : 'border-white/10 text-neutral-400 group-hover:border-white/30 group-hover:text-white bg-white/[0.03]'
                     }`}
                   >
                     <span>{section.num}</span>
@@ -118,8 +118,8 @@ export const TeamYearNav: React.FC = () => {
                   </div>
 
                   {isActive ? (
-                    <span className="flex items-center gap-1 font-mono text-[10px] text-[#4dff7c] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-[#4dff7c]/10 border border-[#4dff7c]/30">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#4dff7c] animate-pulse" />
+                    <span className="flex items-center gap-1 font-mono text-[10px] text-white uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-white/10 border border-white/25">
+                      <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                       <span>CURRENT</span>
                     </span>
                   ) : (
@@ -152,7 +152,7 @@ export const TeamYearNav: React.FC = () => {
                   {previewMembers.map((m, idx) => (
                     <div
                       key={idx}
-                      className="relative w-8 h-8 rounded-full overflow-hidden border-2 border-[#0a100d] bg-neutral-900 shadow-md transition-transform duration-200 group-hover:scale-105"
+                      className="relative w-8 h-8 rounded-full overflow-hidden border-2 border-[#0e0e0e] bg-neutral-900 shadow-md transition-transform duration-200 group-hover:scale-105"
                       title={`${m.name} - ${m.role}`}
                     >
                       <img
@@ -166,7 +166,7 @@ export const TeamYearNav: React.FC = () => {
                     </div>
                   ))}
                   {remainingCount > 0 && (
-                    <div className="relative w-8 h-8 rounded-full border-2 border-[#0a100d] bg-neutral-800/90 text-neutral-300 font-mono text-[10px] font-bold flex items-center justify-center shadow-md">
+                    <div className="relative w-8 h-8 rounded-full border-2 border-[#0e0e0e] bg-neutral-800/90 text-neutral-300 font-mono text-[10px] font-bold flex items-center justify-center shadow-md">
                       +{remainingCount}
                     </div>
                   )}
@@ -176,8 +176,8 @@ export const TeamYearNav: React.FC = () => {
                 <div
                   className={`flex items-center gap-1 text-xs font-mono font-semibold transition-all duration-200 ${
                     isActive
-                      ? 'text-[#4dff7c]'
-                      : 'text-neutral-400 group-hover:text-[#4dff7c] group-hover:translate-x-1'
+                      ? 'text-white'
+                      : 'text-neutral-400 group-hover:text-white group-hover:translate-x-1'
                   }`}
                 >
                   <span>Explore</span>

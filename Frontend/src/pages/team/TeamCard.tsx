@@ -17,7 +17,7 @@ export const TeamCard: React.FC<TeamCardProps> = ({
   // Neutral placeholder if image fails to load
   const imageSrc =
     imgError || !member.image
-      ? `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="100%" height="100%" fill="%23111b15"/><circle cx="100" cy="80" r="36" fill="%23243a2e"/><path d="M40 180 C40 135 70 120 100 120 C130 120 160 135 160 180 Z" fill="%23243a2e"/></svg>`
+      ? `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="100%" height="100%" fill="%23161616"/><circle cx="100" cy="80" r="36" fill="%23282828"/><path d="M40 180 C40 135 70 120 100 120 C130 120 160 135 160 180 Z" fill="%23282828"/></svg>`
       : member.image;
 
   return (
@@ -27,16 +27,16 @@ export const TeamCard: React.FC<TeamCardProps> = ({
         aspectRatio: '0.68',
         borderRadius: '12px',
         border: isStackFront
-          ? '1px solid rgba(77, 255, 124, 0.8)'
+          ? '1px solid rgba(255, 255, 255, 0.85)'
           : '1px solid rgba(255, 255, 255, 0.17)',
-        backgroundColor: '#0a100d',
+        backgroundColor: '#0c0c0c',
         overflow: 'hidden',
         containerType: 'inline-size',
         position: 'relative',
         width: '100%',
         height: '100%',
         boxShadow: isStackFront
-          ? '0 0 25px rgba(77, 255, 124, 0.3), 0 12px 26px rgba(0, 0, 0, 0.55)'
+          ? '0 0 25px rgba(255, 255, 255, 0.25), 0 12px 26px rgba(0, 0, 0, 0.65)'
           : undefined,
       }}
     >
@@ -65,7 +65,7 @@ export const TeamCard: React.FC<TeamCardProps> = ({
           position: 'absolute',
           inset: 0,
           background:
-            'linear-gradient(180deg, transparent 34%, rgba(10, 16, 13, 0.35) 58%, rgba(10, 16, 13, 0.85) 78%, #0a100d 92%)',
+            'linear-gradient(180deg, transparent 34%, rgba(12, 12, 12, 0.35) 58%, rgba(12, 12, 12, 0.85) 78%, #0c0c0c 92%)',
         }}
       />
 
@@ -117,7 +117,7 @@ export const TeamCard: React.FC<TeamCardProps> = ({
           pointerEvents: 'none',
         }}
       >
-        {/* Small green double-bar marker: two 1.5px green lines */}
+        {/* Small silver double-bar marker: two 1.5px lines */}
         <span
           style={{
             display: 'inline-flex',
@@ -133,7 +133,7 @@ export const TeamCard: React.FC<TeamCardProps> = ({
             style={{
               width: '1.5px',
               height: '100%',
-              backgroundColor: '#4dff7c',
+              backgroundColor: 'rgba(255, 255, 255, 0.75)',
               display: 'inline-block',
             }}
           />
@@ -141,7 +141,7 @@ export const TeamCard: React.FC<TeamCardProps> = ({
             style={{
               width: '1.5px',
               height: '100%',
-              backgroundColor: '#4dff7c',
+              backgroundColor: 'rgba(255, 255, 255, 0.75)',
               display: 'inline-block',
             }}
           />

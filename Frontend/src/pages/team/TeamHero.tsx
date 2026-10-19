@@ -35,19 +35,19 @@ export const TeamHero: React.FC = () => {
         />
       </div>
 
-      {/* Fine green grid lines */}
+      {/* Fine monochrome grid lines */}
       <div
-        className="absolute inset-0 opacity-[0.06] pointer-events-none"
+        className="absolute inset-0 opacity-[0.05] pointer-events-none"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(77, 255, 124, 0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(77, 255, 124, 0.4) 1px, transparent 1px)',
+            'linear-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.4) 1px, transparent 1px)',
           backgroundSize: '36px 36px',
         }}
       />
 
       {/* Faint wireframe globe bottom-right */}
       <div
-        className="absolute bottom-[-15%] right-[-5%] sm:right-[4%] pointer-events-none select-none opacity-20"
+        className="absolute bottom-[-15%] right-[-5%] sm:right-[4%] pointer-events-none select-none opacity-25"
         aria-hidden="true"
       >
         <svg
@@ -58,15 +58,15 @@ export const TeamHero: React.FC = () => {
           className="w-[180px] h-[180px] sm:w-[240px] sm:h-[240px]"
         >
           {/* Outer circle */}
-          <circle cx="100" cy="100" r="84" stroke="#4dff7c" strokeWidth="0.9" strokeDasharray="3 3" />
+          <circle cx="100" cy="100" r="84" stroke="rgba(255, 255, 255, 0.45)" strokeWidth="0.9" strokeDasharray="3 3" />
           {/* Latitude lines */}
-          <ellipse cx="100" cy="100" rx="84" ry="28" stroke="#4dff7c" strokeWidth="0.8" />
-          <ellipse cx="100" cy="100" rx="84" ry="58" stroke="#4dff7c" strokeWidth="0.6" strokeDasharray="4 2" />
-          <line x1="16" y1="100" x2="184" y2="100" stroke="#4dff7c" strokeWidth="0.8" />
+          <ellipse cx="100" cy="100" rx="84" ry="28" stroke="rgba(255, 255, 255, 0.4)" strokeWidth="0.8" />
+          <ellipse cx="100" cy="100" rx="84" ry="58" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="0.6" strokeDasharray="4 2" />
+          <line x1="16" y1="100" x2="184" y2="100" stroke="rgba(255, 255, 255, 0.4)" strokeWidth="0.8" />
           {/* Longitude lines */}
-          <ellipse cx="100" cy="100" rx="28" ry="84" stroke="#4dff7c" strokeWidth="0.8" />
-          <ellipse cx="100" cy="100" rx="58" ry="84" stroke="#4dff7c" strokeWidth="0.6" strokeDasharray="4 2" />
-          <line x1="100" y1="16" x2="100" y2="184" stroke="#4dff7c" strokeWidth="0.8" />
+          <ellipse cx="100" cy="100" rx="28" ry="84" stroke="rgba(255, 255, 255, 0.4)" strokeWidth="0.8" />
+          <ellipse cx="100" cy="100" rx="58" ry="84" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="0.6" strokeDasharray="4 2" />
+          <line x1="100" y1="16" x2="100" y2="184" stroke="rgba(255, 255, 255, 0.4)" strokeWidth="0.8" />
         </svg>
       </div>
 
@@ -74,14 +74,14 @@ export const TeamHero: React.FC = () => {
       <div className="relative z-10 flex flex-col items-center justify-center text-center max-w-2xl mx-auto px-4">
         {/* Eyebrow "F L U X" flanked by thin lines */}
         <div className="flex items-center justify-center gap-2.5 sm:gap-3 mb-2.5 sm:mb-3">
-          <div className="h-[1px] w-6 sm:w-8 bg-[#4dff7c]/60" />
-          <span className="font-mono text-[11px] sm:text-xs uppercase tracking-[0.3em] font-semibold text-[#4dff7c]">
+          <div className="h-[1px] w-6 sm:w-8 bg-white/40" />
+          <span className="font-mono text-[11px] sm:text-xs uppercase tracking-[0.3em] font-semibold text-white/90">
             F L U X
           </span>
-          <div className="h-[1px] w-6 sm:w-8 bg-[#4dff7c]/60" />
+          <div className="h-[1px] w-6 sm:w-8 bg-white/40" />
         </div>
 
-        {/* Heading: "Meet the minds behind FLUX." (white, final period green, 800) */}
+        {/* Heading: "Meet the minds behind FLUX." (clean white with soft silver glow) */}
         <h1
           style={{
             fontFamily: '"Plus Jakarta Sans", sans-serif',
@@ -92,7 +92,7 @@ export const TeamHero: React.FC = () => {
           }}
           className="text-white mb-2 sm:mb-2.5 text-center"
         >
-          Meet the minds behind FLUX<span className="text-[#4dff7c]">.</span>
+          Meet the minds behind FLUX<span className="text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.7)]">.</span>
         </h1>
 
         {/* Subtext */}
@@ -110,14 +110,14 @@ export const TeamHero: React.FC = () => {
         aria-hidden="true"
       >
         <span style={{ writingMode: 'vertical-rl' }}>SCROLL</span>
-        <div className="w-[1.5px] h-7 bg-gradient-to-b from-[#4dff7c] to-transparent animate-pulse" />
+        <div className="w-[1.5px] h-7 bg-gradient-to-b from-white/80 to-transparent animate-pulse" />
       </div>
 
       {/* Thin bottom divider */}
       <div
         className="absolute bottom-0 inset-x-0 h-[1px]"
         style={{
-          background: 'linear-gradient(90deg, transparent 0%, rgba(77, 255, 124, 0.25) 30%, rgba(77, 255, 124, 0.25) 70%, transparent 100%)',
+          background: 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.22) 30%, rgba(255, 255, 255, 0.22) 70%, transparent 100%)',
         }}
       />
     </div>

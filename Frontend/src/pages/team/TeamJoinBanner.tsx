@@ -49,14 +49,14 @@ export const TeamJoinBanner: React.FC = () => {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 sm:mb-8">
         {/* Left: Numbered box + Big Title + Subtitle */}
         <div className="flex items-center flex-wrap gap-3 sm:gap-4">
-          {/* Numbered box in green outline */}
+          {/* Numbered box in silver/white outline matching sections 01-03 */}
           <div
             className="flex items-center justify-center font-mono font-bold text-xs sm:text-sm px-2.5 py-1 rounded-md select-none"
             style={{
-              border: '1px solid #4dff7c',
-              color: '#4dff7c',
-              backgroundColor: 'rgba(77, 255, 124, 0.06)',
-              boxShadow: '0 0 10px rgba(77, 255, 124, 0.15)',
+              border: '1px solid rgba(255, 255, 255, 0.4)',
+              color: '#ffffff',
+              backgroundColor: 'rgba(255, 255, 255, 0.06)',
+              boxShadow: '0 0 10px rgba(255, 255, 255, 0.1)',
             }}
           >
             04
@@ -87,12 +87,12 @@ export const TeamJoinBanner: React.FC = () => {
           <div
             className="flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono tracking-wider"
             style={{
-              backgroundColor: 'rgba(77, 255, 124, 0.08)',
-              border: '1px solid rgba(77, 255, 124, 0.3)',
-              color: '#4dff7c',
+              backgroundColor: 'rgba(255, 255, 255, 0.06)',
+              border: '1px solid rgba(255, 255, 255, 0.25)',
+              color: '#ffffff',
             }}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#4dff7c] animate-pulse" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
             <span>OPEN TO ALL STUDENTS</span>
           </div>
         </div>
@@ -110,32 +110,32 @@ export const TeamJoinBanner: React.FC = () => {
               key={item.num}
               className="group relative flex flex-col justify-between p-5 sm:p-6 rounded-2xl transition-all duration-300 text-left overflow-hidden backdrop-blur-md"
               style={{
-                backgroundColor: '#0a100d',
+                backgroundColor: '#0c0c0c',
                 border: '1px solid rgba(255, 255, 255, 0.12)',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(77, 255, 124, 0.55)';
-                e.currentTarget.style.backgroundColor = '#0c1611';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+                e.currentTarget.style.backgroundColor = '#141414';
                 e.currentTarget.style.transform = 'translateY(-3px)';
-                e.currentTarget.style.boxShadow = '0 12px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(77, 255, 124, 0.12)';
+                e.currentTarget.style.boxShadow = '0 12px 30px rgba(0, 0, 0, 0.7), 0 0 25px rgba(255, 255, 255, 0.1)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)';
-                e.currentTarget.style.backgroundColor = '#0a100d';
+                e.currentTarget.style.backgroundColor = '#0c0c0c';
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = 'none';
               }}
             >
               {/* Sci-Fi Micro Tech Brackets (matching YearNav cards) */}
-              <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-[#4dff7c]/40 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
-              <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-[#4dff7c]/40 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
-              <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-[#4dff7c]/40 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
-              <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-[#4dff7c]/40 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-white/30 pointer-events-none opacity-60 group-hover:opacity-100 group-hover:border-white/70 transition-all" />
+              <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-white/30 pointer-events-none opacity-60 group-hover:opacity-100 group-hover:border-white/70 transition-all" />
+              <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-white/30 pointer-events-none opacity-60 group-hover:opacity-100 group-hover:border-white/70 transition-all" />
+              <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-white/30 pointer-events-none opacity-60 group-hover:opacity-100 group-hover:border-white/70 transition-all" />
 
               {/* Top Row: Icon + Monospace Tag */}
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-8 h-8 rounded-lg bg-[#4dff7c]/10 border border-[#4dff7c]/30 flex items-center justify-center text-[#4dff7c]">
+                  <div className="w-8 h-8 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center text-white">
                     <Icon className="w-4 h-4" />
                   </div>
                   <span className="font-mono text-[11px] tracking-wider uppercase text-neutral-400">
@@ -146,7 +146,7 @@ export const TeamJoinBanner: React.FC = () => {
                 {/* Title */}
                 <h3
                   style={{ fontFamily: '"Plus Jakarta Sans", sans-serif' }}
-                  className="text-white text-lg sm:text-xl font-bold tracking-tight mb-2.5 group-hover:text-[#4dff7c] transition-colors"
+                  className="text-white text-lg sm:text-xl font-bold tracking-tight mb-2.5 transition-colors"
                 >
                   {item.title}
                 </h3>
@@ -164,18 +164,18 @@ export const TeamJoinBanner: React.FC = () => {
                     href={item.actionHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-between w-full py-2.5 px-3.5 rounded-xl font-mono text-xs font-semibold tracking-wider text-neutral-300 group-hover:text-white bg-white/[0.03] group-hover:bg-[#4dff7c]/15 border border-white/10 group-hover:border-[#4dff7c]/50 transition-all duration-200 cursor-pointer"
+                    className="inline-flex items-center justify-between w-full py-2.5 px-3.5 rounded-xl font-mono text-xs font-semibold tracking-wider text-neutral-300 group-hover:text-white bg-white/[0.04] group-hover:bg-white/15 border border-white/10 group-hover:border-white/40 transition-all duration-200 cursor-pointer"
                   >
                     <span>{item.actionLabel}</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-[#4dff7c] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-white transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </a>
                 ) : (
                   <Link
                     to={item.actionHref}
-                    className="inline-flex items-center justify-between w-full py-2.5 px-3.5 rounded-xl font-mono text-xs font-semibold tracking-wider text-neutral-300 group-hover:text-white bg-white/[0.03] group-hover:bg-[#4dff7c]/15 border border-white/10 group-hover:border-[#4dff7c]/50 transition-all duration-200 cursor-pointer"
+                    className="inline-flex items-center justify-between w-full py-2.5 px-3.5 rounded-xl font-mono text-xs font-semibold tracking-wider text-neutral-300 group-hover:text-white bg-white/[0.04] group-hover:bg-white/15 border border-white/10 group-hover:border-white/40 transition-all duration-200 cursor-pointer"
                   >
                     <span>{item.actionLabel}</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-[#4dff7c] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-white transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </Link>
                 )}
               </div>
@@ -187,7 +187,7 @@ export const TeamJoinBanner: React.FC = () => {
       {/* ── Subdued Bottom Ticker Bar Matching the Page Palette ── */}
       <div className="w-full py-3 px-4 rounded-xl bg-black/40 border border-white/5 flex flex-wrap items-center justify-between gap-3 text-[11px] font-mono text-neutral-400">
         <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#4dff7c]" />
+          <span className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
           <span className="text-neutral-300">FLUX STUDENT HUB // MMMUT GORAKHPUR</span>
         </div>
 
@@ -197,7 +197,7 @@ export const TeamJoinBanner: React.FC = () => {
           </span>
           <span className="text-neutral-700">•</span>
           <span>
-            <strong className="text-[#4dff7c]">15+</strong> EVENTS
+            <strong className="text-white">15+</strong> EVENTS
           </span>
           <span className="text-neutral-700">•</span>
           <span>

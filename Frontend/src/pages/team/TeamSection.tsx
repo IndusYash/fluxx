@@ -77,14 +77,14 @@ export const TeamSection: React.FC<TeamSectionProps> = ({
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 sm:mb-12">
         {/* Left: Numbered box + Big Title + Subtitle */}
         <div className="flex items-center flex-wrap gap-3 sm:gap-4">
-          {/* Numbered box in green outline */}
+          {/* Numbered box in silver/white outline */}
           <div
             className="flex items-center justify-center font-mono font-bold text-xs sm:text-sm px-2.5 py-1 rounded-md select-none"
             style={{
-              border: '1px solid #4dff7c',
-              color: '#4dff7c',
-              backgroundColor: 'rgba(77, 255, 124, 0.06)',
-              boxShadow: '0 0 10px rgba(77, 255, 124, 0.15)',
+              border: '1px solid rgba(255, 255, 255, 0.4)',
+              color: '#ffffff',
+              backgroundColor: 'rgba(255, 255, 255, 0.06)',
+              boxShadow: '0 0 10px rgba(255, 255, 255, 0.12)',
             }}
           >
             {section.num}
@@ -120,11 +120,11 @@ export const TeamSection: React.FC<TeamSectionProps> = ({
           )}
         </div>
 
-        {/* Right: Short description with 2px green left border */}
+        {/* Right: Short description with 2px silver left border */}
         <div
-          className="border-l-2 border-[#4dff7c] pl-4 max-w-md text-xs sm:text-sm text-neutral-300 font-sans leading-relaxed"
+          className="border-l-2 border-white/60 pl-4 max-w-md text-xs sm:text-sm text-neutral-300 font-sans leading-relaxed"
           style={{
-            borderColor: '#4dff7c',
+            borderColor: 'rgba(255, 255, 255, 0.6)',
           }}
         >
           {section.desc}
@@ -146,7 +146,7 @@ export const TeamSection: React.FC<TeamSectionProps> = ({
         <div className="flux-zone relative w-full h-full min-h-[220px]">
           {/* Sticky Track: scrolls naturally down with user and stops at the last row of the section */}
           <div className="flux-sticky-track relative w-full">
-            {/* Green Trajectory SVG (behind cards, hidden on <=1180px) */}
+            {/* Trajectory SVG (behind cards, hidden on <=1180px) */}
             <svg
               className="flux-trajectory absolute inset-0 w-full h-full pointer-events-none z-[1]"
               viewBox="0 0 929 439"
@@ -154,7 +154,7 @@ export const TeamSection: React.FC<TeamSectionProps> = ({
             >
               <defs>
                 <filter id={`neon-glow-${section.id}`} x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#4dff7c" floodOpacity="0.8" />
+                  <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#ffffff" floodOpacity="0.7" />
                 </filter>
               </defs>
 
@@ -162,7 +162,7 @@ export const TeamSection: React.FC<TeamSectionProps> = ({
               <path
                 d="M321 60C400 12 500 8 600 48S780 150 866 199"
                 fill="none"
-                stroke="rgba(77, 255, 124, 0.55)"
+                stroke="rgba(255, 255, 255, 0.3)"
                 strokeWidth="1.2"
                 strokeDasharray="1 7"
                 strokeLinecap="round"
@@ -174,7 +174,7 @@ export const TeamSection: React.FC<TeamSectionProps> = ({
                 ref={pathRef}
                 d="M321 60C400 12 500 8 600 48S780 150 866 199"
                 fill="none"
-                stroke="#4dff7c"
+                stroke="#ffffff"
                 strokeWidth="2"
                 pathLength="1"
                 strokeDasharray="1"
@@ -202,8 +202,8 @@ export const TeamSection: React.FC<TeamSectionProps> = ({
                   top: pos.top,
                   width: '8px',
                   height: '8px',
-                  backgroundColor: '#4dff7c',
-                  boxShadow: '0 0 10px #4dff7c, 0 0 18px rgba(77, 255, 124, 0.6)',
+                  backgroundColor: '#ffffff',
+                  boxShadow: '0 0 10px #ffffff, 0 0 18px rgba(255, 255, 255, 0.6)',
                   transform: 'translate(-50%, -50%)',
                   opacity: 0,
                   transition: 'opacity 0.2s ease',
@@ -228,12 +228,12 @@ export const TeamSection: React.FC<TeamSectionProps> = ({
                 height="16"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#4dff7c"
+                stroke="#ffffff"
                 strokeWidth="2.8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 style={{
-                  filter: 'drop-shadow(0 0 6px rgba(77, 255, 124, 0.9))',
+                  filter: 'drop-shadow(0 0 6px rgba(255, 255, 255, 0.8))',
                 }}
               >
                 <polyline points="9 18 15 12 9 6" />
@@ -294,7 +294,7 @@ export const TeamSection: React.FC<TeamSectionProps> = ({
                     margin: 'calc(var(--sh, 300px) / -2) 0 0 calc(var(--sw, 204px) / -2)',
                     transform: `translate(calc(var(--sw, 204px) * -0.105 * ${k}), calc(var(--sw, 204px) * 0.0137 * ${k})) rotate(calc(7.5deg - ${4.56 * k}deg))`,
                     zIndex: 10 - k,
-                    background: `linear-gradient(160deg, hsl(150 8% calc(21% - ${k * 1.7}%)), #070a09 80%)`,
+                    background: `linear-gradient(160deg, hsl(0 0% calc(22% - ${k * 1.8}%)), #0c0c0c 80%)`,
                     border: '1px solid rgba(255, 255, 255, 0.16)',
                     boxShadow: '0 12px 26px rgba(0, 0, 0, 0.55)',
                     borderRadius: '12px',
