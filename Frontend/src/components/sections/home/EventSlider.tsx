@@ -574,7 +574,7 @@ export default function EventSlider() {
                     cardRefs.current[index] = el;
                   }}
                   onClick={() => handleCardClick(index)}
-                  className="absolute inset-0 w-full h-full rounded-[2px] overflow-hidden border border-white/20 bg-neutral-900 will-change-transform shadow-[0_16px_40px_rgba(0,0,0,0.85)] cursor-pointer group"
+                  className="absolute inset-0 w-full h-full rounded-xl overflow-hidden border border-white/20 bg-neutral-900 will-change-transform shadow-[0_16px_40px_rgba(0,0,0,0.85)] cursor-pointer group"
                   style={{
                     transform: "translate3d(0, 0, 0) scale(1)",
                     opacity: index === 0 ? 1 : 0,
@@ -591,7 +591,7 @@ export default function EventSlider() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-white/10 pointer-events-none" />
 
                   {/* Mobile text banner inside card (visible on mobile for center card) */}
-                  <div className="card-mobile-banner lg:hidden absolute bottom-0 inset-x-0 p-3 sm:p-4 bg-gradient-to-t from-black via-black/90 to-transparent transition-opacity duration-300 pointer-events-auto">
+                  <div className="card-mobile-banner lg:!hidden absolute bottom-0 inset-x-0 p-3 sm:p-4 bg-gradient-to-t from-black via-black/90 to-transparent transition-opacity duration-300 pointer-events-auto">
                     <span className="font-mono text-[10px] tracking-widest text-white/70 uppercase block">
                       {ev.phase}
                     </span>
@@ -606,7 +606,7 @@ export default function EventSlider() {
                         e.stopPropagation();
                         navigate(ev.link);
                       }}
-                      className="mt-2.5 w-full h-11 min-h-[44px] flex items-center justify-center gap-2 border border-white/40 bg-white/10 active:bg-white active:text-black backdrop-blur-sm text-white text-xs font-mono uppercase tracking-wider transition-colors cursor-pointer rounded-sm"
+                      className="mt-2.5 w-full h-11 min-h-[44px] flex lg:!hidden items-center justify-center gap-2 border border-white/40 bg-white/10 active:bg-white active:text-black backdrop-blur-sm text-white text-xs font-mono uppercase tracking-wider transition-colors cursor-pointer rounded-lg"
                     >
                       <span>Explore Event</span>
                       <span>→</span>
