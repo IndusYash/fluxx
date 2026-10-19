@@ -1,41 +1,22 @@
+
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "services": {
-    "backend": {
-      "root": "backend",
-      "framework": "express",
-      "entrypoint": "brain.js"
-    },
-    "frontend": {
-      "root": "Frontend",
-      "framework": "vite"
-    }
-  },
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": {
-        "service": "backend"
-      }
+      "source": "/api/:path*",
+      "destination": "https://flux-backend-1hmq.onrender.com/api/:path*"
     },
     {
       "source": "/healthz",
-      "destination": {
-        "service": "backend"
-      }
+      "destination": "https://flux-backend-1hmq.onrender.com/healthz"
     },
     {
       "source": "/ping",
-      "destination": {
-        "service": "backend"
-      }
+      "destination": "https://flux-backend-1hmq.onrender.com/ping"
     },
     {
       "source": "/(.*)",
-      "destination": {
-        "service": "frontend"
-      }
+      "destination": "/index.html"
     }
   ]
 }
-
