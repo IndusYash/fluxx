@@ -519,7 +519,7 @@ export const sophomoreMembers: Member[] = [
     email: 'rishirajkasaudhan5705@gmail.com',
     linkedin: 'https://www.linkedin.com/in/rishi-raj-kasaudhan-6615343a8',
     image: rishirajImage,
-    imagePosition: 'object-top',
+    imagePosition: 'center 0%',
   },
   {
     name: 'Ritisha Raghuvanshi',
@@ -538,6 +538,8 @@ export const sophomoreMembers: Member[] = [
     email: '2025021256@mmmut.ac.in',
     linkedin: 'https://www.linkedin.com/in/saumyjeet-kumar-pandey-602a51362/',
     image: saumyjeetKumarImage,
+    imagePosition: 'center 65%',
+    imageScale: 1.25,
   },
   {
     name: 'Shruti Tripathi',

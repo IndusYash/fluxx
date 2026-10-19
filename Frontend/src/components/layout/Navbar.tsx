@@ -281,12 +281,10 @@ export default function Navbar() {
             <Link
               to="/team"
               onClick={(e) => handleNavClick("/team", e)}
-              className={`px-3.5 py-1 text-xs uppercase tracking-wider font-semibold transition-all rounded-full ${
-                location.pathname === "/team"
-                  ? "border border-[#4dff7c] text-white bg-[#4dff7c]/10 shadow-[0_0_14px_rgba(77,255,124,0.35)]"
-                  : isNavbarLight
-                    ? "text-neutral-600 hover:text-black"
-                    : "text-[#9a9a9a] hover:text-white"
+              className={`px-3 py-1.5 text-xs uppercase tracking-wider transition-colors ${
+                isNavbarLight
+                  ? location.pathname === "/team" ? "text-black font-semibold" : "text-neutral-600 hover:text-black"
+                  : location.pathname === "/team" ? "text-white font-medium" : "text-[#9a9a9a] hover:text-white"
               }`}
             >
               <ScrambleText text="TEAM" />

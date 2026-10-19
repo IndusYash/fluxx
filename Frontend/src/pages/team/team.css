@@ -108,7 +108,7 @@
   overflow: hidden;
   container-type: inline-size;
   box-sizing: border-box;
-  background-color: #0a100d;
+  background-color: #0c0c0c;
 }
 
 /* Hover state only after entrance animation finishes (.done class) */
@@ -120,8 +120,8 @@
 
 .flux-grid-card-wrapper.done .flux-team-card:hover {
   transform: translateY(-3px) !important;
-  border-color: rgba(77, 255, 124, 0.8) !important;
-  box-shadow: 0 8px 24px rgba(77, 255, 124, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.75) !important;
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.16) !important;
 }
 
 /* Social links hover & focus */
@@ -130,12 +130,12 @@
 }
 
 .flux-social-link:hover {
-  color: #4dff7c !important;
+  color: #ffffff !important;
   transform: translateY(-1px);
 }
 
 .flux-social-link:focus-visible {
-  outline: 2px solid #4dff7c !important;
+  outline: 2px solid #ffffff !important;
   outline-offset: 2px !important;
 }
 
