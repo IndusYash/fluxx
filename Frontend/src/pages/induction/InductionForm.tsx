@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Upload, X, Check, ArrowRight, ArrowLeft,
   User, Phone, MapPin, Github, Zap,

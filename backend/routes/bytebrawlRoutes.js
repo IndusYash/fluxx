@@ -382,6 +382,8 @@ router.post("/register", registerRateLimiter, async (req, res) => {
       {
         role: isTeam ? "LEADER" : "INDIVIDUAL",
         fullName: data.participant1.fullName.trim(),
+        collegeName: data.participant1.collegeName?.trim() || "",
+        address: data.participant1.address?.trim() || "",
         rollNumber: p1Roll,
         branch: data.participant1.branch,
         year: data.participant1.year,
@@ -395,6 +397,8 @@ router.post("/register", registerRateLimiter, async (req, res) => {
       participantsToCreate.push({
         role: "MEMBER",
         fullName: data.participant2.fullName.trim(),
+        collegeName: data.participant2.collegeName?.trim() || "",
+        address: data.participant2.address?.trim() || "",
         rollNumber: p2Roll,
         branch: data.participant2.branch,
         year: data.participant2.year,

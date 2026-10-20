@@ -11,6 +11,16 @@ const participantSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  collegeName: {
+    type: String,
+    default: "",
+    trim: true,
+  },
+  address: {
+    type: String,
+    default: "",
+    trim: true,
+  },
   rollNumber: {
     type: String,
     required: true,

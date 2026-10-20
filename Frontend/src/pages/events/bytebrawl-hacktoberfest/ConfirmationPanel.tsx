@@ -11,6 +11,8 @@ export interface ConfirmedRegistrationData {
   participants: {
     fullName: string;
     role: string;
+    collegeName?: string;
+    address?: string;
     branch: string;
     year: string;
     rollNumber: string;
@@ -139,12 +141,18 @@ export default function ConfirmationPanel({ data }: ConfirmationPanelProps) {
                   <span>Participant 0{idx + 1}</span>
                   <span className="text-white/60">{p.role}</span>
                 </div>
-                <div className="font-sans font-bold text-sm text-white mb-1">
+                <div className="font-sans font-bold text-sm text-white mb-0.5">
                   {p.fullName}
                 </div>
+                {p.collegeName && (
+                  <div className="text-white/80 text-[11px] font-sans truncate mb-1">
+                    {p.collegeName}
+                  </div>
+                )}
                 <div className="text-neutral-400 space-y-0.5 text-[11px]">
-                  <div>Roll: <span className="text-white">{p.rollNumber}</span></div>
+                  <div>Roll / ID: <span className="text-white">{p.rollNumber}</span></div>
                   <div>Branch: <span className="text-neutral-200">{p.branch}</span> ({p.year})</div>
+                  {p.address && <div className="truncate">Address: <span className="text-neutral-300">{p.address}</span></div>}
                 </div>
               </div>
             ))}

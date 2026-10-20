@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
     Search, X, User, Mail, Phone, ExternalLink, GitBranch,
     Loader2, AlertCircle, Users, ChevronDown, ChevronUp, Eye, EyeOff,

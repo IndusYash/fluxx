@@ -97,6 +97,18 @@ export const participantSchema = z
       .refine(isAllowedEmailDomain, {
         message: "Email domain is not authorized for this event",
       }),
+    collegeName: z
+      .string()
+      .trim()
+      .max(120, "College name cannot exceed 120 characters")
+      .optional()
+      .or(z.literal("")),
+    address: z
+      .string()
+      .trim()
+      .max(250, "Address cannot exceed 250 characters")
+      .optional()
+      .or(z.literal("")),
     verificationToken: z
       .string({ required_error: "Email verification is required. Please click Verify to receive an OTP." })
       .min(10, "Email must be verified with OTP before submitting"),
@@ -120,11 +132,7 @@ export const bytebrawlRegistrationSchema = z
         message: "You must agree to the event rules and regulations",
       }),
     }),
-    confirmedDetails: z.literal(true, {
-      errorMap: () => ({
-        message: "You must confirm that all submitted details are correct",
-      }),
-    }),
+    confirmedDetails: z.boolean().optional().default(true),
     hp_website: z
       .string()
       .max(0, "Bot submission detected")

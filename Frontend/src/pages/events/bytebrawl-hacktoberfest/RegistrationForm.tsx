@@ -105,6 +105,8 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
   // Step 3 (or 2 for Individual): Participant 1 (Leader)
   const [p1, setP1] = useState({
     fullName: "",
+    collegeName: "",
+    address: "",
     rollNumber: "",
     branch: "",
     year: "",
@@ -128,6 +130,8 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
   const [hasTeammate, setHasTeammate] = useState(false);
   const [p2, setP2] = useState({
     fullName: "",
+    collegeName: "",
+    address: "",
     rollNumber: "",
     branch: "",
     year: "",
@@ -149,7 +153,7 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
 
   // Step 5 (or 3 for Individual): Confirmation
   const [agreedRules, setAgreedRules] = useState(false);
-  const [confirmedDetails, setConfirmedDetails] = useState(false);
+  const [confirmedDetails, setConfirmedDetails] = useState(true);
   const [honeypot, setHoneypot] = useState("");
 
   // Form submission state
@@ -494,6 +498,8 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       const phoneCheck = checkClientPhone(p1.mobile);
       return (
         p1.fullName.trim().length >= 2 &&
+        p1.collegeName.trim().length >= 2 &&
+        p1.address.trim().length >= 2 &&
         /^[A-Za-z0-9]{6,14}$/.test(p1.rollNumber.trim()) &&
         p1.branch !== "" &&
         p1.year !== "" &&
@@ -515,6 +521,8 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
 
         return (
           p2.fullName.trim().length >= 2 &&
+          p2.collegeName.trim().length >= 2 &&
+          p2.address.trim().length >= 2 &&
           /^[A-Za-z0-9]{6,14}$/.test(p2.rollNumber.trim()) &&
           distinctRoll &&
           p2.branch !== "" &&
@@ -528,12 +536,12 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       }
 
       if (currentStep === 5) {
-        return agreedRules && confirmedDetails;
+        return agreedRules;
       }
     } else {
       // INDIVIDUAL
       if (currentStep === 4) {
-        return agreedRules && confirmedDetails;
+        return agreedRules;
       }
     }
 
@@ -546,6 +554,8 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
     setHasTeammate(false);
     setP2({
       fullName: "",
+      collegeName: "",
+      address: "",
       rollNumber: "",
       branch: "",
       year: "",
@@ -560,7 +570,7 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
   // Final Form Submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!agreedRules || !confirmedDetails) return;
+    if (!agreedRules) return;
 
     setIsSubmitting(true);
     setServerError(null);
@@ -572,6 +582,8 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       teamName: teamName.trim(),
       participant1: {
         fullName: p1.fullName.trim(),
+        collegeName: p1.collegeName.trim(),
+        address: p1.address.trim(),
         rollNumber: p1.rollNumber.trim().toUpperCase(),
         branch: p1.branch,
         year: p1.year,
@@ -588,6 +600,8 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       const p2Phone = checkClientPhone(p2.mobile);
       payload.participant2 = {
         fullName: p2.fullName.trim(),
+        collegeName: p2.collegeName.trim(),
+        address: p2.address.trim(),
         rollNumber: p2.rollNumber.trim().toUpperCase(),
         branch: p2.branch,
         year: p2.year,
@@ -625,6 +639,8 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       setTeamName("");
       setP1({
         fullName: "",
+        collegeName: "",
+        address: "",
         rollNumber: "",
         branch: "",
         year: "",
@@ -634,6 +650,8 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       });
       setP2({
         fullName: "",
+        collegeName: "",
+        address: "",
         rollNumber: "",
         branch: "",
         year: "",
@@ -744,7 +762,7 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
               How do you want to register?
             </h3>
             <p className="font-sans text-xs text-neutral-400 leading-relaxed mb-6">
-              Pick your preferred competition format. Both members in a team must be students of MMMUT Gorakhpur.
+              Pick your preferred competition format. Open to all college students.
             </p>
           </div>
 
@@ -909,10 +927,24 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
               />
             </div>
 
+            {/* College Name */}
+            <div>
+              <label className="block font-mono text-xs uppercase tracking-wider text-neutral-300 mb-2">
+                College Name <span className="text-neutral-400">*</span>
+              </label>
+              <input
+                type="text"
+                value={p1.collegeName}
+                onChange={(e) => setP1({ ...p1, collegeName: e.target.value })}
+                placeholder="e.g. MMMUT Gorakhpur / IIT / NIT"
+                className="w-full px-4 py-3 rounded-xl bg-[#161616] border border-white/15 focus:border-white focus:ring-1 focus:ring-white text-white placeholder:text-neutral-500 font-sans text-sm focus:outline-none transition-colors"
+              />
+            </div>
+
             {/* University Roll Number */}
             <div>
               <label className="block font-mono text-xs uppercase tracking-wider text-neutral-300 mb-2">
-                University Roll Number <span className="text-neutral-400">*</span>
+                University Roll Number / ID <span className="text-neutral-400">*</span>
               </label>
               <input
                 type="text"
@@ -920,6 +952,20 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                 onChange={(e) => setP1({ ...p1, rollNumber: e.target.value.toUpperCase() })}
                 placeholder="e.g. 2024CSE310"
                 className="w-full px-4 py-3 rounded-xl bg-[#161616] border border-white/15 focus:border-white focus:ring-1 focus:ring-white text-white placeholder:text-neutral-500 font-sans text-sm uppercase focus:outline-none transition-colors"
+              />
+            </div>
+
+            {/* Address */}
+            <div>
+              <label className="block font-mono text-xs uppercase tracking-wider text-neutral-300 mb-2">
+                Address / City <span className="text-neutral-400">*</span>
+              </label>
+              <input
+                type="text"
+                value={p1.address}
+                onChange={(e) => setP1({ ...p1, address: e.target.value })}
+                placeholder="e.g. Gorakhpur, Uttar Pradesh"
+                className="w-full px-4 py-3 rounded-xl bg-[#161616] border border-white/15 focus:border-white focus:ring-1 focus:ring-white text-white placeholder:text-neutral-500 font-sans text-sm focus:outline-none transition-colors"
               />
             </div>
 
@@ -998,7 +1044,7 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                     }
                   }}
                   onBlur={() => checkTypo(p1.email, setP1TypoHint)}
-                  placeholder="e.g. student@mmmut.ac.in"
+                  placeholder="e.g. student@college.edu"
                   className={`w-full px-4 py-3 rounded-xl bg-[#161616] border text-white placeholder:text-neutral-500 font-sans text-sm focus:outline-none transition-colors ${
                     p1Verified
                       ? "border-emerald-500/60 bg-emerald-950/10 text-emerald-200 cursor-not-allowed"
@@ -1246,6 +1292,8 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                     setHasTeammate(false);
                     setP2({
                       fullName: "",
+                      collegeName: "",
+                      address: "",
                       rollNumber: "",
                       branch: "",
                       year: "",
@@ -1277,10 +1325,24 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                   />
                 </div>
 
+                {/* College Name */}
+                <div>
+                  <label className="block font-mono text-xs uppercase tracking-wider text-neutral-300 mb-2">
+                    College Name <span className="text-neutral-400">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={p2.collegeName}
+                    onChange={(e) => setP2({ ...p2, collegeName: e.target.value })}
+                    placeholder="e.g. MMMUT Gorakhpur / IIT / NIT"
+                    className="w-full px-4 py-3 rounded-xl bg-[#161616] border border-white/15 focus:border-white focus:ring-1 focus:ring-white text-white placeholder:text-neutral-500 font-sans text-sm focus:outline-none transition-colors"
+                  />
+                </div>
+
                 {/* University Roll Number */}
                 <div>
                   <label className="block font-mono text-xs uppercase tracking-wider text-neutral-300 mb-2">
-                    University Roll Number <span className="text-neutral-400">*</span>
+                    University Roll Number / ID <span className="text-neutral-400">*</span>
                   </label>
                   <input
                     type="text"
@@ -1294,6 +1356,20 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                       Teammate cannot have the same roll number as Team Leader
                     </p>
                   )}
+                </div>
+
+                {/* Address */}
+                <div>
+                  <label className="block font-mono text-xs uppercase tracking-wider text-neutral-300 mb-2">
+                    Address / City <span className="text-neutral-400">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={p2.address}
+                    onChange={(e) => setP2({ ...p2, address: e.target.value })}
+                    placeholder="e.g. Gorakhpur, Uttar Pradesh"
+                    className="w-full px-4 py-3 rounded-xl bg-[#161616] border border-white/15 focus:border-white focus:ring-1 focus:ring-white text-white placeholder:text-neutral-500 font-sans text-sm focus:outline-none transition-colors"
+                  />
                 </div>
 
                 {/* Branch / Department (Custom Select) */}
@@ -1376,7 +1452,7 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                         }
                       }}
                       onBlur={() => checkTypo(p2.email, setP2TypoHint)}
-                      placeholder="e.g. teammate@mmmut.ac.in"
+                      placeholder="e.g. teammate@college.edu"
                       className={`w-full px-4 py-3 rounded-xl bg-[#161616] border text-white placeholder:text-neutral-500 font-sans text-sm focus:outline-none transition-colors ${
                         p2Verified
                           ? "border-emerald-500/60 bg-emerald-950/10 text-emerald-200 cursor-not-allowed"
@@ -1595,7 +1671,10 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                 </p>
                 <p className="font-sans font-bold text-white text-sm">{p1.fullName}</p>
                 <p className="font-mono text-neutral-400 text-xs mt-0.5">
-                  Roll: {p1.rollNumber} • {p1.branch} ({p1.year})
+                  College: {p1.collegeName} • Roll / ID: {p1.rollNumber}
+                </p>
+                <p className="font-mono text-neutral-400 text-xs">
+                  {p1.branch} ({p1.year}) • {p1.address}
                 </p>
                 <p className="font-mono text-neutral-400 text-xs">
                   {p1.mobile} • {p1.email}
@@ -1620,7 +1699,10 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                   </p>
                   <p className="font-sans font-bold text-white text-sm">{p2.fullName}</p>
                   <p className="font-mono text-neutral-400 text-xs mt-0.5">
-                    Roll: {p2.rollNumber} • {p2.branch} ({p2.year})
+                    College: {p2.collegeName} • Roll / ID: {p2.rollNumber}
+                  </p>
+                  <p className="font-mono text-neutral-400 text-xs">
+                    {p2.branch} ({p2.year}) • {p2.address}
                   </p>
                   <p className="font-mono text-neutral-400 text-xs">
                     {p2.mobile} • {p2.email}
@@ -1650,19 +1732,6 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
               />
               <span className="font-sans text-xs sm:text-sm text-neutral-300 group-hover:text-white transition-colors">
                 I agree to the <strong className="text-white">event rules and regulations</strong>, architectural constraints, and open-source licensing principles. <span className="text-neutral-400">*</span>
-              </span>
-            </label>
-
-            <label className="flex items-start gap-3 cursor-pointer group">
-              <input
-                type="checkbox"
-                id="confirm-details"
-                checked={confirmedDetails}
-                onChange={(e) => setConfirmedDetails(e.target.checked)}
-                className="mt-1 w-4 h-4 rounded border-white/20 bg-black text-white focus:ring-white accent-white cursor-pointer"
-              />
-              <span className="font-sans text-xs sm:text-sm text-neutral-300 group-hover:text-white transition-colors">
-                I confirm that all submitted details (roll numbers, emails, and contacts) are <strong className="text-white">accurate and belong to MMMUT students</strong>. <span className="text-neutral-400">*</span>
               </span>
             </label>
           </div>
@@ -1705,7 +1774,7 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
           <button
             type="button"
             id="btn-submit-registration"
-            disabled={isSubmitting || !agreedRules || !confirmedDetails}
+            disabled={isSubmitting || !agreedRules}
             onClick={handleSubmit}
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-white text-black font-mono text-xs font-bold uppercase tracking-widest hover:bg-neutral-200 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer shadow-[0_0_30px_rgba(255,255,255,0.25)]"
           >
