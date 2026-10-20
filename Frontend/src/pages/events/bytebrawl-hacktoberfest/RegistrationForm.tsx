@@ -160,6 +160,11 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
   // Calculate total steps dynamically (always 1..N without gaps)
   const totalSteps = regType === "TEAM" ? 5 : 4;
 
+  // Pre-warm backend to eliminate cold-start latency when requesting OTP
+  useEffect(() => {
+    fetch("/ping").catch(() => {});
+  }, []);
+
   // Timers for OTP resend cooldown
   useEffect(() => {
     let t: ReturnType<typeof setTimeout> | undefined;

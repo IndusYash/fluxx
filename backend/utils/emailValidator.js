@@ -24,6 +24,13 @@ const KNOWN_VALID_DOMAINS = new Set([
   "outlook.com",
   "hotmail.com",
   "icloud.com",
+  "googlemail.com",
+  "live.com",
+  "msn.com",
+  "proton.me",
+  "protonmail.com",
+  "zoho.com",
+  "rediffmail.com",
   "mmmut.ac.in",
 ]);
 

@@ -14,7 +14,7 @@ const router = express.Router();
 // Strict rate limiter for registration endpoint (~10 requests per minute per IP in production)
 const registerRateLimiter = rateLimit({
   windowMs: 60 * 1000,
-  max: process.env.NODE_ENV === "production" ? 10 : 200,
+  max: process.env.NODE_ENV === "production" ? 30 : 200,
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -26,7 +26,7 @@ const registerRateLimiter = rateLimit({
 // Rate limiter for sending OTP (max 10 requests per 10 minutes per IP in production)
 const otpSendRateLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
-  max: process.env.NODE_ENV === "production" ? 10 : 200,
+  max: process.env.NODE_ENV === "production" ? 30 : 200,
   standardHeaders: true,
   legacyHeaders: false,
   message: {

@@ -24,6 +24,12 @@ export function getTransporter() {
       host,
       port,
       secure,
+      pool: true,
+      maxConnections: 3,
+      maxMessages: 100,
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 15000,
       auth: {
         user,
         pass,

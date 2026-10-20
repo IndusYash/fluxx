@@ -1,6 +1,7 @@
 import dns from 'node:dns';
 
 dns.setServers(['8.8.8.8', '1.1.1.1']);
+dns.setDefaultResultOrder('ipv4first');
 
 import dotenv from "dotenv";
 import path from "node:path";
@@ -44,6 +45,7 @@ import bytebrawlRoutes from "./routes/bytebrawlRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 
 const app = express();
+app.set("trust proxy", 1);
 
 // Security Headers
 app.use(helmet({ crossOriginResourcePolicy: false }));
