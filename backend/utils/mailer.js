@@ -73,6 +73,36 @@ export async function sendOtpEmail({ recipientEmail, otpCode }) {
     sentAt: new Date().toISOString(),
   });
 
+  // 1. If RESEND_API_KEY is configured, send via Resend HTTPS REST API (Port 443 - never blocked by Render)
+  if (process.env.RESEND_API_KEY) {
+    try {
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${process.env.RESEND_API_KEY.trim()}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: process.env.RESEND_FROM || "FLUX ByteBrawl <onboarding@resend.dev>",
+          to: [recipientEmail],
+          subject,
+          text: textBody,
+          html: htmlBody,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.error(`[Mailer] Resend API error:`, data);
+        return { success: false, error: data.message || "Resend email delivery failed" };
+      }
+      console.log(`[Mailer] OTP email dispatched via Resend to ${recipientEmail} (ID: ${data.id})`);
+      return { success: true, messageId: data.id };
+    } catch (err) {
+      console.error(`[Mailer] Resend fetch exception:`, err);
+      return { success: false, error: err.message };
+    }
+  }
+
   const mailClient = getTransporter();
   if (!mailClient) {
     console.log(`[Mailer] SMTP not configured. OTP email recorded in memory for ${recipientEmail}`);
@@ -181,6 +211,36 @@ ${societyName} Team`;
     registrationId,
     sentAt: new Date().toISOString(),
   });
+
+  // 1. If RESEND_API_KEY is configured, send via Resend HTTPS REST API (Port 443 - never blocked by Render)
+  if (process.env.RESEND_API_KEY) {
+    try {
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${process.env.RESEND_API_KEY.trim()}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: process.env.RESEND_FROM || "FLUX ByteBrawl <onboarding@resend.dev>",
+          to: [recipientEmail],
+          subject,
+          text: textBody,
+          html: htmlBody,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.error(`[Mailer] Resend API error:`, data);
+        return { success: false, error: data.message || "Resend email delivery failed" };
+      }
+      console.log(`[Mailer] OTP email dispatched via Resend to ${recipientEmail} (ID: ${data.id})`);
+      return { success: true, messageId: data.id };
+    } catch (err) {
+      console.error(`[Mailer] Resend fetch exception:`, err);
+      return { success: false, error: err.message };
+    }
+  }
 
   const mailClient = getTransporter();
   if (!mailClient) {

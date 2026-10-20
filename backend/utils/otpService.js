@@ -147,6 +147,7 @@ export async function sendEmailOtp(email) {
         errStr.includes("eauth") ||
         errStr.includes("econnrefused") ||
         errStr.includes("etimedout") ||
+        errStr.includes("timeout") ||
         errStr.includes("connection closed");
 
       if (isAuthOrConfigError) {

@@ -243,6 +243,9 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       lower.includes("rate limit") ||
       lower.includes("too many") ||
       lower.includes("network error") ||
+      lower.includes("server error") ||
+      lower.includes("timeout") ||
+      lower.includes("could not send") ||
       lower.includes("server error")
     ) {
       return errorMsg;
