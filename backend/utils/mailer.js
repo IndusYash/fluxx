@@ -4,6 +4,9 @@ let transporter = null;
 let cachedCredentials = null;
 
 // Test helper: stores sent emails in memory for test inspections
+const WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/CEQxUE7IS485dCgckzTNjm";
+const INSTAGRAM_LINK = "https://www.instagram.com/flux.mmmut?srtk=cWNvcmV4ZDcxdXZq";
+
 export const lastSentEmails = [];
 
 export function getTransporter() {
@@ -197,10 +200,19 @@ Registration Details:
 ${detailsLineText}
 - Registration ID: ${registrationId}
 
+Official WhatsApp Group (Important):
+Join for announcements, team coordination, reporting schedule, and live problem statements:
+${WHATSAPP_GROUP_LINK}
+
+Official Instagram:
+Follow @flux.mmmut for event highlights, stories, and updates:
+${INSTAGRAM_LINK}
+
 Thank you for registering. We look forward to seeing you at the event!
 
 Best regards,
-${societyName} Team`;
+${societyName} Team
+Department of CSE, MMMUT Gorakhpur`;
 
   const detailsLineHtml = isTeam
     ? `<tr><td style="color: #888888; padding: 4px 12px 4px 0;">Team Name:</td><td style="color: #ffffff; font-weight: bold;">${teamName}</td></tr>
@@ -226,10 +238,36 @@ ${societyName} Team`;
         </table>
       </div>
 
+      <!-- Official Community & Social Links -->
+      <div style="background-color: #141414; border: 1px solid #2e2e2e; border-radius: 10px; padding: 20px; margin: 24px 0;">
+        <p style="margin: 0 0 6px 0; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #10b981; font-family: monospace; font-weight: bold;">Next Step // Join the Community</p>
+        <p style="margin: 0 0 16px 0; font-size: 13px; color: #a3a3a3; line-height: 1.4;">
+          Stay connected for live event announcements, reporting instructions, hackathon problem statements, and real-time support.
+        </p>
+        
+        <table style="width: 100%; border-collapse: separate; border-spacing: 0 10px;">
+          <tr>
+            <td>
+              <a href="${WHATSAPP_GROUP_LINK}" target="_blank" style="display: block; background-color: #25D366; color: #000000; text-decoration: none; padding: 12px 18px; border-radius: 8px; font-size: 13px; font-weight: bold; text-align: center; font-family: sans-serif; letter-spacing: 0.5px;">
+                💬 Join Official WhatsApp Group
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="${INSTAGRAM_LINK}" target="_blank" style="display: block; background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); background-color: #E1306C; color: #ffffff; text-decoration: none; padding: 12px 18px; border-radius: 8px; font-size: 13px; font-weight: bold; text-align: center; font-family: sans-serif; letter-spacing: 0.5px;">
+                📸 Follow @flux.mmmut on Instagram
+              </a>
+            </td>
+          </tr>
+        </table>
+      </div>
+
       <p style="font-size: 14px; color: #a3a3a3; line-height: 1.5;">Thank you for registering. We look forward to seeing you at the event!</p>
       <p style="font-size: 14px; color: #737373; margin-top: 24px; border-top: 1px solid #262626; padding-top: 16px;">
         Best regards,<br>
-        <strong style="color: #e5e5e5;">${societyName} Team</strong>
+        <strong style="color: #e5e5e5;">${societyName} Team</strong><br>
+        <span style="font-size: 12px; color: #525252;">Department of CSE, MMMUT Gorakhpur</span>
       </p>
     </div>
   `;
@@ -272,7 +310,7 @@ ${societyName} Team`;
         console.error("[Mailer] Brevo API error:", data);
         return { success: false, error: data.message || "Brevo email delivery failed" };
       }
-      console.log(`[Mailer] OTP email dispatched via Brevo to ${recipientEmail} (ID: ${data.messageId})`);
+      console.log(`[Mailer] Confirmation email dispatched via Brevo to ${recipientEmail} (ID: ${data.messageId})`);
       return { success: true, messageId: data.messageId };
     } catch (err) {
       console.error("[Mailer] Brevo fetch exception:", err);
@@ -302,7 +340,7 @@ ${societyName} Team`;
         console.error(`[Mailer] Resend API error:`, data);
         return { success: false, error: data.message || "Resend email delivery failed" };
       }
-      console.log(`[Mailer] OTP email dispatched via Resend to ${recipientEmail} (ID: ${data.id})`);
+      console.log(`[Mailer] Confirmation email dispatched via Resend to ${recipientEmail} (ID: ${data.id})`);
       return { success: true, messageId: data.id };
     } catch (err) {
       console.error(`[Mailer] Resend fetch exception:`, err);

@@ -5,6 +5,8 @@ import ByteBrawlRegistration from "../models/bytebrawlModel.js";
 export const BYTEBRAWL_CONFIG = {
   slug: "bytebrawl-hacktoberfest",
   name: "ByteBrawl x Hacktoberfest",
+  whatsappGroupLink: "https://chat.whatsapp.com/CEQxUE7IS485dCgckzTNjm",
+  instagramLink: "https://www.instagram.com/flux.mmmut?srtk=cWNvcmV4ZDcxdXZq",
   // Default deadline: October 31, 2026 23:59:59 IST (TODO: Update if official deadline differs)
   deadline: process.env.BYTEBRAWL_DEADLINE || "2026-10-31T23:59:59+05:30",
   // Default capacity limit (TODO: Update with venue capacity)

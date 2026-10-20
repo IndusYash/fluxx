@@ -43,6 +43,8 @@ export const BYTEBRAWL_CONFIG = {
   // ── Contact & Faculty / Student Leads ─────────────────────────
   // TODO: Replace with official email if a dedicated event inbox is used
   contactEmail: "flux@mmmut.ac.in",
+  whatsappGroupLink: "https://chat.whatsapp.com/CEQxUE7IS485dCgckzTNjm",
+  instagramLink: "https://www.instagram.com/flux.mmmut?srtk=cWNvcmV4ZDcxdXZq",
   coordinators: [
     {
       name: "To be announced", // TODO: Student Lead Coordinator Name

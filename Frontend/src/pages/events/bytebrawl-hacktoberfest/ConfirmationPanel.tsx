@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Check, Copy, ArrowLeft, ShieldCheck, Mail, Sparkles } from "lucide-react";
+import { Check, Copy, ArrowLeft, ShieldCheck, Mail, Sparkles, ExternalLink } from "lucide-react";
+import { FaWhatsapp, FaInstagram } from "react-icons/fa";
+import { BYTEBRAWL_CONFIG } from "@/config/eventConfig";
 import { motion } from "framer-motion";
 
 export interface ConfirmedRegistrationData {
@@ -157,6 +159,67 @@ export default function ConfirmationPanel({ data }: ConfirmationPanelProps) {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* Community Links (WhatsApp Group & Instagram) */}
+      <div className="p-5 sm:p-6 rounded-xl border border-white/15 bg-gradient-to-b from-[#141414] to-[#0c0c0c] mb-8">
+        <div className="flex items-center gap-2 mb-2">
+          <Sparkles className="w-4 h-4 text-emerald-400" />
+          <h3 className="font-mono text-xs uppercase tracking-wider text-white font-bold">
+            Important Next Step: Join Official Community
+          </h3>
+        </div>
+        <p className="font-sans text-xs text-neutral-400 leading-relaxed mb-4">
+          Connect with organizers and fellow participants. Live announcements, problem statements, reporting timings, and technical guidelines will be shared here.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          {/* WhatsApp Group Link */}
+          <a
+            href={BYTEBRAWL_CONFIG.whatsappGroupLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group p-4 rounded-xl border border-emerald-500/25 bg-emerald-950/15 hover:bg-emerald-950/30 hover:border-emerald-500/50 transition-all duration-200 flex items-center justify-between gap-3 text-white"
+          >
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-10 h-10 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shrink-0 group-hover:bg-[#25D366] group-hover:text-black text-emerald-400 transition-colors">
+                <FaWhatsapp className="w-5 h-5" />
+              </div>
+              <div className="min-w-0">
+                <div className="font-sans font-bold text-sm text-white group-hover:text-emerald-300 transition-colors truncate">
+                  Join WhatsApp Group
+                </div>
+                <div className="font-mono text-[11px] text-neutral-400 truncate">
+                  Live updates & announcements
+                </div>
+              </div>
+            </div>
+            <ExternalLink className="w-4 h-4 text-neutral-500 group-hover:text-emerald-400 shrink-0 transition-colors" />
+          </a>
+
+          {/* Instagram Link */}
+          <a
+            href={BYTEBRAWL_CONFIG.instagramLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group p-4 rounded-xl border border-pink-500/25 bg-pink-950/15 hover:bg-pink-950/30 hover:border-pink-500/50 transition-all duration-200 flex items-center justify-between gap-3 text-white"
+          >
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-10 h-10 rounded-lg bg-pink-500/20 border border-pink-500/30 flex items-center justify-center shrink-0 group-hover:bg-gradient-to-tr group-hover:from-amber-500 group-hover:via-rose-500 group-hover:to-purple-600 group-hover:text-white text-pink-400 transition-all">
+                <FaInstagram className="w-5 h-5" />
+              </div>
+              <div className="min-w-0">
+                <div className="font-sans font-bold text-sm text-white group-hover:text-pink-300 transition-colors truncate">
+                  Follow on Instagram
+                </div>
+                <div className="font-mono text-[11px] text-neutral-400 truncate">
+                  @flux.mmmut • Event highlights
+                </div>
+              </div>
+            </div>
+            <ExternalLink className="w-4 h-4 text-neutral-500 group-hover:text-pink-400 shrink-0 transition-colors" />
+          </a>
         </div>
       </div>
 
