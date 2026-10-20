@@ -73,7 +73,41 @@ export async function sendOtpEmail({ recipientEmail, otpCode }) {
     sentAt: new Date().toISOString(),
   });
 
-  // 1. If RESEND_API_KEY is configured, send via Resend HTTPS REST API (Port 443 - never blocked by Render)
+  // 1. If BREVO_API_KEY is configured, send via Brevo HTTPS REST API (Port 443 - no domain required, 300 free emails/day to any recipient)
+  if (process.env.BREVO_API_KEY) {
+    try {
+      const res = await fetch("https://api.brevo.com/v3/smtp/email", {
+        method: "POST",
+        headers: {
+          "api-key": process.env.BREVO_API_KEY.trim(),
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body: JSON.stringify({
+          sender: {
+            name: "FLUX MMMUT",
+            email: process.env.BREVO_SENDER || process.env.SMTP_USER || "fluxmmmut@gmail.com",
+          },
+          to: [{ email: recipientEmail }],
+          subject,
+          htmlContent: htmlBody,
+          textContent: textBody,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.error("[Mailer] Brevo API error:", data);
+        return { success: false, error: data.message || "Brevo email delivery failed" };
+      }
+      console.log(`[Mailer] OTP email dispatched via Brevo to ${recipientEmail} (ID: ${data.messageId})`);
+      return { success: true, messageId: data.messageId };
+    } catch (err) {
+      console.error("[Mailer] Brevo fetch exception:", err);
+      return { success: false, error: err.message };
+    }
+  }
+
+  // 2. If RESEND_API_KEY is configured, send via Resend HTTPS REST API (Port 443)
   if (process.env.RESEND_API_KEY) {
     try {
       const res = await fetch("https://api.resend.com/emails", {
@@ -212,7 +246,41 @@ ${societyName} Team`;
     sentAt: new Date().toISOString(),
   });
 
-  // 1. If RESEND_API_KEY is configured, send via Resend HTTPS REST API (Port 443 - never blocked by Render)
+  // 1. If BREVO_API_KEY is configured, send via Brevo HTTPS REST API (Port 443 - no domain required, 300 free emails/day to any recipient)
+  if (process.env.BREVO_API_KEY) {
+    try {
+      const res = await fetch("https://api.brevo.com/v3/smtp/email", {
+        method: "POST",
+        headers: {
+          "api-key": process.env.BREVO_API_KEY.trim(),
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body: JSON.stringify({
+          sender: {
+            name: "FLUX MMMUT",
+            email: process.env.BREVO_SENDER || process.env.SMTP_USER || "fluxmmmut@gmail.com",
+          },
+          to: [{ email: recipientEmail }],
+          subject,
+          htmlContent: htmlBody,
+          textContent: textBody,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.error("[Mailer] Brevo API error:", data);
+        return { success: false, error: data.message || "Brevo email delivery failed" };
+      }
+      console.log(`[Mailer] OTP email dispatched via Brevo to ${recipientEmail} (ID: ${data.messageId})`);
+      return { success: true, messageId: data.messageId };
+    } catch (err) {
+      console.error("[Mailer] Brevo fetch exception:", err);
+      return { success: false, error: err.message };
+    }
+  }
+
+  // 2. If RESEND_API_KEY is configured, send via Resend HTTPS REST API (Port 443)
   if (process.env.RESEND_API_KEY) {
     try {
       const res = await fetch("https://api.resend.com/emails", {
