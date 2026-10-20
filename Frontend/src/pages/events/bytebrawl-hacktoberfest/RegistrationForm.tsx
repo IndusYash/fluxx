@@ -708,7 +708,7 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto rounded-2xl border border-white/15 bg-[#101010]/95 backdrop-blur-2xl p-6 sm:p-10 shadow-[0_20px_60px_rgba(0,0,0,0.85)] text-white relative">
+    <div className="w-full max-w-3xl mx-auto rounded-2xl border border-white/15 bg-[#101010]/95 backdrop-blur-2xl p-4 sm:p-8 md:p-10 shadow-[0_20px_60px_rgba(0,0,0,0.85)] text-white relative">
       {/* Honeypot field for anti-bot protection */}
       <input
         type="text"
@@ -722,8 +722,8 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       />
 
       {/* Progress Bar & Header */}
-      <div className="mb-8 border-b border-white/10 pb-6">
-        <div className="flex items-center justify-between text-xs font-mono uppercase tracking-widest text-neutral-400 mb-2.5">
+      <div className="mb-6 sm:mb-8 border-b border-white/10 pb-5 sm:pb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-4 text-xs font-mono uppercase tracking-widest text-neutral-400 mb-2.5">
           <span>
             Step {currentStep} of {totalSteps}
           </span>
@@ -1136,15 +1136,15 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                 exit={{ opacity: 0, height: 0 }}
                 className="p-4 rounded-xl border border-white/20 bg-[#161616] space-y-3"
               >
-                <div className="flex items-center justify-between text-xs font-mono text-neutral-300">
-                  <span>Enter 6-digit code sent to <strong className="text-white">{p1.email}</strong></span>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs font-mono text-neutral-300">
+                  <span className="break-all">Enter 6-digit code sent to <strong className="text-white">{p1.email}</strong></span>
                   {p1OtpState.timer > 0 ? (
-                    <span className="text-neutral-400">Resend in {p1OtpState.timer}s</span>
+                    <span className="text-neutral-400 shrink-0">Resend in {p1OtpState.timer}s</span>
                   ) : (
                     <button
                       type="button"
                       onClick={handleSendP1Otp}
-                      className="text-white hover:underline flex items-center gap-1"
+                      className="text-white hover:underline flex items-center gap-1 shrink-0"
                     >
                       <RefreshCw className="w-3 h-3" />
                       <span>Resend</span>
@@ -1168,31 +1168,33 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                   </div>
                 )}
 
-                <div className="flex items-center gap-3">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3">
                   <input
                     type="text"
                     maxLength={6}
                     value={p1OtpState.code}
                     onChange={(e) => setP1OtpState({ ...p1OtpState, code: e.target.value.replace(/\D/g, "") })}
                     placeholder="123456"
-                    className="w-40 px-3 py-2 rounded-lg bg-black border border-white/30 text-white font-mono text-center tracking-[0.3em] text-base focus:outline-none focus:border-white"
+                    className="w-full sm:w-40 px-3 py-2 rounded-lg bg-black border border-white/30 text-white font-mono text-center tracking-[0.3em] text-base focus:outline-none focus:border-white"
                   />
-                  <button
-                    type="button"
-                    id="btn-confirm-otp-p1"
-                    disabled={p1OtpState.verifying || p1OtpState.code.length !== 6}
-                    onClick={handleVerifyP1Otp}
-                    className="px-4 py-2 rounded-lg bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-neutral-200 disabled:opacity-40"
-                  >
-                    {p1OtpState.verifying ? "Checking..." : "Confirm OTP"}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setP1OtpState({ ...p1OtpState, active: false, error: "" })}
-                    className="text-xs font-mono text-neutral-400 hover:text-white"
-                  >
-                    Cancel
-                  </button>
+                  <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
+                    <button
+                      type="button"
+                      id="btn-confirm-otp-p1"
+                      disabled={p1OtpState.verifying || p1OtpState.code.length !== 6}
+                      onClick={handleVerifyP1Otp}
+                      className="flex-1 sm:flex-initial px-4 py-2 rounded-lg bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-neutral-200 disabled:opacity-40"
+                    >
+                      {p1OtpState.verifying ? "Checking..." : "Confirm OTP"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setP1OtpState({ ...p1OtpState, active: false, error: "" })}
+                      className="px-3 py-2 text-xs font-mono text-neutral-400 hover:text-white shrink-0"
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </div>
 
                 <p className="font-mono text-[11px] text-neutral-400">
@@ -1550,15 +1552,15 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                     exit={{ opacity: 0, height: 0 }}
                     className="p-4 rounded-xl border border-white/20 bg-[#161616] space-y-3"
                   >
-                    <div className="flex items-center justify-between text-xs font-mono text-neutral-300">
-                      <span>Enter 6-digit code sent to <strong className="text-white">{p2.email}</strong></span>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs font-mono text-neutral-300">
+                      <span className="break-all">Enter 6-digit code sent to <strong className="text-white">{p2.email}</strong></span>
                       {p2OtpState.timer > 0 ? (
-                        <span className="text-neutral-400">Resend in {p2OtpState.timer}s</span>
+                        <span className="text-neutral-400 shrink-0">Resend in {p2OtpState.timer}s</span>
                       ) : (
                         <button
                           type="button"
                           onClick={handleSendP2Otp}
-                          className="text-white hover:underline flex items-center gap-1"
+                          className="text-white hover:underline flex items-center gap-1 shrink-0"
                         >
                           <RefreshCw className="w-3 h-3" />
                           <span>Resend</span>
@@ -1582,31 +1584,33 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                       </div>
                     )}
 
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3">
                       <input
                         type="text"
                         maxLength={6}
                         value={p2OtpState.code}
                         onChange={(e) => setP2OtpState({ ...p2OtpState, code: e.target.value.replace(/\D/g, "") })}
                         placeholder="123456"
-                        className="w-40 px-3 py-2 rounded-lg bg-black border border-white/30 text-white font-mono text-center tracking-[0.3em] text-base focus:outline-none focus:border-white"
+                        className="w-full sm:w-40 px-3 py-2 rounded-lg bg-black border border-white/30 text-white font-mono text-center tracking-[0.3em] text-base focus:outline-none focus:border-white"
                       />
-                      <button
-                        type="button"
-                        id="btn-confirm-otp-p2"
-                        disabled={p2OtpState.verifying || p2OtpState.code.length !== 6}
-                        onClick={handleVerifyP2Otp}
-                        className="px-4 py-2 rounded-lg bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-neutral-200 disabled:opacity-40"
-                      >
-                        {p2OtpState.verifying ? "Checking..." : "Confirm OTP"}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setP2OtpState({ ...p2OtpState, active: false, error: "" })}
-                        className="text-xs font-mono text-neutral-400 hover:text-white"
-                      >
-                        Cancel
-                      </button>
+                      <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
+                        <button
+                          type="button"
+                          id="btn-confirm-otp-p2"
+                          disabled={p2OtpState.verifying || p2OtpState.code.length !== 6}
+                          onClick={handleVerifyP2Otp}
+                          className="flex-1 sm:flex-initial px-4 py-2 rounded-lg bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-neutral-200 disabled:opacity-40"
+                        >
+                          {p2OtpState.verifying ? "Checking..." : "Confirm OTP"}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setP2OtpState({ ...p2OtpState, active: false, error: "" })}
+                          className="px-3 py-2 text-xs font-mono text-neutral-400 hover:text-white shrink-0"
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     </div>
 
                     <p className="font-mono text-[11px] text-neutral-400">
@@ -1644,78 +1648,84 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
 
           <div className="space-y-4">
             {/* Format & Team Name Card */}
-            <div className="p-4 rounded-xl border border-white/10 bg-[#141414] flex items-center justify-between">
-              <div>
+            <div className="p-4 rounded-xl border border-white/10 bg-[#141414] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="min-w-0 flex-1">
                 <p className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
                   Registration Format
                 </p>
-                <p className="font-sans font-bold text-white text-sm">
+                <p className="font-sans font-bold text-white text-sm break-words">
                   {regType === "TEAM" ? `Team Registration: "${teamName}"` : `Individual Registration: "${teamName}"`}
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={() => setCurrentStep(2)}
-                className="inline-flex items-center gap-1 text-xs text-neutral-300 hover:text-white font-mono uppercase underline"
-              >
-                <Edit2 className="w-3 h-3" />
-                <span>Edit</span>
-              </button>
-            </div>
-
-            {/* Participant 1 Summary */}
-            <div className="p-4 rounded-xl border border-white/10 bg-[#141414] flex items-center justify-between">
-              <div>
-                <p className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
-                  {regType === "TEAM" ? "Team Leader" : "Participant"}
-                </p>
-                <p className="font-sans font-bold text-white text-sm">{p1.fullName}</p>
-                <p className="font-mono text-neutral-400 text-xs mt-0.5">
-                  College: {p1.collegeName} • Roll / ID: {p1.rollNumber}
-                </p>
-                <p className="font-mono text-neutral-400 text-xs">
-                  {p1.branch} ({p1.year}) • {p1.address}
-                </p>
-                <p className="font-mono text-neutral-400 text-xs">
-                  {p1.mobile} • {p1.email}
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setCurrentStep(3)}
-                className="inline-flex items-center gap-1 text-xs text-neutral-300 hover:text-white font-mono uppercase underline"
-              >
-                <Edit2 className="w-3 h-3" />
-                <span>Edit</span>
-              </button>
-            </div>
-
-            {/* Participant 2 Summary (Team only) */}
-            {regType === "TEAM" && hasTeammate && (
-              <div className="p-4 rounded-xl border border-white/10 bg-[#141414] flex items-center justify-between">
-                <div>
-                  <p className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
-                    Teammate
-                  </p>
-                  <p className="font-sans font-bold text-white text-sm">{p2.fullName}</p>
-                  <p className="font-mono text-neutral-400 text-xs mt-0.5">
-                    College: {p2.collegeName} • Roll / ID: {p2.rollNumber}
-                  </p>
-                  <p className="font-mono text-neutral-400 text-xs">
-                    {p2.branch} ({p2.year}) • {p2.address}
-                  </p>
-                  <p className="font-mono text-neutral-400 text-xs">
-                    {p2.mobile} • {p2.email}
-                  </p>
-                </div>
+              <div className="pt-2.5 border-t border-white/10 sm:border-t-0 sm:pt-0 shrink-0 flex justify-end sm:justify-start">
                 <button
                   type="button"
-                  onClick={() => setCurrentStep(4)}
-                  className="inline-flex items-center gap-1 text-xs text-neutral-300 hover:text-white font-mono uppercase underline"
+                  onClick={() => setCurrentStep(2)}
+                  className="inline-flex items-center gap-1 text-xs text-neutral-300 hover:text-white font-mono uppercase underline cursor-pointer"
                 >
                   <Edit2 className="w-3 h-3" />
                   <span>Edit</span>
                 </button>
+              </div>
+            </div>
+
+            {/* Participant 1 Summary */}
+            <div className="p-4 rounded-xl border border-white/10 bg-[#141414] flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+              <div className="min-w-0 flex-1">
+                <p className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
+                  {regType === "TEAM" ? "Team Leader" : "Participant"}
+                </p>
+                <p className="font-sans font-bold text-white text-sm break-words">{p1.fullName}</p>
+                <p className="font-mono text-neutral-400 text-xs mt-0.5 break-words">
+                  College: {p1.collegeName} • Roll / ID: {p1.rollNumber}
+                </p>
+                <p className="font-mono text-neutral-400 text-xs break-words">
+                  {p1.branch} ({p1.year}) • {p1.address}
+                </p>
+                <p className="font-mono text-neutral-400 text-xs break-all">
+                  {p1.mobile} • {p1.email}
+                </p>
+              </div>
+              <div className="pt-2.5 border-t border-white/10 sm:border-t-0 sm:pt-0 shrink-0 flex justify-end sm:justify-start">
+                <button
+                  type="button"
+                  onClick={() => setCurrentStep(3)}
+                  className="inline-flex items-center gap-1 text-xs text-neutral-300 hover:text-white font-mono uppercase underline cursor-pointer"
+                >
+                  <Edit2 className="w-3 h-3" />
+                  <span>Edit</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Participant 2 Summary (Team only) */}
+            {regType === "TEAM" && hasTeammate && (
+              <div className="p-4 rounded-xl border border-white/10 bg-[#141414] flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                <div className="min-w-0 flex-1">
+                  <p className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
+                    Teammate
+                  </p>
+                  <p className="font-sans font-bold text-white text-sm break-words">{p2.fullName}</p>
+                  <p className="font-mono text-neutral-400 text-xs mt-0.5 break-words">
+                    College: {p2.collegeName} • Roll / ID: {p2.rollNumber}
+                  </p>
+                  <p className="font-mono text-neutral-400 text-xs break-words">
+                    {p2.branch} ({p2.year}) • {p2.address}
+                  </p>
+                  <p className="font-mono text-neutral-400 text-xs break-all">
+                    {p2.mobile} • {p2.email}
+                  </p>
+                </div>
+                <div className="pt-2.5 border-t border-white/10 sm:border-t-0 sm:pt-0 shrink-0 flex justify-end sm:justify-start">
+                  <button
+                    type="button"
+                    onClick={() => setCurrentStep(4)}
+                    className="inline-flex items-center gap-1 text-xs text-neutral-300 hover:text-white font-mono uppercase underline cursor-pointer"
+                  >
+                    <Edit2 className="w-3 h-3" />
+                    <span>Edit</span>
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -1739,14 +1749,14 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       )}
 
       {/* Navigation Buttons (Back / Next / Submit) */}
-      <div className="mt-10 pt-6 border-t border-white/10 flex items-center justify-between gap-4">
+      <div className="mt-8 sm:mt-10 pt-6 border-t border-white/10 flex items-center justify-between gap-3 sm:gap-4">
         {currentStep > 1 ? (
           <button
             type="button"
             id="btn-back-step"
             disabled={isSubmitting}
             onClick={() => setCurrentStep((prev) => Math.max(1, prev - 1))}
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-white/20 hover:border-white text-xs font-mono uppercase tracking-wider text-neutral-300 hover:text-white transition-all cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 sm:px-5 py-3 rounded-xl border border-white/20 hover:border-white text-xs font-mono uppercase tracking-wider text-neutral-300 hover:text-white transition-all cursor-pointer"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back</span>
@@ -1765,7 +1775,7 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                 setCurrentStep((prev) => Math.min(totalSteps, prev + 1));
               }
             }}
-            className="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-white text-black font-mono text-xs font-bold uppercase tracking-widest hover:bg-neutral-200 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+            className="inline-flex items-center gap-2 px-6 sm:px-7 py-3 rounded-xl bg-white text-black font-mono text-xs font-bold uppercase tracking-widest hover:bg-neutral-200 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer shadow-[0_0_20px_rgba(255,255,255,0.15)]"
           >
             <span>Next</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -1776,15 +1786,15 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
             id="btn-submit-registration"
             disabled={isSubmitting || !agreedRules}
             onClick={handleSubmit}
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-white text-black font-mono text-xs font-bold uppercase tracking-widest hover:bg-neutral-200 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer shadow-[0_0_30px_rgba(255,255,255,0.25)]"
+            className="inline-flex items-center gap-2 px-6 sm:px-8 py-3.5 rounded-xl bg-white text-black font-mono text-xs font-bold uppercase tracking-widest hover:bg-neutral-200 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer shadow-[0_0_30px_rgba(255,255,255,0.25)]"
           >
             {isSubmitting ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin text-black" />
-                <span>Submitting Registration...</span>
+                <span>Submitting...</span>
               </>
             ) : (
-              <span>Register Now // Submit</span>
+              <span>Submit</span>
             )}
           </button>
         )}

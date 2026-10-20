@@ -35,7 +35,7 @@ export default function ByteBrawlRegisterPage({ isMobile: _isMobile }: ByteBrawl
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#060606] text-white selection:bg-white selection:text-black overflow-x-clip pt-4 sm:pt-6 pb-32 sm:pb-36">
+    <div className="relative min-h-screen bg-[#060606] text-white selection:bg-white selection:text-black overflow-x-clip pt-24 sm:pt-28 md:pt-32 pb-32 sm:pb-36">
       {/* Background ambient lighting */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/[0.03] rounded-full blur-3xl" />
