@@ -2,5 +2,22 @@
   "buildCommand": "npm run build",
   "installCommand": "npm install",
   "outputDirectory": "dist",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://flux-backend-1hmq.onrender.com/api/:path*"
+    },
+    {
+      "source": "/healthz",
+      "destination": "https://flux-backend-1hmq.onrender.com/healthz"
+    },
+    {
+      "source": "/ping",
+      "destination": "https://flux-backend-1hmq.onrender.com/ping"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
