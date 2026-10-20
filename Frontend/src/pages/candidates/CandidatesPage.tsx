@@ -172,8 +172,8 @@ const CandidateModal: React.FC<{ candidate: Candidate; onClose: () => void }> = 
             <p className="text-xs text-gray-600 mt-4">
                 Applied: {new Date(candidate.createdAt).toLocaleString('en-IN')}
             </p>
-        </div>
-    </div>
+        </motion.div>
+    </motion.div>
 );
 
 const CandidateRow: React.FC<{ candidate: Candidate; index: number; onClick: () => void }> = ({ candidate, index, onClick }) => (
@@ -403,8 +403,8 @@ export default function CandidatesPage() {
                                     </div>
                                 </motion.button>
                             </div>
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
             </div>
         );
     }

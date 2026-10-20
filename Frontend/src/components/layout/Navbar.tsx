@@ -202,8 +202,8 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Center Column: Floating Pill Navigation (height 52px) */}
-          <nav className={`pointer-events-auto hidden md:flex items-center gap-1.5 h-[52px] rounded-full px-5 shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex-none border transition-colors duration-150 ${
+          {/* Center Column: Floating Pill Navigation */}
+          <nav className={`pointer-events-auto hidden min-[701px]:flex items-center gap-1 sm:gap-1.5 h-[48px] sm:h-[52px] rounded-full px-4 sm:px-5 shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex-none border transition-colors duration-150 ${
             isNavbarLight
               ? "bg-white/90 backdrop-blur-xl border-black/15 text-black"
               : "bg-[#111111]/80 backdrop-blur-xl border-white/10 text-white"
@@ -211,13 +211,13 @@ export default function Navbar() {
             <Link
               to="/about"
               onClick={(e) => handleNavClick("/about", e)}
-              className={`px-3 py-1.5 text-xs transition-colors ${
+              className={`px-3 py-1.5 text-xs uppercase tracking-wider transition-colors ${
                 isNavbarLight
                   ? location.pathname === "/about" ? "text-black font-semibold" : "text-neutral-600 hover:text-black"
                   : location.pathname === "/about" ? "text-white font-medium" : "text-[#9a9a9a] hover:text-white"
               }`}
             >
-              <ScrambleText text="About" />
+              <ScrambleText text="ABOUT" />
             </Link>
 
             {/* Dropdown item: Events + */}
@@ -229,7 +229,7 @@ export default function Navbar() {
               <Link
                 to="/events"
                 onClick={(e) => handleNavClick("/events", e)}
-                className={`px-3 py-1.5 text-xs flex items-center gap-1 transition-colors ${
+                className={`px-3 py-1.5 text-xs uppercase tracking-wider flex items-center gap-1 transition-colors ${
                   isNavbarLight
                     ? location.pathname.startsWith("/events") || location.pathname === "/ideathon" || location.pathname === "/she-leads"
                       ? "text-black font-semibold"
@@ -239,7 +239,7 @@ export default function Navbar() {
                       : "text-[#9a9a9a] hover:text-white"
                 }`}
               >
-                <ScrambleText text="Events" />
+                <ScrambleText text="EVENTS" />
                 <span className="text-[10px] font-mono leading-none">+</span>
               </Link>
 
@@ -281,53 +281,53 @@ export default function Navbar() {
             <Link
               to="/team"
               onClick={(e) => handleNavClick("/team", e)}
-              className={`px-3 py-1.5 text-xs transition-colors ${
+              className={`px-3 py-1.5 text-xs uppercase tracking-wider transition-colors ${
                 isNavbarLight
                   ? location.pathname === "/team" ? "text-black font-semibold" : "text-neutral-600 hover:text-black"
                   : location.pathname === "/team" ? "text-white font-medium" : "text-[#9a9a9a] hover:text-white"
               }`}
             >
-              <ScrambleText text="Team" />
+              <ScrambleText text="TEAM" />
             </Link>
 
             <Link
               to="/faculty"
               onClick={(e) => handleNavClick("/faculty", e)}
-              className={`px-3 py-1.5 text-xs transition-colors ${
+              className={`px-3 py-1.5 text-xs uppercase tracking-wider transition-colors ${
                 isNavbarLight
                   ? location.pathname === "/faculty" ? "text-black font-semibold" : "text-neutral-600 hover:text-black"
                   : location.pathname === "/faculty" ? "text-white font-medium" : "text-[#9a9a9a] hover:text-white"
               }`}
             >
-              <ScrambleText text="Faculty" />
+              <ScrambleText text="FACULTY" />
             </Link>
 
             <Link
               to="/gallery"
               onClick={(e) => handleNavClick("/gallery", e)}
-              className={`px-3 py-1.5 text-xs transition-colors ${
+              className={`px-3 py-1.5 text-xs uppercase tracking-wider transition-colors ${
                 isNavbarLight
                   ? location.pathname === "/gallery" ? "text-black font-semibold" : "text-neutral-600 hover:text-black"
                   : location.pathname === "/gallery" ? "text-white font-medium" : "text-[#9a9a9a] hover:text-white"
               }`}
             >
-              <ScrambleText text="Gallery" />
+              <ScrambleText text="GALLERY" />
             </Link>
 
             <Link
               to="/contact"
               onClick={(e) => handleNavClick("/contact", e)}
-              className={`px-3 py-1.5 text-xs transition-colors ${
+              className={`px-3 py-1.5 text-xs uppercase tracking-wider transition-colors ${
                 isNavbarLight
                   ? location.pathname === "/contact" ? "text-black font-semibold" : "text-neutral-600 hover:text-black"
                   : location.pathname === "/contact" ? "text-white font-medium" : "text-[#9a9a9a] hover:text-white"
               }`}
             >
-              <ScrambleText text="Contact" />
+              <ScrambleText text="CONTACT" />
             </Link>
           </nav>
 
-          {/* Right Column: Join Us Action & Mobile Toggle */}
+          {/* Right Column: Pill & Mobile Toggle */}
           <div className="flex-1 flex justify-end items-center gap-2 sm:gap-3">
             {/* Join Us Pill */}
             <Link
@@ -348,7 +348,7 @@ export default function Navbar() {
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className={`pointer-events-auto md:hidden flex items-center justify-center w-[48px] h-[48px] sm:w-[52px] sm:h-[52px] rounded-xl border transition-colors shadow-sm ${
+              className={`pointer-events-auto min-[701px]:hidden flex items-center justify-center w-[48px] h-[48px] sm:w-[52px] sm:h-[52px] rounded-xl border transition-colors shadow-sm ${
                 isNavbarLight
                   ? "text-black border-black/15 bg-white/90 backdrop-blur-xl"
                   : "text-white border-white/10 bg-[#111111]/80 backdrop-blur-xl"

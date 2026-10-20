@@ -4,7 +4,6 @@ import HeroSection from '../../components/sections/events/HeroSection';
 import UpcomingEventsSection from '../../components/sections/events/UpcomingEvents';
 import Timeline from '../../components/sections/events/timeline';
 import type { TimelineEvent } from '../../components/sections/events/timeline';
-import xpert_talk from '/src/assets/images/xpert_talk.webp';
 import ideathoncomp from "/src/assets/images/ideathoncomp.webp";
 import orientation from '/src/assets/images/freshmen_orientation_poster.png';
 import expert from '/src/assets/images/expert.webp';

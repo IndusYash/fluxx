@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Calendar, MapPin, Users, ArrowRight, Award, Mic2 } from 'lucide-react';
-import dimitrios from '@/assets/images/dimitrios.webp';
 import ideathon from '@/assets/images/ideathon.webp';
-import orientation from '@/assets/images/orientation_2.webp';
 import conferenceImg from '@/assets/images/conferenceImg.webp';
 import sheLeadsBanner from '@/assets/images/she_leads_hero_banner.jpg';
+import orientation from '@/assets/images/freshmen_orientation_poster.png';
 const RAW_API_BASE = (import.meta.env as any).VITE_API_BASE_URL ?? (import.meta.env as any).VITE_API_BASE ?? '/api';
 const API_BASE = (RAW_API_BASE || '/api').replace(/\/+$/, ''); // remove trailing slash
 
