@@ -38,7 +38,7 @@ export const BYTEBRAWL_CONFIG = {
   // TODO: Update official registration deadline timestamp
   registrationDeadline: "2026-10-31T23:59:59+05:30",
   // TODO: Set venue seating capacity (number of registrations)
-  capacity: 100,
+  capacity: 500,
 
   // ── Contact & Faculty / Student Leads ─────────────────────────
   // TODO: Replace with official email if a dedicated event inbox is used
