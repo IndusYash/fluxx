@@ -26,9 +26,7 @@ async function runTests() {
   // Clear test data for clean slate
   try {
     await connectDB();
-    await ByteBrawlRegistration.deleteMany({
-      eventSlug: BYTEBRAWL_CONFIG.slug,
-    });
+    // Preserved: do not deleteMany
   } catch (err) {
     console.warn("Notice: Test cleanup skipped:", err.message);
   }

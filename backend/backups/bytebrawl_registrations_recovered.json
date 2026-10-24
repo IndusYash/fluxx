@@ -1,0 +1,3339 @@
+[
+  {
+    "_id": "6ada560986514ac57bf0898e",
+    "registrationId": "BBH26-SPT75C",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Cache-Me-Byte",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Aditya Kumar",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttarpradesh",
+        "rollNumber": "2026021104",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9793919573",
+        "email": "surfers925@gmail.com",
+        "_id": "6ada560986514ac57bf0898f",
+        "createdAt": "2026-10-22T18:29:29.858Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Vanshika Varshney",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttarpradesh",
+        "rollNumber": "2026021069",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9548800636",
+        "email": "varshneyvanshika2007@gmail.com",
+        "_id": "6ada560986514ac57bf08990",
+        "createdAt": "2026-10-22T18:29:29.858Z"
+      }
+    ],
+    "createdAt": "2026-10-22T18:29:29.868Z",
+    "updatedAt": "2026-10-22T18:29:29.868Z",
+    "__v": 0
+  },
+  {
+    "_id": "6ada56dd86514ac57bf0899a",
+    "registrationId": "BBH26-5ZGWQE",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Team Hexacore",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Shraddha Gupta",
+        "collegeName": "Madan Mohan Malviya University of technology,gorakhpur",
+        "address": "Gorakhpur",
+        "rollNumber": "2026021358",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9236491099",
+        "email": "shraddhaguptab@gmail.com",
+        "_id": "6ada56dd86514ac57bf0899b",
+        "createdAt": "2026-10-22T18:33:01.369Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Kaira singh",
+        "collegeName": "Madan Mohan Malviya University of technology, Gorakhpur",
+        "address": "Gorakhpur",
+        "rollNumber": "2026021034",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "8077567496",
+        "email": "kairasingh0805@gmail.com",
+        "_id": "6ada56dd86514ac57bf0899c",
+        "createdAt": "2026-10-22T18:33:01.370Z"
+      }
+    ],
+    "createdAt": "2026-10-22T18:33:01.371Z",
+    "updatedAt": "2026-10-22T18:33:01.371Z",
+    "__v": 0
+  },
+  {
+    "_id": "6ada6ea57021266fd4a5a62e",
+    "registrationId": "BBH26-BBWSA3",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "Ravi",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Ravi Kumar Singh",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur",
+        "rollNumber": "2026021150",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9336499479",
+        "email": "ravisingh933649@gmail.com",
+        "_id": "6ada6ea57021266fd4a5a62f",
+        "createdAt": "2026-10-22T20:14:29.973Z"
+      }
+    ],
+    "createdAt": "2026-10-22T20:14:29.977Z",
+    "updatedAt": "2026-10-22T20:14:29.977Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adafd4cd27933600276830d",
+    "registrationId": "BBH26-VT3XP7",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "TRIVIA TITANS",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Krish Kumar Gupta",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026081025",
+        "branch": "BBA",
+        "year": "1st Year",
+        "mobile": "8303724606",
+        "email": "guptakrish780@gmail.com",
+        "_id": "6adafd4cd27933600276830e",
+        "createdAt": "2026-10-23T06:23:08.423Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Shivesh Gupta",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026081046",
+        "branch": "BBA",
+        "year": "1st Year",
+        "mobile": "9236949455",
+        "email": "keshugupta9494@gmail.com",
+        "_id": "6adafd4cd27933600276830f",
+        "createdAt": "2026-10-23T06:23:08.424Z"
+      }
+    ],
+    "createdAt": "2026-10-23T06:23:08.431Z",
+    "updatedAt": "2026-10-23T06:23:08.431Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb0166d27933600276832f",
+    "registrationId": "BBH26-V2TXF4",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Intrestellar",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Abhishek Mishra",
+        "collegeName": "Ddugu",
+        "address": "Gorakhpur Uttar Pradesh",
+        "rollNumber": "64001201",
+        "branch": "IT",
+        "year": "1st Year",
+        "mobile": "9792809063",
+        "email": "abhi.sshra@gmail.com",
+        "_id": "6adb0166d279336002768330",
+        "createdAt": "2026-10-23T06:40:38.476Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Subham Rai",
+        "collegeName": "ITM GIDA",
+        "address": "Gorakhpur UP",
+        "rollNumber": "2401201780041",
+        "branch": "BBA",
+        "year": "3rd Year",
+        "mobile": "8765108535",
+        "email": "raisubham006@gmail.com",
+        "_id": "6adb0166d279336002768331",
+        "createdAt": "2026-10-23T06:40:38.477Z"
+      }
+    ],
+    "createdAt": "2026-10-23T06:40:38.478Z",
+    "updatedAt": "2026-10-23T06:40:38.478Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb0308d279336002768349",
+    "registrationId": "BBH26-DD6DUD",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "NullVortex",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Prakhar Kumar Srivastava",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "Gorakhpur,Uttar Pradesh",
+        "rollNumber": "2026021043",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "7992151994",
+        "email": "2026021043@mmmut.ac.in",
+        "_id": "6adb0308d27933600276834a",
+        "createdAt": "2026-10-23T06:47:36.100Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Shivanshu Bhardwaj",
+        "collegeName": "MMMUT,GORAKHPUR",
+        "address": "Gorakhpur,Uttar Pradesh",
+        "rollNumber": "2026021061",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "7619833237",
+        "email": "2026021061@mmmut.ac.in",
+        "_id": "6adb0308d27933600276834b",
+        "createdAt": "2026-10-23T06:47:36.100Z"
+      }
+    ],
+    "createdAt": "2026-10-23T06:47:36.101Z",
+    "updatedAt": "2026-10-23T06:47:36.101Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb0437d27933600276835a",
+    "registrationId": "BBH26-MEPM8F",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "404NotFound",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Anubhav Kumar Ray",
+        "collegeName": "ITM Gida",
+        "address": "Gorakhpur",
+        "rollNumber": "2301200100046",
+        "branch": "CSE",
+        "year": "4th Year",
+        "mobile": "9026434558",
+        "email": "anubhavray45@gmail.com",
+        "_id": "6adb0437d27933600276835b",
+        "createdAt": "2026-10-23T06:52:39.502Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Akahand Pratap Mishra",
+        "collegeName": "ITM Gida",
+        "address": "Gorakhpur",
+        "rollNumber": "2301200100023",
+        "branch": "CSE",
+        "year": "4th Year",
+        "mobile": "8423165357",
+        "email": "mishramudit117@gmail.com",
+        "_id": "6adb0437d27933600276835c",
+        "createdAt": "2026-10-23T06:52:39.502Z"
+      }
+    ],
+    "createdAt": "2026-10-23T06:52:39.503Z",
+    "updatedAt": "2026-10-23T06:52:39.503Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb1a63e48cdf8fe7d1b2e1",
+    "registrationId": "BBH26-WDFKD6",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "ThinkAsCoder",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Sunil Singh",
+        "collegeName": "ITM Gida Gorkhpur",
+        "address": "Word no2 Abdul Hamid nagar",
+        "rollNumber": "2301201530055",
+        "branch": "CSE",
+        "year": "4th Year",
+        "mobile": "8853080716",
+        "email": "singhsunil34500@gmail.com",
+        "_id": "6adb1a63e48cdf8fe7d1b2e2",
+        "createdAt": "2026-10-23T08:27:15.540Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Shivam Srivastava",
+        "collegeName": "ITM GIDA GORKHPUR",
+        "address": "Haraiya, gorakhpur, up",
+        "rollNumber": "2301201530049",
+        "branch": "CSE",
+        "year": "4th Year",
+        "mobile": "8115656121",
+        "email": "mypersonalishere.mypersonal@gmail.com",
+        "_id": "6adb1a63e48cdf8fe7d1b2e3",
+        "createdAt": "2026-10-23T08:27:15.540Z"
+      }
+    ],
+    "createdAt": "2026-10-23T08:27:15.546Z",
+    "updatedAt": "2026-10-23T08:27:15.546Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb1e81e48cdf8fe7d1b2fa",
+    "registrationId": "BBH26-22M3KS",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "OctoKnockout",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Afreen Khatoon",
+        "collegeName": "ITM Gida Gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2301201530007",
+        "branch": "CSE",
+        "year": "4th Year",
+        "mobile": "7247387691",
+        "email": "afreenkhatoon11122004@gmail.com",
+        "_id": "6adb1e81e48cdf8fe7d1b2fb",
+        "createdAt": "2026-10-23T08:44:49.556Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Umme Habiba",
+        "collegeName": "ITM Gida",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2301201530058",
+        "branch": "CSE",
+        "year": "4th Year",
+        "mobile": "8303293932",
+        "email": "ummehabiba2241@gmail.com",
+        "_id": "6adb1e81e48cdf8fe7d1b2fc",
+        "createdAt": "2026-10-23T08:44:49.556Z"
+      }
+    ],
+    "createdAt": "2026-10-23T08:44:49.559Z",
+    "updatedAt": "2026-10-23T08:44:49.559Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb212ee48cdf8fe7d1b308",
+    "registrationId": "BBH26-VF7YRJ",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Flaxpark",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Devarshi gupta",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur",
+        "rollNumber": "2026021318",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9319587505",
+        "email": "devarshigupta35@gmail.com",
+        "_id": "6adb212ee48cdf8fe7d1b309",
+        "createdAt": "2026-10-23T08:56:14.539Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Ayush mishra",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur",
+        "rollNumber": "2026021314",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9305608295",
+        "email": "ayush2426161@gmail.com",
+        "_id": "6adb212ee48cdf8fe7d1b30a",
+        "createdAt": "2026-10-23T08:56:14.539Z"
+      }
+    ],
+    "createdAt": "2026-10-23T08:56:14.541Z",
+    "updatedAt": "2026-10-23T08:56:14.541Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb254de48cdf8fe7d1b318",
+    "registrationId": "BBH26-NJ4VEH",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "Hydra",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Vansh agrawal",
+        "collegeName": "MMMUT",
+        "address": "Gorakhpur, Uttar pradesh",
+        "rollNumber": "2025071062",
+        "branch": "IT",
+        "year": "2nd Year",
+        "mobile": "9140155922",
+        "email": "2025071062@mmmut.ac.in",
+        "_id": "6adb254de48cdf8fe7d1b319",
+        "createdAt": "2026-10-23T09:13:49.348Z"
+      }
+    ],
+    "createdAt": "2026-10-23T09:13:49.349Z",
+    "updatedAt": "2026-10-23T09:13:49.349Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb38de22005c8d19c4104c",
+    "registrationId": "BBH26-P4ZFUH",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Spaghetti Coders",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Tanish Gangwar",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "barielly ,uttar pradesh",
+        "rollNumber": "2026011066",
+        "branch": "CE",
+        "year": "1st Year",
+        "mobile": "8868069133",
+        "email": "2026011066@mmmut.ac.in",
+        "_id": "6adb38de22005c8d19c4104d",
+        "createdAt": "2026-10-23T10:37:18.842Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Shoury verma",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "mathura,uttar pradesh",
+        "rollNumber": "2026011064",
+        "branch": "CE",
+        "year": "1st Year",
+        "mobile": "9450591381",
+        "email": "2026011064@mmmut.ac.in",
+        "_id": "6adb38de22005c8d19c4104e",
+        "createdAt": "2026-10-23T10:37:18.843Z"
+      }
+    ],
+    "createdAt": "2026-10-23T10:37:18.930Z",
+    "updatedAt": "2026-10-23T10:37:18.930Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb4407c9635656e7e9b34c",
+    "registrationId": "BBH26-8C4X2Z",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "One Tech",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Rishabh Dev Tiwari",
+        "collegeName": "Institute Of Technology And Management Gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2401200100131",
+        "branch": "CSE",
+        "year": "3rd Year",
+        "mobile": "9026867355",
+        "email": "rishabhdevtiwari35@gmail.com",
+        "_id": "6adb4407c9635656e7e9b34d",
+        "createdAt": "2026-10-23T11:24:55.246Z"
+      }
+    ],
+    "createdAt": "2026-10-23T11:24:55.253Z",
+    "updatedAt": "2026-10-23T11:24:55.253Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb44ccc9635656e7e9b356",
+    "registrationId": "BBH26-M262AU",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "The Flying Dutchman",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Vikrant",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "Gorakhpur",
+        "rollNumber": "2026041268",
+        "branch": "ECE",
+        "year": "1st Year",
+        "mobile": "9555343660",
+        "email": "2026041268@mmmut.ac.in",
+        "_id": "6adb44ccc9635656e7e9b357",
+        "createdAt": "2026-10-23T11:28:12.160Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Utkarsh gautam",
+        "collegeName": "Mmmut Gorakhpur",
+        "address": "Ayodhya,UP",
+        "rollNumber": "2026041064",
+        "branch": "ECE",
+        "year": "1st Year",
+        "mobile": "8009942317",
+        "email": "utkarshgautam1729@gmail.com",
+        "_id": "6adb44ccc9635656e7e9b358",
+        "createdAt": "2026-10-23T11:28:12.160Z"
+      }
+    ],
+    "createdAt": "2026-10-23T11:28:12.161Z",
+    "updatedAt": "2026-10-23T11:28:12.161Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb5460349a538defc5ee49",
+    "registrationId": "BBH26-6G7W2C",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "BaseLess",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Pragya Gupta",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026021341",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9454679056",
+        "email": "pragyagp025@gmail.com",
+        "_id": "6adb5460349a538defc5ee4a",
+        "createdAt": "2026-10-23T12:34:40.602Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Riddhima Omar",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026021346",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9336662437",
+        "email": "riddhima.omar1790@gmail.com",
+        "_id": "6adb5460349a538defc5ee4b",
+        "createdAt": "2026-10-23T12:34:40.603Z"
+      }
+    ],
+    "createdAt": "2026-10-23T12:34:40.607Z",
+    "updatedAt": "2026-10-23T12:34:40.607Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb5a59349a538defc5ee5b",
+    "registrationId": "BBH26-67BHT8",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Team Elite",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Upasna",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026021068",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9021395477",
+        "email": "10upasna07@gmail.com",
+        "_id": "6adb5a59349a538defc5ee5c",
+        "createdAt": "2026-10-23T13:00:09.773Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Nidhi",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026021039",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "7525041826",
+        "email": "nidhigkp888@gmail.com",
+        "_id": "6adb5a59349a538defc5ee5d",
+        "createdAt": "2026-10-23T13:00:09.773Z"
+      }
+    ],
+    "createdAt": "2026-10-23T13:00:09.774Z",
+    "updatedAt": "2026-10-23T13:00:09.774Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb602a349a538defc5ee7a",
+    "registrationId": "BBH26-UFYH3N",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Hackworld",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Vaibhav kumar",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur",
+        "rollNumber": "2026021369",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9120140548",
+        "email": "2026021369@mmmut.ac.in",
+        "_id": "6adb602a349a538defc5ee7b",
+        "createdAt": "2026-10-23T13:24:58.011Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Utkarsh singh",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "Gorakhpur",
+        "rollNumber": "2026021368",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "7457837714",
+        "email": "2026021368@mmmut.ac.in",
+        "_id": "6adb602a349a538defc5ee7c",
+        "createdAt": "2026-10-23T13:24:58.011Z"
+      }
+    ],
+    "createdAt": "2026-10-23T13:24:58.013Z",
+    "updatedAt": "2026-10-23T13:24:58.013Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb677f349a538defc5eea6",
+    "registrationId": "BBH26-RB23SM",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "TRINETRA.EXE",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "KUSHAGRA SHARMA",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "Varanasi",
+        "rollNumber": "2026031032",
+        "branch": "EE",
+        "year": "1st Year",
+        "mobile": "9555315629",
+        "email": "kushagrasharmaksmk@gmail.com",
+        "_id": "6adb677f349a538defc5eea7",
+        "createdAt": "2026-10-23T13:56:15.952Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Krishna Kant Saroj",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "Gorakhpur",
+        "rollNumber": "2026031138",
+        "branch": "EE",
+        "year": "1st Year",
+        "mobile": "7099033452",
+        "email": "kksaroj2007@gmail.com",
+        "_id": "6adb677f349a538defc5eea8",
+        "createdAt": "2026-10-23T13:56:15.952Z"
+      }
+    ],
+    "createdAt": "2026-10-23T13:56:15.955Z",
+    "updatedAt": "2026-10-23T13:56:15.955Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb6884349a538defc5eeb6",
+    "registrationId": "BBH26-55NDZ7",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "VetexDuo",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Harsh Kesharwani",
+        "collegeName": "MMMUT",
+        "address": "Up",
+        "rollNumber": "2026031135",
+        "branch": "EE",
+        "year": "1st Year",
+        "mobile": "8869958929",
+        "email": "harshkesharwani7428@gmail.com",
+        "_id": "6adb6884349a538defc5eeb7",
+        "createdAt": "2026-10-23T14:00:36.242Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Utkarsh",
+        "collegeName": "MMMUT",
+        "address": "Up",
+        "rollNumber": "2026021366",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9889140898",
+        "email": "u1919875@gmail.com",
+        "_id": "6adb6884349a538defc5eeb8",
+        "createdAt": "2026-10-23T14:00:36.242Z"
+      }
+    ],
+    "createdAt": "2026-10-23T14:00:36.243Z",
+    "updatedAt": "2026-10-23T14:00:36.243Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb6a65349a538defc5eec8",
+    "registrationId": "BBH26-R79XNV",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "Omix",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Rudra Pratap Singh",
+        "collegeName": "Mmmut gorakhpur",
+        "address": "Post Shekhupur, Maudaha Hamirpur Uttar Pradesh India210505",
+        "rollNumber": "2026051147",
+        "branch": "ME",
+        "year": "1st Year",
+        "mobile": "9236974538",
+        "email": "pratapsinghrudra78140@gmail.com",
+        "_id": "6adb6a65349a538defc5eec9",
+        "createdAt": "2026-10-23T14:08:37.170Z"
+      }
+    ],
+    "createdAt": "2026-10-23T14:08:37.171Z",
+    "updatedAt": "2026-10-23T14:08:37.171Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb70d7349a538defc5ef21",
+    "registrationId": "BBH26-QN9HER",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "Sparkle",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Jitendra Singh",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Kanpur Uttar Pradesh",
+        "rollNumber": "2026021033",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "7452884551",
+        "email": "jitendra0607s@gmail.com",
+        "_id": "6adb70d7349a538defc5ef22",
+        "createdAt": "2026-10-23T14:36:07.264Z"
+      }
+    ],
+    "createdAt": "2026-10-23T14:36:07.266Z",
+    "updatedAt": "2026-10-23T14:36:07.266Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb70fc349a538defc5ef2a",
+    "registrationId": "BBH26-SAFY9R",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "Byteforce",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Vivek Singh Rathore",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026021373",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "8115649069",
+        "email": "2026021373@mmmut.ac.in",
+        "_id": "6adb70fc349a538defc5ef2b",
+        "createdAt": "2026-10-23T14:36:44.808Z"
+      }
+    ],
+    "createdAt": "2026-10-23T14:36:44.808Z",
+    "updatedAt": "2026-10-23T14:36:44.808Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb7146349a538defc5ef38",
+    "registrationId": "BBH26-K24T2C",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Hehewale",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Arman Khan",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026071013",
+        "branch": "IT",
+        "year": "1st Year",
+        "mobile": "9454676876",
+        "email": "armankhan220907@gmail.com",
+        "_id": "6adb7146349a538defc5ef39",
+        "createdAt": "2026-10-23T14:37:58.320Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Saksham Tiwari",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026071150",
+        "branch": "IT",
+        "year": "1st Year",
+        "mobile": "6306062778",
+        "email": "sakshammtarii@gmail.com",
+        "_id": "6adb7146349a538defc5ef3a",
+        "createdAt": "2026-10-23T14:37:58.320Z"
+      }
+    ],
+    "createdAt": "2026-10-23T14:37:58.321Z",
+    "updatedAt": "2026-10-23T14:37:58.321Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb714e349a538defc5ef41",
+    "registrationId": "BBH26-7X5Q98",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "3I's2Hack",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Prashant Mishra",
+        "collegeName": "Madan Mohan Malaviya University of Technology, Gorakhpur",
+        "address": "Madan Mohan Malviya, Kasia - Gorakhpur Rd, Singhariya, Rapti Nagar Phase-4, Gorakhpur, Uttar Pradesh 273010",
+        "rollNumber": "2026021343",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9120485631",
+        "email": "2026021343@mmmut.ac.in",
+        "_id": "6adb714e349a538defc5ef42",
+        "createdAt": "2026-10-23T14:38:06.888Z"
+      }
+    ],
+    "createdAt": "2026-10-23T14:38:06.888Z",
+    "updatedAt": "2026-10-23T14:38:06.888Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb71e7349a538defc5ef4d",
+    "registrationId": "BBH26-JTFCGZ",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Prompt Ke Pujari",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Shirish Kashyap",
+        "collegeName": "Mmmut",
+        "address": "Bangalore",
+        "rollNumber": "2026021157",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "6363688133",
+        "email": "shirishkashyap1.2.3@gmail.com",
+        "_id": "6adb71e7349a538defc5ef4e",
+        "createdAt": "2026-10-23T14:40:39.377Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Harsh gautam",
+        "collegeName": "Mmmut",
+        "address": "Matura",
+        "rollNumber": "2026021126",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9258743767",
+        "email": "gautambharat9090@gmail.com",
+        "_id": "6adb71e7349a538defc5ef4f",
+        "createdAt": "2026-10-23T14:40:39.378Z"
+      }
+    ],
+    "createdAt": "2026-10-23T14:40:39.379Z",
+    "updatedAt": "2026-10-23T14:40:39.379Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb71ea349a538defc5ef58",
+    "registrationId": "BBH26-EAEEMQ",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Team Eren",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "swayash jharkharia",
+        "collegeName": "Mmmut gorakhpur",
+        "address": "Gorakhpur, UttarPradesh",
+        "rollNumber": "2026021363",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9559643203",
+        "email": "2026021363@mmmut.ac.in",
+        "_id": "6adb71ea349a538defc5ef59",
+        "createdAt": "2026-10-23T14:40:42.537Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Harshit Chaurasiya",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "Gorakhpur, UttarPradesh",
+        "rollNumber": "2026021325",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9336366717",
+        "email": "2026021325@mmmut.ac.in",
+        "_id": "6adb71ea349a538defc5ef5a",
+        "createdAt": "2026-10-23T14:40:42.537Z"
+      }
+    ],
+    "createdAt": "2026-10-23T14:40:42.538Z",
+    "updatedAt": "2026-10-23T14:40:42.538Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb7395349a538defc5ef70",
+    "registrationId": "BBH26-K95MP8",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "Aarav",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Avinay Kumar",
+        "collegeName": "MMM ut gorkhpur",
+        "address": "Gorkhpur",
+        "rollNumber": "2026021313",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9616776261",
+        "email": "2026021313@mmmut.ac.in",
+        "_id": "6adb7395349a538defc5ef71",
+        "createdAt": "2026-10-23T14:47:49.058Z"
+      }
+    ],
+    "createdAt": "2026-10-23T14:47:49.059Z",
+    "updatedAt": "2026-10-23T14:47:49.059Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb73d2349a538defc5ef78",
+    "registrationId": "BBH26-J2TZSG",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "Team Agastya",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Ayush Mishra",
+        "collegeName": "Mmmut gorakhpur",
+        "address": "Gorakhpur",
+        "rollNumber": "2026021224",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9119671277",
+        "email": "www.ayush1276@gmail.com",
+        "_id": "6adb73d2349a538defc5ef79",
+        "createdAt": "2026-10-23T14:48:50.626Z"
+      }
+    ],
+    "createdAt": "2026-10-23T14:48:50.626Z",
+    "updatedAt": "2026-10-23T14:48:50.626Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb77f2349a538defc5efb6",
+    "registrationId": "BBH26-7VAG56",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Chole bhature",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Ayush Kumar Mishra",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026071019",
+        "branch": "IT",
+        "year": "1st Year",
+        "mobile": "6307961428",
+        "email": "abhiraj1122nd@gmail.com",
+        "_id": "6adb77f2349a538defc5efb7",
+        "createdAt": "2026-10-23T15:06:26.351Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Udit Kumar Barnwal",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "Gorakhpur , Uttar Pradesh",
+        "rollNumber": "2026071068",
+        "branch": "IT",
+        "year": "1st Year",
+        "mobile": "6392356937",
+        "email": "the.guy.udit@gmail.com",
+        "_id": "6adb77f2349a538defc5efb8",
+        "createdAt": "2026-10-23T15:06:26.351Z"
+      }
+    ],
+    "createdAt": "2026-10-23T15:06:26.352Z",
+    "updatedAt": "2026-10-23T15:06:26.352Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb78f1349a538defc5efe6",
+    "registrationId": "BBH26-7A5CTY",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "UVA",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "UMESH KUMAR",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "GORAKHPUR UTTARPRADESH",
+        "rollNumber": "2026021365",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "8789149195",
+        "email": "2026021365@mmmut.ac.in",
+        "_id": "6adb78f1349a538defc5efe7",
+        "createdAt": "2026-10-23T15:10:41.830Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "VAIJNATH YADAV",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "GORAKHPUR UTTARPRADESH",
+        "rollNumber": "2026021370",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "8467896297",
+        "email": "2026021370@mmmut.ac.in",
+        "_id": "6adb78f1349a538defc5efe8",
+        "createdAt": "2026-10-23T15:10:41.830Z"
+      }
+    ],
+    "createdAt": "2026-10-23T15:10:41.831Z",
+    "updatedAt": "2026-10-23T15:10:41.831Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb78f2349a538defc5efec",
+    "registrationId": "BBH26-SGSKFH",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "AeroNeX",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Zaid",
+        "collegeName": "Mmmut Gorakhpur",
+        "address": "Gorakhpur Uttar Pradesh",
+        "rollNumber": "2026CSD0585",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "7307292443",
+        "email": "zk854499@gmail.com",
+        "_id": "6adb78f2349a538defc5efed",
+        "createdAt": "2026-10-23T15:10:42.367Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Shivansh Tripathi",
+        "collegeName": "Mmmut Gorakhpur",
+        "address": "Gorakhpur Uttar Pradesh",
+        "rollNumber": "2026CSD0646",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9569981344",
+        "email": "shivanshtripathi9454@gmail.com",
+        "_id": "6adb78f2349a538defc5efee",
+        "createdAt": "2026-10-23T15:10:42.367Z"
+      }
+    ],
+    "createdAt": "2026-10-23T15:10:42.368Z",
+    "updatedAt": "2026-10-23T15:10:42.368Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb796f349a538defc5f003",
+    "registrationId": "BBH26-G9N9DK",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "COVID 26",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Ayushman rajpoot",
+        "collegeName": "Mmmut gorakhpur",
+        "address": "Lalitpur",
+        "rollNumber": "2026021122",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9555677930",
+        "email": "ayushraj052007@gmail.com",
+        "_id": "6adb796f349a538defc5f004",
+        "createdAt": "2026-10-23T15:12:47.256Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Abhishek Kumar",
+        "collegeName": "Mmmut gorakhpur",
+        "address": "Khusrupur,patna,bihar",
+        "rollNumber": "2026021102",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9661831944",
+        "email": "abhishekumar9384@gmail.com",
+        "_id": "6adb796f349a538defc5f005",
+        "createdAt": "2026-10-23T15:12:47.256Z"
+      }
+    ],
+    "createdAt": "2026-10-23T15:12:47.257Z",
+    "updatedAt": "2026-10-23T15:12:47.257Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb7b01349a538defc5f01f",
+    "registrationId": "BBH26-FM4W9J",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Garud Dwar",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Aman Verma",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur",
+        "rollNumber": "2026MED1298",
+        "branch": "ME",
+        "year": "1st Year",
+        "mobile": "6393823928",
+        "email": "runnerblaze07@gmail.com",
+        "_id": "6adb7b01349a538defc5f020",
+        "createdAt": "2026-10-23T15:19:29.920Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Divyansh Jaiswal",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur",
+        "rollNumber": "2026MED1237",
+        "branch": "ME",
+        "year": "1st Year",
+        "mobile": "9621815614",
+        "email": "krishnajais945145@gmail.com",
+        "_id": "6adb7b01349a538defc5f021",
+        "createdAt": "2026-10-23T15:19:29.920Z"
+      }
+    ],
+    "createdAt": "2026-10-23T15:19:29.921Z",
+    "updatedAt": "2026-10-23T15:19:29.921Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb7b11349a538defc5f02a",
+    "registrationId": "BBH26-3PYG7A",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Challengers",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Prasun Singh",
+        "collegeName": "MMMUT",
+        "address": "Akbarpur",
+        "rollNumber": "2026021044",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9450220437",
+        "email": "prasunsingh5112@gmail.com",
+        "_id": "6adb7b11349a538defc5f02b",
+        "createdAt": "2026-10-23T15:19:45.125Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Masoom Alam",
+        "collegeName": "MMMUT",
+        "address": "Gopalganj",
+        "rollNumber": "2026071038",
+        "branch": "IT",
+        "year": "1st Year",
+        "mobile": "7667905871",
+        "email": "masoomalam9973@gmail.com",
+        "_id": "6adb7b11349a538defc5f02c",
+        "createdAt": "2026-10-23T15:19:45.126Z"
+      }
+    ],
+    "createdAt": "2026-10-23T15:19:45.126Z",
+    "updatedAt": "2026-10-23T15:19:45.126Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb7b39349a538defc5f037",
+    "registrationId": "BBH26-TAM9FK",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Team Galaxy",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Sandeep Kumar",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "Prayagraj",
+        "rollNumber": "2026021155",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9580868006",
+        "email": "sandeepkumar95808680@gmail.com",
+        "_id": "6adb7b39349a538defc5f038",
+        "createdAt": "2026-10-23T15:20:25.228Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Aman Yadav",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "Bhadohi",
+        "rollNumber": "2026021008",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9936376079",
+        "email": "titanamanyadav018@gmail.com",
+        "_id": "6adb7b39349a538defc5f039",
+        "createdAt": "2026-10-23T15:20:25.228Z"
+      }
+    ],
+    "createdAt": "2026-10-23T15:20:25.228Z",
+    "updatedAt": "2026-10-23T15:20:25.228Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb7b9d349a538defc5f047",
+    "registrationId": "BBH26-YERX97",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Pantheon",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Priyanshu Jaiswar",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "jaunpur,uttar pradesh",
+        "rollNumber": "2026041251",
+        "branch": "ECE",
+        "year": "1st Year",
+        "mobile": "8081867061",
+        "email": "2026041251@mmmut.ac.in",
+        "_id": "6adb7b9d349a538defc5f048",
+        "createdAt": "2026-10-23T15:22:05.421Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Sankalp Gupta",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Jhansi,uttar pradesh",
+        "rollNumber": "2026041146",
+        "branch": "ECE",
+        "year": "1st Year",
+        "mobile": "8707708684",
+        "email": "2026041146@mmmut.ac.in",
+        "_id": "6adb7b9d349a538defc5f049",
+        "createdAt": "2026-10-23T15:22:05.421Z"
+      }
+    ],
+    "createdAt": "2026-10-23T15:22:05.422Z",
+    "updatedAt": "2026-10-23T15:22:05.422Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb8560349a538defc5f082",
+    "registrationId": "BBH26-VM99FR",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "ETHERNAL",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "ADITYA KUMAR DUBEY",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "Gorakhpur, uttar pradesh",
+        "rollNumber": "2026021302",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "6388076294",
+        "email": "adityadubey7387@gmail.com",
+        "_id": "6adb8560349a538defc5f083",
+        "createdAt": "2026-10-23T16:03:44.583Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "HARDIK YADAV",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttar pradesh",
+        "rollNumber": "2026021324",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "6005993115",
+        "email": "2026021324@mmmut.ac.in",
+        "_id": "6adb8560349a538defc5f084",
+        "createdAt": "2026-10-23T16:03:44.583Z"
+      }
+    ],
+    "createdAt": "2026-10-23T16:03:44.584Z",
+    "updatedAt": "2026-10-23T16:03:44.584Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb8849349a538defc5f0a7",
+    "registrationId": "BBH26-HBB325",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Codestorm",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Mayank Kumar",
+        "collegeName": "Madan Mohan Malviya university of technology",
+        "address": "Bijnor,uttar pradesh",
+        "rollNumber": "2026021038",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "7017341838",
+        "email": "mk8470075@gmail.com",
+        "_id": "6adb8849349a538defc5f0a8",
+        "createdAt": "2026-10-23T16:16:09.279Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Nirbhay Kumar Gautam",
+        "collegeName": "Madan Mohan Malviya University of gorakhpur",
+        "address": "Bulandshahr",
+        "rollNumber": "2026021240",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9997329614",
+        "email": "nirbhaykumargautam518@gmail.com",
+        "_id": "6adb8849349a538defc5f0a9",
+        "createdAt": "2026-10-23T16:16:09.279Z"
+      }
+    ],
+    "createdAt": "2026-10-23T16:16:09.280Z",
+    "updatedAt": "2026-10-23T16:16:09.280Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb8926349a538defc5f0b6",
+    "registrationId": "BBH26-R33EDX",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Wayne interprises",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Abhinav mathur",
+        "collegeName": "Mmmut Gorakhpur",
+        "address": "Vs hostel mmmut gorakhpur",
+        "rollNumber": "2026041305",
+        "branch": "ECE",
+        "year": "1st Year",
+        "mobile": "7268965229",
+        "email": "abhinavmathur7088@gmail.com",
+        "_id": "6adb8926349a538defc5f0b7",
+        "createdAt": "2026-10-23T16:19:50.493Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Avneesh Kumar",
+        "collegeName": "Mmmut Gorakhpur",
+        "address": "Vs hostel mmmut Gorakhpur",
+        "rollNumber": "2026041320",
+        "branch": "ECE",
+        "year": "1st Year",
+        "mobile": "9045707079",
+        "email": "avneeshkumar9348@gmail.com",
+        "_id": "6adb8926349a538defc5f0b8",
+        "createdAt": "2026-10-23T16:19:50.493Z"
+      }
+    ],
+    "createdAt": "2026-10-23T16:19:50.494Z",
+    "updatedAt": "2026-10-23T16:19:50.494Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb89ab349a538defc5f0c5",
+    "registrationId": "BBH26-UBZGS3",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Vintage",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Mohammad Ashraf",
+        "collegeName": "Madan Mohan Malviya university of technology",
+        "address": "Gorakhpur, uttar pradesh",
+        "rollNumber": "2026071139",
+        "branch": "IT",
+        "year": "1st Year",
+        "mobile": "8960872878",
+        "email": "mohdashraf89608@gmail.com",
+        "_id": "6adb89ab349a538defc5f0c6",
+        "createdAt": "2026-10-23T16:22:03.057Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Gaurish Kumar Soni",
+        "collegeName": "Madan mohan malaviya university of technology",
+        "address": "Gorakhpur, uttar pradesh",
+        "rollNumber": "2026021231",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9580716836",
+        "email": "gaurishsoni5@gmail.com",
+        "_id": "6adb89ab349a538defc5f0c7",
+        "createdAt": "2026-10-23T16:22:03.057Z"
+      }
+    ],
+    "createdAt": "2026-10-23T16:22:03.058Z",
+    "updatedAt": "2026-10-23T16:22:03.058Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb8a11349a538defc5f0ce",
+    "registrationId": "BBH26-P2PJNZ",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "KDMASTER",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Kartikey Dhiman",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026021329",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9278219501",
+        "email": "2026021329@mmmut.ac.in",
+        "_id": "6adb8a11349a538defc5f0cf",
+        "createdAt": "2026-10-23T16:23:45.293Z"
+      }
+    ],
+    "createdAt": "2026-10-23T16:23:45.294Z",
+    "updatedAt": "2026-10-23T16:23:45.294Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb8a42349a538defc5f0d8",
+    "registrationId": "BBH26-GZ4JGM",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Elevate",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Anmol Gupta",
+        "collegeName": "Mmmut Gorakhpur",
+        "address": "Gorkhapur",
+        "rollNumber": "2026021011",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "8009865328",
+        "email": "2026021011@mmmut.ac.in",
+        "_id": "6adb8a42349a538defc5f0d9",
+        "createdAt": "2026-10-23T16:24:34.453Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Rishikesh Nandan",
+        "collegeName": "Mmmut Gorakhpur",
+        "address": "Gorkhapur",
+        "rollNumber": "2026021048",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9060087428",
+        "email": "2026021048@mmmut.ac.in",
+        "_id": "6adb8a42349a538defc5f0da",
+        "createdAt": "2026-10-23T16:24:34.453Z"
+      }
+    ],
+    "createdAt": "2026-10-23T16:24:34.454Z",
+    "updatedAt": "2026-10-23T16:24:34.454Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb9257349a538defc5f118",
+    "registrationId": "BBH26-PGXMN4",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "xpt",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "IRFAN ALAM",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "gorkhpur",
+        "rollNumber": "2026021328",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9219848509",
+        "email": "iacude0learn@gmail.com",
+        "_id": "6adb9257349a538defc5f119",
+        "createdAt": "2026-10-23T16:59:03.205Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Abhiuday singh",
+        "collegeName": "MMMUT",
+        "address": "Gorakhpur",
+        "rollNumber": "2026021301",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9214854825",
+        "email": "beadedicated1@gmail.com",
+        "_id": "6adb9257349a538defc5f11a",
+        "createdAt": "2026-10-23T16:59:03.206Z"
+      }
+    ],
+    "createdAt": "2026-10-23T16:59:03.207Z",
+    "updatedAt": "2026-10-23T16:59:03.207Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb929e349a538defc5f124",
+    "registrationId": "BBH26-947KQM",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "PAIR PROGRAMMERS",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Shreyash Mishra",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Ballia, Uttar Pradesh",
+        "rollNumber": "2026MED1277",
+        "branch": "ME",
+        "year": "1st Year",
+        "mobile": "6203770317",
+        "email": "shreyashmishra49@gmail.com",
+        "_id": "6adb929e349a538defc5f125",
+        "createdAt": "2026-10-23T17:00:14.719Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Pratyaksha Dubey",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026081037",
+        "branch": "BBA",
+        "year": "1st Year",
+        "mobile": "6391292259",
+        "email": "2026081037@mmmut.ac.in",
+        "_id": "6adb929e349a538defc5f126",
+        "createdAt": "2026-10-23T17:00:14.719Z"
+      }
+    ],
+    "createdAt": "2026-10-23T17:00:14.720Z",
+    "updatedAt": "2026-10-23T17:00:14.720Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb945f349a538defc5f133",
+    "registrationId": "BBH26-88TE3P",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "ER.HACKER",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Ayush Kumar",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026041222",
+        "branch": "ECE",
+        "year": "1st Year",
+        "mobile": "8953533106",
+        "email": "ak.ayush.8953@gmail.com",
+        "_id": "6adb945f349a538defc5f134",
+        "createdAt": "2026-10-23T17:07:43.964Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Ajit Yadav",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026031107",
+        "branch": "ECE",
+        "year": "1st Year",
+        "mobile": "7520135191",
+        "email": "anitayadav38746@gmail.com",
+        "_id": "6adb945f349a538defc5f135",
+        "createdAt": "2026-10-23T17:07:43.964Z"
+      }
+    ],
+    "createdAt": "2026-10-23T17:07:43.964Z",
+    "updatedAt": "2026-10-23T17:07:43.964Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb98fe349a538defc5f144",
+    "registrationId": "BBH26-574424",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Tech Titans",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Prince Chauhan",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "Gorakhpur",
+        "rollNumber": "2026031148",
+        "branch": "EE",
+        "year": "1st Year",
+        "mobile": "8126607537",
+        "email": "thakurprince8510@gmail.com",
+        "_id": "6adb98fe349a538defc5f145",
+        "createdAt": "2026-10-23T17:27:26.437Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Mayank Sharma",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "Gorakhpur",
+        "rollNumber": "2026071039",
+        "branch": "IT",
+        "year": "1st Year",
+        "mobile": "9997945066",
+        "email": "bhardwajkush9105@gmail.com",
+        "_id": "6adb98fe349a538defc5f146",
+        "createdAt": "2026-10-23T17:27:26.437Z"
+      }
+    ],
+    "createdAt": "2026-10-23T17:27:26.438Z",
+    "updatedAt": "2026-10-23T17:27:26.438Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb9cae349a538defc5f163",
+    "registrationId": "BBH26-R7ZGZX",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "T.A.P. Authorizer",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Tanya Prajapati",
+        "collegeName": "Institute of Technology and Management",
+        "address": "Gorakhpur",
+        "rollNumber": "2301201540050",
+        "branch": "CSE",
+        "year": "4th Year",
+        "mobile": "9026016881",
+        "email": "tanya.tp2004@gmail.com",
+        "_id": "6adb9cae349a538defc5f164",
+        "createdAt": "2026-10-23T17:43:10.387Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Abhijeet Kumar Pandey",
+        "collegeName": "Institute of Technology and Management",
+        "address": "Gorakhpur",
+        "rollNumber": "2301201530003",
+        "branch": "CSE",
+        "year": "4th Year",
+        "mobile": "9415246126",
+        "email": "ap9990032@gmail.com",
+        "_id": "6adb9cae349a538defc5f165",
+        "createdAt": "2026-10-23T17:43:10.387Z"
+      }
+    ],
+    "createdAt": "2026-10-23T17:43:10.388Z",
+    "updatedAt": "2026-10-23T17:43:10.388Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb9eee349a538defc5f185",
+    "registrationId": "BBH26-Z9V57T",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "The debugging gladiator",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Satvik Shukla",
+        "collegeName": "MMMUT gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026031156",
+        "branch": "EE",
+        "year": "1st Year",
+        "mobile": "7388018744",
+        "email": "satvikshukla5137@gmail.com",
+        "_id": "6adb9eee349a538defc5f186",
+        "createdAt": "2026-10-23T17:52:46.520Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Vaibhav Dixit",
+        "collegeName": "MMMUT  gorakhpur",
+        "address": "Gorakhpur Uttar Pradesh",
+        "rollNumber": "2026021170",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "7355761535",
+        "email": "vaidxt237@gmail.com",
+        "_id": "6adb9eee349a538defc5f187",
+        "createdAt": "2026-10-23T17:52:46.521Z"
+      }
+    ],
+    "createdAt": "2026-10-23T17:52:46.522Z",
+    "updatedAt": "2026-10-23T17:52:46.522Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adb9fac349a538defc5f190",
+    "registrationId": "BBH26-4X27ET",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "BitForge",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Shivank Chaudhary",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Bijnor",
+        "rollNumber": "2026021355",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9528262654",
+        "email": "shivankchaudhary101@gmail.com",
+        "_id": "6adb9fac349a538defc5f191",
+        "createdAt": "2026-10-23T17:55:56.513Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Samarth Rastogi",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Bijnor",
+        "rollNumber": "2026021348",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "7906507585",
+        "email": "samarthrastogi97@gmail.com",
+        "_id": "6adb9fac349a538defc5f192",
+        "createdAt": "2026-10-23T17:55:56.514Z"
+      }
+    ],
+    "createdAt": "2026-10-23T17:55:56.515Z",
+    "updatedAt": "2026-10-23T17:55:56.515Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adba08a349a538defc5f19c",
+    "registrationId": "BBH26-M6W754",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "BeRojgar Coders",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "VISHAL PRAJAPATI",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026011168",
+        "branch": "CE",
+        "year": "1st Year",
+        "mobile": "9454076873",
+        "email": "victusgeforce14@gmail.com",
+        "_id": "6adba08a349a538defc5f19d",
+        "createdAt": "2026-10-23T17:59:38.570Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Harsh",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Dwarka, New Delhi",
+        "rollNumber": "2026011034",
+        "branch": "CE",
+        "year": "1st Year",
+        "mobile": "9430894039",
+        "email": "er.harsh008@gmail.com",
+        "_id": "6adba08a349a538defc5f19e",
+        "createdAt": "2026-10-23T17:59:38.570Z"
+      }
+    ],
+    "createdAt": "2026-10-23T17:59:38.573Z",
+    "updatedAt": "2026-10-23T17:59:38.573Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adba1cb349a538defc5f1b3",
+    "registrationId": "BBH26-G92CCJ",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Team Hover",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Shivansh Kumar Tripathi",
+        "collegeName": "Madan Mohan Malaviya University of Technology",
+        "address": "Gorakhpur, Uttarpradesh",
+        "rollNumber": "2026021059",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "7685013218",
+        "email": "2026021059@mmmut.ac.in",
+        "_id": "6adba1cb349a538defc5f1b4",
+        "createdAt": "2026-10-23T18:04:59.772Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Kushagra Upadhyay",
+        "collegeName": "madan mohan malaviya university of technology",
+        "address": "Gorakhpur , Uttar Pradesh",
+        "rollNumber": "2026071135",
+        "branch": "IT",
+        "year": "1st Year",
+        "mobile": "7988896418",
+        "email": "2026071135@mmmut.ac.in",
+        "_id": "6adba1cb349a538defc5f1b5",
+        "createdAt": "2026-10-23T18:04:59.772Z"
+      }
+    ],
+    "createdAt": "2026-10-23T18:04:59.773Z",
+    "updatedAt": "2026-10-23T18:04:59.773Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adba21f349a538defc5f1bf",
+    "registrationId": "BBH26-TV9F5Y",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Team_IAF",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Shaurya Gupta",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026041156",
+        "branch": "ECE",
+        "year": "1st Year",
+        "mobile": "8279357415",
+        "email": "shouryag756@gmail.com",
+        "_id": "6adba21f349a538defc5f1c0",
+        "createdAt": "2026-10-23T18:06:23.150Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Shivendra Vikram Singh",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026041155",
+        "branch": "ECE",
+        "year": "1st Year",
+        "mobile": "9076819590",
+        "email": "shivendravns7@gmail.com",
+        "_id": "6adba21f349a538defc5f1c1",
+        "createdAt": "2026-10-23T18:06:23.150Z"
+      }
+    ],
+    "createdAt": "2026-10-23T18:06:23.151Z",
+    "updatedAt": "2026-10-23T18:06:23.151Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adba4cf349a538defc5f1f8",
+    "registrationId": "BBH26-T6AV7T",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Chargers",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Gautam Kanishk",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur Uttar Pradesh",
+        "rollNumber": "2026041127",
+        "branch": "ECE",
+        "year": "1st Year",
+        "mobile": "8009580432",
+        "email": "gautamkanishk2710@gmail.com",
+        "_id": "6adba4cf349a538defc5f1f9",
+        "createdAt": "2026-10-23T18:17:51.437Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Arsh Shukla",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur Uttar Pradesh",
+        "rollNumber": "2026031119",
+        "branch": "EE",
+        "year": "1st Year",
+        "mobile": "8303774806",
+        "email": "arshshukla279@gmail.com",
+        "_id": "6adba4cf349a538defc5f1fa",
+        "createdAt": "2026-10-23T18:17:51.438Z"
+      }
+    ],
+    "createdAt": "2026-10-23T18:17:51.439Z",
+    "updatedAt": "2026-10-23T18:17:51.439Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adba9aa349a538defc5f210",
+    "registrationId": "BBH26-XM5573",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Namo",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Shashwat Jha",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2025021157",
+        "branch": "CSE",
+        "year": "2nd Year",
+        "mobile": "9305802654",
+        "email": "jhashashwat25@gmail.com",
+        "_id": "6adba9aa349a538defc5f211",
+        "createdAt": "2026-10-23T18:38:34.724Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Utkarsh Singh",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2025021268",
+        "branch": "CSE",
+        "year": "2nd Year",
+        "mobile": "8318667179",
+        "email": "2025021268@mmmut.ac.in",
+        "_id": "6adba9aa349a538defc5f212",
+        "createdAt": "2026-10-23T18:38:34.724Z"
+      }
+    ],
+    "createdAt": "2026-10-23T18:38:34.724Z",
+    "updatedAt": "2026-10-23T18:38:34.724Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adbaca6349a538defc5f237",
+    "registrationId": "BBH26-QTCR9V",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "Flux",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Pramod Yadav",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur",
+        "rollNumber": "2025021141",
+        "branch": "CSE",
+        "year": "2nd Year",
+        "mobile": "9795349290",
+        "email": "pramodyadav32982@gmail.com",
+        "_id": "6adbaca6349a538defc5f238",
+        "createdAt": "2026-10-23T18:51:18.695Z"
+      }
+    ],
+    "createdAt": "2026-10-23T18:51:18.695Z",
+    "updatedAt": "2026-10-23T18:51:18.695Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adbadbf349a538defc5f246",
+    "registrationId": "BBH26-ER7NJ3",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "DeepLoop",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Arya Srivastav",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur Uttar Pradesh",
+        "rollNumber": "2026IOT1165",
+        "branch": "ECE",
+        "year": "1st Year",
+        "mobile": "7007639270",
+        "email": "aryasrivastav9270@gmail.com",
+        "_id": "6adbadbf349a538defc5f247",
+        "createdAt": "2026-10-23T18:55:59.883Z"
+      }
+    ],
+    "createdAt": "2026-10-23T18:55:59.883Z",
+    "updatedAt": "2026-10-23T18:55:59.883Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adc0415a3ce5a8818947c13",
+    "registrationId": "BBH26-3AV9AQ",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Team Nakshatra",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Nitin Kumar",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttarpradesh",
+        "rollNumber": "2026041133",
+        "branch": "ECE",
+        "year": "1st Year",
+        "mobile": "9838424828",
+        "email": "2026041133@mmmut.ac.in",
+        "_id": "6adc0415a3ce5a8818947c14",
+        "createdAt": "2026-10-24T01:04:21.546Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Swati Kushwaha",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttarpradesh",
+        "rollNumber": "2026061063",
+        "branch": "CHE",
+        "year": "1st Year",
+        "mobile": "9569194520",
+        "email": "2026061063@mmmut.ac.in",
+        "_id": "6adc0415a3ce5a8818947c15",
+        "createdAt": "2026-10-24T01:04:21.547Z"
+      }
+    ],
+    "createdAt": "2026-10-24T01:04:21.563Z",
+    "updatedAt": "2026-10-24T01:04:21.563Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adc1cbb922bd6bfe3ce74c3",
+    "registrationId": "BBH26-Z2BPQK",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "SIGKILL_08",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Anushka Saxena",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026021113",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "8077047941",
+        "email": "anushkasaxena1901@gmail.com",
+        "_id": "6adc1cbb922bd6bfe3ce74c4",
+        "createdAt": "2026-10-24T02:49:31.081Z"
+      }
+    ],
+    "createdAt": "2026-10-24T02:49:31.086Z",
+    "updatedAt": "2026-10-24T02:49:31.086Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adc36d5d7ea27edcb908327",
+    "registrationId": "BBH26-KBPDDP",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "hackhive",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Kashish rajput",
+        "collegeName": "MMMUT",
+        "address": "Gorakhpur,U.P.",
+        "rollNumber": "2026CSE131",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9569477100",
+        "email": "kashishrazput2603@gmail.com",
+        "_id": "6adc36d5d7ea27edcb908328",
+        "createdAt": "2026-10-24T04:40:53.035Z"
+      }
+    ],
+    "createdAt": "2026-10-24T04:40:53.041Z",
+    "updatedAt": "2026-10-24T04:40:53.041Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adc3cd2d7ea27edcb908357",
+    "registrationId": "BBH26-5C4E7C",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "RacXcoder",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Rachit Dwivedi",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2024041048",
+        "branch": "ECE",
+        "year": "3rd Year",
+        "mobile": "9696181623",
+        "email": "dwivedirachit684@gmail.com",
+        "_id": "6adc3cd2d7ea27edcb908358",
+        "createdAt": "2026-10-24T05:06:26.452Z"
+      }
+    ],
+    "createdAt": "2026-10-24T05:06:26.453Z",
+    "updatedAt": "2026-10-24T05:06:26.453Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adc3d6fd7ea27edcb908362",
+    "registrationId": "BBH26-C3G24U",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "ZeroDay",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Disha Dhuliya",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttarpradesh",
+        "rollNumber": "2026021227",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9354150353",
+        "email": "dhuliyadisha49@gmail.com",
+        "_id": "6adc3d6fd7ea27edcb908363",
+        "createdAt": "2026-10-24T05:09:03.884Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Yahvi Mohan",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttarpradesh",
+        "rollNumber": "2026021270",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9695415511",
+        "email": "yahvimohan@gmail.com",
+        "_id": "6adc3d6fd7ea27edcb908364",
+        "createdAt": "2026-10-24T05:09:03.884Z"
+      }
+    ],
+    "createdAt": "2026-10-24T05:09:03.886Z",
+    "updatedAt": "2026-10-24T05:09:03.886Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adc42c6d7ea27edcb908373",
+    "registrationId": "BBH26-UYSPTH",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "CYCLOTRON",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Devesh Tripathi",
+        "collegeName": "MMMUT",
+        "address": "Gorakhpur Uttar Pradesh",
+        "rollNumber": "2026061027",
+        "branch": "CHE",
+        "year": "1st Year",
+        "mobile": "9140713029",
+        "email": "deveshtripathi9140@gmail.com",
+        "_id": "6adc42c6d7ea27edcb908374",
+        "createdAt": "2026-10-24T05:31:50.349Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Anmol Srivastava",
+        "collegeName": "MMMUT GKP",
+        "address": "Gorakhpur",
+        "rollNumber": "2026061014",
+        "branch": "CHE",
+        "year": "1st Year",
+        "mobile": "9415822361",
+        "email": "deveshmmmut9140@gmail.com",
+        "_id": "6adc42c6d7ea27edcb908375",
+        "createdAt": "2026-10-24T05:31:50.349Z"
+      }
+    ],
+    "createdAt": "2026-10-24T05:31:50.350Z",
+    "updatedAt": "2026-10-24T05:31:50.350Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adc537f55f2874e440502c4",
+    "registrationId": "BBH26-2VWK43",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "Flux AI 1",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Anchal Gupta",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Salempur",
+        "rollNumber": "2026011116",
+        "branch": "CE",
+        "year": "1st Year",
+        "mobile": "9598987786",
+        "email": "anchalguptajan96@gmail.com",
+        "_id": "6adc537f55f2874e440502c5",
+        "createdAt": "2026-10-24T06:43:11.559Z"
+      }
+    ],
+    "createdAt": "2026-10-24T06:43:11.564Z",
+    "updatedAt": "2026-10-24T06:43:11.564Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adc577755f2874e440502dc",
+    "registrationId": "BBH26-XYXTTH",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Binary Beasts",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Shishir Pandey",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Madwa Nagar Gandhi Nagar Basti",
+        "rollNumber": "2026021158",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "7880458306",
+        "email": "shishirpandey199@gmail.com",
+        "_id": "6adc577755f2874e440502dd",
+        "createdAt": "2026-10-24T07:00:07.190Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "ASHUTOSH KUMAR MAURYA",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Biswan , Sitapur",
+        "rollNumber": "2026021121",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9005138853",
+        "email": "ashutoshkumar2364@gmail.com",
+        "_id": "6adc577755f2874e440502de",
+        "createdAt": "2026-10-24T07:00:07.190Z"
+      }
+    ],
+    "createdAt": "2026-10-24T07:00:07.191Z",
+    "updatedAt": "2026-10-24T07:00:07.191Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adc5cd455f2874e440502ff",
+    "registrationId": "BBH26-HP6NYF",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "DuoNex",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Nandita Pandey",
+        "collegeName": "Institute of Technology and Management",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2301201540027",
+        "branch": "CSE",
+        "year": "4th Year",
+        "mobile": "9648844634",
+        "email": "nanditapandey0315@gmail.com",
+        "_id": "6adc5cd455f2874e44050300",
+        "createdAt": "2026-10-24T07:23:00.222Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Arushi Yadav",
+        "collegeName": "Institute of Technology and Management",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2301201540014",
+        "branch": "CSE",
+        "year": "4th Year",
+        "mobile": "7752968758",
+        "email": "arushiyadav3344@gmail.com",
+        "_id": "6adc5cd455f2874e44050301",
+        "createdAt": "2026-10-24T07:23:00.222Z"
+      }
+    ],
+    "createdAt": "2026-10-24T07:23:00.223Z",
+    "updatedAt": "2026-10-24T07:23:00.223Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adc5cf955f2874e4405030b",
+    "registrationId": "BBH26-QV5AEQ",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Hack bloom",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Shambhavi Mishra",
+        "collegeName": "Institute of technology and management",
+        "address": "Hno150A post Shivpuri colony near falmandi rustumpur",
+        "rollNumber": "2301201540042",
+        "branch": "CSE",
+        "year": "4th Year",
+        "mobile": "9305582083",
+        "email": "shambhavim450@gmail.com",
+        "_id": "6adc5cf955f2874e4405030c",
+        "createdAt": "2026-10-24T07:23:37.390Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Shruti pandey",
+        "collegeName": "Institute of technology and management",
+        "address": "Ews 9 vistar nagar bargadwa gorakhpur",
+        "rollNumber": "2301201540046",
+        "branch": "CSE",
+        "year": "4th Year",
+        "mobile": "9517054255",
+        "email": "officialshruti2111@gmail.com",
+        "_id": "6adc5cf955f2874e4405030d",
+        "createdAt": "2026-10-24T07:23:37.390Z"
+      }
+    ],
+    "createdAt": "2026-10-24T07:23:37.391Z",
+    "updatedAt": "2026-10-24T07:23:37.391Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adc6b9855b9157985e8cb04",
+    "registrationId": "BBH26-D6HVG7",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Cyber Smith",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Satyam Kumar Singh",
+        "collegeName": "Maharana Pratap Institute of Technology",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2412172000002",
+        "branch": "CSE",
+        "year": "3rd Year",
+        "mobile": "9452087253",
+        "email": "satayamsingh21@gmail.com",
+        "_id": "6adc6b9855b9157985e8cb05",
+        "createdAt": "2026-10-24T08:26:00.419Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Som Singh",
+        "collegeName": "Maharana Pratap Institute of Technology",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2412172000003",
+        "branch": "CSE",
+        "year": "3rd Year",
+        "mobile": "9919785445",
+        "email": "somsingh7928@gmail.com",
+        "_id": "6adc6b9855b9157985e8cb06",
+        "createdAt": "2026-10-24T08:26:00.419Z"
+      }
+    ],
+    "createdAt": "2026-10-24T08:26:00.423Z",
+    "updatedAt": "2026-10-24T08:26:00.423Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adc6bcd55b9157985e8cb0f",
+    "registrationId": "BBH26-GD3W69",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "Uday",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Uday Pratap Chaudhary",
+        "collegeName": "Maharana Pratap Institute of Technology",
+        "address": "Kushinagar, Uttar Pradesh",
+        "rollNumber": "MPIT26AIMLCL12",
+        "branch": "Other",
+        "year": "2nd Year",
+        "mobile": "8299334373",
+        "email": "upratapchaudhary@gmail.com",
+        "_id": "6adc6bcd55b9157985e8cb10",
+        "createdAt": "2026-10-24T08:26:53.137Z"
+      }
+    ],
+    "createdAt": "2026-10-24T08:26:53.138Z",
+    "updatedAt": "2026-10-24T08:26:53.138Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adc6d7055b9157985e8cb1e",
+    "registrationId": "BBH26-5QKMB9",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Holy Larpers",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Ansh Srivastava",
+        "collegeName": "MMMUT GORAKHPUR.",
+        "address": "E-112 gida sector 5 gorkhpur",
+        "rollNumber": "2026022001",
+        "branch": "CSE",
+        "year": "2nd Year",
+        "mobile": "7706990885",
+        "email": "anshsrivastava834@gmail.com",
+        "_id": "6adc6d7055b9157985e8cb1f",
+        "createdAt": "2026-10-24T08:33:52.512Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Swapnil Swaraj",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "Gorakhpur",
+        "rollNumber": "2026022008",
+        "branch": "CSE",
+        "year": "2nd Year",
+        "mobile": "9565965440",
+        "email": "swapnilswaraj0@gmail.com",
+        "_id": "6adc6d7055b9157985e8cb20",
+        "createdAt": "2026-10-24T08:33:52.512Z"
+      }
+    ],
+    "createdAt": "2026-10-24T08:33:52.513Z",
+    "updatedAt": "2026-10-24T08:33:52.513Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adc8c631cb3719bc3e14730",
+    "registrationId": "BBH26-MV2FGV",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "Social Media",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Antima Gupta",
+        "collegeName": "Maharana pratap institute of technology",
+        "address": "Mahesra Gorakhpur",
+        "rollNumber": "2412170100016",
+        "branch": "CSE",
+        "year": "3rd Year",
+        "mobile": "8528413373",
+        "email": "antimagupta3373@gmail.com",
+        "_id": "6adc8c631cb3719bc3e14731",
+        "createdAt": "2026-10-24T10:45:55.292Z"
+      }
+    ],
+    "createdAt": "2026-10-24T10:45:55.297Z",
+    "updatedAt": "2026-10-24T10:45:55.297Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adc91791cb3719bc3e14743",
+    "registrationId": "BBH26-BU6Y9K",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "Synaptic Sparks",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Ankesh Srivastava",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Jail Road , Gulali Vatika , Shahpur , Gorakhpur - 273006",
+        "rollNumber": "2025031008",
+        "branch": "EE",
+        "year": "2nd Year",
+        "mobile": "7897139837",
+        "email": "ankeshsrivastava61289@gmail.com",
+        "_id": "6adc91791cb3719bc3e14744",
+        "createdAt": "2026-10-24T11:07:37.611Z"
+      }
+    ],
+    "createdAt": "2026-10-24T11:07:37.612Z",
+    "updatedAt": "2026-10-24T11:07:37.612Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adc995b7c310c1aba7baaa1",
+    "registrationId": "BBH26-ZAW8BQ",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Bhuchaal",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Gaurav Kumar",
+        "collegeName": "MPIT",
+        "address": "Gorakhpur",
+        "rollNumber": "2412170100024",
+        "branch": "CSE",
+        "year": "3rd Year",
+        "mobile": "6394185153",
+        "email": "silentashok32@gmail.com",
+        "_id": "6adc995b7c310c1aba7baaa2",
+        "createdAt": "2026-10-24T11:41:15.862Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Adarsh Madheshiya",
+        "collegeName": "MPIT",
+        "address": "Gorakhpur",
+        "rollNumber": "2412170100001",
+        "branch": "CSE",
+        "year": "3rd Year",
+        "mobile": "7052615294",
+        "email": "anshmadheshiyamath@gmail.com",
+        "_id": "6adc995b7c310c1aba7baaa3",
+        "createdAt": "2026-10-24T11:41:15.868Z"
+      }
+    ],
+    "createdAt": "2026-10-24T11:41:15.891Z",
+    "updatedAt": "2026-10-24T11:41:15.891Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adc9c997c310c1aba7baabc",
+    "registrationId": "BBH26-BX43JH",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Codepanti",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "SURYANSH GUPTA",
+        "collegeName": "Maharana Pratap Institute of Technology",
+        "address": "Gorakhpur Uttar Pradesh",
+        "rollNumber": "2412171640014",
+        "branch": "CSE",
+        "year": "3rd Year",
+        "mobile": "9452098730",
+        "email": "suryanshgupta744@gmail.com",
+        "_id": "6adc9c997c310c1aba7baabd",
+        "createdAt": "2026-10-24T11:55:05.349Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Shivam Singh",
+        "collegeName": "Maharana Pratap Institute of Technology",
+        "address": "Gorakhpur Uttar Pradesh",
+        "rollNumber": "24121640010",
+        "branch": "CSE",
+        "year": "3rd Year",
+        "mobile": "9452149290",
+        "email": "shivamsingh49290@gmail.com",
+        "_id": "6adc9c997c310c1aba7baabe",
+        "createdAt": "2026-10-24T11:55:05.349Z"
+      }
+    ],
+    "createdAt": "2026-10-24T11:55:05.350Z",
+    "updatedAt": "2026-10-24T11:55:05.350Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adca2e997da6ef2049653d0",
+    "registrationId": "BBH26-J3R3JC",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "NeuralNova",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Vidya Gupta",
+        "collegeName": "Maharana Pratap Institute of Technology",
+        "address": "Gorakhnath, Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2412170100045",
+        "branch": "CSE",
+        "year": "3rd Year",
+        "mobile": "8423984184",
+        "email": "vidyagupta104@gmail.com",
+        "_id": "6adca2e997da6ef2049653d1",
+        "createdAt": "2026-10-24T12:22:01.570Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Aditi Srivastava",
+        "collegeName": "Maharana Pratap Institute of Technology",
+        "address": "Gorakhnath, Gorakhpur, Uttar Pardesh",
+        "rollNumber": "2412170100002",
+        "branch": "CSE",
+        "year": "3rd Year",
+        "mobile": "9236999653",
+        "email": "snehasrivastava1907@gmail.com",
+        "_id": "6adca2e997da6ef2049653d2",
+        "createdAt": "2026-10-24T12:22:01.571Z"
+      }
+    ],
+    "createdAt": "2026-10-24T12:22:01.622Z",
+    "updatedAt": "2026-10-24T12:22:01.622Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adca49f97da6ef2049653df",
+    "registrationId": "BBH26-4CE3N4",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Infinite Loop",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Ayush Kumar",
+        "collegeName": "MMMUT",
+        "address": "Gorakhpur, UP",
+        "rollNumber": "2025021120",
+        "branch": "CSE",
+        "year": "2nd Year",
+        "mobile": "8601401658",
+        "email": "ayushk19203@gmail.com",
+        "_id": "6adca49f97da6ef2049653e0",
+        "createdAt": "2026-10-24T12:29:19.329Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Ayush Kumar",
+        "collegeName": "MMMUT",
+        "address": "Gorakhpur,UP",
+        "rollNumber": "2025021121",
+        "branch": "CSE",
+        "year": "2nd Year",
+        "mobile": "8948147476",
+        "email": "ayushkumarfzdup@gmail.com",
+        "_id": "6adca49f97da6ef2049653e1",
+        "createdAt": "2026-10-24T12:29:19.329Z"
+      }
+    ],
+    "createdAt": "2026-10-24T12:29:19.331Z",
+    "updatedAt": "2026-10-24T12:29:19.331Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adcadb197da6ef20496540d",
+    "registrationId": "BBH26-D8NMKP",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "Whisper_X",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Saurav Yadav",
+        "collegeName": "MMMUT",
+        "address": "Badaura khurd",
+        "rollNumber": "2026031157",
+        "branch": "EE",
+        "year": "1st Year",
+        "mobile": "6387556530",
+        "email": "saurydv04@gmail.com",
+        "_id": "6adcadb197da6ef20496540e",
+        "createdAt": "2026-10-24T13:08:01.531Z"
+      }
+    ],
+    "createdAt": "2026-10-24T13:08:01.534Z",
+    "updatedAt": "2026-10-24T13:08:01.534Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adcb27397da6ef204965426",
+    "registrationId": "BBH26-XT2DYS",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "Flux Dynamic",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Aman Yadav",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur Uttar Pradesh",
+        "rollNumber": "2026031112",
+        "branch": "EE",
+        "year": "1st Year",
+        "mobile": "8737882332",
+        "email": "amanyadav180309@gmail.com",
+        "_id": "6adcb27397da6ef204965427",
+        "createdAt": "2026-10-24T13:28:19.118Z"
+      }
+    ],
+    "createdAt": "2026-10-24T13:28:19.119Z",
+    "updatedAt": "2026-10-24T13:28:19.119Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adcb5f797da6ef20496543e",
+    "registrationId": "BBH26-PHVMQB",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "AI arc",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Devansh Jain",
+        "collegeName": "MMMUT gorakhpur",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2026041224",
+        "branch": "ECE",
+        "year": "1st Year",
+        "mobile": "8273327883",
+        "email": "jaindevansh603@gmail.com",
+        "_id": "6adcb5f797da6ef20496543f",
+        "createdAt": "2026-10-24T13:43:19.746Z"
+      }
+    ],
+    "createdAt": "2026-10-24T13:43:19.747Z",
+    "updatedAt": "2026-10-24T13:43:19.747Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adcb66097da6ef204965448",
+    "registrationId": "BBH26-GD3J4P",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Unpaid_Thinkers",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Arihant Jain",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, 273010",
+        "rollNumber": "2026021116",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9557855697",
+        "email": "dharam0755jain@gmail.com",
+        "_id": "6adcb66097da6ef204965449",
+        "createdAt": "2026-10-24T13:45:04.868Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Anuj Kumar Yadav",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur,273010",
+        "rollNumber": "2026021013",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "7619811605",
+        "email": "yadavanuj00550@gmail.com",
+        "_id": "6adcb66097da6ef20496544a",
+        "createdAt": "2026-10-24T13:45:04.868Z"
+      }
+    ],
+    "createdAt": "2026-10-24T13:45:04.869Z",
+    "updatedAt": "2026-10-24T13:45:04.869Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adcb96f97da6ef204965472",
+    "registrationId": "BBH26-T3K5NP",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "Breaking Bugs",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "praveen pandey",
+        "collegeName": "Maharana Pratap Institute of Technology",
+        "address": "Gorakhpur, Uttar Pradesh",
+        "rollNumber": "2412171640008",
+        "branch": "CSE",
+        "year": "3rd Year",
+        "mobile": "9838455445",
+        "email": "praveenpandeygkp08@gmail.com",
+        "_id": "6adcb96f97da6ef204965473",
+        "createdAt": "2026-10-24T13:58:07.942Z"
+      }
+    ],
+    "createdAt": "2026-10-24T13:58:07.943Z",
+    "updatedAt": "2026-10-24T13:58:07.943Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adcb9a197da6ef20496547c",
+    "registrationId": "BBH26-K9R55D",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "CODE DESTROYERS",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Priyanshu Dubey",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "GORAKHPUR, UTTAR PRADESH",
+        "rollNumber": "2026071147",
+        "branch": "IT",
+        "year": "1st Year",
+        "mobile": "8979730177",
+        "email": "priyanshud288@gmail.com",
+        "_id": "6adcb9a197da6ef20496547d",
+        "createdAt": "2026-10-24T13:58:57.640Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "AMIT KANDU",
+        "collegeName": "MMMUT GORAKHPUR",
+        "address": "GORAKHPUR ,UTTAR PRADESH",
+        "rollNumber": "2026071108",
+        "branch": "IT",
+        "year": "1st Year",
+        "mobile": "9120069971",
+        "email": "lethalabhi61@gmail.com",
+        "_id": "6adcb9a197da6ef20496547e",
+        "createdAt": "2026-10-24T13:58:57.640Z"
+      }
+    ],
+    "createdAt": "2026-10-24T13:58:57.641Z",
+    "updatedAt": "2026-10-24T13:58:57.641Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adcb9b097da6ef204965487",
+    "registrationId": "BBH26-NA6VMU",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Potato",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Aryan Das",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Tagore Bhawan, Madan Mohan Malviya University of Technology",
+        "rollNumber": "2026041118",
+        "branch": "ECE",
+        "year": "1st Year",
+        "mobile": "7999311170",
+        "email": "2026041118@mmmut.ac.in",
+        "_id": "6adcb9b097da6ef204965488",
+        "createdAt": "2026-10-24T13:59:12.646Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Ansh Sharma",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Tagore Bhawan, Madan Mohan Malviya University of Technology",
+        "rollNumber": "2026041018",
+        "branch": "ECE",
+        "year": "1st Year",
+        "mobile": "9958286818",
+        "email": "sharma2008ansh@gmail.com",
+        "_id": "6adcb9b097da6ef204965489",
+        "createdAt": "2026-10-24T13:59:12.646Z"
+      }
+    ],
+    "createdAt": "2026-10-24T13:59:12.646Z",
+    "updatedAt": "2026-10-24T13:59:12.646Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adcbdcc97da6ef204965497",
+    "registrationId": "BBH26-5Y68JX",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "INDIVIDUAL",
+    "teamName": "LastNeuron",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "INDIVIDUAL",
+        "fullName": "Divyanshu Prajapati",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Nauka Tola, Kushinagar",
+        "rollNumber": "2026071026",
+        "branch": "IT",
+        "year": "1st Year",
+        "mobile": "8417952755",
+        "email": "divyanshuprajapati30@gmail.com",
+        "_id": "6adcbdcc97da6ef204965498",
+        "createdAt": "2026-10-24T14:16:44.917Z"
+      }
+    ],
+    "createdAt": "2026-10-24T14:16:44.917Z",
+    "updatedAt": "2026-10-24T14:16:44.917Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adcc27b97da6ef2049654b6",
+    "registrationId": "BBH26-4C4F8N",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Team-Miracle",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Anuj kesharwani",
+        "collegeName": "MMMUT gorahpur",
+        "address": "gorakhpur",
+        "rollNumber": "2026011017",
+        "branch": "CE",
+        "year": "1st Year",
+        "mobile": "8400595566",
+        "email": "anujkesharwani406@gmail.com",
+        "_id": "6adcc27b97da6ef2049654b7",
+        "createdAt": "2026-10-24T14:36:43.194Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Abhinav kumar",
+        "collegeName": "MMMUT gorahpur",
+        "address": "gorakhpur",
+        "rollNumber": "2026011003",
+        "branch": "CE",
+        "year": "1st Year",
+        "mobile": "9415470960",
+        "email": "warmachine941547@gmail.com",
+        "_id": "6adcc27b97da6ef2049654b8",
+        "createdAt": "2026-10-24T14:36:43.194Z"
+      }
+    ],
+    "createdAt": "2026-10-24T14:36:43.196Z",
+    "updatedAt": "2026-10-24T14:36:43.196Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adcc6ac97da6ef2049654db",
+    "registrationId": "BBH26-Q2NSP4",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "CodeVortex",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Prince Singh",
+        "collegeName": "Maharana Pratap Institute of technology Gorakhpur",
+        "address": "Gorakhnath, Gorakhpur",
+        "rollNumber": "2512170100034",
+        "branch": "CSE",
+        "year": "2nd Year",
+        "mobile": "9277177978",
+        "email": "ps2266086@gmail.com",
+        "_id": "6adcc6ac97da6ef2049654dc",
+        "createdAt": "2026-10-24T14:54:36.011Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Sumit Maurya",
+        "collegeName": "Maharana Pratap Institute of technology Gorakhpur",
+        "address": "Gorakhpur",
+        "rollNumber": "2512170100053",
+        "branch": "CSE",
+        "year": "2nd Year",
+        "mobile": "8303591350",
+        "email": "mauryasumit834@gmail.com",
+        "_id": "6adcc6ac97da6ef2049654dd",
+        "createdAt": "2026-10-24T14:54:36.011Z"
+      }
+    ],
+    "createdAt": "2026-10-24T14:54:36.012Z",
+    "updatedAt": "2026-10-24T14:54:36.012Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adcc6d497da6ef2049654e6",
+    "registrationId": "BBH26-Y6E2S5",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Radiant",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Vibhavari Patel",
+        "collegeName": "Madan Mohan Malviya university of technology gorakhpur",
+        "address": "Gorakhpur",
+        "rollNumber": "2026021266",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9235066340",
+        "email": "vibhavari0696@gmail.com",
+        "_id": "6adcc6d497da6ef2049654e7",
+        "createdAt": "2026-10-24T14:55:16.254Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Sumit Gupta",
+        "collegeName": "Madan Mohan Malviya university of technology gorakhpur",
+        "address": "Gorakhpur",
+        "rollNumber": "2026021261",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "7570007342",
+        "email": "sg9627418@gmail.com",
+        "_id": "6adcc6d497da6ef2049654e8",
+        "createdAt": "2026-10-24T14:55:16.254Z"
+      }
+    ],
+    "createdAt": "2026-10-24T14:55:16.257Z",
+    "updatedAt": "2026-10-24T14:55:16.257Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adccb0c97da6ef20496550a",
+    "registrationId": "BBH26-3BGS25",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Thinkers",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Shruti Shukla",
+        "collegeName": "MMMUT",
+        "address": "Gorakhpur",
+        "rollNumber": "2026021360",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9236124896",
+        "email": "shuklashruti327@gmail.com",
+        "_id": "6adccb0c97da6ef20496550b",
+        "createdAt": "2026-10-24T15:13:16.492Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Khushboo Yadav",
+        "collegeName": "MMMUT",
+        "address": "Gorakhpur",
+        "rollNumber": "2026021234",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9621862691",
+        "email": "gy9621862691@gmail.com",
+        "_id": "6adccb0c97da6ef20496550c",
+        "createdAt": "2026-10-24T15:13:16.492Z"
+      }
+    ],
+    "createdAt": "2026-10-24T15:13:16.492Z",
+    "updatedAt": "2026-10-24T15:13:16.492Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adccc4a97da6ef204965516",
+    "registrationId": "BBH26-HJB4C8",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Berozgar Developers",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Ashish Kumar",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttarpradesh",
+        "rollNumber": "2026CSD0529",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "8267908173",
+        "email": "akashish80064@gmail.com",
+        "_id": "6adccc4a97da6ef204965517",
+        "createdAt": "2026-10-24T15:18:34.088Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Aman Maddhesiya",
+        "collegeName": "MMMUT Gorakhpur",
+        "address": "Gorakhpur, Uttarpradesh",
+        "rollNumber": "2026CSD0518",
+        "branch": "CSE",
+        "year": "1st Year",
+        "mobile": "9670135625",
+        "email": "amanmadhesiya17@gmail.com",
+        "_id": "6adccc4a97da6ef204965518",
+        "createdAt": "2026-10-24T15:18:34.088Z"
+      }
+    ],
+    "createdAt": "2026-10-24T15:18:34.088Z",
+    "updatedAt": "2026-10-24T15:18:34.088Z",
+    "__v": 0
+  },
+  {
+    "_id": "6adcdf0b8cd4d5e6a6c61be9",
+    "registrationId": "BBH26-ZQRCQ4",
+    "eventSlug": "bytebrawl-hacktoberfest",
+    "type": "TEAM",
+    "teamName": "Team Flux",
+    "agreedRules": true,
+    "confirmedDetails": true,
+    "status": "CONFIRMED",
+    "participants": [
+      {
+        "role": "LEADER",
+        "fullName": "Deepak Shivhare",
+        "collegeName": "MMMUT",
+        "address": "GKP",
+        "rollNumber": "2025071021",
+        "branch": "IT",
+        "year": "2nd Year",
+        "mobile": "6389757557",
+        "email": "dk23107575@gmail.com",
+        "_id": "6adcdf0b8cd4d5e6a6c61bea",
+        "createdAt": "2026-10-24T16:38:35.095Z"
+      },
+      {
+        "role": "MEMBER",
+        "fullName": "Aashish Kumar",
+        "collegeName": "MMMUT",
+        "address": "GKP",
+        "rollNumber": "2025021301",
+        "branch": "CSE",
+        "year": "2nd Year",
+        "mobile": "8252752426",
+        "email": "aashishkumar6281@gmail.com",
+        "_id": "6adcdf0b8cd4d5e6a6c61beb",
+        "createdAt": "2026-10-24T16:38:35.095Z"
+      }
+    ],
+    "createdAt": "2026-10-24T16:38:35.099Z",
+    "updatedAt": "2026-10-24T16:38:35.099Z",
+    "__v": 0
+  }
+]
