@@ -7,9 +7,8 @@ const router = express.Router();
 function requireAdminToken(req, res, next) {
   const authHeader = req.headers.authorization || "";
   const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7).trim() : null;
-  const expectedToken = process.env.ADMIN_TOKEN || "flux-admin-secret-2026";
-
-  if (!token || token !== expectedToken) {
+  const expectedToken = (process.env.ADMIN_TOKEN || "").trim();
+  if (!expectedToken || !token || token !== expectedToken) {
     return res.status(401).json({
       error: "Unauthorized. Missing or invalid Bearer ADMIN_TOKEN.",
     });

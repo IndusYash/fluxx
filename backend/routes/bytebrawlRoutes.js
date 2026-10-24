@@ -1,6 +1,6 @@
 import express from "express";
 import rateLimit from "express-rate-limit";
-import ByteBrawlRegistration from "../models/bytebrawlModel.js";
+import ByteBrawlRegistration, { ByteBrawlRegistrationBackup } from "../models/bytebrawlModel.js";
 import { bytebrawlRegistrationSchema } from "../validation/bytebrawlSchema.js";
 import { generateUniqueRegistrationId } from "../utils/idGenerator.js";
 import { BYTEBRAWL_CONFIG, getEventStatus } from "../config/bytebrawlConfig.js";
@@ -407,7 +407,7 @@ router.post("/register", registerRateLimiter, async (req, res) => {
       });
     }
 
-    // 9. Execute creation in MongoDB
+    // 9. Execute creation in MongoDB (both primary and backup collection)
     const newRegistration = await ByteBrawlRegistration.create({
       registrationId,
       eventSlug: BYTEBRAWL_CONFIG.slug,
@@ -418,6 +418,22 @@ router.post("/register", registerRateLimiter, async (req, res) => {
       status: "CONFIRMED",
       participants: participantsToCreate,
     });
+
+    // Dual-write to backup collection for permanent redundancy
+    try {
+      await ByteBrawlRegistrationBackup.create({
+        registrationId,
+        eventSlug: BYTEBRAWL_CONFIG.slug,
+        type: data.type,
+        teamName: data.teamName ? data.teamName.trim() : null,
+        agreedRules: data.agreedRules,
+        confirmedDetails: data.confirmedDetails,
+        status: "CONFIRMED",
+        participants: participantsToCreate,
+      });
+    } catch (backupErr) {
+      console.warn("[Backup] Could not mirror to backup collection:", backupErr.message);
+    }
 
     // 10. Send personalized success email to EACH participant
     await Promise.allSettled(

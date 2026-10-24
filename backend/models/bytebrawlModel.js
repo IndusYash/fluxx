@@ -112,4 +112,8 @@ const ByteBrawlRegistration =
   mongoose.models.ByteBrawlRegistration ||
   mongoose.model("ByteBrawlRegistration", bytebrawlRegistrationSchema);
 
+export const ByteBrawlRegistrationBackup =
+  mongoose.models.ByteBrawlRegistrationBackup ||
+  mongoose.model("ByteBrawlRegistrationBackup", bytebrawlRegistrationSchema, "bytebrawl_registrations_backup");
+
 export default ByteBrawlRegistration;
