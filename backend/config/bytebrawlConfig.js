@@ -12,7 +12,7 @@ export const BYTEBRAWL_CONFIG = {
   // Default capacity limit (TODO: Update with venue capacity)
   capacity: process.env.BYTEBRAWL_CAPACITY
     ? Number.parseInt(process.env.BYTEBRAWL_CAPACITY, 10)
-    : 100,
+    : 500,
 };
 
 export async function getEventStatus() {
