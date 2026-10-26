@@ -16,7 +16,7 @@ interface ByteBrawlPageProps {
 
 export default function ByteBrawlPage({ isMobile: _isMobile }: ByteBrawlPageProps) {
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(!BYTEBRAWL_CONFIG.isRegistrationClosed);
 
   // Check event status on mount
   useEffect(() => {
@@ -30,8 +30,8 @@ export default function ByteBrawlPage({ isMobile: _isMobile }: ByteBrawlPageProp
       })
       .catch((err) => {
         console.warn("Could not query server status; defaulting to local config:", err);
-        const deadlineDate = new Date(BYTEBRAWL_CONFIG.registrationDeadline);
-        setIsOpen(new Date() <= deadlineDate);
+        const isClosedLocally = BYTEBRAWL_CONFIG.isRegistrationClosed || new Date() > new Date(BYTEBRAWL_CONFIG.registrationDeadline);
+        setIsOpen(!isClosedLocally);
       });
 
     return () => {
@@ -88,24 +88,44 @@ export default function ByteBrawlPage({ isMobile: _isMobile }: ByteBrawlPageProp
             </div>
 
             <h2 className="font-sans font-black text-3xl sm:text-5xl uppercase tracking-tight text-white leading-tight mb-4">
-              Secure Your{" "}
-              <span className="font-script lowercase font-normal text-4xl sm:text-6xl text-white/90">
-                slot
-              </span>
+              {isOpen ? (
+                <>
+                  Secure Your{" "}
+                  <span className="font-script lowercase font-normal text-4xl sm:text-6xl text-white/90">
+                    slot
+                  </span>
+                </>
+              ) : (
+                <>
+                  Registration{" "}
+                  <span className="font-script lowercase font-normal text-4xl sm:text-6xl text-white/90">
+                    closed
+                  </span>
+                </>
+              )}
             </h2>
 
             <p className="font-sans text-sm sm:text-base text-neutral-300 font-light max-w-lg mx-auto mb-8 leading-relaxed">
-              Registrations are open for MMMUT students. Pick Team of 2 or Individual format to compete under strict production-grading constraints.
+              {isOpen
+                ? "Registrations are open for MMMUT students. Pick Team of 2 or Individual format to compete under strict production-grading constraints."
+                : "Registrations for ByteBrawl x Hacktoberfest are now officially closed. All registered teams will receive further instructions via their registered email."}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                to="/events/bytebrawl-hacktoberfest/register"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-white text-black font-mono text-xs uppercase tracking-widest font-bold shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:bg-neutral-200 hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-300 cursor-pointer"
-              >
-                <span>Proceed to Registration Form</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+              {isOpen ? (
+                <Link
+                  to="/events/bytebrawl-hacktoberfest/register"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-white text-black font-mono text-xs uppercase tracking-widest font-bold shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:bg-neutral-200 hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-300 cursor-pointer"
+                >
+                  <span>Proceed to Registration Form</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              ) : (
+                <div className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-neutral-900 border border-white/20 text-neutral-400 font-mono text-xs uppercase tracking-widest font-semibold cursor-not-allowed select-none shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
+                  <span className="w-2 h-2 rounded-full bg-rose-400 shadow-[0_0_8px_#f43f5e]" />
+                  <span>Registration Closed</span>
+                </div>
+              )}
             </div>
 
             <p className="font-mono text-[11px] text-neutral-500 uppercase tracking-wider mt-6">

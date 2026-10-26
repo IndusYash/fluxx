@@ -40,7 +40,7 @@ const events: EventProps[] = [
     category: 'Innovation',
     prize: 'Trophies, Certificates & Swag',
     featured: true,
-    registrationClosed: false,
+    registrationClosed: true,
   },
   {
     id: 2,

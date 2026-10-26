@@ -36,7 +36,8 @@ export const BYTEBRAWL_CONFIG = {
   time: "To be announced",
   venue: "Alan Turing Hall",
   // TODO: Update official registration deadline timestamp
-  registrationDeadline: "2026-10-31T23:59:59+05:30",
+  isRegistrationClosed: true,
+  registrationDeadline: "2026-10-26T00:00:00+05:30",
   // TODO: Set venue seating capacity (number of registrations)
   capacity: 500,
 

@@ -90,7 +90,7 @@ export default function EventSlider() {
       phase: "HACKATHON",
       date: BYTEBRAWL_CONFIG.date,
       attendees:
-        new Date() > new Date(BYTEBRAWL_CONFIG.registrationDeadline)
+        BYTEBRAWL_CONFIG.isRegistrationClosed || new Date() > new Date(BYTEBRAWL_CONFIG.registrationDeadline)
           ? "Registrations closed"
           : "Registrations open",
       isUpcoming: true,

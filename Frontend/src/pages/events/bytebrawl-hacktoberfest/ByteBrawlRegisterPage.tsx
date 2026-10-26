@@ -12,7 +12,7 @@ interface ByteBrawlRegisterPageProps {
 
 export default function ByteBrawlRegisterPage({ isMobile: _isMobile }: ByteBrawlRegisterPageProps) {
   const [confirmedData, setConfirmedData] = useState<ConfirmedRegistrationData | null>(null);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(!BYTEBRAWL_CONFIG.isRegistrationClosed);
 
   useEffect(() => {
     let isMounted = true;
@@ -25,8 +25,9 @@ export default function ByteBrawlRegisterPage({ isMobile: _isMobile }: ByteBrawl
       })
       .catch((err) => {
         console.warn("Could not query server status; defaulting to local config:", err);
-        const deadlineDate = new Date(BYTEBRAWL_CONFIG.registrationDeadline);
-        setIsOpen(new Date() <= deadlineDate);
+        const isClosedLocally = BYTEBRAWL_CONFIG.isRegistrationClosed || new Date() > new Date(BYTEBRAWL_CONFIG.registrationDeadline);
+        setIsOpen(!isClosedLocally);
+
       });
 
     return () => {
@@ -79,7 +80,9 @@ export default function ByteBrawlRegisterPage({ isMobile: _isMobile }: ByteBrawl
             </h1>
 
             <p className="font-sans text-sm sm:text-base text-neutral-300 font-light max-w-xl mx-auto mb-6">
-              Complete your entry below. All details are securely validated and processed in a single transactional database commit.
+              {isOpen
+                ? "Complete your entry below. All details are securely validated and processed in a single transactional database commit."
+                : "Registrations for ByteBrawl x Hacktoberfest are now officially closed. All confirmed entries remain secure."}
             </p>
 
             {/* Quick parameters badges */}

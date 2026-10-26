@@ -24,9 +24,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { ConfirmedRegistrationData } from "./ConfirmationPanel";
+import { BYTEBRAWL_CONFIG } from "@/config/eventConfig";
 
 interface RegistrationFormProps {
-  isOpen: boolean;
+  isOpen?: boolean;
   onSuccess: (data: ConfirmedRegistrationData) => void;
 }
 
@@ -92,7 +93,7 @@ const COMMON_TYPOS: Record<string, string> = {
   "mmut.ac.in": "mmmut.ac.in",
 };
 
-export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
+export default function RegistrationForm({ isOpen = true, onSuccess }: RegistrationFormProps) {
   // Step State
   const [currentStep, setCurrentStep] = useState(1);
   const [regType, setRegType] = useState<"TEAM" | "INDIVIDUAL">("TEAM");
@@ -706,6 +707,75 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       }
     }
   };
+
+  if (!isOpen) {
+    return (
+      <div className="relative max-w-2xl mx-auto rounded-2xl border border-white/15 bg-[#0d0f14]/95 backdrop-blur-2xl p-6 sm:p-10 text-center shadow-[0_20px_60px_rgba(0,0,0,0.85)] overflow-hidden">
+        {/* Ambient Top Glow */}
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-48 bg-rose-500/10 rounded-full blur-3xl pointer-events-none" />
+
+        {/* Tech Corner Brackets */}
+        <div className="absolute top-2 left-2 w-3.5 h-3.5 border-t-2 border-l-2 border-white/40 pointer-events-none" />
+        <div className="absolute top-2 right-2 w-3.5 h-3.5 border-t-2 border-r-2 border-white/40 pointer-events-none" />
+        <div className="absolute bottom-2 left-2 w-3.5 h-3.5 border-b-2 border-l-2 border-white/40 pointer-events-none" />
+        <div className="absolute bottom-2 right-2 w-3.5 h-3.5 border-b-2 border-r-2 border-white/40 pointer-events-none" />
+
+        {/* Status Pill */}
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-rose-500/30 bg-rose-500/10 backdrop-blur-md mb-6">
+          <span className="w-2 h-2 rounded-full bg-rose-400 shadow-[0_0_8px_#f43f5e]" />
+          <span className="font-mono text-xs uppercase tracking-[0.2em] font-bold text-rose-300">
+            REGISTRATION CLOSED
+          </span>
+        </div>
+
+        {/* Headline */}
+        <h2 className="font-sans font-black text-2xl sm:text-4xl uppercase tracking-tight text-white mb-3">
+          Registrations are now closed
+        </h2>
+
+        {/* Body Message */}
+        <p className="font-sans text-sm sm:text-base text-neutral-300 font-light max-w-lg mx-auto mb-6 leading-relaxed">
+          The registration window for ByteBrawl x Hacktoberfest has officially closed. We have reached maximum capacity. Thank you for the massive response!
+        </p>
+
+        {/* Info Box for Registered Participants */}
+        <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4 text-left mb-8 space-y-3">
+          <div className="flex items-start gap-2.5">
+            <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+            <p className="font-sans text-xs sm:text-sm text-neutral-300 leading-relaxed">
+              <strong className="text-white font-medium">Already registered?</strong> Your registration ID and confirmed slot remain active and valid in our database. You will receive event day instructions and reporting timings via email.
+            </p>
+          </div>
+          <div className="flex items-start gap-2.5">
+            <Users className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+            <p className="font-sans text-xs sm:text-sm text-neutral-300 leading-relaxed">
+              <strong className="text-white font-medium">Community Updates:</strong> Join the official WhatsApp group for live schedules, problem statements, and announcements.
+            </p>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={BYTEBRAWL_CONFIG.whatsappGroupLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs uppercase tracking-wider font-semibold transition-colors shadow-lg"
+          >
+            <span>Join WhatsApp Group</span>
+            <ArrowRight className="w-4 h-4" />
+          </a>
+
+          <a
+            href="/events/bytebrawl-hacktoberfest"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 text-white font-mono text-xs uppercase tracking-wider transition-colors"
+          >
+            <span>← Event Overview</span>
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-3xl mx-auto rounded-2xl border border-white/15 bg-[#101010]/95 backdrop-blur-2xl p-4 sm:p-8 md:p-10 shadow-[0_20px_60px_rgba(0,0,0,0.85)] text-white relative">

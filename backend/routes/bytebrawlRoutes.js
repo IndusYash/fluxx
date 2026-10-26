@@ -120,6 +120,13 @@ router.post("/check-email", async (req, res) => {
  */
 router.post("/send-otp", otpSendRateLimiter, async (req, res) => {
   try {
+    const status = await getEventStatus();
+    if (!status.open) {
+      return res.status(410).json({
+        error: status.message || "Registrations are closed for this event",
+        open: false,
+      });
+    }
     const email = String(req.body?.email || "").trim().toLowerCase();
     if (!email) {
       return res.status(400).json({ error: "Email is required" });

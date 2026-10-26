@@ -37,7 +37,7 @@ export default function ByteBrawlHero({
               transition={{ duration: 0.5 }}
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-md mb-4 sm:mb-5"
             >
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className={`w-2 h-2 rounded-full ${isOpen ? "bg-emerald-400 animate-pulse" : "bg-rose-400"}`} />
               <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-white/80">
                 // {isOpen ? "REGISTRATIONS OPEN" : "REGISTRATIONS CLOSED"} //
               </span>
@@ -126,13 +126,20 @@ export default function ByteBrawlHero({
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto"
             >
-              <Link
-                to="/events/bytebrawl-hacktoberfest/register"
-                className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-white text-black font-mono text-xs uppercase tracking-widest font-bold shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(255,255,255,0.4)] hover:bg-neutral-100 transition-all duration-300 cursor-pointer active:scale-[0.98]"
-              >
-                <span>Register Now</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
+              {isOpen ? (
+                <Link
+                  to="/events/bytebrawl-hacktoberfest/register"
+                  className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-white text-black font-mono text-xs uppercase tracking-widest font-bold shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(255,255,255,0.4)] hover:bg-neutral-100 transition-all duration-300 cursor-pointer active:scale-[0.98]"
+                >
+                  <span>Register Now</span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              ) : (
+                <div className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-neutral-900 border border-white/20 text-neutral-400 font-mono text-xs uppercase tracking-widest font-semibold cursor-not-allowed select-none shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
+                  <span className="w-2 h-2 rounded-full bg-rose-400 shadow-[0_0_8px_#f43f5e]" />
+                  <span>Registration Closed</span>
+                </div>
+              )}
 
               <a
                 href="#about-hacktoberfest"

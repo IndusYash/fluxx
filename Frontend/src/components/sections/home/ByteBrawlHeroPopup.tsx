@@ -179,14 +179,13 @@ export default function ByteBrawlHeroPopup({ isMobile = false }: ByteBrawlHeroPo
                   {/* ==================== 1. TOP HEADER ROW ==================== */}
                   <div className="flex items-center justify-between gap-2 mb-2.5 relative z-10">
                     {/* Left: "REGISTRATIONS LIVE" Glass Pill */}
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 border border-white/35 shadow-[0_0_12px_rgba(255,255,255,0.22),inset_0_1px_1px_rgba(255,255,255,0.35)] backdrop-blur-md">
-                      {/* Luminous Pulsing Dot */}
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 border border-rose-500/35 shadow-[0_0_12px_rgba(244,63,94,0.22),inset_0_1px_1px_rgba(255,255,255,0.2)] backdrop-blur-md">
+                      {/* Indicator Dot */}
                       <span className="relative flex h-2.5 w-2.5">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
-                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white shadow-[0_0_8px_#ffffff]" />
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-rose-400 shadow-[0_0_8px_#f43f5e]" />
                       </span>
-                      <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.2em] font-black text-white uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
-                        REGISTRATIONS LIVE
+                      <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.2em] font-black text-rose-300 uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+                        REGISTRATIONS CLOSED
                       </span>
                     </div>
 
@@ -270,7 +269,7 @@ export default function ByteBrawlHeroPopup({ isMobile = false }: ByteBrawlHeroPo
                   <div className="relative z-10 flex items-center gap-2">
                     {/* Primary CTA: Iconic Glossy Liquid Glass / Mercury Button */}
                     <button
-                      onClick={() => navigate("/events/bytebrawl-hacktoberfest/register")}
+                      onClick={() => navigate("/events/bytebrawl-hacktoberfest")}
                       className="relative flex-1 h-12 min-h-[48px] rounded-xl cursor-pointer group overflow-hidden transition-all duration-300 transform active:scale-[0.98]"
                       style={{
                         background:
@@ -300,11 +299,11 @@ export default function ByteBrawlHeroPopup({ isMobile = false }: ByteBrawlHeroPo
 
                       {/* Stacked Button Typography */}
                       <div className="relative z-10 flex flex-col items-center justify-center h-full leading-tight">
-                        <span className="font-mono text-[11px] sm:text-xs font-black tracking-[0.2em] text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] uppercase">
-                          REGISTER
+                        <span className="font-mono text-[10px] sm:text-[11px] font-black tracking-[0.16em] text-white/90 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] uppercase">
+                          REGISTRATION
                         </span>
-                        <span className="font-mono text-[10px] sm:text-[11px] font-black tracking-[0.16em] text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] uppercase flex items-center gap-0.5 mt-0.5">
-                          NOW ↗
+                        <span className="font-mono text-[9px] sm:text-[10px] font-black tracking-[0.14em] text-rose-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] uppercase flex items-center gap-0.5 mt-0.5">
+                          CLOSED ✕
                         </span>
                       </div>
                     </button>
@@ -347,7 +346,7 @@ export default function ByteBrawlHeroPopup({ isMobile = false }: ByteBrawlHeroPo
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white shadow-[0_0_8px_#ffffff]" />
               </span>
-              <span className="text-white font-bold tracking-wider">BYTEBRAWL LIVE</span>
+              <span className="text-white font-bold tracking-wider">BYTEBRAWL INFO</span>
               <Sparkles className="w-3.5 h-3.5 text-white/80 group-hover:rotate-12 transition-transform" />
             </button>
           </motion.div>
