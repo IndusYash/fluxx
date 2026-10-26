@@ -17,6 +17,7 @@ interface ByteBrawlPageProps {
 export default function ByteBrawlPage({ isMobile: _isMobile }: ByteBrawlPageProps) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(!BYTEBRAWL_CONFIG.isRegistrationClosed);
+  const isRegistrationOpen = isOpen && !BYTEBRAWL_CONFIG.isRegistrationClosed;
 
   // Check event status on mount
   useEffect(() => {
@@ -81,14 +82,14 @@ export default function ByteBrawlPage({ isMobile: _isMobile }: ByteBrawlPageProp
         <Container>
           <div className="max-w-3xl mx-auto rounded-2xl border border-white/15 bg-[#111111]/90 backdrop-blur-xl p-8 sm:p-12 text-center shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.04] mb-5">
-              <span className={`w-2 h-2 rounded-full ${isOpen ? "bg-emerald-400 animate-pulse" : "bg-rose-400"}`} />
+              <span className={`w-2 h-2 rounded-full ${isRegistrationOpen ? "bg-emerald-400 animate-pulse" : "bg-rose-400"}`} />
               <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-neutral-300">
-                // {isOpen ? "REGISTRATIONS OPEN" : "REGISTRATIONS CLOSED"} //
+                // {isRegistrationOpen ? "REGISTRATIONS OPEN" : "REGISTRATIONS CLOSED"} //
               </span>
             </div>
 
             <h2 className="font-sans font-black text-3xl sm:text-5xl uppercase tracking-tight text-white leading-tight mb-4">
-              {isOpen ? (
+              {isRegistrationOpen ? (
                 <>
                   Secure Your{" "}
                   <span className="font-script lowercase font-normal text-4xl sm:text-6xl text-white/90">
@@ -106,13 +107,13 @@ export default function ByteBrawlPage({ isMobile: _isMobile }: ByteBrawlPageProp
             </h2>
 
             <p className="font-sans text-sm sm:text-base text-neutral-300 font-light max-w-lg mx-auto mb-8 leading-relaxed">
-              {isOpen
+              {isRegistrationOpen
                 ? "Registrations are open for MMMUT students. Pick Team of 2 or Individual format to compete under strict production-grading constraints."
                 : "Registrations for ByteBrawl x Hacktoberfest are now officially closed. All registered teams will receive further instructions via their registered email."}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              {isOpen ? (
+              {isRegistrationOpen ? (
                 <Link
                   to="/events/bytebrawl-hacktoberfest/register"
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-white text-black font-mono text-xs uppercase tracking-widest font-bold shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:bg-neutral-200 hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-300 cursor-pointer"

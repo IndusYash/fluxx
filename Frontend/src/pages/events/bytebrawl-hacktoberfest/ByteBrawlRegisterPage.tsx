@@ -60,9 +60,9 @@ export default function ByteBrawlRegisterPage({ isMobile: _isMobile }: ByteBrawl
         {!confirmedData && (
           <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-14">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-md mb-4">
-              <span className={`w-2 h-2 rounded-full ${isOpen ? "bg-emerald-400 animate-pulse" : "bg-rose-400"}`} />
+              <span className={`w-2 h-2 rounded-full ${isOpen && !BYTEBRAWL_CONFIG.isRegistrationClosed ? "bg-emerald-400 animate-pulse" : "bg-rose-400"}`} />
               <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-white/80">
-                // {isOpen ? "REGISTRATIONS OPEN" : "REGISTRATIONS CLOSED"} //
+                // {isOpen && !BYTEBRAWL_CONFIG.isRegistrationClosed ? "REGISTRATIONS OPEN" : "REGISTRATIONS CLOSED"} //
               </span>
               <span className="text-[10px] text-white/40 font-mono hidden sm:inline">
                 | CSE DEPT MMMUT
@@ -109,7 +109,7 @@ export default function ByteBrawlRegisterPage({ isMobile: _isMobile }: ByteBrawl
             <ConfirmationPanel data={confirmedData} />
           ) : (
             <RegistrationForm
-              isOpen={isOpen}
+              isOpen={isOpen && !BYTEBRAWL_CONFIG.isRegistrationClosed}
               onSuccess={(data) => {
                 setConfirmedData(data);
               }}

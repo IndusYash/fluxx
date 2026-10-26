@@ -708,7 +708,7 @@ export default function RegistrationForm({ isOpen = true, onSuccess }: Registrat
     }
   };
 
-  if (!isOpen) {
+  if (!isOpen || BYTEBRAWL_CONFIG.isRegistrationClosed) {
     return (
       <div className="relative max-w-2xl mx-auto rounded-2xl border border-white/15 bg-[#0d0f14]/95 backdrop-blur-2xl p-6 sm:p-10 text-center shadow-[0_20px_60px_rgba(0,0,0,0.85)] overflow-hidden">
         {/* Ambient Top Glow */}
