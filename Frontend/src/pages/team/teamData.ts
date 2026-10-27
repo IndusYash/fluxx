@@ -8,7 +8,6 @@ import threeMImage from "@/assets/images/3m.webp";
 import Shubham from "@/assets/images/Shubham.webp";
 import aryanImage from "@/assets/images/Aryan.webp";
 import Prad from "@/assets/images/Pradyuman.webp";
-import Ananya from "@/assets/images/Ananya.webp";
 import Tamanna from "@/assets/images/Tamanna.webp";
 import Aman from "@/assets/images/Aman Rawat.webp";
 import ashishImage from "@/assets/images/ashish.webp";
@@ -149,15 +148,6 @@ export const finalYearMembers: Member[] = [
     email: 'pradyumnagrahari111@gmail.com',
     linkedin: 'https://www.linkedin.com/in/pradyumn-a-09b209277',
     image: Prad,
-  },
-  {
-    name: 'Ananya',
-    role: 'Design Head',
-    branch: 'CE',
-    batch: "'27",
-    email: 'ananyar0912@gmail.com',
-    linkedin: 'https://www.linkedin.com/in/ananya-mmmut',
-    image: Ananya,
   },
   {
     name: 'Tamanna Sharma',

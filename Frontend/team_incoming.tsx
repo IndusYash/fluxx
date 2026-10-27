@@ -1,4 +1,4 @@
-﻿import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Mail, Linkedin, Users, Award, GraduationCap, Sparkles, ChevronDown
@@ -33,7 +33,6 @@ import atulKumarImage from "../../assets/images/Atul.jpeg";
 import rishiImage    from "../../assets/images/Rishi.jpeg";
 
 // Design
-import Ananya             from "../../assets/images/Ananya.webp";
 import Tamanna            from "../../assets/images/Tamanna.webp";
 import abhigyanVardhanImage from "../../assets/images/AbhigyanVardhan.webp";
 import stutiTripathiImage from "../../assets/images/StutiTripathi .webp";
@@ -481,7 +480,6 @@ const Team: React.FC<{ isMobile?: boolean }> = () => {
     { name: 'Shubham Rai', role: 'Treasurer', branch: 'CSE', batch: "'27", email: 'kuvar2003@gmail.com', linkedin: 'https://www.linkedin.com/in/shubham-rai-866b2b294/', image: Shubham, color: C.admin },
     { name: 'Aryan S. Shandilya', role: 'Development Head', branch: 'CSE', batch: "'27", email: 'aryanacc28@gmail.com', linkedin: 'https://www.linkedin.com/in/aryan-s-shandilya', image: aryanImage, color: C.dev },
     { name: 'Pradyumn Agrahari', role: 'Development Head', branch: 'CSE', batch: "'27", email: 'pradyumnagrahari111@gmail.com', linkedin: 'https://www.linkedin.com/in/pradyumn-a-09b209277', image: Prad, color: C.dev },
-    { name: 'Ananya', role: 'Design Head', branch: 'CE', batch: "'27", email: 'ananyar0912@gmail.com', linkedin: 'https://www.linkedin.com/in/ananya-mmmut', image: Ananya, color: C.design },
     { name: 'Tamanna Sharma', role: 'Design Head', branch: 'EE', batch: "'27", email: 'tamanna.sharma9929knp@gmail.com', linkedin: 'https://www.linkedin.com/in/tamanna-sharma-b3290a294/', image: Tamanna, color: C.design },
     { name: 'Aman Kumar Rawat', role: 'Photography & Video Head', branch: 'ME', batch: "'27", email: 'amankrawat.ds@gmail.com', linkedin: 'https://www.linkedin.com/in/amankrrawat/', image: Aman, color: C.photo },
     { name: 'Ashish Kumar Yadav', role: 'Algorithms Head', branch: 'CSE', batch: "'27", email: 'kumaryadavashish390@gmail.com', linkedin: 'https://in.linkedin.com/in/ashish-yadav-040730225', image: ashishImage, color: C.algo },
