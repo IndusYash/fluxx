@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import ByteBrawlHero from "./ByteBrawlHero";
+import ByteBrawlWinnersLeaderboard from "./ByteBrawlWinnersLeaderboard";
 import AboutByteBrawl from "./AboutByteBrawl";
 import AboutHacktoberfest from "./AboutHacktoberfest";
 import EventDetailsGrid from "./EventDetailsGrid";
@@ -51,9 +52,15 @@ export default function ByteBrawlPage({ isMobile: _isMobile }: ByteBrawlPageProp
       <ByteBrawlHero onRegisterClick={handleGoToRegister} isOpen={isOpen} />
 
       {/* Paint Edge Divider */}
-      <PaintEdgeDivider topColor="#060606" bottomColor="#0a0a0a" />
+      <PaintEdgeDivider topColor="#060606" bottomColor="#080808" />
 
-      {/* 2. About ByteBrawl Section */}
+      {/* 2. Official Results & Round 2 Problem Statement Allotments */}
+      <ByteBrawlWinnersLeaderboard />
+
+      {/* Paint Edge Divider */}
+      <PaintEdgeDivider topColor="#080808" bottomColor="#0a0a0a" flip />
+
+      {/* 3. About ByteBrawl Section */}
       <AboutByteBrawl />
 
       {/* Paint Edge Divider */}

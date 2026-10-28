@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Calendar, MapPin, Users, ArrowRight, Sparkles } from "lucide-react";
+import { Calendar, MapPin, Users, ArrowRight, Sparkles, Trophy } from "lucide-react";
 import Container from "@/components/layout/Container";
 import ChromeLogo3D from "@/components/3d/ChromeLogo3D";
 import { BYTEBRAWL_CONFIG } from "@/config/eventConfig";
@@ -36,11 +36,11 @@ export default function ByteBrawlHero({
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-md mb-4 sm:mb-5"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 backdrop-blur-md mb-4 sm:mb-5"
             >
-              <span className={`w-2 h-2 rounded-full ${isRegistrationOpen ? "bg-emerald-400 animate-pulse" : "bg-rose-400"}`} />
-              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-white/80">
-                // {isRegistrationOpen ? "REGISTRATIONS OPEN" : "REGISTRATIONS CLOSED"} //
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-amber-300 font-semibold">
+                // QUALIFIED TEAMS & ROUND 2 ALLOTMENTS LIVE //
               </span>
               <span className="text-[10px] text-white/40 font-mono hidden sm:inline">
                 | CSE DEPT MMMUT
@@ -120,34 +120,42 @@ export default function ByteBrawlHero({
               </div>
             </motion.div>
 
-            {/* CTA Button */}
+            {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto"
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto"
             >
+              <a
+                href="#results-and-allotments"
+                className="group relative inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 text-black font-mono text-xs uppercase tracking-widest font-extrabold shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:shadow-[0_0_35px_rgba(245,158,11,0.6)] hover:brightness-110 transition-all duration-300 cursor-pointer active:scale-[0.98]"
+              >
+                <Users className="w-4 h-4 text-black" />
+                <span>Teams & PS Allotments</span>
+                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+              </a>
+
               {isRegistrationOpen ? (
                 <Link
                   to="/events/bytebrawl-hacktoberfest/register"
-                  className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-white text-black font-mono text-xs uppercase tracking-widest font-bold shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(255,255,255,0.4)] hover:bg-neutral-100 transition-all duration-300 cursor-pointer active:scale-[0.98]"
+                  className="group relative inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 text-white font-mono text-xs uppercase tracking-widest font-bold transition-all duration-300 cursor-pointer active:scale-[0.98]"
                 >
-                  <span>Register Now</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  <span>Registration Form</span>
                 </Link>
               ) : (
-                <div className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-neutral-900 border border-white/20 text-neutral-400 font-mono text-xs uppercase tracking-widest font-semibold cursor-not-allowed select-none shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
+                <div className="inline-flex items-center justify-center gap-2 px-5 py-4 rounded-xl bg-neutral-900/80 border border-white/15 text-neutral-400 font-mono text-xs uppercase tracking-widest font-semibold select-none">
                   <span className="w-2 h-2 rounded-full bg-rose-400 shadow-[0_0_8px_#f43f5e]" />
-                  <span>Registration Closed</span>
+                  <span>Reg Closed</span>
                 </div>
               )}
 
               <a
                 href="#about-hacktoberfest"
-                className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl border border-white/15 bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-mono text-xs uppercase tracking-widest transition-colors duration-200"
+                className="inline-flex items-center justify-center gap-2 px-5 py-4 rounded-xl border border-white/10 bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-mono text-xs uppercase tracking-widest transition-colors duration-200"
               >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Explore Open Source 2026</span>
+                <Sparkles className="w-3.5 h-3.5 text-neutral-400" />
+                <span>Hacktoberfest '26</span>
               </a>
             </motion.div>
           </div>
