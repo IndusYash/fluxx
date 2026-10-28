@@ -367,7 +367,7 @@ export const SPECIAL_APPRECIATION_TEAMS: SpecialAppreciationTeam[] = [
 export const ROUND2_ALLOTMENTS: Round2Allotment[] = [
   {
     "sno": 1,
-    "teamId": "Not provided",
+    "teamId": "FLUX-180",
     "teamName": "2 Fast 2 Curious",
     "leader": "Aryan Yadav",
     "member": "Aryan Agarwal",
