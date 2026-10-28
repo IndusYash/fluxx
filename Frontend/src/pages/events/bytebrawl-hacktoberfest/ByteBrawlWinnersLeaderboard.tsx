@@ -287,8 +287,8 @@ export default function ByteBrawlWinnersLeaderboard() {
               <button
                 onClick={() => setActiveTab("allotments")}
                 className={`flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl font-mono text-xs uppercase tracking-wider transition-all duration-200 ${activeTab === "allotments"
-                    ? "bg-white text-black font-bold shadow-md"
-                    : "text-neutral-400 hover:text-white hover:bg-white/[0.05]"
+                  ? "bg-white text-black font-bold shadow-md"
+                  : "text-neutral-400 hover:text-white hover:bg-white/[0.05]"
                   }`}
               >
                 <CheckCircle2 className="w-3.5 h-3.5" />
@@ -301,8 +301,8 @@ export default function ByteBrawlWinnersLeaderboard() {
               <button
                 onClick={() => setActiveTab("leaderboard")}
                 className={`flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl font-mono text-xs uppercase tracking-wider transition-all duration-200 ${activeTab === "leaderboard"
-                    ? "bg-white text-black font-bold shadow-md"
-                    : "text-neutral-400 hover:text-white hover:bg-white/[0.05]"
+                  ? "bg-white text-black font-bold shadow-md"
+                  : "text-neutral-400 hover:text-white hover:bg-white/[0.05]"
                   }`}
               >
                 <Users className="w-3.5 h-3.5" />
@@ -315,8 +315,8 @@ export default function ByteBrawlWinnersLeaderboard() {
               <button
                 onClick={() => setActiveTab("problemStatements")}
                 className={`flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl font-mono text-xs uppercase tracking-wider transition-all duration-200 ${activeTab === "problemStatements"
-                    ? "bg-white text-black font-bold shadow-md"
-                    : "text-neutral-400 hover:text-white hover:bg-white/[0.05]"
+                  ? "bg-white text-black font-bold shadow-md"
+                  : "text-neutral-400 hover:text-white hover:bg-white/[0.05]"
                   }`}
               >
                 <FileText className="w-3.5 h-3.5" />
@@ -358,8 +358,8 @@ export default function ByteBrawlWinnersLeaderboard() {
                 <button
                   onClick={() => setSelectedTrack("ALL")}
                   className={`px-3 py-1 rounded-lg font-mono text-[11px] uppercase tracking-wider border transition-colors ${selectedTrack === "ALL"
-                      ? "bg-white text-black font-bold border-white"
-                      : "border-white/10 text-neutral-400 hover:text-white hover:bg-white/[0.04]"
+                    ? "bg-white text-black font-bold border-white"
+                    : "border-white/10 text-neutral-400 hover:text-white hover:bg-white/[0.04]"
                     }`}
                 >
                   All (25)
@@ -372,8 +372,8 @@ export default function ByteBrawlWinnersLeaderboard() {
                       key={meta.id}
                       onClick={() => setSelectedTrack(trackName)}
                       className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-mono text-[11px] uppercase tracking-wider border transition-all ${isActive
-                          ? `${meta.badgeColor} font-bold shadow-sm`
-                          : "border-white/10 text-neutral-400 hover:text-white hover:bg-white/[0.04]"
+                        ? `${meta.badgeColor} font-bold shadow-sm`
+                        : "border-white/10 text-neutral-400 hover:text-white hover:bg-white/[0.04]"
                         }`}
                     >
                       {TRACK_ICONS[trackName]}
@@ -395,8 +395,8 @@ export default function ByteBrawlWinnersLeaderboard() {
                     key={col}
                     onClick={() => setSelectedCollege(col)}
                     className={`px-2.5 py-1 rounded-lg font-mono text-[10px] uppercase tracking-wider border transition-colors ${selectedCollege === col
-                        ? "bg-white text-black font-bold border-white"
-                        : "border-white/10 text-neutral-400 hover:text-white hover:bg-white/[0.04]"
+                      ? "bg-white text-black font-bold border-white"
+                      : "border-white/10 text-neutral-400 hover:text-white hover:bg-white/[0.04]"
                       }`}
                   >
                     {col}
@@ -435,8 +435,8 @@ export default function ByteBrawlWinnersLeaderboard() {
                       <div
                         key={allot.sno + allot.teamName}
                         className={`relative rounded-2xl border p-5 sm:p-6 backdrop-blur-md transition-all duration-300 hover:scale-[1.01] flex flex-col justify-between ${isMerged
-                            ? "border-amber-400/40 bg-gradient-to-br from-amber-500/10 via-[#151310] to-[#0d0d0f]"
-                            : "border-white/10 bg-[#121215]/90 hover:border-white/20"
+                          ? "border-amber-400/40 bg-gradient-to-br from-amber-500/10 via-[#151310] to-[#0d0d0f]"
+                          : "border-white/10 bg-[#121215]/90 hover:border-white/20"
                           }`}
                       >
                         <div>

@@ -26,8 +26,8 @@ export async function getEventStatus() {
   try {
     if (mongoose.connection && mongoose.connection.readyState === 1) {
       registeredCount = await ByteBrawlRegistration.countDocuments({
-      eventSlug: BYTEBRAWL_CONFIG.slug,
-      status: "CONFIRMED",
+        eventSlug: BYTEBRAWL_CONFIG.slug,
+        status: "CONFIRMED",
       });
     }
   } catch (err) {
@@ -52,8 +52,8 @@ export async function getEventStatus() {
       ? BYTEBRAWL_CONFIG.isClosed
         ? "Registrations are closed"
         : isPastDeadline
-        ? "Registrations are closed (deadline reached)"
-        : "Registrations are closed (capacity reached)"
+          ? "Registrations are closed (deadline reached)"
+          : "Registrations are closed (capacity reached)"
       : "Registrations open",
   };
 }

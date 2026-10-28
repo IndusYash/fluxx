@@ -28,7 +28,7 @@ export default function ByteBrawlHero({
 
       <Container className="relative z-10 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          
+
           {/* Left Column: Text & CTA (7 cols on lg) */}
           <div className="lg:col-span-7 flex flex-col items-start text-left z-20">
             {/* Mono caps sub-badge */}
@@ -167,7 +167,7 @@ export default function ByteBrawlHero({
               {/* Outer decorative ring */}
               <div className="absolute inset-4 rounded-full border border-white/10 pointer-events-none" />
               <div className="absolute inset-12 rounded-full border border-dashed border-white/15 pointer-events-none animate-spin-slow" />
-              
+
               <ChromeLogo3D
                 className="w-full h-full"
                 scale={1.05}
